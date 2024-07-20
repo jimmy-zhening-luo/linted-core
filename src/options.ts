@@ -1,3 +1,4 @@
+import type { Scope } from "./scopes.js";
 import JsOption from "./options/JsOption.js";
 import TsOption from "./options/TsOption.js";
 import SvelteOption from "./options/SvelteOption.js";

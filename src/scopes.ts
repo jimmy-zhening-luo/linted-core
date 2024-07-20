@@ -1,3 +1,5 @@
+export type Scope = typeof scopes[number];
+
 const scopes = [
   "js",
   "ts",
@@ -6,6 +8,6 @@ const scopes = [
   "json",
   "jsonc",
   "yml",
-] as const satisfies Scope[];
+] as const;
 
 export default scopes;
