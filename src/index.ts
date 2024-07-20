@@ -13,7 +13,12 @@ export type { default as IConfig } from "./interface/IConfig.js";
 export default function (
   plugins: Plugins,
   parsers: Parsers,
-  files: Record<Scopes, string[]>,
+  files: Record<
+    | "defaults"
+    | "includes"
+    ,
+    Record<Scopes, string[]>,
+  >,
   rulesets: { [S in Scopes]: Ruleset<S> },
 ): IConfig[] {
   try {
@@ -25,14 +30,16 @@ export default function (
       js: new options
         .js(
           plugins.js,
-          ...files.js,
+          ...files.defaults.js,
+          ...files.includes.js,
         )
         .body,
       ts: new options
         .ts(
           plugins.ts,
           parsers.ts,
-          ...files.ts,
+          ...files.defaults.ts,
+          ...files.includes.ts,
         )
         .body,
       svelte: new options
@@ -40,35 +47,40 @@ export default function (
           plugins.svelte,
           parsers.svelte,
           parsers.ts,
-          ...files.svelte,
+          ...files.defaults.svelte,
+          ...files.includes.svelte,
         )
         .body,
       html: new options
         .html(
           plugins.html,
           parsers.html,
-          ...files.html,
+          ...files.defaults.html,
+          ...files.includes.html,
         )
         .body,
       json: new options
         .json(
           plugins.json,
           parsers.json,
-          ...files.json,
+          ...files.defaults.json,
+          ...files.includes.json,
         )
         .body,
       jsonc: new options
         .jsonc(
           plugins.jsonc,
           parsers.jsonc,
-          ...files.jsonc,
+          ...files.defaults.jsonc,
+          ...files.includes.jsonc,
         )
         .body,
       yml: new options
         .yml(
           plugins.yml,
           parsers.yml,
-          ...files.yml,
+          ...files.defaults.yml,
+          ...files.includes.yml,
         )
         .body,
     };
