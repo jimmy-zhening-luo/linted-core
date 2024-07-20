@@ -6,7 +6,7 @@ export default class Ruleset<Language extends string> {
   public readonly overrides: Rule[] = [];
 
   constructor(
-    protected readonly language: literalful<Language>,
+    public readonly language: literalful<Language>,
     ...ruleset: readonly Rule[]
   ) {
     this.ruleset = [...ruleset];
