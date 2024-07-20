@@ -1,20 +1,21 @@
 import scopes from "./scopes.js";
 import options from "./options.js";
-import type { Scope } from "./scopes.js";
+import type { Scopes } from "./scopes.js";
 import type Plugins from "./plugins.js";
+import type Parsers from "./parsers.js";
 import type Ruleset from "./rulesets/ruleset/Ruleset.js";
 
 export { default as Ruleset } from "./rulesets/ruleset/Ruleset.js";
 export { Rule } from "./rulesets/ruleset/Ruleset.js";
 export default function (
   plugins: Plugins,
-  parsers: Record<Scope, unknown>,
-  files: Record<Scope, string[]>,
-  rulesets: { [S in Scope]: Ruleset<S> },
+  parsers: Parsers,
+  files: Record<Scopes, string[]>,
+  rulesets: { [S in Scopes]: Ruleset<S> },
 ): IConfig[] {
   try {
     const instantiatedOptions: {
-      [S in Scope]: InstanceType<
+      [S in Scopes]: InstanceType<
         typeof options[S]
       >["body"]
     } = {

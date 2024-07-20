@@ -1,4 +1,4 @@
-export type Scope = typeof scopes[number];
+export type Scopes = typeof scopes[number];
 
 const scopes = [
   "js",

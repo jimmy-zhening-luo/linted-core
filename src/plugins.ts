@@ -1,9 +1,9 @@
-import type { Scope } from "./scopes.js";
+import type { Scopes } from "./scopes.js";
 
 type PluginPackage = { configs: unknown };
 
 export default interface Plugins extends Record<
-  Scope,
+  Scopes,
   Record<
     string,
     { configs: unknown }
