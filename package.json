@@ -1,0 +1,63 @@
+{
+  "name": "{PACKAGE}",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "config": {
+    "PACKAGE_JSON_VERSION": "20.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimmy-zhening-luo/{REPO}.git"
+  },
+  "homepage": "https://github.com/jimmy-zhening-luo/{REPO}#readme",
+  "bugs": {
+    "url": "https://github.com/jimmy-zhening-luo/{REPO}/issues"
+  },
+  "author": {
+    "name": "Jimmy Zhening Luo",
+    "email": "1450044+jimmy-zhening-luo@users.noreply.github.com",
+    "url": "https://jimm.my"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "peerDependencies": {},
+  "peerDependenciesMeta": {},
+  "optionalDependencies": {},
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "~8.57.0",
+    "linted": "~14.4.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.5.3"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
+    ]
+  },
+  "scripts": {
+    "build": "run-s \"build:{1}:*\" lint:built  --  {SOURCE}",
+    "build:ts:compile": "tsc",
+    "build:svelte:sync": "svelte-kit sync",
+    "build:svelte:check": "svelte-check --tsconfig ./tsconfig.json",
+    "build:svelte:compile": "vite build",
+    "build:svelte:prelint": "npm run ln src/**/*.svelte",
+    "lint": "npm run build",
+    "lint:built": "run-s lint:built:*",
+    "lint:built:configs": "npm run ln {*,.github/workflows/*}.{json,jsonc,js,ts,yml}",
+    "lint:built:source": "npm run ln src/**/*.{js,ts,html}",
+    "ln": "eslint --cache --fix",
+    "pretest": "npm run build",
+    "test": "",
+    "start": "vite preview || node .",
+    "prestart": "npm test",
+    "prepublishOnly": "npm test",
+    "predeploy": "npm test",
+    "deploy": ""
+  }
+}
