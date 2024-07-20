@@ -3,10 +3,12 @@ import options from "./options.js";
 import type { Scopes } from "./scopes.js";
 import type Plugins from "./plugins.js";
 import type Parsers from "./parsers.js";
-import type Ruleset from "./rulesets/ruleset/Ruleset.js";
+import type Ruleset from "./ruleset/Ruleset.js";
 
-export { default as Ruleset } from "./rulesets/ruleset/Ruleset.js";
-export { Rule } from "./rulesets/ruleset/Ruleset.js";
+export { default as Ruleset } from "./ruleset/Ruleset.js";
+export { Rule } from "./ruleset/Ruleset.js";
+export { default as scopes } from "./scopes.js";
+export type { Scopes } from "./scopes.js";
 export default function (
   plugins: Plugins,
   parsers: Parsers,
