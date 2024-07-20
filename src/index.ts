@@ -1,13 +1,15 @@
 import scopes from "./scopes.js";
 import options from "./options.js";
+import type IConfig from "./interface/IConfig.js";
 import type { Scopes } from "./scopes.js";
 import type Plugins from "./plugins.js";
 import type Parsers from "./parsers.js";
 import type Ruleset from "./ruleset/Ruleset.js";
 
-export type { Scopes } from "./scopes.js";
 export { default as Ruleset } from "./ruleset/Ruleset.js";
 export { Rule } from "./ruleset/Ruleset.js";
+export type { Scopes } from "./scopes.js";
+export type { default as IConfig } from "./interface/IConfig.js";
 export default function (
   plugins: Plugins,
   parsers: Parsers,
@@ -22,72 +24,51 @@ export default function (
     } = {
       js: new options
         .js(
-          plugins
-            .js,
-          ...files
-            .js,
+          plugins.js,
+          ...files.js,
         )
         .body,
       ts: new options
         .ts(
-          plugins
-            .ts,
-          parsers
-            .ts,
-          ...files
-            .ts,
+          plugins.ts,
+          parsers.ts,
+          ...files.ts,
         )
         .body,
       svelte: new options
         .svelte(
-          plugins
-            .svelte,
-          parsers
-            .svelte,
-          parsers
-            .ts,
-          ...files
-            .svelte,
+          plugins.svelte,
+          parsers.svelte,
+          parsers.ts,
+          ...files.svelte,
         )
         .body,
       html: new options
         .html(
-          plugins
-            .html,
-          parsers
-            .html,
-          ...files
-            .html,
+          plugins.html,
+          parsers.html,
+          ...files.html,
         )
         .body,
       json: new options
         .json(
-          plugins
-            .json,
-          parsers
-            .json,
-          ...files
-            .json,
+          plugins.json,
+          parsers.json,
+          ...files.json,
         )
         .body,
       jsonc: new options
         .jsonc(
-          plugins
-            .jsonc,
-          parsers
-            .jsonc,
-          ...files
-            .jsonc,
+          plugins.jsonc,
+          parsers.jsonc,
+          ...files.jsonc,
         )
         .body,
       yml: new options
         .yml(
-          plugins
-            .yml,
-          parsers
-            .yml,
-          ...files
-            .yml,
+          plugins.yml,
+          parsers.yml,
+          ...files.yml,
         )
         .body,
     };
@@ -96,14 +77,16 @@ export default function (
       .map(
         scope =>
           instantiatedOptions[scope].files.length > 0
-            ? rulesets[scope].flat.map(
-              rules => {
-                return {
-                  rules,
-                  ...instantiatedOptions[scope],
-                };
-              },
-            )
+            ? rulesets[scope]
+              .flat
+              .map(
+                rules => {
+                  return {
+                    rules,
+                    ...instantiatedOptions[scope],
+                  };
+                },
+              )
             : [],
       )
       .flat();

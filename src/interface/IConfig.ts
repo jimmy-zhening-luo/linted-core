@@ -1,4 +1,4 @@
-declare interface IConfig {
+export default interface IConfig {
   rules: IRule;
   files: string[];
   name: `linted/scope:${string}`;

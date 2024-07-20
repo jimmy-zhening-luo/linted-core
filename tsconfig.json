@@ -5,7 +5,6 @@
   "include": [
     "*.config.ts",
     "src/**/*.ts",
-    "interface/**/*.d.ts",
     "types/**/*.d.ts",
   ],
   "compilerOptions": {
