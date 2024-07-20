@@ -17,7 +17,7 @@ export default function (
     | "defaults"
     | "includes"
     ,
-    Record<Scopes, string[]>,
+    Record<Scopes, string[]>
   >,
   rulesets: { [S in Scopes]: Ruleset<S> },
 ): IConfig[] {
