@@ -2,6 +2,8 @@ import scopes from "./scopes.js";
 import options from "./options.js";
 import type Ruleset from "./rulesets/ruleset/Ruleset.js";
 
+export { default as Ruleset } from "./rulesets/ruleset/Ruleset.js";
+export { Rule } from "./rulesets/ruleset/Ruleset.js";
 export default function (
   plugins: Plugins,
   parsers: Record<Scope, unknown>,
