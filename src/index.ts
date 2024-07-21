@@ -14,10 +14,14 @@ export default function (
   plugins: Plugins,
   parsers: Parsers,
   defaults: Record<Scopes, string[]>,
-  includes: Partial<Record<Scopes, string[]>>,
+  includes: Particord<Scopes, string[]>,
   rulesets: { [S in Scopes]: Ruleset<S> },
+  overrides: Particord<Scopes, IRule>,
 ): IConfig[] {
   try {
+    for (const scope of scopes)
+      rulesets[scope].override(overrides[scope]);
+
     const instantiatedOptions: {
       [S in Scopes]: InstanceType<
         typeof options[S]
