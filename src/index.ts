@@ -3,7 +3,7 @@ import options from "./options.js";
 import type IConfig from "./interface/IConfig.js";
 import type { Scope } from "./scopes.js";
 import type Plugins from "./plugins.js";
-import type Parsers from "./parsers.js";
+import type { Parsers } from "./parsers.js";
 import type Ruleset from "./ruleset/Ruleset.js";
 
 export { default as Ruleset } from "./ruleset/Ruleset.js";

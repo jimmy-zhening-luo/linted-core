@@ -1,26 +1,23 @@
 import type { Scope } from "./scopes.js";
 
-type PluginPackage = { configs: unknown };
+type PluginImport = { configs: unknown };
 
 export default interface Plugins extends Record<
   Scope,
-  Record<
-    string,
-    { configs: unknown }
-  >
+  Record<string, { configs: unknown }>
 > {
-  js: { "@stylistic": PluginPackage };
+  js: { "@stylistic": PluginImport };
   ts: {
-    "@stylistic": PluginPackage;
-    "@typescript-eslint": PluginPackage;
+    "@stylistic": PluginImport;
+    "@typescript-eslint": PluginImport;
   };
   svelte: {
-    "@stylistic": PluginPackage;
-    "@typescript-eslint": PluginPackage;
-    svelte: PluginPackage;
+    "@stylistic": PluginImport;
+    "@typescript-eslint": PluginImport;
+    svelte: PluginImport;
   };
-  html: { "@html-eslint": PluginPackage };
-  json: { jsonc: PluginPackage };
-  jsonc: { jsonc: PluginPackage };
-  yml: { yml: PluginPackage };
+  html: { "@html-eslint": PluginImport };
+  json: { jsonc: PluginImport };
+  jsonc: { jsonc: PluginImport };
+  yml: { yml: PluginImport };
 }
