@@ -1,6 +1,5 @@
 import Rule from "./rule/Rule.js";
 
-export { default as Rule } from "./rule/Rule.js";
 export default class Ruleset<Language extends string> {
   public readonly ruleset: readonly Rule[];
   public readonly overrides: Rule[] = [];

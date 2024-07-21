@@ -1,29 +1,29 @@
 import scopes from "./scopes.js";
 import options from "./options.js";
 import type IConfig from "./interface/IConfig.js";
-import type { Scopes } from "./scopes.js";
+import type { Scope } from "./scopes.js";
 import type Plugins from "./plugins.js";
 import type Parsers from "./parsers.js";
 import type Ruleset from "./ruleset/Ruleset.js";
 
 export { default as Ruleset } from "./ruleset/Ruleset.js";
-export { Rule } from "./ruleset/Ruleset.js";
-export type { Scopes } from "./scopes.js";
+export { default as Rule } from "./ruleset/rule/Rule.js";
+export type { Scope } from "./scopes.js";
 export type { default as IConfig } from "./interface/IConfig.js";
 export default function (
   plugins: Plugins,
   parsers: Parsers,
-  defaults: Record<Scopes, string[]>,
-  includes: Particord<Scopes, string[]>,
-  rulesets: { [S in Scopes]: Ruleset<S> },
-  overrides: Particord<Scopes, IRule>,
+  defaults: Record<Scope, string[]>,
+  includes: Particord<Scope, string[]>,
+  rulesets: { [S in Scope]: Ruleset<S> },
+  overrides: Particord<Scope, IRule>,
 ): IConfig[] {
   try {
     for (const scope of scopes)
       rulesets[scope].override(overrides[scope]);
 
     const instantiatedOptions: {
-      [S in Scopes]: InstanceType<
+      [S in Scope]: InstanceType<
         typeof options[S]
       >["body"]
     } = {

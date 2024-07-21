@@ -1,6 +1,6 @@
-import type { Scopes } from "./scopes.js";
+import type { Scope } from "./scopes.js";
 
-export default interface Parsers extends Particord<Scopes, unknown> {
+export default interface Parsers extends Particord<Scope, unknown> {
   ts: unknown;
   svelte: unknown;
   html: unknown;

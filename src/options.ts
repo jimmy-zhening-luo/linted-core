@@ -1,4 +1,4 @@
-import type { Scopes } from "./scopes.js";
+import type { Scope } from "./scopes.js";
 import JsOption from "./options/JsOption.js";
 import TsOption from "./options/TsOption.js";
 import SvelteOption from "./options/SvelteOption.js";
@@ -15,4 +15,4 @@ export default {
   json: JsonOption,
   jsonc: JsoncOption,
   yml: YmlOption,
-} satisfies Record<Scopes, unknown>;
+} satisfies Record<Scope, unknown>;
