@@ -6,10 +6,10 @@ import type Plugins from "./plugins.js";
 import type { Parsers } from "./parsers.js";
 import type Ruleset from "./ruleset/Ruleset.js";
 
-export { default as Ruleset } from "./ruleset/Ruleset.js";
-export { default as Rule } from "./ruleset/rule/Rule.js";
-export type { Scope } from "./scopes.js";
-export type { default as IConfig } from "./interface/IConfig.js";
+export * from "./scopes.js";
+export * from "./ruleset/Ruleset.js";
+export * from "./ruleset/rule/Rule.js";
+export type * from "./interface/IConfig.js";
 export default function (
   plugins: Plugins,
   parsers: Parsers,
@@ -87,19 +87,18 @@ export default function (
 
     return scopes
       .map(
-        scope =>
-          instantiatedOptions[scope].files.length > 0
-            ? rulesets[scope]
-              .flat
-              .map(
-                rules => {
-                  return {
-                    rules,
-                    ...instantiatedOptions[scope],
-                  };
-                },
-              )
-            : [],
+        scope => instantiatedOptions[scope].files.length > 0
+          ? rulesets[scope]
+            .flat
+            .map(
+              rules => {
+                return {
+                  rules,
+                  ...instantiatedOptions[scope],
+                };
+              },
+            )
+          : [],
       )
       .flat();
   }

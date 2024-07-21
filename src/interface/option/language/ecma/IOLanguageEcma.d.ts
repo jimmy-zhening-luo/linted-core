@@ -2,7 +2,6 @@ declare type IOLanguageEcma<Ecma extends number | IOLanguageEcma.Ecma> = [Ecma] 
   ? Numbered<Ecma> extends never
     ? object
     : { ecmaVersion: Numbered<Ecma> }
-
   : [Ecma] extends [string]
       ? literalful<Ecma> extends never
         ? object

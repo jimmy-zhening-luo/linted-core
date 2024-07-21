@@ -17,30 +17,20 @@ export default class Ruleset<Language extends string> {
 
   public get flat() {
     return [
-      ...this.ruleset.map(
-        rules =>
-          rules.rules,
-      ),
-      ...this.overrides.map(
-        rules =>
-          rules.rules,
-      ),
+      ...this.ruleset.map(rules => rules.rules),
+      ...this.overrides.map(rules => rules.rules),
     ];
   }
 
   public override(...overrides: (undefined | IRule)[]) {
     this.overrides.push(
       ...overrides
-        .filter(
-          override =>
-            typeof override !== "undefined",
-        )
+        .filter(override => typeof override !== "undefined")
         .map(
-          override =>
-            new Rule(
-              "override",
-              override,
-            ),
+          override => new Rule(
+            "override",
+            override,
+          ),
         ),
     );
 
