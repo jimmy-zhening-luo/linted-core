@@ -1,19 +1,19 @@
-import scopes from "./module/index.js";
-import {
-  options,
-  Files,
-  Ruleset,
-  Rule,
-} from "./factory/index.js";
+import scopes from "./boundary/boundary.js";
 import type {
   Scope,
   Plugins,
   Parsers,
-} from "./module/index.js";
-import type Config from "./config/index.js";
+  Config,
+} from "./boundary/boundary.js";
+import {
+  Options,
+  Files,
+  Ruleset,
+  Rule,
+} from "./factory/Factory.js";
 
-export { Ruleset, Rule };
 export type { Scope };
+export { Ruleset, Rule };
 export default function (
   plugins: Plugins,
   parsers: Parsers,
@@ -23,97 +23,80 @@ export default function (
   overrides: Particord<Scope, IRule>,
 ): Config[] {
   try {
+    const files = new Files(
+      base,
+      includes,
+    );
+
     for (const scope of scopes)
       rulesets[scope].override(overrides[scope]);
 
-    const instantiatedOptions: {
+    const options: {
       [S in Scope]: InstanceType<
-        typeof options[S]
+        typeof Options[S]
       >["body"]
     } = {
-      js: new options
+      js: new Options
         .js(
           plugins.js,
-          new Files(
-            "js",
-            { base, includes },
-          ).files,
-
+          files.files("js"),
         )
         .body,
-      ts: new options
+      ts: new Options
         .ts(
           plugins.ts,
           parsers.ts,
-          new Files(
-            "ts",
-            { base, includes },
-          ).files,
+          files.files("ts"),
         )
         .body,
-      svelte: new options
+      svelte: new Options
         .svelte(
           plugins.svelte,
           parsers.svelte,
           parsers.ts,
-          new Files(
-            "svelte",
-            { base, includes },
-          ).files,
+          files.files("svelte"),
         )
         .body,
-      html: new options
+      html: new Options
         .html(
           plugins.html,
           parsers.html,
-          new Files(
-            "html",
-            { base, includes },
-          ).files,
+          files.files("html"),
         )
         .body,
-      json: new options
+      json: new Options
         .json(
           plugins.json,
           parsers.json,
-          new Files(
-            "json",
-            { base, includes },
-          ).files,
+          files.files("json"),
         )
         .body,
-      jsonc: new options
+      jsonc: new Options
         .jsonc(
           plugins.jsonc,
           parsers.jsonc,
-          new Files(
-            "jsonc",
-            { base, includes },
-          ).files,
+          files.files("jsonc"),
         )
         .body,
-      yml: new options
+      yml: new Options
         .yml(
           plugins.yml,
           parsers.yml,
-          new Files(
-            "yml",
-            { base, includes },
-          ).files,
+          files.files("yml"),
         )
         .body,
     };
 
     return scopes
       .map(
-        scope => instantiatedOptions[scope].files.length > 0
+        scope => options[scope].files.length > 0
           ? rulesets[scope]
             .flat
             .map(
               rules => {
                 return {
                   rules,
-                  ...instantiatedOptions[scope],
+                  ...options[scope],
                 };
               },
             )

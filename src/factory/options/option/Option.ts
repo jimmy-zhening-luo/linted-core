@@ -1,4 +1,4 @@
-import type { Scope } from "../index.js";
+import type { Scope } from "../Options.js";
 
 export default class Option<
   S extends Scope,

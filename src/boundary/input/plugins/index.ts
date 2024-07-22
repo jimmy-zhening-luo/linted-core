@@ -1,4 +1,4 @@
-import type { Scope } from "../index.js";
+import type { Scope } from "../input.js";
 
 type PluginImport = { configs: unknown };
 

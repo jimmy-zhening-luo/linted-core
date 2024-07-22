@@ -1,4 +1,4 @@
-import Option from "../index.js";
+import Option from "../Option.js";
 
 export default class JsOption extends Option<"js", "@stylistic"> {
   constructor(

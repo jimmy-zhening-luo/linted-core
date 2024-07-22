@@ -1,4 +1,4 @@
-import Option from "../index.js";
+import Option from "../Option.js";
 import type TsOption from "../ts/index.js";
 
 export default class SvelteOption extends Option<
