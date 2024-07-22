@@ -1,15 +1,18 @@
-import scopes from "./scopes.js";
-import options from "./options.js";
-import type IConfig from "./interface/IConfig.js";
-import type { Scope } from "./scopes.js";
-import type Plugins from "./plugins.js";
-import type { Parsers } from "./parsers.js";
-import type Ruleset from "./ruleset/Ruleset.js";
+import scopes from "./module";
+import {
+  options,
+  Ruleset,
+  Rule,
+} from "./factory";
+import type {
+  Scope,
+  Plugins,
+  Parsers,
+} from "./module";
+import type Config from "./config";
 
-export type { default as IConfig } from "./interface/IConfig.js";
-export type { Scope } from "./scopes.js";
-export { default as Ruleset } from "./ruleset/Ruleset.js";
-export { default as Rule } from "./ruleset/rule/Rule.js";
+export { Ruleset, Rule };
+export type { Scope, Config };
 export default function (
   plugins: Plugins,
   parsers: Parsers,
@@ -17,7 +20,7 @@ export default function (
   includes: Particord<Scope, string[]>,
   rulesets: { [S in Scope]: Ruleset<S> },
   overrides: Particord<Scope, IRule>,
-): IConfig[] {
+): Config[] {
   try {
     for (const scope of scopes)
       rulesets[scope].override(overrides[scope]);

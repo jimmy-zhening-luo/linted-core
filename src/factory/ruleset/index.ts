@@ -1,5 +1,6 @@
-import Rule from "./rule/Rule.js";
+import Rule from "./rule";
 
+export { Rule };
 export default class Ruleset<Language extends string> {
   public readonly ruleset: readonly Rule[];
   public readonly overrides: Rule[] = [];

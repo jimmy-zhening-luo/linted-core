@@ -1,11 +1,8 @@
-import type { Scope } from "./scopes.js";
+import type { Scope } from "..";
 
 type PluginImport = { configs: unknown };
 
-export default interface Plugins extends Record<
-  Scope,
-  Record<string, { configs: unknown }>
-> {
+export default interface Plugins extends Record<Scope, Record<string, PluginImport>> {
   js: { "@stylistic": PluginImport };
   ts: {
     "@stylistic": PluginImport;

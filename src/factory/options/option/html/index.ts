@@ -1,8 +1,8 @@
-import Option from "./option/Option.js";
+import Option from "..";
 
-export default class YmlOption extends Option<
-  "yml",
-  "yml",
+export default class HtmlOption extends Option<
+  "html",
+  "@html-eslint",
   true,
   never,
   never,
@@ -11,13 +11,13 @@ export default class YmlOption extends Option<
   never
 > {
   constructor(
-    plugins: YmlOption["body"]["plugins"],
-    parser: YmlOption["body"]["languageOptions"]["parser"],
+    plugins: HtmlOption["body"]["plugins"],
+    parser: HtmlOption["body"]["languageOptions"]["parser"],
     ...files: string[]
   ) {
     super(
       {
-        name: "linted/scope:yml",
+        name: "linted/scope:html",
         files,
         plugins,
         linterOptions: {

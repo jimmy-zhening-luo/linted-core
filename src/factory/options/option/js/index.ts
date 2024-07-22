@@ -1,4 +1,4 @@
-import Option from "./option/Option.js";
+import Option from "..";
 
 export default class JsOption extends Option<
   "js",

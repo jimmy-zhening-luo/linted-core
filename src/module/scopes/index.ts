@@ -1,5 +1,3 @@
-export type Scope = typeof scopes[number];
-
 const scopes = [
   "js",
   "ts",
@@ -11,3 +9,4 @@ const scopes = [
 ] as const;
 
 export default scopes;
+export type Scope = typeof scopes[number];

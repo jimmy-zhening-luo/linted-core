@@ -1,8 +1,8 @@
-import Option from "./option/Option.js";
+import Option from "..";
 
-export default class HtmlOption extends Option<
-  "html",
-  "@html-eslint",
+export default class MdOption extends Option<
+  "md",
+  "yml",
   true,
   never,
   never,
@@ -11,13 +11,13 @@ export default class HtmlOption extends Option<
   never
 > {
   constructor(
-    plugins: HtmlOption["body"]["plugins"],
-    parser: HtmlOption["body"]["languageOptions"]["parser"],
+    plugins: MdOption["body"]["plugins"],
+    parser: MdOption["body"]["languageOptions"]["parser"],
     ...files: string[]
   ) {
     super(
       {
-        name: "linted/scope:html",
+        name: "linted/scope:md",
         files,
         plugins,
         linterOptions: {

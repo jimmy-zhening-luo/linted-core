@@ -1,7 +1,7 @@
-import Option from "./option/Option.js";
+import Option from "..";
 
-export default class JsoncOption extends Option<
-  "jsonc",
+export default class JsonOption extends Option<
+  "json",
   "jsonc",
   true,
   never,
@@ -11,13 +11,13 @@ export default class JsoncOption extends Option<
   never
 > {
   constructor(
-    plugins: JsoncOption["body"]["plugins"],
-    parser: JsoncOption["body"]["languageOptions"]["parser"],
+    plugins: JsonOption["body"]["plugins"],
+    parser: JsonOption["body"]["languageOptions"]["parser"],
     ...files: string[]
   ) {
     super(
       {
-        name: "linted/scope:jsonc",
+        name: "linted/scope:json",
         files,
         plugins,
         linterOptions: {

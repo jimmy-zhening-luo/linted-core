@@ -1,7 +1,7 @@
-import Option from "./option/Option.js";
+import Option from "..";
 
-export default class MdOption extends Option<
-  "md",
+export default class YmlOption extends Option<
+  "yml",
   "yml",
   true,
   never,
@@ -11,13 +11,13 @@ export default class MdOption extends Option<
   never
 > {
   constructor(
-    plugins: MdOption["body"]["plugins"],
-    parser: MdOption["body"]["languageOptions"]["parser"],
+    plugins: YmlOption["body"]["plugins"],
+    parser: YmlOption["body"]["languageOptions"]["parser"],
     ...files: string[]
   ) {
     super(
       {
-        name: "linted/scope:md",
+        name: "linted/scope:yml",
         files,
         plugins,
         linterOptions: {
