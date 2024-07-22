@@ -1,6 +1,7 @@
 import scopes from "./module/index.js";
 import {
   options,
+  Files,
   Ruleset,
   Rule,
 } from "./factory/index.js";
@@ -16,7 +17,7 @@ export type { Scope };
 export default function (
   plugins: Plugins,
   parsers: Parsers,
-  defaults: Record<Scope, string[]>,
+  base: Record<Scope, string[]>,
   includes: Particord<Scope, string[]>,
   rulesets: { [S in Scope]: Ruleset<S> },
   overrides: Particord<Scope, IRule>,
@@ -33,16 +34,21 @@ export default function (
       js: new options
         .js(
           plugins.js,
-          ...defaults.js,
-          ...includes.js ?? [],
+          new Files(
+            "js",
+            { base, includes },
+          ).files,
+
         )
         .body,
       ts: new options
         .ts(
           plugins.ts,
           parsers.ts,
-          ...defaults.ts,
-          ...includes.ts ?? [],
+          new Files(
+            "ts",
+            { base, includes },
+          ).files,
         )
         .body,
       svelte: new options
@@ -50,40 +56,50 @@ export default function (
           plugins.svelte,
           parsers.svelte,
           parsers.ts,
-          ...defaults.svelte,
-          ...includes.svelte ?? [],
+          new Files(
+            "svelte",
+            { base, includes },
+          ).files,
         )
         .body,
       html: new options
         .html(
           plugins.html,
           parsers.html,
-          ...defaults.html,
-          ...includes.html ?? [],
+          new Files(
+            "html",
+            { base, includes },
+          ).files,
         )
         .body,
       json: new options
         .json(
           plugins.json,
           parsers.json,
-          ...defaults.json,
-          ...includes.json ?? [],
+          new Files(
+            "json",
+            { base, includes },
+          ).files,
         )
         .body,
       jsonc: new options
         .jsonc(
           plugins.jsonc,
           parsers.jsonc,
-          ...defaults.jsonc,
-          ...includes.jsonc ?? [],
+          new Files(
+            "jsonc",
+            { base, includes },
+          ).files,
         )
         .body,
       yml: new options
         .yml(
           plugins.yml,
           parsers.yml,
-          ...defaults.yml,
-          ...includes.yml ?? [],
+          new Files(
+            "yml",
+            { base, includes },
+          ).files,
         )
         .body,
     };

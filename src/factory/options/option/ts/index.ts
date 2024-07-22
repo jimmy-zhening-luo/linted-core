@@ -11,7 +11,7 @@ export default class TsOption extends Option<
   constructor(
     plugins: TsOption["body"]["plugins"],
     parser: unknown,
-    ...files: string[]
+    files: readonly string[],
   ) {
     super(
       {

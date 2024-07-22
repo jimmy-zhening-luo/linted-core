@@ -1,13 +1,20 @@
-export default class {
+import type { Scope } from "../index.js";
+
+export default class Files<S extends Scope> {
   public readonly files: readonly string[];
 
   constructor(
-    base: string[],
-    includes: string[] = [],
+    scope: S,
+    filescopes: {
+      base: Record<Scope, string[]>;
+      includes: Particord<Scope, string[]>;
+    },
   ) {
+    const { base, includes } = filescopes;
+
     this.files = [
-      ...base,
-      ...includes,
+      ...base[scope],
+      ...includes[scope] ?? [],
     ];
   }
 }

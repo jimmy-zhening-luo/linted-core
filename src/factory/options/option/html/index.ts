@@ -13,7 +13,7 @@ export default class HtmlOption extends Option<
   constructor(
     plugins: HtmlOption["body"]["plugins"],
     parser: HtmlOption["body"]["languageOptions"]["parser"],
-    ...files: string[]
+    files: readonly string[],
   ) {
     super(
       {

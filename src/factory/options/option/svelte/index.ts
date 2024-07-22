@@ -15,7 +15,7 @@ export default class SvelteOption extends Option<
     plugins: SvelteOption["body"]["plugins"],
     svelteParser: SvelteOption["body"]["languageOptions"]["parser"],
     tsParser: SvelteOption["body"]["languageOptions"]["parserOptions"]["parser"],
-    ...files: string[]
+    files: readonly string[],
   ) {
     super(
       {

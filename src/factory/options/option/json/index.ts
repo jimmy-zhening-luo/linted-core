@@ -13,7 +13,7 @@ export default class JsonOption extends Option<
   constructor(
     plugins: JsonOption["body"]["plugins"],
     parser: JsonOption["body"]["languageOptions"]["parser"],
-    ...files: string[]
+    files: readonly string[],
   ) {
     super(
       {

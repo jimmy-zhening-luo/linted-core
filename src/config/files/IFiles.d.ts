@@ -1,1 +1,1 @@
-declare interface IFiles { files: string[] }
+declare interface IFiles { files: readonly string[] }

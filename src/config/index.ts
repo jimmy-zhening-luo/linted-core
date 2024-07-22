@@ -1,6 +1,6 @@
 export default interface Config {
   rules: IRule;
-  files: string[];
+  files: readonly string[];
   name: `linted/scope:${string}`;
   linterOptions: {
     noInlineConfig: true;

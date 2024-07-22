@@ -13,7 +13,7 @@ export default class YmlOption extends Option<
   constructor(
     plugins: YmlOption["body"]["plugins"],
     parser: YmlOption["body"]["languageOptions"]["parser"],
-    ...files: string[]
+    files: readonly string[],
   ) {
     super(
       {
