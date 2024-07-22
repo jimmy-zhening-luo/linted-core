@@ -3,7 +3,7 @@ export default class {
 
   constructor(
     base: string[],
-    includes: string[],
+    includes: string[] = [],
   ) {
     this.files = [
       ...base,
