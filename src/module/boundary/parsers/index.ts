@@ -1,4 +1,4 @@
-import type { Scope } from "..";
+import type { Scope } from "../index.js";
 
 type ParsedScopes = Scope & (
   | "ts"

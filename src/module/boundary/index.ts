@@ -1,3 +1,3 @@
-export type { default as Plugins } from "./plugins";
-export type { Parsers } from "./parsers";
-export type { Scope } from "..";
+export type { default as Plugins } from "./plugins/index.js";
+export type { Parsers } from "./parsers/index.js";
+export type { Scope } from "../index.js";

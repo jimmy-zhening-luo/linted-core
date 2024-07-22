@@ -1,11 +1,9 @@
-import Option from "..";
-import type JsOption from "../js";
+import Option from "../index.js";
+import type JsOption from "../js/index.js";
 
 export default class TsOption extends Option<
   "ts",
-  | "@typescript-eslint"
-  | keyof JsOption["body"]["plugins"]
-  ,
+  "@typescript-eslint" | keyof JsOption["body"]["plugins"],
   true,
   & JsOption["body"]["languageOptions"]
   & { project: "tsconfig.json" }

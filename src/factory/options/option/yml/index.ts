@@ -1,4 +1,4 @@
-import Option from "..";
+import Option from "../index.js";
 
 export default class YmlOption extends Option<
   "yml",

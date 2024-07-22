@@ -1,11 +1,13 @@
-import type { Scope } from "../../module";
-import JsOption from "./option/js";
-import TsOption from "./option/ts";
-import SvelteOption from "./option/svelte";
-import HtmlOption from "./option/html";
-import JsonOption from "./option/json";
-import JsoncOption from "./option/jsonc";
-import YmlOption from "./option/yml";
+import type { Scope } from "../../index.js";
+import {
+  JsOption,
+  TsOption,
+  SvelteOption,
+  HtmlOption,
+  JsonOption,
+  JsoncOption,
+  YmlOption,
+} from "./option/index.js";
 
 export default {
   js: JsOption,

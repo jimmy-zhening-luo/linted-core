@@ -1,15 +1,15 @@
-import scopes from "./module";
+import scopes from "./module/index.js";
 import {
   options,
   Ruleset,
   Rule,
-} from "./factory";
+} from "./factory/index.js";
 import type {
   Scope,
   Plugins,
   Parsers,
-} from "./module";
-import type Config from "./config";
+} from "./module/index.js";
+import type Config from "./config/index.js";
 
 export { Ruleset, Rule };
 export type { Scope };

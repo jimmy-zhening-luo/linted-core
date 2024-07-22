@@ -1,4 +1,4 @@
-import Rule from "./rule";
+import Rule from "./rule/index.js";
 
 export { Rule };
 export default class Ruleset<Language extends string> {

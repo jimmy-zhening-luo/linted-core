@@ -1,4 +1,4 @@
-import Option from "..";
+import Option from "../index.js";
 
 export default class HtmlOption extends Option<
   "html",
