@@ -12,7 +12,7 @@ import type {
 import type Config from "./config";
 
 export { Ruleset, Rule };
-export type { Scope, Config };
+export type { Scope };
 export default function (
   plugins: Plugins,
   parsers: Parsers,
