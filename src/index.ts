@@ -1,5 +1,6 @@
 import scopes, { type Scope } from "./scopes/scopes.js";
-import type Boundary from "./boundary/boundary.js";
+import type Output from "./boundary/output.js";
+import type Input from "./boundary/input.js";
 import {
   Options,
   Files,
@@ -7,16 +8,16 @@ import {
   Rule,
 } from "./factory/factory.js";
 
-export type { Scope, Boundary };
+export type { Scope, Output };
 export { Ruleset, Rule };
 export default function (
-  plugins: Boundary.Input.Plugins,
-  parsers: Boundary.Input.Parsers,
+  plugins: Input.Plugins,
+  parsers: Input.Parsers,
   base: Record<Scope, string[]>,
   includes: Particord<Scope, string[]>,
   rulesets: { [S in Scope]: Ruleset<S> },
   overrides: Particord<Scope, IRule>,
-): Boundary.Output[] {
+): Output[] {
   try {
     const files = new Files(
       base,
@@ -102,7 +103,7 @@ export default function (
   }
   catch (e) {
     throw new Error(
-      `linted(): Caught exception.`,
+      `linted.main`,
       { cause: e },
     );
   }

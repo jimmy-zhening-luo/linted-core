@@ -1,5 +1,5 @@
-import type plugins from "./plugins/plugins.js";
-import type parsers from "./parsers/parsers.js";
+import type plugins from "./input/plugins.js";
+import type parsers from "./input/parsers.js";
 
 namespace Input {
   export type Plugins = plugins;

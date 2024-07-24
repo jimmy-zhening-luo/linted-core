@@ -16,19 +16,27 @@ export default class SvelteOption extends Option<
   public readonly processor = { processor: "svelte/svelte" } as const;
 
   public get languageOptions() {
-    const [parser, tsParser] = this.parser;
+    try {
+      const [parser, tsParser] = this.parser;
 
-    return {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      parser,
-      parserOptions: {
+      return {
         ecmaVersion: "latest",
         sourceType: "module",
-        project: "tsconfig.json",
-        extraFileExtensions: [".svelte"] as const,
-        parser: tsParser,
-      },
-    } as const;
+        parser,
+        parserOptions: {
+          ecmaVersion: "latest",
+          sourceType: "module",
+          project: "tsconfig.json",
+          extraFileExtensions: [".svelte"] as const,
+          parser: tsParser,
+        },
+      } as const;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.options.svelte: languageOptions`,
+        { cause: e },
+      );
+    }
   }
 }

@@ -13,17 +13,25 @@ export default class TsOption extends Option<
   public readonly processor = {} as const;
 
   public get languageOptions() {
-    const [parser] = this.parser;
+    try {
+      const [parser] = this.parser;
 
-    return {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      parser,
-      parserOptions: {
+      return {
         ecmaVersion: "latest",
         sourceType: "module",
-        project: "tsconfig.json",
-      },
-    } as const;
+        parser,
+        parserOptions: {
+          ecmaVersion: "latest",
+          sourceType: "module",
+          project: "tsconfig.json",
+        },
+      } as const;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.options.ts: languageOptions`,
+        { cause: e },
+      );
+    }
   }
 }

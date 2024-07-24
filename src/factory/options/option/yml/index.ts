@@ -11,8 +11,16 @@ export default class YmlOption extends Option<
   public readonly processor = {} as const;
 
   public get languageOptions() {
-    const [parser] = this.parser;
+    try {
+      const [parser] = this.parser;
 
-    return { parser } as const;
+      return { parser } as const;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.options.yml: languageOptions`,
+        { cause: e },
+      );
+    }
   }
 }

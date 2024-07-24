@@ -5,9 +5,17 @@ export default class JsOption extends Option<"js", "@stylistic"> {
   public readonly processor = {};
 
   public get languageOptions() {
-    return {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    } as const;
+    try {
+      return {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      } as const;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.options.js: languageOptions`,
+        { cause: e },
+      );
+    }
   }
 }

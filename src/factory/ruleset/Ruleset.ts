@@ -10,31 +10,63 @@ export default class Ruleset<S extends Scope> {
     private readonly scope: literalful<S>,
     ...ruleset: readonly Rule[]
   ) {
-    this.ruleset = [...ruleset];
+    try {
+      this.ruleset = [...ruleset];
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.Ruleset`,
+        { cause: e },
+      );
+    }
   }
 
   public get id() {
-    const { scope } = this;
+    try {
+      const { scope } = this;
 
-    return scope;
+      return scope;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.Ruleset: id`,
+        { cause: e },
+      );
+    }
   }
 
   public get records() {
-    const { ruleset, overrides } = this;
+    try {
+      const { ruleset, overrides } = this;
 
-    return [
-      ...ruleset.map(rules => [rules.id, rules.rules] as const),
-      ...overrides === null ? [] : [[overrides.id, overrides.rules] as const] as const,
-    ];
+      return [
+        ...ruleset.map(rules => [rules.id, rules.rules] as const),
+        ...overrides === null ? [] : [[overrides.id, overrides.rules] as const] as const,
+      ];
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.Ruleset: records`,
+        { cause: e },
+      );
+    }
   }
 
   public override(overrides: undefined | IRule) {
-    if (typeof overrides !== "undefined")
-      this.overrides = new Rule(
-        "override",
-        overrides,
-      );
+    try {
+      if (typeof overrides !== "undefined")
+        this.overrides = new Rule(
+          "override",
+          overrides,
+        );
 
-    return this;
+      return this;
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.Ruleset: override`,
+        { cause: e },
+      );
+    }
   }
 }
