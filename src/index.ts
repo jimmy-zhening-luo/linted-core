@@ -3,7 +3,7 @@ import type {
   Scope,
   Plugins,
   Parsers,
-  Config,
+  IConfig,
 } from "./boundary/boundary.js";
 import {
   Options,
@@ -21,14 +21,14 @@ export default function (
   includes: Particord<Scope, string[]>,
   rulesets: { [S in Scope]: Ruleset<S> },
   overrides: Particord<Scope, IRule>,
-): Config[] {
+): IConfig[] {
   try {
     const files = new Files(
       base,
       includes,
     ),
     imports: {
-      [S in Scope]: OmitFirst<ConstructorParameters<typeof Options[S]>>;
+      [S in Scope]: OmitFilesRuleset<ConstructorParameters<typeof Options[S]>>;
     } = {
       js: [plugins.js, []] as const,
       ts: [plugins.ts, [parsers.ts]] as const,
@@ -48,67 +48,61 @@ export default function (
     const options: {
       [S in Scope]: InstanceType<
         typeof Options[S]
-      >["option"]
+      >["configs"]
     } = {
       js: new Options
         .js(
           files.files("js"),
+          rulesets.js,
           ...imports.js,
         )
-        .option,
+        .configs,
       ts: new Options
         .ts(
           files.files("ts"),
+          rulesets.ts,
           ...imports.ts,
         )
-        .option,
+        .configs,
       svelte: new Options
         .svelte(
           files.files("svelte"),
+          rulesets.svelte,
           ...imports.svelte,
         )
-        .option,
+        .configs,
       html: new Options
         .html(
           files.files("html"),
+          rulesets.html,
           ...imports.html,
         )
-        .option,
+        .configs,
       json: new Options
         .json(
           files.files("json"),
+          rulesets.json,
           ...imports.json,
         )
-        .option,
+        .configs,
       jsonc: new Options
         .jsonc(
           files.files("jsonc"),
+          rulesets.jsonc,
           ...imports.jsonc,
         )
-        .option,
+        .configs,
       yml: new Options
         .yml(
           files.files("yml"),
+          rulesets.yml,
           ...imports.yml,
         )
-        .option,
+        .configs,
     };
 
     return scopes
-      .map(
-        scope => options[scope].files.length > 0
-          ? rulesets[scope]
-            .flat
-            .map(
-              rules => {
-                return {
-                  rules,
-                  ...options[scope],
-                };
-              },
-            )
-          : [],
-      )
+      .map(scope => options[scope])
       .flat();
   }
   catch (e) {

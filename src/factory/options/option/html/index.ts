@@ -7,7 +7,7 @@ export default class HtmlOption extends Option<
   true,
   1
 > {
-  public readonly name = "scope:html";
+  public readonly scope = "html";
   public readonly processor = {} as const;
 
   public get languageOptions() {

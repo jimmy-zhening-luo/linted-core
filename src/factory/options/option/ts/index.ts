@@ -9,7 +9,7 @@ export default class TsOption extends Option<
   & { project: "tsconfig.json" },
   1
 > {
-  public readonly name = "scope:ts";
+  public readonly scope = "ts";
   public readonly processor = {} as const;
 
   public get languageOptions() {

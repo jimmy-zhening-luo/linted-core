@@ -1,39 +1,39 @@
 import Rule from "./rule/Rule.js";
+import type { Scope } from "../Factory.js";
 
 export { Rule };
-export default class Ruleset<Language extends string> {
+export default class Ruleset<S extends Scope> {
   public readonly ruleset: readonly Rule[];
-  public readonly overrides: Rule[] = [];
+  public overrides: Null<Rule> = null;
 
   constructor(
-    public readonly language: literalful<Language>,
+    private readonly scope: literalful<S>,
     ...ruleset: readonly Rule[]
   ) {
     this.ruleset = [...ruleset];
   }
 
   public get id() {
-    return `ruleset:${this.language}` as const;
+    const { scope } = this;
+
+    return scope;
   }
 
-  public get flat() {
+  public get records() {
+    const { ruleset, overrides } = this;
+
     return [
-      ...this.ruleset.map(rules => rules.rules),
-      ...this.overrides.map(rules => rules.rules),
+      ...ruleset.map(rules => [rules.id, rules.rules] as const),
+      ...overrides === null ? [] : [[overrides.id, overrides.rules] as const] as const,
     ];
   }
 
-  public override(...overrides: (undefined | IRule)[]) {
-    this.overrides.push(
-      ...overrides
-        .filter(override => typeof override !== "undefined")
-        .map(
-          override => new Rule(
-            "override",
-            override,
-          ),
-        ),
-    );
+  public override(overrides: undefined | IRule) {
+    if (typeof overrides !== "undefined")
+      this.overrides = new Rule(
+        "override",
+        overrides,
+      );
 
     return this;
   }

@@ -7,7 +7,7 @@ export default class JsonOption extends Option<
   true,
   1
 > {
-  public readonly name = "scope:json";
+  public readonly scope = "json";
   public readonly processor = {} as const;
 
   public get languageOptions() {

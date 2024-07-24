@@ -1,4 +1,6 @@
 import type { Scope } from "../Options.js";
+import type { Ruleset } from "../../Factory.js";
+import type { IConfig } from "../../../boundary/boundary.js";
 
 export default abstract class Option<
   S extends Scope,
@@ -14,19 +16,51 @@ export default abstract class Option<
     reportUnusedDisableDirectives: "error",
   } as const;
 
-  public abstract readonly name: literalful<`scope:${S}`>;
+  public abstract readonly scope: literalful<S>;
   public abstract readonly processor: (Interface<Processor> extends never ? object : Interface<Processor> extends { "interface": string } ? Interface<Processor> : object);
 
   constructor(
     public readonly files: readonly string[],
+    public readonly ruleset: Ruleset<S>,
     public readonly plugins: IOPlugins<PluginId>,
     public readonly parser: Tuple<unknown, ParserCount>,
   ) {}
 
+  public get configs(): IConfig[] {
+    const {
+      scope,
+      ruleset,
+      files,
+      option,
+    } = this;
+
+    if (ruleset.id !== scope)
+      throw new TypeError(
+        `Option and Ruleset scope mismatch`,
+        { cause: { option: scope, ruleset: ruleset.id } },
+      );
+    else if (files.length < 1)
+      return [];
+    else {
+      const baseName = `scope:${scope}/rule:${ruleset.id}` as const;
+
+      return ruleset.records.map(
+        ([ruleId, rules]) => {
+          const name = `${baseName}+${ruleId}` as const;
+
+          return {
+            name,
+            files,
+            rules,
+            ...option,
+          };
+        },
+      );
+    }
+  }
+
   public get option() {
     const {
-      name,
-      files,
       plugins,
       linterOptions,
       languageOptions,
@@ -34,14 +68,11 @@ export default abstract class Option<
     } = this;
 
     return {
-      name,
-      files,
       linterOptions,
       languageOptions,
       plugins,
       ...processor,
     } satisfies IOption<
-      `scope:${S}`,
       PluginId,
       IsEcma,
       ParserOptions,

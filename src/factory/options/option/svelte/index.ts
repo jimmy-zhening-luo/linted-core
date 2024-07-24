@@ -12,7 +12,7 @@ export default class SvelteOption extends Option<
   never,
   { processor: "svelte/svelte" }
 > {
-  public readonly name = "scope:svelte";
+  public readonly scope = "svelte";
   public readonly processor = { processor: "svelte/svelte" } as const;
 
   public get languageOptions() {

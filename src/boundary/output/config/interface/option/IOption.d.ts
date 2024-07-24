@@ -1,5 +1,4 @@
 declare type IOption<
-  Name extends string,
   PluginId extends string,
   IsEcma extends boolean,
   ParserOptions extends object | boolean,
@@ -7,8 +6,6 @@ declare type IOption<
   Processor extends object,
 > =
   {
-    name: IOName<Name>;
-    files: readonly string[];
     linterOptions: IOLinter;
     languageOptions: IOLanguage<
       IsEcma,

@@ -7,7 +7,7 @@ export default class JsoncOption extends Option<
   true,
   1
 > {
-  public readonly name = "scope:jsonc";
+  public readonly scope = "jsonc";
   public readonly processor = {} as const;
 
   public get languageOptions() {

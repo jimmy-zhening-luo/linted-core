@@ -1,7 +1,7 @@
 import Option from "../Option.js";
 
 export default class JsOption extends Option<"js", "@stylistic"> {
-  public readonly name = "scope:js";
+  public readonly scope = "js";
   public readonly processor = {};
 
   public get languageOptions() {

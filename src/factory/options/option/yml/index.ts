@@ -7,7 +7,7 @@ export default class YmlOption extends Option<
   true,
   1
 > {
-  public readonly name = "scope:yml";
+  public readonly scope = "yml";
   public readonly processor = {} as const;
 
   public get languageOptions() {

@@ -1,5 +1,5 @@
 export default interface IConfig {
-  name: `scope:${string}`;
+  name: `scope:${string}/rule:${string}+${string}`;
   rules: IRule;
   files: readonly string[];
   linterOptions: {
