@@ -26,7 +26,21 @@ export default function (
     const files = new Files(
       base,
       includes,
-    );
+    ),
+          imports: {
+            [S in Scope]: OmitFirst<ConstructorParameters<typeof Options[S]>>;
+          } = {
+            js: [plugins.js, []] as const,
+            ts: [plugins.ts, [parsers.ts]] as const,
+            svelte: [
+              plugins.svelte,
+              [parsers.svelte, parsers.ts],
+            ] as const,
+            html: [plugins.html, [parsers.html]] as const,
+            json: [plugins.json, [parsers.json]] as const,
+            jsonc: [plugins.jsonc, [parsers.jsonc]] as const,
+            yml: [plugins.yml, [parsers.yml]] as const,
+          } as const;
 
     for (const scope of scopes)
       rulesets[scope].override(overrides[scope]);
@@ -34,57 +48,50 @@ export default function (
     const options: {
       [S in Scope]: InstanceType<
         typeof Options[S]
-      >["body"]
+      >["option"]
     } = {
       js: new Options
         .js(
-          plugins.js,
           files.files("js"),
+          ...imports.js,
         )
-        .body,
+        .option,
       ts: new Options
         .ts(
-          plugins.ts,
-          parsers.ts,
           files.files("ts"),
+          ...imports.ts,
         )
-        .body,
+        .option,
       svelte: new Options
         .svelte(
-          plugins.svelte,
-          parsers.svelte,
-          parsers.ts,
           files.files("svelte"),
+          ...imports.svelte,
         )
-        .body,
+        .option,
       html: new Options
         .html(
-          plugins.html,
-          parsers.html,
           files.files("html"),
+          ...imports.html,
         )
-        .body,
+        .option,
       json: new Options
         .json(
-          plugins.json,
-          parsers.json,
           files.files("json"),
+          ...imports.json,
         )
-        .body,
+        .option,
       jsonc: new Options
         .jsonc(
-          plugins.jsonc,
-          parsers.jsonc,
           files.files("jsonc"),
+          ...imports.jsonc,
         )
-        .body,
+        .option,
       yml: new Options
         .yml(
-          plugins.yml,
-          parsers.yml,
           files.files("yml"),
+          ...imports.yml,
         )
-        .body,
+        .option,
     };
 
     return scopes

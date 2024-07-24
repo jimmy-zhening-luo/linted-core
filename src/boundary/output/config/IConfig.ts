@@ -1,7 +1,7 @@
-export default interface Config {
+export default interface IConfig {
+  name: `scope:${string}`;
   rules: IRule;
   files: readonly string[];
-  name: `linted/scope:${string}`;
   linterOptions: {
     noInlineConfig: true;
     reportUnusedDisableDirectives: "error";
@@ -9,8 +9,7 @@ export default interface Config {
   languageOptions: {
     sourceType?:
       | "module"
-      | "script"
-    ;
+      | "script";
     ecmaVersion?: "latest";
     globals?: Record<string, true>;
     parser?: unknown;

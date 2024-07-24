@@ -3,29 +3,16 @@ import Option from "../Option.js";
 export default class JsoncOption extends Option<
   "jsonc",
   "jsonc",
+  false,
   true,
-  never,
-  never,
-  never,
-  never,
-  never
+  1
 > {
-  constructor(
-    plugins: JsoncOption["body"]["plugins"],
-    parser: JsoncOption["body"]["languageOptions"]["parser"],
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:jsonc",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: { parser },
-      },
-    );
+  public readonly name = "scope:jsonc";
+  public readonly processor = {} as const;
+
+  public get languageOptions() {
+    const [parser] = this.parser;
+
+    return { parser } as const;
   }
 }

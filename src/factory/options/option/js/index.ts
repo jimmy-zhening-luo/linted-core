@@ -1,24 +1,13 @@
 import Option from "../Option.js";
 
 export default class JsOption extends Option<"js", "@stylistic"> {
-  constructor(
-    plugins: JsOption["body"]["plugins"],
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:js",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-        },
-      },
-    );
+  public readonly name = "scope:js";
+  public readonly processor = {};
+
+  public get languageOptions() {
+    return {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    } as const;
   }
 }

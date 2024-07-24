@@ -3,29 +3,16 @@ import Option from "../Option.js";
 export default class JsonOption extends Option<
   "json",
   "jsonc",
+  false,
   true,
-  never,
-  never,
-  never,
-  never,
-  never
+  1
 > {
-  constructor(
-    plugins: JsonOption["body"]["plugins"],
-    parser: JsonOption["body"]["languageOptions"]["parser"],
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:json",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: { parser },
-      },
-    );
+  public readonly name = "scope:json";
+  public readonly processor = {} as const;
+
+  public get languageOptions() {
+    const [parser] = this.parser;
+
+    return { parser } as const;
   }
 }

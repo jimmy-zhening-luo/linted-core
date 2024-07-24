@@ -3,29 +3,16 @@ import Option from "../Option.js";
 export default class HtmlOption extends Option<
   "html",
   "@html-eslint",
+  false,
   true,
-  never,
-  never,
-  never,
-  never,
-  never
+  1
 > {
-  constructor(
-    plugins: HtmlOption["body"]["plugins"],
-    parser: HtmlOption["body"]["languageOptions"]["parser"],
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:html",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: { parser },
-      },
-    );
+  public readonly name = "scope:html";
+  public readonly processor = {} as const;
+
+  public get languageOptions() {
+    const [parser] = this.parser;
+
+    return { parser } as const;
   }
 }

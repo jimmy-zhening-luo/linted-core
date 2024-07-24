@@ -3,36 +3,27 @@ import type JsOption from "../js/index.js";
 
 export default class TsOption extends Option<
   "ts",
-  "@typescript-eslint" | keyof JsOption["body"]["plugins"],
+  "@typescript-eslint" | keyof JsOption["option"]["plugins"],
   true,
-  & JsOption["body"]["languageOptions"]
-  & { project: "tsconfig.json" }
+  & JsOption["option"]["languageOptions"]
+  & { project: "tsconfig.json" },
+  1
 > {
-  constructor(
-    plugins: TsOption["body"]["plugins"],
-    parser: unknown,
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:ts",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-          parser,
-          parserOptions: {
-            ecmaVersion: "latest",
-            sourceType: "module",
-            project: "tsconfig.json",
-          },
-        },
+  public readonly name = "scope:ts";
+  public readonly processor = {} as const;
+
+  public get languageOptions() {
+    const [parser] = this.parser;
+
+    return {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        project: "tsconfig.json",
       },
-    );
+    } as const;
   }
 }

@@ -3,29 +3,16 @@ import Option from "../Option.js";
 export default class YmlOption extends Option<
   "yml",
   "yml",
+  false,
   true,
-  never,
-  never,
-  never,
-  never,
-  never
+  1
 > {
-  constructor(
-    plugins: YmlOption["body"]["plugins"],
-    parser: YmlOption["body"]["languageOptions"]["parser"],
-    files: readonly string[],
-  ) {
-    super(
-      {
-        name: "linted/scope:yml",
-        files,
-        plugins,
-        linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
-        },
-        languageOptions: { parser },
-      },
-    );
+  public readonly name = "scope:yml";
+  public readonly processor = {} as const;
+
+  public get languageOptions() {
+    const [parser] = this.parser;
+
+    return { parser } as const;
   }
 }

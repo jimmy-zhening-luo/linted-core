@@ -1,3 +1,5 @@
-export type { default as Plugins } from "./plugins/index.js";
-export type { Parsers } from "./parsers/index.js";
+import type Plugins from "./plugins/plugins.js";
+import type Parsers from "./parsers/parsers.js";
+
+export type { Plugins, Parsers };
 export type { Scope } from "../boundary.js";

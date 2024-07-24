@@ -16,4 +16,4 @@ export default {
   json: JsonOption,
   jsonc: JsoncOption,
   yml: YmlOption,
-} satisfies Record<Scope, unknown>;
+} as const;

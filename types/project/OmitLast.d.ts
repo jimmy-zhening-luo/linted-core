@@ -1,1 +1,1 @@
-declare type OmitLast<A> = A extends [...infer An_1, unknown] ? An_1 : never;
+declare type OmitFirst<A> = A extends readonly [unknown, ...infer An_1] ? An_1 : never;
