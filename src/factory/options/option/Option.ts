@@ -1,6 +1,6 @@
 import type { Scope } from "../../../scopes/scopes.js";
 import type Boundary from "../../../boundary/boundary.js";
-import type { Ruleset } from "../../_factory.js";
+import type { Ruleset } from "../../factory.js";
 
 export default abstract class Option<
   S extends Scope,

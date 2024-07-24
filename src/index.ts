@@ -5,7 +5,7 @@ import {
   Files,
   Ruleset,
   Rule,
-} from "./factory/_factory.js";
+} from "./factory/factory.js";
 
 export type { Scope, Boundary };
 export { Ruleset, Rule };
