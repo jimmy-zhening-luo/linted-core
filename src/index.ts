@@ -27,20 +27,20 @@ export default function (
       base,
       includes,
     ),
-          imports: {
-            [S in Scope]: OmitFirst<ConstructorParameters<typeof Options[S]>>;
-          } = {
-            js: [plugins.js, []] as const,
-            ts: [plugins.ts, [parsers.ts]] as const,
-            svelte: [
-              plugins.svelte,
-              [parsers.svelte, parsers.ts],
-            ] as const,
-            html: [plugins.html, [parsers.html]] as const,
-            json: [plugins.json, [parsers.json]] as const,
-            jsonc: [plugins.jsonc, [parsers.jsonc]] as const,
-            yml: [plugins.yml, [parsers.yml]] as const,
-          } as const;
+    imports: {
+      [S in Scope]: OmitFirst<ConstructorParameters<typeof Options[S]>>;
+    } = {
+      js: [plugins.js, []] as const,
+      ts: [plugins.ts, [parsers.ts]] as const,
+      svelte: [
+        plugins.svelte,
+        [parsers.svelte, parsers.ts],
+      ] as const,
+      html: [plugins.html, [parsers.html]] as const,
+      json: [plugins.json, [parsers.json]] as const,
+      jsonc: [plugins.jsonc, [parsers.jsonc]] as const,
+      yml: [plugins.yml, [parsers.yml]] as const,
+    } as const;
 
     for (const scope of scopes)
       rulesets[scope].override(overrides[scope]);
