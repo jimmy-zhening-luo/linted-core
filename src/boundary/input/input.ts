@@ -1,5 +1,9 @@
-import type Plugins from "./plugins/plugins.js";
-import type Parsers from "./parsers/parsers.js";
+import type plugins from "./plugins/plugins.js";
+import type parsers from "./parsers/parsers.js";
 
-export type { Plugins, Parsers };
-export type { Scope } from "../boundary.js";
+namespace Input {
+  export type Plugins = plugins;
+  export type Parsers = parsers;
+}
+
+export type { Input as default };

@@ -1,27 +1,22 @@
-import scopes from "./boundary/boundary.js";
-import type {
-  Scope,
-  Plugins,
-  Parsers,
-  IConfig,
-} from "./boundary/boundary.js";
+import scopes, { type Scope } from "./scopes/scopes.js";
+import type Boundary from "./boundary/boundary.js";
 import {
   Options,
   Files,
   Ruleset,
   Rule,
-} from "./factory/Factory.js";
+} from "./factory/_factory.js";
 
-export type { Scope };
+export type { Scope, Boundary };
 export { Ruleset, Rule };
 export default function (
-  plugins: Plugins,
-  parsers: Parsers,
+  plugins: Boundary.Input.Plugins,
+  parsers: Boundary.Input.Parsers,
   base: Record<Scope, string[]>,
   includes: Particord<Scope, string[]>,
   rulesets: { [S in Scope]: Ruleset<S> },
   overrides: Particord<Scope, IRule>,
-): IConfig[] {
+): Boundary.Output[] {
   try {
     const files = new Files(
       base,

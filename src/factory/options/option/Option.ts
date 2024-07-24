@@ -1,6 +1,6 @@
-import type { Scope } from "../Options.js";
-import type { Ruleset } from "../../Factory.js";
-import type { IConfig } from "../../../boundary/boundary.js";
+import type { Scope } from "../../../scopes/scopes.js";
+import type Boundary from "../../../boundary/boundary.js";
+import type { Ruleset } from "../../_factory.js";
 
 export default abstract class Option<
   S extends Scope,
@@ -26,7 +26,7 @@ export default abstract class Option<
     public readonly parser: Tuple<unknown, ParserCount>,
   ) {}
 
-  public get configs(): IConfig[] {
+  public get configs(): Boundary.Output[] {
     const {
       scope,
       ruleset,

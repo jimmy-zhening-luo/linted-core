@@ -1,4 +1,4 @@
-import type { Scope } from "../Factory.js";
+import type { Scope } from "../../scopes/scopes.js";
 
 export default class Files {
   constructor(

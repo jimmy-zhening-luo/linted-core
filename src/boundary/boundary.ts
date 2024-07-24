@@ -1,11 +1,12 @@
-import scopes, { type Scope } from "./scopes/scopes.js";
-import type { Plugins, Parsers } from "./input/input.js";
-import type IConfig from "./output/output.js";
+import type input from "./input/input.js";
+import type output from "./output/output.js";
 
-export default scopes;
-export type {
-  Scope,
-  Plugins,
-  Parsers,
-  IConfig,
-};
+namespace Boundary {
+  export namespace Input {
+    export type Plugins = input.Plugins;
+    export type Parsers = input.Parsers;
+  }
+  export type Output = output;
+}
+
+export type { Boundary as default };
