@@ -8,10 +8,10 @@ export default class Ruleset<S extends Scope> {
 
   constructor(
     private readonly scope: literalful<S>,
-    ...ruleset: readonly Rule[]
+    ...rules: readonly Rule[]
   ) {
     try {
-      this.ruleset = [...ruleset];
+      this.ruleset = [...rules];
     }
     catch (e) {
       throw new Error(

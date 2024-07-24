@@ -8,14 +8,17 @@ import {
   Rule,
 } from "./factory/factory.js";
 
-export type { Scope, Output };
-export { Ruleset, Rule };
+export type {
+  Scope,
+  Input,
+  Output,
+};
 export default function (
   plugins: Input.Plugins,
   parsers: Input.Parsers,
   base: Record<Scope, string[]>,
   includes: Particord<Scope, string[]>,
-  rulesets: { [S in Scope]: Ruleset<S> },
+  rules: Record<Scope, readonly [string, IRule][]>,
   overrides: Particord<Scope, IRule>,
 ): Output[] {
   try {
@@ -23,6 +26,36 @@ export default function (
       base,
       includes,
     ),
+    rulesets = {
+      js: new Ruleset(
+        "js",
+        ...rules.js.map(args => new Rule(...args)),
+      ),
+      ts: new Ruleset(
+        "ts",
+        ...rules.ts.map(args => new Rule(...args)),
+      ),
+      svelte: new Ruleset(
+        "svelte",
+        ...rules.svelte.map(args => new Rule(...args)),
+      ),
+      html: new Ruleset(
+        "html",
+        ...rules.html.map(args => new Rule(...args)),
+      ),
+      json: new Ruleset(
+        "json",
+        ...rules.json.map(args => new Rule(...args)),
+      ),
+      jsonc: new Ruleset(
+        "jsonc",
+        ...rules.jsonc.map(args => new Rule(...args)),
+      ),
+      yml: new Ruleset(
+        "yml",
+        ...rules.yml.map(args => new Rule(...args)),
+      ),
+    },
     imports: {
       [S in Scope]: OmitFilesRuleset<ConstructorParameters<typeof Options[S]>>;
     } = {
