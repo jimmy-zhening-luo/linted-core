@@ -1,6 +1,8 @@
-export default interface IConfig {
-  name: `scope:${string}/rule:${string}+${string}`;
-  rules: IRule;
+import type Input from "../../input/input.js";
+
+export default interface Config {
+  name: `linted/scope:${string}/rule:${string}+${string}`;
+  rules: Input.Rules.Entry.Object;
   files: readonly string[];
   linterOptions: {
     noInlineConfig: true;

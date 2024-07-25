@@ -1,8 +1,0 @@
-import type { Scope } from "../../scopes/scopes.js";
-import type { Options } from "../../factory/factory.js";
-
-type Plugins = {
-  readonly [S in Scope]: InstanceType<typeof Options[S]>["plugins"];
-};
-
-export type { Plugins as default };

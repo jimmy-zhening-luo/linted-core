@@ -1,6 +1,6 @@
 import scopes, { type Scope } from "./scopes/scopes.js";
-import type Output from "./boundary/output.js";
-import type Input from "./boundary/input.js";
+import type Output from "./boundary/output/output.js";
+import type Input from "./boundary/input/input.js";
 import {
   Options,
   Files,
@@ -16,10 +16,10 @@ export type {
 export default function (
   plugins: Input.Plugins,
   parsers: Input.Parsers,
-  base: Record<Scope, string[]>,
-  includes: Particord<Scope, string[]>,
-  rules: Record<Scope, readonly Input.RuleRecord[]>,
-  overrides: Particord<Scope, IRule>,
+  base: Input.Files,
+  includes: Partial<Input.Files>,
+  rules: Input.Rules,
+  overrides: Input.Overrides,
 ): Output[] {
   try {
     const files = new Files(

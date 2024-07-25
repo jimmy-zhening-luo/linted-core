@@ -1,6 +1,6 @@
 import type { Scope } from "../../../scopes/scopes.js";
 import type { Ruleset } from "../../factory.js";
-import type Output from "../../../boundary/output.js";
+import type Output from "../../../boundary/output/output.js";
 
 export default abstract class Option<
   S extends Scope,
@@ -47,7 +47,7 @@ export default abstract class Option<
       else if (files.length < 1)
         return [];
       else {
-        const baseName = `scope:${scope}/rule:${ruleset.id}` as const;
+        const baseName = `linted/scope:${scope}/rule:${ruleset.id}` as const;
 
         return ruleset.records.map(
           ([ruleId, rules]) => {

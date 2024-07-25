@@ -9,4 +9,4 @@ const scopes = [
 ] as const;
 
 export default scopes;
-export type Scope = typeof scopes[number];
+export type Scope = (typeof scopes)[number];
