@@ -18,7 +18,7 @@ export default function (
   parsers: Input.Parsers,
   base: Record<Scope, string[]>,
   includes: Particord<Scope, string[]>,
-  rules: Record<Scope, readonly [string, IRule][]>,
+  rules: Record<Scope, readonly Input.RuleRecord[]>,
   overrides: Particord<Scope, IRule>,
 ): Output[] {
   try {
