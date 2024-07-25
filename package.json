@@ -1,6 +1,6 @@
 {
   "name": "@eslinted/core",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "description": "Core ESLint flat config factory npm package `linted`.",
   "keywords": [],
   "license": "MIT",
