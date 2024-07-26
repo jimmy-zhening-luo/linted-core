@@ -1,6 +1,9 @@
-import type { Scope } from "../../../scopes/scopes.js";
-import type Input from "../input.js";
+import type { Scope } from "../../../scopes/Scopes.js";
+import type { Rules } from "../input.js";
 
-type Overrides = Particord<Scope, Input.Rules.Entry.Object>;
+type Overrides = Readonly<Particord<Scope, Rules.Entry.Object>>;
 
-export type { Overrides as default };
+export type {
+  Overrides as default,
+  Overrides,
+};

@@ -1,6 +1,9 @@
-import type { Scope } from "../../../scopes/scopes.js";
-import type { Options } from "../../../factory/factory.js";
+import type { Plugins as Dependencies } from "../../../dependency/dependency.js";
 
-type Plugins = { readonly [S in Scope]: InstanceType<typeof Options[S]>["plugins"] };
+type Plugins = Readonly<Record<Dependencies, { configs: unknown }>>;
 
-export type { Plugins as default };
+export type {
+  Plugins as default,
+  Plugins,
+  Dependencies,
+};

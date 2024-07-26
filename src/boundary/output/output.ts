@@ -1,3 +1,3 @@
-import type Output from "./config/config.js";
+import type Config from "./config/config.js";
 
-export type { Output as default };
+export type { Config as default };

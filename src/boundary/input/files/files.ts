@@ -1,6 +1,9 @@
-import type { Scope } from "../../../scopes/scopes.js";
-import type FileArray from "./array/filearray.js";
+import type { Scope } from "../../../scopes/Scopes.js";
+import type * as Files from "./list/list.js";
 
-type Files = { readonly [S in Scope]: FileArray };
+type Files = Readonly<Record<Scope, Files.List>>;
 
-export type { Files as default };
+export type {
+  Files as default,
+  Files,
+};

@@ -1,10 +1,11 @@
-import type { Scope } from "../../../scopes/scopes.js";
+import type { Scope } from "../../../scopes/Scopes.js";
 import type { Ruleset } from "../../factory.js";
-import type Output from "../../../boundary/output/output.js";
+import type { Plugins } from "../../../dependency/dependency.js";
+import type { Output } from "../../../boundary/boundary.js";
 
 export default abstract class Option<
   S extends Scope,
-  PluginId extends string,
+  PluginId extends Plugins,
   IsEcma extends boolean = true,
   ParserOptions extends object | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,

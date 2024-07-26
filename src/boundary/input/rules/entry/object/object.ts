@@ -1,5 +1,12 @@
-import type Severity from "./state/severity.js";
+import type * as Object from "./state/level.js";
 
-type RuleObject = Record<string, Severity | [Severity, ...unknown[]]>;
+type Object = Readonly<Record<
+  string,
+  | Object.Level
+  | readonly [Object.Level, ...unknown[]]
+>>;
 
-export type { RuleObject as default };
+export type {
+  Object as default,
+  Object,
+};

@@ -1,6 +1,5 @@
-import scopes, { type Scope } from "./scopes/scopes.js";
-import type Output from "./boundary/output/output.js";
-import type Input from "./boundary/input/input.js";
+import scopes, { type Scope } from "./scopes/Scopes.js";
+import type * as Boundary from "./boundary/boundary.js";
 import {
   Options,
   Files,
@@ -10,17 +9,16 @@ import {
 
 export type {
   Scope,
-  Input,
-  Output,
+  Boundary,
 };
 export default function (
-  plugins: Input.Plugins,
-  parsers: Input.Parsers,
-  base: Input.Files,
-  includes: Partial<Input.Files>,
-  rules: Input.Rules,
-  overrides: Input.Overrides,
-): Output[] {
+  plugins: Boundary.Input.Plugins,
+  parsers: Boundary.Input.Parsers,
+  base: Boundary.Input.Files,
+  includes: Partial<Boundary.Input.Files>,
+  rules: Boundary.Input.Rules,
+  overrides: Boundary.Input.Overrides,
+): Boundary.Output[] {
   try {
     const files = new Files(
       base,
@@ -56,19 +54,16 @@ export default function (
         ...rules.yml.map(args => new Rule(...args)),
       ),
     },
-    imports: {
-      [S in Scope]: OmitFilesRuleset<ConstructorParameters<typeof Options[S]>>;
+    scopedParsers: {
+      [S in Scope]: ConstructorParameters<typeof Options[S]>[3];
     } = {
-      js: [plugins.js, []] as const,
-      ts: [plugins.ts, [parsers.ts]] as const,
-      svelte: [
-        plugins.svelte,
-        [parsers.svelte, parsers.ts],
-      ] as const,
-      html: [plugins.html, [parsers.html]] as const,
-      json: [plugins.json, [parsers.json]] as const,
-      jsonc: [plugins.jsonc, [parsers.jsonc]] as const,
-      yml: [plugins.yml, [parsers.yml]] as const,
+      js: [] as const,
+      ts: [parsers.ts] as const,
+      svelte: [parsers.svelte, parsers.ts] as const,
+      html: [parsers.html] as const,
+      json: [parsers.jsonc] as const,
+      jsonc: [parsers.jsonc] as const,
+      yml: [parsers.yml] as const,
     } as const;
 
     for (const scope of scopes)
@@ -83,49 +78,65 @@ export default function (
         .js(
           files.files("js"),
           rulesets.js,
-          ...imports.js,
+          {
+            "@stylistic": plugins["@stylistic"],
+          },
+          scopedParsers.js,
         )
         .configs,
       ts: new Options
         .ts(
           files.files("ts"),
           rulesets.ts,
-          ...imports.ts,
+          {
+            "@stylistic": plugins["@stylistic"],
+            "@typescript-eslint": plugins["@typescript-eslint"],
+          },
+          scopedParsers.ts,
         )
         .configs,
       svelte: new Options
         .svelte(
           files.files("svelte"),
           rulesets.svelte,
-          ...imports.svelte,
+          {
+            "@stylistic": plugins["@stylistic"],
+            "@typescript-eslint": plugins["@typescript-eslint"],
+            svelte: plugins.svelte,
+          },
+          scopedParsers.svelte,
         )
         .configs,
       html: new Options
         .html(
           files.files("html"),
           rulesets.html,
-          ...imports.html,
+          { "@html-eslint": plugins["@html-eslint"] },
+          scopedParsers.html,
         )
         .configs,
       json: new Options
         .json(
           files.files("json"),
           rulesets.json,
-          ...imports.json,
+          { jsonc: plugins.jsonc },
+          scopedParsers.json,
         )
         .configs,
       jsonc: new Options
         .jsonc(
           files.files("jsonc"),
           rulesets.jsonc,
-          ...imports.jsonc,
+          { jsonc: plugins.jsonc },
+          scopedParsers.jsonc,
         )
         .configs,
       yml: new Options
         .yml(
           files.files("yml"),
           rulesets.yml,
-          ...imports.yml,
+          { yml: plugins.yml },
+          scopedParsers.yml,
         )
         .configs,
     };

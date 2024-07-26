@@ -1,5 +1,4 @@
-import type { Scope } from "../../scopes/scopes.js";
-import type Input from "../../boundary/input/input.js";
+import type { Scope } from "../../scopes/Scopes.js";
 import Rule from "./rule/Rule.js";
 
 export { Rule };
@@ -53,7 +52,7 @@ export default class Ruleset<S extends Scope> {
     }
   }
 
-  public override(overrides: undefined | Input.Rules.Entry.Object) {
+  public override(overrides: undefined | Rule["rules"]) {
     try {
       if (typeof overrides !== "undefined")
         this.overrides = new Rule(

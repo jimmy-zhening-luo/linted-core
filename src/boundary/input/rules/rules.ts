@@ -1,11 +1,9 @@
-import type { Scope } from "../../../scopes/scopes.js";
-import type RuleEntry from "./entry/entry.js";
-import type RuleObject from "./entry/object/object.js";
+import type { Scope } from "../../../scopes/Scopes.js";
+import type * as Rules from "./entry/entry.js";
 
-type Rules = Record<Scope, readonly RuleEntry[]>;
+type Rules = Readonly<Record<Scope, readonly Rules.Entry[]>>;
 
 export type {
   Rules as default,
-  RuleEntry,
-  RuleObject,
+  Rules,
 };

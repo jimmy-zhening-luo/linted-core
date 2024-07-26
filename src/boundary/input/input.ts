@@ -1,22 +1,13 @@
-import type plugins from "./plugins/plugins.js";
-import type parsers from "./parsers/parsers.js";
-import type files from "./files/files.js";
-import type rules from "./rules/rules.js";
-import type { RuleEntry, RuleObject } from "./rules/rules.js";
-import type overrides from "./overrides/overrides.js";
+import type Plugins from "./plugins/plugins.js";
+import type Parsers from "./parsers/parsers.js";
+import type Files from "./files/files.js";
+import type Rules from "./rules/rules.js";
+import type Overrides from "./overrides/overrides.js";
 
-namespace Input {
-  export type Plugins = plugins;
-  export type Parsers = parsers;
-  export type Files = files;
-  export type Rules = rules;
-  export namespace Rules {
-    export type Entry = RuleEntry;
-    export namespace Entry {
-      export type Object = RuleObject;
-    }
-  }
-  export type Overrides = overrides;
-}
-
-export type { Input as default };
+export type {
+  Plugins,
+  Parsers,
+  Files,
+  Rules,
+  Overrides,
+};
