@@ -1,5 +1,5 @@
-import scopes, { type Scope } from "./scopes/Scopes.js";
 import type * as Boundary from "./boundary/boundary.js";
+import scopes, { type Scope } from "./scopes/Scopes.js";
 import {
   Options,
   Files,
@@ -7,51 +7,52 @@ import {
   Rule,
 } from "./factory/factory.js";
 
-export type {
-  Scope,
-  Boundary,
-};
+export type { Boundary };
 export default function (
   plugins: Boundary.Input.Plugins,
   parsers: Boundary.Input.Parsers,
-  base: Boundary.Input.Files,
-  includes: Partial<Boundary.Input.Files>,
-  rules: Boundary.Input.Rules,
-  overrides: Boundary.Input.Overrides,
+  files: {
+    base: Boundary.Input.Files.Base;
+    includes: Boundary.Input.Files.Includes;
+  },
+  rules: {
+    preset: Boundary.Input.Rules.Preset;
+    overrides: Boundary.Input.Rules.Overrides;
+  },
 ): Boundary.Output[] {
   try {
-    const files = new Files(
-      base,
-      includes,
+    const f = new Files(
+      files.base,
+      files.includes,
     ),
     rulesets = {
       js: new Ruleset(
         "js",
-        ...rules.js.map(args => new Rule(...args)),
+        ...rules.preset.js.map(args => new Rule(...args)),
       ),
       ts: new Ruleset(
         "ts",
-        ...rules.ts.map(args => new Rule(...args)),
+        ...rules.preset.ts.map(args => new Rule(...args)),
       ),
       svelte: new Ruleset(
         "svelte",
-        ...rules.svelte.map(args => new Rule(...args)),
+        ...rules.preset.svelte.map(args => new Rule(...args)),
       ),
       html: new Ruleset(
         "html",
-        ...rules.html.map(args => new Rule(...args)),
+        ...rules.preset.html.map(args => new Rule(...args)),
       ),
       json: new Ruleset(
         "json",
-        ...rules.json.map(args => new Rule(...args)),
+        ...rules.preset.json.map(args => new Rule(...args)),
       ),
       jsonc: new Ruleset(
         "jsonc",
-        ...rules.jsonc.map(args => new Rule(...args)),
+        ...rules.preset.jsonc.map(args => new Rule(...args)),
       ),
       yml: new Ruleset(
         "yml",
-        ...rules.yml.map(args => new Rule(...args)),
+        ...rules.preset.yml.map(args => new Rule(...args)),
       ),
     },
     scopedParsers: {
@@ -67,7 +68,7 @@ export default function (
     } as const;
 
     for (const scope of scopes)
-      rulesets[scope].override(overrides[scope]);
+      rulesets[scope].override(rules.overrides[scope]);
 
     const options: {
       [S in Scope]: InstanceType<
@@ -76,7 +77,7 @@ export default function (
     } = {
       js: new Options
         .js(
-          files.files("js"),
+          f.files("js"),
           rulesets.js,
           {
             "@stylistic": plugins["@stylistic"],
@@ -86,7 +87,7 @@ export default function (
         .configs,
       ts: new Options
         .ts(
-          files.files("ts"),
+          f.files("ts"),
           rulesets.ts,
           {
             "@stylistic": plugins["@stylistic"],
@@ -97,7 +98,7 @@ export default function (
         .configs,
       svelte: new Options
         .svelte(
-          files.files("svelte"),
+          f.files("svelte"),
           rulesets.svelte,
           {
             "@stylistic": plugins["@stylistic"],
@@ -109,7 +110,7 @@ export default function (
         .configs,
       html: new Options
         .html(
-          files.files("html"),
+          f.files("html"),
           rulesets.html,
           { "@html-eslint": plugins["@html-eslint"] },
           scopedParsers.html,
@@ -117,7 +118,7 @@ export default function (
         .configs,
       json: new Options
         .json(
-          files.files("json"),
+          f.files("json"),
           rulesets.json,
           { jsonc: plugins.jsonc },
           scopedParsers.json,
@@ -125,7 +126,7 @@ export default function (
         .configs,
       jsonc: new Options
         .jsonc(
-          files.files("jsonc"),
+          f.files("jsonc"),
           rulesets.jsonc,
           { jsonc: plugins.jsonc },
           scopedParsers.jsonc,
@@ -133,7 +134,7 @@ export default function (
         .configs,
       yml: new Options
         .yml(
-          files.files("yml"),
+          f.files("yml"),
           rulesets.yml,
           { yml: plugins.yml },
           scopedParsers.yml,

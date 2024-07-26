@@ -2,7 +2,7 @@ import type { Rules } from "../../input/input.js";
 
 export default interface Config {
   name: `linted/scope:${string}/rule:${string}+${string}`;
-  rules: Rules.Entry.Object;
+  rules: Rules.Preset.Entry.Object;
   files: readonly string[];
   linterOptions: {
     noInlineConfig: true;

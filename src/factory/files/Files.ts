@@ -3,8 +3,8 @@ import type { Input } from "../../boundary/boundary.js";
 
 export default class Files {
   constructor(
-    private readonly base: Input.Files,
-    private readonly includes: Partial<Input.Files>,
+    private readonly base: Input.Files.Base,
+    private readonly includes: Input.Files.Includes,
   ) {}
 
   public files(scope: Scope): readonly string[] {
