@@ -1,13 +1,13 @@
 import Option from "../Option.js";
 
-export default class Html extends Option<
-  "html",
-  "@html-eslint",
+export default class Md extends Option<
+  "md",
+  "markdownlint",
   false,
   true,
   1
 > {
-  public readonly scope = "html";
+  public readonly scope = "md";
   public readonly processor = {} as const;
 
   public get languageOptions() {
@@ -18,7 +18,7 @@ export default class Html extends Option<
     }
     catch (e) {
       throw new Error(
-        `linted.factory.options.html: languageOptions`,
+        `linted.factory.options.md: languageOptions`,
         { cause: e },
       );
     }

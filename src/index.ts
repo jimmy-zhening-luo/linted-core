@@ -54,6 +54,10 @@ export default function (
         "yml",
         ...rules.preset.yml.map(args => new Rule(...args)),
       ),
+      md: new Ruleset(
+        "md",
+        ...rules.preset.md.map(args => new Rule(...args)),
+      ),
     },
     scopedParsers: {
       [S in Scope]: ConstructorParameters<typeof Options[S]>[3];
@@ -65,6 +69,7 @@ export default function (
       json: [parsers.jsonc] as const,
       jsonc: [parsers.jsonc] as const,
       yml: [parsers.yml] as const,
+      md: [parsers.md] as const,
     } as const;
 
     for (const scope of scopes)
@@ -140,6 +145,17 @@ export default function (
           scopedParsers.yml,
         )
         .configs,
+      md: new Options
+        .md(
+          f.files("md"),
+          rulesets.md,
+          {
+            markdownlint: plugins.markdownlint,
+          },
+          scopedParsers.md,
+        )
+        .configs,
+
     };
 
     return scopes

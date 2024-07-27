@@ -1,6 +1,6 @@
 import Option from "../Option.js";
 
-export default class JsoncOption extends Option<
+export default class Jsonc extends Option<
   "jsonc",
   "jsonc",
   false,

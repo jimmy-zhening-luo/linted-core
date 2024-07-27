@@ -1,6 +1,6 @@
 import Option from "../Option.js";
 
-export default class YmlOption extends Option<
+export default class Yml extends Option<
   "yml",
   "yml",
   false,

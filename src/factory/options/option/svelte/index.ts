@@ -1,11 +1,11 @@
 import Option from "../Option.js";
-import type TsOption from "../ts/index.js";
+import type Ts from "../ts/index.js";
 
-export default class SvelteOption extends Option<
+export default class Svelte extends Option<
   "svelte",
-  "svelte" | keyof TsOption["option"]["plugins"],
+  "svelte" | keyof Ts["option"]["plugins"],
   true,
-  & TsOption["option"]["languageOptions"]["parserOptions"]
+  & Ts["option"]["languageOptions"]["parserOptions"]
   & { parser: unknown }
   & { extraFileExtensions: readonly [".svelte"] },
   2,

@@ -1,17 +1,19 @@
-import JsOption from "./option/js/index.js";
-import TsOption from "./option/ts/index.js";
-import SvelteOption from "./option/svelte/index.js";
-import HtmlOption from "./option/html/index.js";
-import JsonOption from "./option/json/index.js";
-import JsoncOption from "./option/jsonc/index.js";
-import YmlOption from "./option/yml/index.js";
+import js from "./option/js/index.js";
+import ts from "./option/ts/index.js";
+import svelte from "./option/svelte/index.js";
+import html from "./option/html/index.js";
+import json from "./option/json/index.js";
+import jsonc from "./option/jsonc/index.js";
+import yml from "./option/yml/index.js";
+import md from "./option/md/index.js";
 
 export default {
-  js: JsOption,
-  ts: TsOption,
-  svelte: SvelteOption,
-  html: HtmlOption,
-  json: JsonOption,
-  jsonc: JsoncOption,
-  yml: YmlOption,
+  js,
+  ts,
+  svelte,
+  html,
+  json,
+  jsonc,
+  yml,
+  md,
 } as const;
