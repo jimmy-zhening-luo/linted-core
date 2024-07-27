@@ -1,6 +1,7 @@
 import js from "./option/js/index.js";
 import ts from "./option/ts/index.js";
 import svelte from "./option/svelte/index.js";
+import mocha from "./option/mocha/index.js";
 import html from "./option/html/index.js";
 import json from "./option/json/index.js";
 import jsonc from "./option/jsonc/index.js";
@@ -11,6 +12,7 @@ export default {
   js,
   ts,
   svelte,
+  mocha,
   html,
   json,
   jsonc,

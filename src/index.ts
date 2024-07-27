@@ -38,6 +38,10 @@ export default function (
         "svelte",
         ...rules.preset.svelte.map(args => new Rule(...args)),
       ),
+      mocha: new Ruleset(
+        "mocha",
+        ...rules.preset.mocha.map(args => new Rule(...args)),
+      ),
       html: new Ruleset(
         "html",
         ...rules.preset.html.map(args => new Rule(...args)),
@@ -65,6 +69,7 @@ export default function (
       js: [] as const,
       ts: [parsers.ts] as const,
       svelte: [parsers.svelte, parsers.ts] as const,
+      mocha: [parsers.ts] as const,
       html: [parsers.html] as const,
       json: [parsers.jsonc] as const,
       jsonc: [parsers.jsonc] as const,
@@ -113,6 +118,18 @@ export default function (
           scopedParsers.svelte,
         )
         .configs,
+      mocha: new Options
+        .mocha(
+          f.files("mocha"),
+          rulesets.mocha,
+          {
+            "@stylistic": plugins["@stylistic"],
+            "@typescript-eslint": plugins["@typescript-eslint"],
+            mocha: plugins.mocha,
+          },
+          scopedParsers.mocha,
+        )
+        .configs,
       html: new Options
         .html(
           f.files("html"),
@@ -155,7 +172,6 @@ export default function (
           scopedParsers.md,
         )
         .configs,
-
     };
 
     return scopes

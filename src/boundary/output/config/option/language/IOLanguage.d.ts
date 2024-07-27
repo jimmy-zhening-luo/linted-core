@@ -4,7 +4,7 @@ declare type IOLanguage<
   GlobalTypes extends string,
 > =
  & (True<IsEcma> extends never ? object : { ecmaVersion: IOLanguageEcma; sourceType: IOLanguageSource })
- & (literalful<GlobalTypes> extends never ? object : { globals: IOLanguageGlobals<GlobalTypes> })
+ & (literalful<GlobalTypes> extends never ? object : { globals: Record<string, unknown> })
  & (
     ParserOptions extends boolean
       ? True<ParserOptions> extends never

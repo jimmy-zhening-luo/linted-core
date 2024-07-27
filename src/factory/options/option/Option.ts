@@ -1,3 +1,4 @@
+import globals from "globals";
 import type { Scope } from "../../../scopes/Scopes.js";
 import type { Ruleset } from "../../factory.js";
 import type { Plugins } from "../../../dependency/dependency.js";
@@ -9,7 +10,7 @@ export default abstract class Option<
   IsEcma extends boolean = true,
   ParserOptions extends object | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,
-  GlobalTypes extends string = never,
+  GlobalTypes extends keyof typeof globals = never,
   Processor extends object = never,
 > {
   private readonly linterOptions = {
@@ -107,4 +108,16 @@ export default abstract class Option<
     ParserOptions,
     GlobalTypes
   >;
+
+  protected globals(type: GlobalTypes) {
+    try {
+      return globals[type];
+    }
+    catch (e) {
+      throw new Error(
+        `linted.factory.Option/scope:${this.scope}: globals`,
+        { cause: e },
+      );
+    }
+  }
 }

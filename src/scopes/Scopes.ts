@@ -2,6 +2,7 @@ const scopes = [
   "js",
   "ts",
   "svelte",
+  "mocha",
   "html",
   "json",
   "jsonc",
