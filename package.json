@@ -1,7 +1,7 @@
 {
   "_schemaVersion": "20.13.0",
   "name": "@eslinted/core",
-  "version": "2.0.1",
+  "version": "2.1.0-rc.0",
   "description": "Core ESLint flat config factory npm package `linted`.",
   "keywords": [],
   "license": "MIT",
