@@ -23,7 +23,9 @@
   "peerDependencies": {},
   "peerDependenciesMeta": {},
   "optionalDependencies": {},
-  "dependencies": {},
+  "dependencies": {
+    "globals": "^15.8.0"
+  },
   "devDependencies": {
     "eslint": "~8.57.0",
     "linted": "~15.5.1",
