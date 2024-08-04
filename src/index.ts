@@ -89,99 +89,68 @@ export default function (
         .js(
           f.files("js"),
           rulesets.js,
-          {
-            "@stylistic": plugins["@stylistic"],
-          },
+          { "@stylistic": plugins["@stylistic"] },
           scopedParsers.js,
-        )
-        .configs,
+        ).configs,
       ts: new Options
         .ts(
           f.files("ts"),
           rulesets.ts,
-          {
-            "@stylistic": plugins["@stylistic"],
-            "@typescript-eslint": plugins["@typescript-eslint"],
-          },
+          { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"] },
           scopedParsers.ts,
-        )
-        .configs,
+        ).configs,
       svelte: new Options
         .svelte(
           f.files("svelte"),
           rulesets.svelte,
-          {
-            "@stylistic": plugins["@stylistic"],
-            "@typescript-eslint": plugins["@typescript-eslint"],
-            svelte: plugins.svelte,
-          },
+          { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], svelte: plugins.svelte },
           scopedParsers.svelte,
-        )
-        .configs,
+        ).configs,
       mocha: new Options
         .mocha(
           f.files("mocha"),
           rulesets.mocha,
-          {
-            "@stylistic": plugins["@stylistic"],
-            "@typescript-eslint": plugins["@typescript-eslint"],
-            mocha: plugins.mocha,
-          },
+          { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], mocha: plugins.mocha },
           scopedParsers.mocha,
-        )
-        .configs,
+        ).configs,
       html: new Options
         .html(
           f.files("html"),
           rulesets.html,
           { "@html-eslint": plugins["@html-eslint"] },
           scopedParsers.html,
-        )
-        .configs,
+        ).configs,
       json: new Options
         .json(
           f.files("json"),
           rulesets.json,
           { jsonc: plugins.jsonc },
           scopedParsers.json,
-        )
-        .configs,
+        ).configs,
       jsonc: new Options
         .jsonc(
           f.files("jsonc"),
           rulesets.jsonc,
           { jsonc: plugins.jsonc },
           scopedParsers.jsonc,
-        )
-        .configs,
+        ).configs,
       yml: new Options
         .yml(
           f.files("yml"),
           rulesets.yml,
           { yml: plugins.yml },
           scopedParsers.yml,
-        )
-        .configs,
+        ).configs,
       md: new Options
         .md(
           f.files("md"),
           rulesets.md,
-          {
-            markdownlint: plugins.markdownlint,
-          },
+          { markdownlint: plugins.markdownlint },
           scopedParsers.md,
-        )
-        .configs,
+        ).configs,
     };
 
-    return scopes
-      .map(scope => options[scope])
-      .flat();
+    return scopes.flatMap(scope => options[scope]);
   }
-  catch (e) {
-    throw new Error(
-      `linted.main`,
-      { cause: e },
-    );
-  }
+  catch (e) { throw new Error(`linted-core`, { cause: e }); }
 }

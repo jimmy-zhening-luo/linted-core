@@ -13,10 +13,7 @@ export default abstract class Option<
   GlobalTypes extends keyof typeof globals = never,
   Processor extends object = never,
 > {
-  private readonly linterOptions = {
-    noInlineConfig: true,
-    reportUnusedDisableDirectives: "error",
-  } as const;
+  private readonly linterOptions = { noInlineConfig: true, reportUnusedDisableDirectives: "error" } as const;
 
   public abstract readonly scope: literalful<S>;
   public abstract readonly processor: Interface<Processor> extends never
@@ -42,35 +39,25 @@ export default abstract class Option<
       } = this;
 
       if (ruleset.id !== scope)
-        throw new TypeError(
-          `Option and Ruleset scope mismatch`,
-          { cause: { option: scope, ruleset: ruleset.id } },
-        );
+        throw new TypeError(`Option and Ruleset scope mismatch`, { cause: { option: scope, ruleset: ruleset.id } });
       else if (files.length < 1)
         return [];
       else {
         const baseName = `linted/scope:${scope}/rule:${ruleset.id}` as const;
 
-        return ruleset.records.map(
-          ([ruleId, rules]) => {
-            const name = `${baseName}+${ruleId}` as const;
+        return ruleset.records.map(([ruleId, rules]) => {
+          const name = `${baseName}+${ruleId}` as const;
 
-            return {
-              name,
-              files,
-              rules,
-              ...option,
-            };
-          },
-        );
+          return {
+            name,
+            files,
+            rules,
+            ...option,
+          };
+        });
       }
     }
-    catch (e) {
-      throw new Error(
-        `linted.factory.Option/scope:${this.scope}: configs`,
-        { cause: e },
-      );
-    }
+    catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: configs`, { cause: e }); }
   }
 
   private get option() {
@@ -95,29 +82,12 @@ export default abstract class Option<
         Processor
       >;
     }
-    catch (e) {
-      throw new Error(
-        `linted.factory.Option/scope:${this.scope}: option`,
-        { cause: e },
-      );
-    }
+    catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }
   }
 
-  protected abstract get languageOptions(): IOLanguage<
-    IsEcma,
-    ParserOptions,
-    GlobalTypes
-  >;
+  protected abstract get languageOptions(): IOLanguage<IsEcma, ParserOptions, GlobalTypes>;
 
   protected globals(type: GlobalTypes) {
-    try {
-      return globals[type];
-    }
-    catch (e) {
-      throw new Error(
-        `linted.factory.Option/scope:${this.scope}: globals`,
-        { cause: e },
-      );
-    }
+    return globals[type];
   }
 }

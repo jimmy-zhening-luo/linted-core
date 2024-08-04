@@ -5,9 +5,7 @@ export default class Svelte extends Option<
   "svelte",
   "svelte" | keyof Ts["option"]["plugins"],
   true,
-  & Ts["option"]["languageOptions"]["parserOptions"]
-  & { parser: unknown }
-  & { extraFileExtensions: readonly [".svelte"] },
+  { parser: unknown } & { extraFileExtensions: readonly [".svelte"] } & Ts["option"]["languageOptions"]["parserOptions"],
   2,
   never,
   { processor: "svelte/svelte" }
@@ -16,27 +14,19 @@ export default class Svelte extends Option<
   public readonly processor = { processor: "svelte/svelte" } as const;
 
   public get languageOptions() {
-    try {
-      const [parser, tsParser] = this.parser;
+    const [parser, tsParser] = this.parser;
 
-      return {
+    return {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser,
+      parserOptions: {
+        parser: tsParser,
+        extraFileExtensions: [".svelte"] as const,
+        project: "tsconfig.json",
         ecmaVersion: "latest",
         sourceType: "module",
-        parser,
-        parserOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-          project: "tsconfig.json",
-          extraFileExtensions: [".svelte"] as const,
-          parser: tsParser,
-        },
-      } as const;
-    }
-    catch (e) {
-      throw new Error(
-        `linted.factory.options.svelte: languageOptions`,
-        { cause: e },
-      );
-    }
+      },
+    } as const;
   }
 }

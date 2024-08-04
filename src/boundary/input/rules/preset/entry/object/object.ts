@@ -6,7 +6,4 @@ type Object = Readonly<Record<
   | readonly [Object.Level, ...unknown[]]
 >>;
 
-export type {
-  Object as default,
-  Object,
-};
+export type { Object, Object as default };

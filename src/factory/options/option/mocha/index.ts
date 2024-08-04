@@ -5,7 +5,7 @@ export default class Mocha extends Option<
   "mocha",
   "mocha" | keyof Ts["option"]["plugins"],
   true,
-  & Ts["option"]["languageOptions"]["parserOptions"],
+  Ts["option"]["languageOptions"]["parserOptions"],
   1,
   "mocha"
 > {
@@ -14,27 +14,15 @@ export default class Mocha extends Option<
   public readonly types = ["mocha"] as const;
 
   public get languageOptions() {
-    try {
-      const [parser] = this.parser,
-      globals = this.globals("mocha");
+    const [parser] = this.parser,
+    globals = this.globals("mocha");
 
-      return {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        parser,
-        parserOptions: {
-          ecmaVersion: "latest",
-          sourceType: "module",
-          project: "tsconfig.json",
-        },
-        globals,
-      } as const;
-    }
-    catch (e) {
-      throw new Error(
-        `linted.factory.options.mocha: languageOptions`,
-        { cause: e },
-      );
-    }
+    return {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parser,
+      parserOptions: { project: "tsconfig.json", ecmaVersion: "latest", sourceType: "module" },
+      globals,
+    } as const;
   }
 }

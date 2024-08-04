@@ -1,6 +1,3 @@
 type List = readonly string[];
 
-export type {
-  List as default,
-  List,
-};
+export type { List, List as default };

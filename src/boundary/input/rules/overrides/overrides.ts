@@ -3,7 +3,4 @@ import type * as Overrides from "../preset/preset.js";
 
 type Overrides = Readonly<Partial<Record<Scope, Overrides.Preset.Entry.Object>>>;
 
-export type {
-  Overrides as default,
-  Overrides,
-};
+export type { Overrides, Overrides as default };

@@ -11,16 +11,8 @@ export default class Jsonc extends Option<
   public readonly processor = {} as const;
 
   public get languageOptions() {
-    try {
-      const [parser] = this.parser;
+    const [parser] = this.parser;
 
-      return { parser } as const;
-    }
-    catch (e) {
-      throw new Error(
-        `linted.factory.options.jsonc: languageOptions`,
-        { cause: e },
-      );
-    }
+    return { parser } as const;
   }
 }

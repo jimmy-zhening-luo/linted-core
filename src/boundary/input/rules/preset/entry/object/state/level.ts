@@ -3,7 +3,4 @@ type Level =
   | "warn"
   | "off";
 
-export type {
-  Level as default,
-  Level,
-};
+export type { Level, Level as default };
