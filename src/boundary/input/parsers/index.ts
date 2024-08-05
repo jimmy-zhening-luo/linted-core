@@ -1,4 +1,4 @@
-import type { Parsers as Dependencies } from "../../../dependency/dependency.js";
+import type { Parsers as Dependencies } from "../../../dependency/index.js";
 
 type Parsers = Readonly<Record<Dependencies, unknown>>;
 

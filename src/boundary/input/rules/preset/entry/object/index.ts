@@ -1,4 +1,4 @@
-import type * as Object from "./state/level.js";
+import type * as Object from "./state/index.js";
 
 type Object = Readonly<Record<
   string,

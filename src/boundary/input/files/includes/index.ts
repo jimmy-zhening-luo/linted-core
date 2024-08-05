@@ -1,4 +1,4 @@
-import type * as Includes from "../base/base.ts";
+import type * as Includes from "../base/index.js";
 
 type Includes = Partial<Includes.Base>;
 

@@ -1,11 +1,11 @@
-import type * as Boundary from "./boundary/boundary.js";
-import scopes, { type Scope } from "./scopes/Scopes.js";
+import scopes, { type Scope } from "./scopes/index.js";
+import type * as Boundary from "./boundary/index.js";
 import {
   Options,
   Files,
   Ruleset,
   Rule,
-} from "./factory/factory.js";
+} from "./factory/index.js";
 
 export type { Boundary };
 export default function (
@@ -21,51 +21,19 @@ export default function (
   },
 ): Boundary.Output[] {
   try {
-    const f = new Files(
-      files.base,
-      files.includes,
-    ),
+    const f = new Files(files.base, files.includes),
     rulesets = {
-      js: new Ruleset(
-        "js",
-        ...rules.preset.js.map(args => new Rule(...args)),
-      ),
-      ts: new Ruleset(
-        "ts",
-        ...rules.preset.ts.map(args => new Rule(...args)),
-      ),
-      svelte: new Ruleset(
-        "svelte",
-        ...rules.preset.svelte.map(args => new Rule(...args)),
-      ),
-      mocha: new Ruleset(
-        "mocha",
-        ...rules.preset.mocha.map(args => new Rule(...args)),
-      ),
-      html: new Ruleset(
-        "html",
-        ...rules.preset.html.map(args => new Rule(...args)),
-      ),
-      json: new Ruleset(
-        "json",
-        ...rules.preset.json.map(args => new Rule(...args)),
-      ),
-      jsonc: new Ruleset(
-        "jsonc",
-        ...rules.preset.jsonc.map(args => new Rule(...args)),
-      ),
-      yml: new Ruleset(
-        "yml",
-        ...rules.preset.yml.map(args => new Rule(...args)),
-      ),
-      md: new Ruleset(
-        "md",
-        ...rules.preset.md.map(args => new Rule(...args)),
-      ),
+      js: new Ruleset("js", ...rules.preset.js.map(args => new Rule(...args))),
+      ts: new Ruleset("ts", ...rules.preset.ts.map(args => new Rule(...args))),
+      svelte: new Ruleset("svelte", ...rules.preset.svelte.map(args => new Rule(...args))),
+      mocha: new Ruleset("mocha", ...rules.preset.mocha.map(args => new Rule(...args))),
+      html: new Ruleset("html", ...rules.preset.html.map(args => new Rule(...args))),
+      json: new Ruleset("json", ...rules.preset.json.map(args => new Rule(...args))),
+      jsonc: new Ruleset("jsonc", ...rules.preset.jsonc.map(args => new Rule(...args))),
+      yml: new Ruleset("yml", ...rules.preset.yml.map(args => new Rule(...args))),
+      md: new Ruleset("md", ...rules.preset.md.map(args => new Rule(...args))),
     },
-    scopedParsers: {
-      [S in Scope]: ConstructorParameters<typeof Options[S]>[3];
-    } = {
+    scopedParsers: { [S in Scope]: ConstructorParameters<typeof Options[S]>[3] } = {
       js: [] as const,
       ts: [parsers.ts] as const,
       svelte: [parsers.svelte, parsers.ts] as const,
@@ -80,11 +48,7 @@ export default function (
     for (const scope of scopes)
       rulesets[scope].override(rules.overrides[scope]);
 
-    const options: {
-      [S in Scope]: InstanceType<
-        typeof Options[S]
-      >["configs"]
-    } = {
+    const options: { [S in Scope]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
           f.files("js"),

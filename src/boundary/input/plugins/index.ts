@@ -1,4 +1,4 @@
-import type { Plugins as Dependencies } from "../../../dependency/dependency.js";
+import type { Plugins as Dependencies } from "../../../dependency/index.js";
 
 type Plugins = Readonly<Record<Dependencies, { configs: unknown }>>;
 

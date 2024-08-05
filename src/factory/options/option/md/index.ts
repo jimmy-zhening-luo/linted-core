@@ -1,4 +1,4 @@
-import Option from "../Option.js";
+import Option from "../index.js";
 
 export default class Md extends Option<
   "md",

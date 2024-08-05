@@ -1,4 +1,4 @@
-import type { Scope } from "../../scopes/Scopes.js";
+import type { Scope } from "../../scopes/index.js";
 
 type Parsers =
   | "ts"

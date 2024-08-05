@@ -1,4 +1,4 @@
-import Option from "../Option.js";
+import Option from "../index.js";
 import type Js from "../js/index.js";
 
 export default class Ts extends Option<

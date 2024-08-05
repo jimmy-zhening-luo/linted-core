@@ -1,4 +1,4 @@
-import Option from "../Option.js";
+import Option from "../index.js";
 import type Ts from "../ts/index.js";
 
 export default class Mocha extends Option<

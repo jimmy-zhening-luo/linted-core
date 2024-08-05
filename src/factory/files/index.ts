@@ -1,5 +1,5 @@
-import type { Scope } from "../../scopes/Scopes.js";
-import type { Input } from "../../boundary/boundary.js";
+import type { Scope } from "../../scopes/index.js";
+import type { Input } from "../../boundary/index.js";
 
 export default class Files {
   constructor(

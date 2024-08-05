@@ -1,8 +1,8 @@
 import globals from "globals";
-import type { Scope } from "../../../scopes/Scopes.js";
-import type { Ruleset } from "../../factory.js";
-import type { Plugins } from "../../../dependency/dependency.js";
-import type { Output } from "../../../boundary/boundary.js";
+import type { Scope } from "../../../scopes/index.js";
+import type { Ruleset } from "../../index.js";
+import type { Plugins } from "../../../dependency/index.js";
+import type { Output } from "../../../boundary/index.js";
 
 export default abstract class Option<
   S extends Scope,

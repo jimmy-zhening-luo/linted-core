@@ -1,4 +1,4 @@
-import type * as Entry from "./object/object.js";
+import type * as Entry from "./object/index.js";
 
 type Entry = readonly [string, Entry.Object];
 

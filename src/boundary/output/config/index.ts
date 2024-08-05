@@ -1,4 +1,4 @@
-import type { Rules } from "../../input/input.js";
+import type { Rules } from "../../input/index.js";
 
 export default interface Config {
   name: `linted/scope:${string}/rule:${string}+${string}`;

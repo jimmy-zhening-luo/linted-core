@@ -1,5 +1,5 @@
-import type { Scope } from "../../scopes/Scopes.js";
-import Rule from "./rule/Rule.js";
+import type { Scope } from "../../scopes/index.js";
+import Rule from "./rule/index.js";
 
 export { Rule };
 export default class Ruleset<S extends Scope> {

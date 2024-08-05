@@ -1,5 +1,5 @@
-import type { Scope } from "../../../../scopes/Scopes.js";
-import type * as Overrides from "../preset/preset.js";
+import type { Scope } from "../../../../scopes/index.js";
+import type * as Overrides from "../preset/index.js";
 
 type Overrides = Readonly<Partial<Record<Scope, Overrides.Preset.Entry.Object>>>;
 
