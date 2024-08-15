@@ -1,9 +1,12 @@
-declare type IOLanguage<
+import type Ecma from "./ecma/index.js";
+import type Source from "./source/index.js";
+
+type Language<
   IsEcma extends boolean,
   ParserOptions extends object | boolean,
   GlobalTypes extends string,
 > =
- & (True<IsEcma> extends never ? object : { ecmaVersion: IOLanguageEcma; sourceType: IOLanguageSource })
+ & (True<IsEcma> extends never ? object : { ecmaVersion: Ecma; sourceType: Source })
  & (literalful<GlobalTypes> extends never ? object : { globals: Record<string, unknown> })
  & (
     ParserOptions extends boolean
@@ -16,3 +19,5 @@ declare type IOLanguage<
           : { parser: unknown; parserOptions: ParserOptions }
         : object
   );
+
+export type { Language, Language as default };

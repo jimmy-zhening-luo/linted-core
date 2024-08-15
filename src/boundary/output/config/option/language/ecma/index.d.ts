@@ -1,1 +1,0 @@
-declare type IOLanguageEcma = "latest";

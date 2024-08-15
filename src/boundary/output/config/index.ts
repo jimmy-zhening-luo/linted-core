@@ -1,6 +1,7 @@
 import type { Rules } from "../../input/index.js";
+import type * as Config from "./option/index.js";
 
-export default interface Config {
+interface Config {
   name: `linted/scope:${string}/rule:${string}+${string}`;
   rules: Rules.Preset.Entry.Object;
   files: readonly string[];
@@ -20,3 +21,5 @@ export default interface Config {
   plugins: Record<string, Record<"configs", unknown>>;
   processor?: string;
 }
+
+export type { Config, Config as default };

@@ -25,7 +25,7 @@ export default abstract class Option<
   constructor(
     public readonly files: readonly string[],
     public readonly ruleset: Ruleset<S>,
-    public readonly plugins: IOPlugins<PluginId>,
+    public readonly plugins: Output.Config.Plugins<PluginId>,
     public readonly parser: Tuple<unknown, ParserCount>,
   ) {}
 
@@ -74,7 +74,7 @@ export default abstract class Option<
         linterOptions,
         languageOptions,
         ...processor,
-      } satisfies IOption<
+      } satisfies Output.Config.IOption<
         PluginId,
         IsEcma,
         ParserOptions,
@@ -85,7 +85,7 @@ export default abstract class Option<
     catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }
   }
 
-  protected abstract get languageOptions(): IOLanguage<IsEcma, ParserOptions, GlobalTypes>;
+  protected abstract get languageOptions(): Output.Config.Language<IsEcma, ParserOptions, GlobalTypes>;
 
   protected globals(type: GlobalTypes) {
     return globals[type];

@@ -1,3 +1,3 @@
 import type Config from "./config/index.js";
 
-export type { Config as default };
+export type { Config, Config as default };
