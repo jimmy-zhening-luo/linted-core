@@ -16,8 +16,8 @@ export default function (
   },
 ): Boundary.Output[] {
   try {
-    const F = new Files(files.base, files.includes),
-    R = new Rulesets(rules.preset, rules.overrides),
+    const F = new Files(files),
+    R = new Rulesets(rules),
     Pa: { [S in Scope]: ConstructorParameters<typeof Options[S]>[3] } = {
       js: [] as const,
       ts: [parsers.ts] as const,

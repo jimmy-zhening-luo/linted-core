@@ -70,9 +70,9 @@ export default abstract class Option<
       } = this;
 
       return {
+        plugins,
         linterOptions,
         languageOptions,
-        plugins,
         ...processor,
       } satisfies IOption<
         PluginId,

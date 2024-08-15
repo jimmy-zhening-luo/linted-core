@@ -1,4 +1,11 @@
 import type Base from "./base/index.js";
 import type Includes from "./includes/index.js";
 
-export type { Base, Includes };
+type Files = { base: Base; includes: Includes };
+
+export type {
+  Base,
+  Includes,
+  Files,
+  Files as default,
+};
