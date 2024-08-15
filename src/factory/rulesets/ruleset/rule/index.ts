@@ -1,4 +1,4 @@
-import type { Input } from "../../../boundary/index.js";
+import type { Input } from "../../../../boundary/index.js";
 
 export default class {
   constructor(

@@ -1,6 +1,6 @@
 import globals from "globals";
 import type { Scope } from "../../../scopes/index.js";
-import type { Ruleset } from "../../index.js";
+import type Ruleset from "../../rulesets/ruleset/index.js";
 import type { Plugins } from "../../../dependency/index.js";
 import type { Output } from "../../../boundary/index.js";
 

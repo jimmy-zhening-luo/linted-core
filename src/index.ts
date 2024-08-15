@@ -1,11 +1,6 @@
 import scopes, { type Scope } from "./scopes/index.js";
 import type * as Boundary from "./boundary/index.js";
-import {
-  Options,
-  Files,
-  Ruleset,
-  Rule,
-} from "./factory/index.js";
+import { Options, Files, Rulesets } from "./factory/index.js";
 
 export type { Boundary };
 export default function (
@@ -21,19 +16,9 @@ export default function (
   },
 ): Boundary.Output[] {
   try {
-    const f = new Files(files.base, files.includes),
-    rulesets = {
-      js: new Ruleset("js", ...rules.preset.js.map(args => new Rule(...args))),
-      ts: new Ruleset("ts", ...rules.preset.ts.map(args => new Rule(...args))),
-      svelte: new Ruleset("svelte", ...rules.preset.svelte.map(args => new Rule(...args))),
-      mocha: new Ruleset("mocha", ...rules.preset.mocha.map(args => new Rule(...args))),
-      html: new Ruleset("html", ...rules.preset.html.map(args => new Rule(...args))),
-      json: new Ruleset("json", ...rules.preset.json.map(args => new Rule(...args))),
-      jsonc: new Ruleset("jsonc", ...rules.preset.jsonc.map(args => new Rule(...args))),
-      yml: new Ruleset("yml", ...rules.preset.yml.map(args => new Rule(...args))),
-      md: new Ruleset("md", ...rules.preset.md.map(args => new Rule(...args))),
-    },
-    scopedParsers: { [S in Scope]: ConstructorParameters<typeof Options[S]>[3] } = {
+    const F = new Files(files.base, files.includes),
+    R = new Rulesets(rules.preset, rules.overrides),
+    Pa: { [S in Scope]: ConstructorParameters<typeof Options[S]>[3] } = {
       js: [] as const,
       ts: [parsers.ts] as const,
       svelte: [parsers.svelte, parsers.ts] as const,
@@ -43,74 +28,70 @@ export default function (
       jsonc: [parsers.jsonc] as const,
       yml: [parsers.yml] as const,
       md: [parsers.md] as const,
-    } as const;
-
-    for (const scope of scopes)
-      rulesets[scope].override(rules.overrides[scope]);
-
-    const options: { [S in Scope]: InstanceType<typeof Options[S]>["configs"] } = {
+    } as const,
+    options: { [S in Scope]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
-          f.files("js"),
-          rulesets.js,
+          F.files("js"),
+          R.ruleset("js"),
           { "@stylistic": plugins["@stylistic"] },
-          scopedParsers.js,
+          Pa.js,
         ).configs,
       ts: new Options
         .ts(
-          f.files("ts"),
-          rulesets.ts,
+          F.files("ts"),
+          R.ruleset("ts"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"] },
-          scopedParsers.ts,
+          Pa.ts,
         ).configs,
       svelte: new Options
         .svelte(
-          f.files("svelte"),
-          rulesets.svelte,
+          F.files("svelte"),
+          R.ruleset("svelte"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], svelte: plugins.svelte },
-          scopedParsers.svelte,
+          Pa.svelte,
         ).configs,
       mocha: new Options
         .mocha(
-          f.files("mocha"),
-          rulesets.mocha,
+          F.files("mocha"),
+          R.ruleset("mocha"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], mocha: plugins.mocha },
-          scopedParsers.mocha,
+          Pa.mocha,
         ).configs,
       html: new Options
         .html(
-          f.files("html"),
-          rulesets.html,
+          F.files("html"),
+          R.ruleset("html"),
           { "@html-eslint": plugins["@html-eslint"] },
-          scopedParsers.html,
+          Pa.html,
         ).configs,
       json: new Options
         .json(
-          f.files("json"),
-          rulesets.json,
+          F.files("json"),
+          R.ruleset("json"),
           { jsonc: plugins.jsonc },
-          scopedParsers.json,
+          Pa.json,
         ).configs,
       jsonc: new Options
         .jsonc(
-          f.files("jsonc"),
-          rulesets.jsonc,
+          F.files("jsonc"),
+          R.ruleset("jsonc"),
           { jsonc: plugins.jsonc },
-          scopedParsers.jsonc,
+          Pa.jsonc,
         ).configs,
       yml: new Options
         .yml(
-          f.files("yml"),
-          rulesets.yml,
+          F.files("yml"),
+          R.ruleset("yml"),
           { yml: plugins.yml },
-          scopedParsers.yml,
+          Pa.yml,
         ).configs,
       md: new Options
         .md(
-          f.files("md"),
-          rulesets.md,
+          F.files("md"),
+          R.ruleset("md"),
           { markdownlint: plugins.markdownlint },
-          scopedParsers.md,
+          Pa.md,
         ).configs,
     };
 

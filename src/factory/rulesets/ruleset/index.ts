@@ -1,4 +1,4 @@
-import type { Scope } from "../../scopes/index.js";
+import type { Scope } from "../../../scopes/index.js";
 import Rule from "./rule/index.js";
 
 export { Rule };
