@@ -6,14 +6,8 @@ export type { Boundary };
 export default function (
   plugins: Boundary.Input.Plugins,
   parsers: Boundary.Input.Parsers,
-  files: {
-    base: Boundary.Input.Files.Base;
-    includes: Boundary.Input.Files.Includes;
-  },
-  rules: {
-    preset: Boundary.Input.Rules.Preset;
-    overrides: Boundary.Input.Rules.Overrides;
-  },
+  files: Boundary.Input.Files.Files,
+  rules: Boundary.Input.Rules.Rules,
 ): Boundary.Output[] {
   try {
     const F = new Files(files),
