@@ -1,17 +1,12 @@
 declare type IOption<
   PluginId extends string,
   IsEcma extends boolean,
-  ParserOptions extends object | boolean,
+  ParserOptions extends boolean | object,
   GlobalTypes extends string,
   Processor extends object,
 > =
-  {
-    linterOptions: IOLinter;
-    languageOptions: IOLanguage<
-      IsEcma,
-      ParserOptions,
-      GlobalTypes
-    >;
-  }
+  & { linterOptions: IOLinter }
+  & { languageOptions: IOLanguage<IsEcma, ParserOptions, GlobalTypes> }
   & (IOPlugins<PluginId> extends never ? object : { plugins: IOPlugins<PluginId> })
-  & (Interface<Processor> extends never ? object : Interface<Processor> extends { "interface": string } ? Interface<Processor> : object);
+  & (Interface<Processor> extends never ? object : Interface<Processor> extends { "interface": string } ? Interface<Processor> : object)
+;
