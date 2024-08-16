@@ -5,10 +5,18 @@ import type * as Rules from "./rules/index.js";
 
 type Files = Files.Files;
 type Rules = Rules.Rules;
+interface Input {
+  files: Files,
+  rules: Rules,
+  plugins: Plugins,
+  parsers: Parsers,
+}
 
 export type {
   Files,
   Rules,
   Plugins,
   Parsers,
+  Input,
+  Input as default,
 };
