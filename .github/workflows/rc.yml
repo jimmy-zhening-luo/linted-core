@@ -10,7 +10,7 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
-      name: publish
+      name: rc
       url: https://www.npmjs.com/package/@eslinted/core
     name: Build/Publish (rc)
     steps:
