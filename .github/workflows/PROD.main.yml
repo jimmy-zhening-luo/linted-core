@@ -1,4 +1,4 @@
-name: NPM Publish (RELEASE.main)
+name: NPM Publish (RELEASE)
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
-  publish-release-main:
+  publish-release:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
-      name: RELEASE.main
+      name: publish
       url: https://www.npmjs.com/package/@eslinted/core
-    name: Build/Publish (RELEASE.main)
+    name: Build/Publish (RELEASE)
     steps:
       - name: Checkout
         id: checkout
