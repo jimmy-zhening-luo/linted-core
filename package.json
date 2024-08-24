@@ -25,8 +25,8 @@
     "globals": "^15.9.0"
   },
   "devDependencies": {
-    "eslint": "~9.9.0",
-    "linted": "~16.3.3",
+    "eslint": "~9.9.1",
+    "linted": "~16.3.4",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.5.4"
   },
