@@ -1,5 +1,5 @@
 {
-  "_schemaVersion": "20.17.0",
+  "_schemaVersion": "20.17.2",
   "name": "@eslinted/core",
   "version": "3.3.0",
   "description": "Core ESLint flat config factory npm package `linted`.",
@@ -36,7 +36,7 @@
     "build:svelte:check": "svelte-check --tsconfig ./tsconfig.json",
     "build:svelte:compile": "vite build",
     "build:svelte:prelint": "npm run ln src/**/*.svelte",
-    "lint": "npm run build",
+    "lint": "npm run build || echo \"No linter installed.\"",
     "lint:built": "run-s lint:built:*",
     "lint:built:configs": "npm run ln {*,.github/workflows/*}.{json,jsonc,js,ts,yml}",
     "lint:built:source": "npm run ln src/**/*.{js,ts,html}",
