@@ -25,7 +25,6 @@
     "globals": "^15.9.0"
   },
   "devDependencies": {
-    "eslint": "~9.10.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.6.2"
   },
@@ -40,7 +39,7 @@
     "lint:built": "run-s lint:built:*",
     "lint:built:configs": "npm run ln {*,.github/workflows/*}.{json,jsonc,js,ts,yml}",
     "lint:built:source": "npm run ln src/**/*.{js,ts,html}",
-    "ln": "eslint --cache --fix",
+    "ln": "eslint --cache --fix --no-error-on-unmatched-pattern",
     "pretest": "npm run build",
     "test": "",
     "start": "vite preview || node .",
