@@ -1,4 +1,4 @@
 declare type Negative<
-  N extends number,
+  N extends number = numberful,
   Zero = true,
-> = Pole<N, "-", Zero>;
+> = pole<"-", N, Zero>;
