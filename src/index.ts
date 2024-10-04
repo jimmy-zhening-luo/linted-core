@@ -7,7 +7,7 @@ import scopes from "./scopes/index.js";
 import type { Scope } from "./scopes/index.js";
 import type { Input, Output } from "./boundary/index.js";
 
-export type * as LintedCore from "./boundary/index.js";
+export type * as LintCore from "./boundary/index.js";
 export default function (
   plugins: Input.Plugins,
   parsers: Input.Parsers,
