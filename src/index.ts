@@ -5,19 +5,18 @@ import {
 } from "./factory/index.js";
 import scopes from "./scopes/index.js";
 import type { Scope } from "./scopes/index.js";
-import type { Input, Output } from "./boundary/index.js";
+import type * as Core from "./boundary/index.js";
 
-export type * as LintCore from "./boundary/index.js";
 export default function (
-  plugins: Input.Plugins,
-  parsers: Input.Parsers,
-  files: Input.Files,
-  rules: Input.Rules,
-): Output[] {
+  plugins: Core.Input.Plugins,
+  parsers: Core.Input.Parsers,
+  files: Core.Input.Files,
+  rules: Core.Input.Rules,
+): Core.Output[] {
   try {
     const F = new Files(files),
     R = new Rulesets(rules),
-    options: { [S in Scope]: InstanceType<typeof Options[S]>["configs"] } = {
+    options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
           F.files("js"),
@@ -87,3 +86,24 @@ export default function (
   }
   catch (e) { throw new Error(`linted-core`, { cause: e }); }
 }
+
+namespace LintCore {
+  export type Scopes = Scope;
+  export namespace Input {
+    export type Parsers = Core.Input.Parsers;
+    export type Plugins = Core.Input.Plugins;
+    export type Files = Core.Input.Files;
+    export namespace Files {
+      export type Base = Core.Input.Files.FileBase;
+      export type Includes = Core.Input.Files.Includes;
+    }
+    export type Rules = Core.Input.Rules;
+    export namespace Rules {
+      export type Base = Core.Input.Rules.RuleBase;
+      export type Overrides = Core.Input.Rules.Overrides;
+    }
+  }
+  export type Output = Core.Output[];
+}
+
+export type { LintCore };
