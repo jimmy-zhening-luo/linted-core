@@ -1,14 +1,19 @@
-import scopes, { type Scope } from "./scopes/index.js";
-import type * as Boundary from "./boundary/index.js";
-import { Options, Files, Rulesets } from "./factory/index.js";
+import {
+  Options,
+  Files,
+  Rulesets,
+} from "./factory/index.js";
+import scopes from "./scopes/index.js";
+import type { Scope } from "./scopes/index.js";
+import type { Input, Output } from "./boundary/index.js";
 
-export type { Boundary };
+export type * as LintedCore from "./boundary/index.js";
 export default function (
-  plugins: Boundary.Input.Plugins,
-  parsers: Boundary.Input.Parsers,
-  files: Boundary.Input.Files,
-  rules: Boundary.Input.Rules,
-): Boundary.Output[] {
+  plugins: Input.Plugins,
+  parsers: Input.Parsers,
+  files: Input.Files,
+  rules: Input.Rules,
+): Output[] {
   try {
     const F = new Files(files),
     R = new Rulesets(rules),

@@ -3,7 +3,7 @@ import type * as Config from "./option/index.js";
 
 interface Config {
   name: `linted/scope:${string}/rule:${string}+${string}`;
-  rules: Rules.Preset.Entry.Object;
+  rules: Rules.RuleBase.RuleEntry.RuleObject;
   files: readonly string[];
   linterOptions: {
     noInlineConfig: true;

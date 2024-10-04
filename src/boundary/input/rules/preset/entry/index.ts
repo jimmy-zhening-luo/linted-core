@@ -1,5 +1,9 @@
-import type * as Entry from "./object/index.js";
+import type * as RuleEntry from "./object/index.js";
 
-type Entry = readonly [string, Entry.Object];
+type RuleEntry = readonly [string, RuleEntry.RuleObject];
 
-export type { Entry, Entry as default };
+export type {
+  RuleEntry,
+  RuleEntry as Entry,
+  RuleEntry as default,
+};

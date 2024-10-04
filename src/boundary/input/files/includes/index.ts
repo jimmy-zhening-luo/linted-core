@@ -1,5 +1,5 @@
-import type * as Includes from "../base/index.js";
+import type * as Includes from "../default/index.js";
 
-type Includes = Partial<Includes.Base>;
+type Includes = Partial<Includes.FileBase>;
 
 export type { Includes, Includes as default };

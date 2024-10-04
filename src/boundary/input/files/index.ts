@@ -1,10 +1,10 @@
-import type Base from "./base/index.js";
+import type FileBase from "./default/index.js";
 import type Includes from "./includes/index.js";
 
-type Files = { base: Base; includes: Includes };
+type Files = { files: FileBase; includes: Includes };
 
 export type {
-  Base,
+  FileBase,
   Includes,
   Files,
   Files as default,

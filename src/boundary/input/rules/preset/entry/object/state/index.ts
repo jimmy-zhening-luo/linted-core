@@ -1,6 +1,10 @@
-type Level =
+type RuleLevel =
   | "error"
   | "warn"
   | "off";
 
-export type { Level, Level as default };
+export type {
+  RuleLevel,
+  RuleLevel as Level,
+  RuleLevel as default,
+};

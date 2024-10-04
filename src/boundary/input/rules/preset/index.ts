@@ -1,6 +1,10 @@
 import type { Scope } from "../../../../scopes/index.js";
-import type * as Preset from "./entry/index.js";
+import type * as RuleBase from "./entry/index.js";
 
-type Preset = Readonly<Record<Scope, readonly Preset.Entry[]>>;
+type RuleBase = Readonly<Record<Scope, readonly RuleBase.RuleEntry[]>>;
 
-export type { Preset, Preset as default };
+export type {
+  RuleBase,
+  RuleBase as Base,
+  RuleBase as default,
+};

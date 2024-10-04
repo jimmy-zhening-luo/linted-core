@@ -1,9 +1,13 @@
-import type * as Object from "./state/index.js";
+import type * as RuleObject from "./state/index.js";
 
-type Object = Readonly<Record<
+type RuleObject = Readonly<Record<
   string,
-  | Object.Level
-  | readonly [Object.Level, ...unknown[]]
+  | RuleObject.RuleLevel
+  | readonly [RuleObject.RuleLevel, ...unknown[]]
 >>;
 
-export type { Object, Object as default };
+export type {
+  RuleObject,
+  RuleObject as Object,
+  RuleObject as default,
+};
