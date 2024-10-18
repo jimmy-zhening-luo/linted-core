@@ -1,8 +1,5 @@
-import Rulesets from "./rulesets/index.js";
-import Files from "./files/index.js";
-import Options from "./options/index.js";
+import { Rulesets } from "./rulesets";
+import { Files } from "./files";
+import Options from "./options";
 
-export class Factory {
-
-}
 export { Options, Files, Rulesets };

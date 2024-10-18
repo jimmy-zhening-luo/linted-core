@@ -1,16 +1,22 @@
+import type { Input } from "@eslinted/core/input";
+import type { Scope } from "@eslinted/core/scopes";
+import type { Output } from "@eslinted/core/output";
+import type { Ruleset } from "../../ruleset";
+import type {
+  OptionTemplate,
+  LanguageOptions,
+  Plugins,
+  Globals,
+} from "./template";
 import globals from "globals";
-import type { Scope } from "../../../scopes/index.js";
-import type Ruleset from "../../rulesets/ruleset/index.js";
-import type { Plugins } from "../../../dependency/index.js";
-import type { Output } from "../../../boundary/index.js";
 
 export default abstract class Option<
   S extends Scope,
-  PluginId extends Plugins,
+  Plugin extends keyof Input["plugins"],
   IsEcma extends boolean = true,
   ParserOptions extends object | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,
-  GlobalTypes extends keyof typeof globals = never,
+  Global extends Globals = never,
   Processor extends object = never,
 > {
   private readonly linterOptions = { noInlineConfig: true, reportUnusedDisableDirectives: "error" } as const;
@@ -25,11 +31,11 @@ export default abstract class Option<
   constructor(
     public readonly files: readonly string[],
     public readonly ruleset: Ruleset<S>,
-    public readonly plugins: Output.Config.Plugins<PluginId>,
+    public readonly plugins: Plugins<Plugin>,
     public readonly parser: Tuple<unknown, ParserCount>,
   ) {}
 
-  public get configs(): Output[] {
+  public get configs(): Output {
     try {
       const {
         scope,
@@ -74,20 +80,20 @@ export default abstract class Option<
         linterOptions,
         languageOptions,
         ...processor,
-      } satisfies Output.Config.IOption<
-        PluginId,
+      } satisfies OptionTemplate<
+        Plugin,
         IsEcma,
         ParserOptions,
-        GlobalTypes,
+        Global,
         Processor
       >;
     }
     catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }
   }
 
-  protected abstract get languageOptions(): Output.Config.Language<IsEcma, ParserOptions, GlobalTypes>;
+  protected abstract get languageOptions(): LanguageOptions<IsEcma, ParserOptions, Global>;
 
-  protected globals(type: GlobalTypes) {
+  protected globals(type: Global) {
     return globals[type];
   }
 }

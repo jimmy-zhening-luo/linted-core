@@ -1,18 +1,19 @@
+import type { Input } from "./input";
+import type { Scope } from "./scopes";
+import type { Output } from "./output";
+import { scopes } from "./scopes";
 import {
-  Options,
   Files,
   Rulesets,
-} from "./factory/index.js";
-import scopes from "./scopes/index.js";
-import type { Scope } from "./scopes/index.js";
-import type * as core from "./boundary/index.js";
+  Options,
+} from "./factory";
 
 export default function (
-  plugins: core.Input.Plugins,
-  parsers: core.Input.Parsers,
-  files: core.Input.Files,
-  rules: core.Input.Rules,
-): core.Output[] {
+  plugins: Input["plugins"],
+  parsers: Input["parsers"],
+  files: Input["files"],
+  rules: Input["rules"],
+): Output {
   try {
     const F = new Files(files),
     R = new Rulesets(rules),
@@ -90,20 +91,20 @@ export default function (
 namespace Core {
   export type Scopes = Scope;
   export namespace Input {
-    export type Parsers = core.Input.Parsers;
-    export type Plugins = core.Input.Plugins;
-    export type Files = core.Input.Files;
+    export type Parsers = Input["parsers"];
+    export type Plugins = Input["plugins"];
+    export type Files = Input["files"];
     export namespace Files {
-      export type Base = core.Input.Files.FileBase;
-      export type Includes = core.Input.Files.Includes;
+      export type Base = Files["files"];
+      export type Includes = Files["includes"];
     }
-    export type Rules = core.Input.Rules;
+    export type Rules = Input["rules"];
     export namespace Rules {
-      export type Base = core.Input.Rules.RuleBase;
-      export type Overrides = core.Input.Rules.Overrides;
+      export type Base = Rules["rules"];
+      export type Overrides = Rules["overrides"];
     }
   }
-  export type Output = core.Output[];
+  export type Output = Output[];
 }
 
 export type { Core };
