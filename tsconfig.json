@@ -1,7 +1,7 @@
 {
   "display": "@jimbojet/tsc",
   "$schema": "https://json.schemastore.org/tsconfig",
-  "_version": "5.6.1-core.0",
+  "_version": "5.6.1-core.1",
   "include": [
     "*.config.ts",
     "src/**/*.ts",
@@ -10,7 +10,7 @@
   ],
   "exclude": [],
   "compilerOptions": {
-    /* http://aka.ms/tsconfig#quick-nav-Top%20Level */
+    /* https://www.typescriptlang.org/tsconfig/#quick-nav-Top%20Level */
 
     // #region TYPE CHECKING
     "allowUnreachableCode": false,
@@ -41,7 +41,7 @@
     // "allowUmdGlobalAccess": true,
     // "baseUrl": "./",
     // "customConditions": [],
-    "module": "preserve",
+    "module": "es2022",
     "moduleResolution": "bundler",
     // "moduleSuffixes": [],
     // "noResolve": true,
@@ -118,7 +118,7 @@
       "es2023",
       /* {CONFIGURE} */
     ],
-    "moduleDetection": "force",
+    // "moduleDetection": "auto",
     // "noLib": true,
     // "reactNamespace": "",
     "target": "es2022",
