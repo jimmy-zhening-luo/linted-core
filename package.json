@@ -17,16 +17,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./input": {
-      "types": "./dist/input.d.ts"
-    },
-    "./scopes": {
-      "types": "./dist/scopes.d.ts",
-      "default": "./dist/scopes.js"
-    },
-    "./output": {
-      "types": "./dist/output.d.ts"
     }
   },
   "config": {

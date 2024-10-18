@@ -1,6 +1,9 @@
 import type { Input } from "./input";
 import type { Scope } from "./scopes";
 import type { Output } from "./output";
+
+export type { Input, Scope, Output };
+
 import { scopes } from "./scopes";
 import {
   Files,

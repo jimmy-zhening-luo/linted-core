@@ -1,5 +1,5 @@
-import type { Input } from "@eslinted/core/input";
-import type { Scope } from "@eslinted/core/scopes";
+import type { Input } from "@eslinted/core";
+import type { Scope } from "@eslinted/core";
 import { Ruleset, Rule } from "./ruleset";
 
 export class Rulesets {

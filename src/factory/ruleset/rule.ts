@@ -1,4 +1,4 @@
-import type { Input } from "@eslinted/core/input";
+import type { Input } from "@eslinted/core";
 
 export class Rule {
   constructor(
