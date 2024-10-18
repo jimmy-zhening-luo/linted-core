@@ -1,5 +1,4 @@
-import type { Scope } from "@eslinted/core";
-import type { Input } from "@eslinted/core";
+import type { Scope, Input } from ".";
 
 export class Files {
   constructor(private readonly input: Input["files"]) {}

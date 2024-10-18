@@ -1,3 +1,4 @@
+export type Scope = (typeof scopes)[number];
 export const scopes = [
   "js",
   "ts",
@@ -9,4 +10,3 @@ export const scopes = [
   "yml",
   "md",
 ] as const;
-export type Scope = (typeof scopes)[number];

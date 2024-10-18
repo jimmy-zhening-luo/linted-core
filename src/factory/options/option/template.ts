@@ -3,6 +3,7 @@ import type { Linter } from "./params/linter";
 import type { Plugins } from "./params/plugins";
 import type { Globals } from "./params/globals";
 
+export type { Input, Scope, Output } from "..";
 export type {
   LanguageOptions,
   Linter,

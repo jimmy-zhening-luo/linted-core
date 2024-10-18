@@ -1,4 +1,4 @@
-export type Plugins =
+export type Plugins = (
   | "@stylistic"
   | "@typescript-eslint"
   | "svelte"
@@ -6,4 +6,5 @@ export type Plugins =
   | "@html-eslint"
   | "jsonc"
   | "yml"
-  | "markdownlint";
+  | "markdownlint"
+);

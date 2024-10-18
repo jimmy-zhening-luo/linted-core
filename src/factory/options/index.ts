@@ -8,6 +8,7 @@ import jsonc from "./jsonc";
 import yml from "./yml";
 import md from "./md";
 
+export type { Input, Scope, Output } from "..";
 export default {
   js,
   ts,

@@ -1,7 +1,7 @@
-import type { Input } from "@eslinted/core";
-import type { Scope } from "@eslinted/core";
+import type { Scope, Input } from "..";
 import { Rule } from "./rule";
 
+export type { Input };
 export { Rule };
 export class Ruleset<S extends Scope> {
   public readonly ruleset: readonly Rule[];

@@ -1,8 +1,8 @@
-import type { Input } from "@eslinted/core";
-import type { Scope } from "@eslinted/core";
-import type { Output } from "@eslinted/core";
 import type { Ruleset } from "../../ruleset";
 import type {
+  Input,
+  Scope,
+  Output,
   OptionTemplate,
   LanguageOptions,
   Plugins,

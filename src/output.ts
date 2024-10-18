@@ -1,4 +1,6 @@
-import type { Input } from "./input";
+import type { Input } from "./inputs";
+
+export type Output = Config[];
 
 interface Config {
   name: `linted/scope:${string}/rule:${string}+${string}`;
@@ -20,5 +22,3 @@ interface Config {
   plugins: Record<string, Record<"configs", unknown>>;
   processor?: string;
 }
-
-export type Output = Config[];
