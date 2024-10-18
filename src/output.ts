@@ -1,4 +1,4 @@
-import type { Input } from "./inputs";
+import type { Input } from ".";
 
 export type Output = Config[];
 

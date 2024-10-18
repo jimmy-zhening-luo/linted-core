@@ -1,4 +1,4 @@
-import type { Input } from "./inputs";
+import type { Input } from "./input";
 import type { Scope } from "./scopes";
 import type { Output } from "./output";
 
