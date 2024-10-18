@@ -1,7 +1,7 @@
 {
   "display": "@jimbojet/tsc",
   "$schema": "https://json.schemastore.org/tsconfig",
-  "_version": "5.6.1",
+  "_version": "5.6.1-core.0",
   "include": [
     "*.config.ts",
     "src/**/*.ts",
@@ -41,7 +41,7 @@
     // "allowUmdGlobalAccess": true,
     // "baseUrl": "./",
     // "customConditions": [],
-    "module": "es2022",
+    "module": "preserve",
     "moduleResolution": "bundler",
     // "moduleSuffixes": [],
     // "noResolve": true,
@@ -118,7 +118,7 @@
       "es2023",
       /* {CONFIGURE} */
     ],
-    // "moduleDetection": "auto",
+    "moduleDetection": "force",
     // "noLib": true,
     // "reactNamespace": "",
     "target": "es2022",
