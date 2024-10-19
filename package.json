@@ -1,5 +1,5 @@
 {
-  "_schemaVersion": "20.18.0-core.0",
+  "_schemaVersion": "20.18.0",
   "name": "@eslinted/core",
   "version": "4.0.5-rc.6",
   "description": "Core ESLint flat config factory npm package `linted`.",
@@ -13,8 +13,8 @@
     "access": "public"
   },
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "config": {
     "language": "ts",
     "fix": "true",
