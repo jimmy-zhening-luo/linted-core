@@ -13,70 +13,68 @@ import {
 } from "./factory";
 
 export default function (
-  plugins: Input["plugins"],
-  parsers: Input["parsers"],
-  files: Input["files"],
-  rules: Input["rules"],
+  input: Input,
 ): Output {
   try {
-    const F = new Files(files),
-    R = new Rulesets(rules),
+    const files = new Files(input.files),
+    rulesets = new Rulesets(input.rules),
+    { parsers, plugins } = input,
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
           { "@stylistic": plugins["@stylistic"] },
           [],
-          F.files("js"),
-          R.ruleset("js"),
+          files.files("js"),
+          rulesets.ruleset("js"),
         ).configs,
       ts: new Options
         .ts(
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"] },
           [parsers.ts],
-          F.files("ts"),
-          R.ruleset("ts"),
+          files.files("ts"),
+          rulesets.ruleset("ts"),
         ).configs,
       svelte: new Options
         .svelte(
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], svelte: plugins.svelte },
           [parsers.svelte, parsers.ts],
-          F.files("svelte"),
-          R.ruleset("svelte"),
+          files.files("svelte"),
+          rulesets.ruleset("svelte"),
         ).configs,
       mocha: new Options
         .mocha(
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], mocha: plugins.mocha },
           [parsers.ts],
-          F.files("mocha"),
-          R.ruleset("mocha"),
+          files.files("mocha"),
+          rulesets.ruleset("mocha"),
         ).configs,
       html: new Options
         .html(
           { "@html-eslint": plugins["@html-eslint"] },
           [parsers.html],
-          F.files("html"),
-          R.ruleset("html"),
+          files.files("html"),
+          rulesets.ruleset("html"),
         ).configs,
       json: new Options
         .json(
           { jsonc: plugins.jsonc },
           [parsers.jsonc],
-          F.files("json"),
-          R.ruleset("json"),
+          files.files("json"),
+          rulesets.ruleset("json"),
         ).configs,
       jsonc: new Options
         .jsonc(
           { jsonc: plugins.jsonc },
           [parsers.jsonc],
-          F.files("jsonc"),
-          R.ruleset("jsonc"),
+          files.files("jsonc"),
+          rulesets.ruleset("jsonc"),
         ).configs,
       yml: new Options
         .yml(
           { yml: plugins.yml },
           [parsers.yml],
-          F.files("yml"),
-          R.ruleset("yml"),
+          files.files("yml"),
+          rulesets.ruleset("yml"),
         ).configs,
     };
 

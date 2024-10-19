@@ -7,12 +7,12 @@ import { Ruleset } from "./ruleset";
 export class Rulesets {
   private readonly rulesets = new Map<string, Ruleset>();
 
-  constructor(private readonly input: Input["rules"]) {
-    const { rules, overrides } = this.input,
-    scopes = Object.keys(rules) as (keyof typeof rules)[];
+  constructor(rules: Input["rules"]) {
+    const { rules: base, overrides } = rules,
+    scopes = Object.keys(base) as (keyof typeof base)[];
 
     for (const scope of scopes)
-      this.rulesets.set(scope, new Ruleset(scope, rules[scope], overrides[scope]));
+      this.rulesets.set(scope, new Ruleset(scope, base[scope], overrides[scope]));
   }
 
   public ruleset(scope: string): Ruleset {

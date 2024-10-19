@@ -3,15 +3,15 @@ import type { Input } from ".";
 export class Files {
   private readonly _files = new Map<string, string[]>();
 
-  constructor(private readonly input: Input["files"]) {
-    const { files, includes } = this.input,
-    scopes = Object.keys(files) as (keyof typeof files)[];
+  constructor(files: Input["files"]) {
+    const { files: base, includes } = files,
+    scopes = Object.keys(base) as (keyof typeof base)[];
 
     for (const scope of scopes)
       this._files.set(
         scope,
         [
-          ...files[scope],
+          ...base[scope],
           ...scope in includes ? (includes[scope] as string[]) : [],
         ],
       );
