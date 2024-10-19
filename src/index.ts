@@ -78,13 +78,6 @@ export default function (
           F.files("yml"),
           R.ruleset("yml"),
         ).configs,
-      md: new Options
-        .md(
-          { markdownlint: plugins.markdownlint },
-          [parsers.md],
-          F.files("md"),
-          R.ruleset("md"),
-        ).configs,
     };
 
     return scopes.flatMap(scope => options[scope]);

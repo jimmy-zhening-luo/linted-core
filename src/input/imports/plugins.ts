@@ -6,5 +6,4 @@ export type Plugins = (
   | "@html-eslint"
   | "jsonc"
   | "yml"
-  | "markdownlint"
 );

@@ -7,5 +7,4 @@ export type Parsers = Scope
     | "html"
     | "jsonc"
     | "yml"
-    | "md"
 );

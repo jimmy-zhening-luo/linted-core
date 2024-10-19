@@ -8,5 +8,4 @@ export const scopes = [
   "json",
   "jsonc",
   "yml",
-  "md",
 ] as const;
