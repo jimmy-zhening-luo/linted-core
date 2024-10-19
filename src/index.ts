@@ -12,9 +12,7 @@ import {
   Options,
 } from "./factory";
 
-export default function (
-  input: Input,
-): Output {
+export default function (input: Input): Output {
   try {
     const files = new Files(input.files),
     rulesets = new Rulesets(input.rules),
@@ -82,27 +80,3 @@ export default function (
   }
   catch (e) { throw new Error(`linted-core`, { cause: e }); }
 }
-
-// #region DEPRECATED
-namespace Core {
-  export type Scopes = typeof scopes[number];
-  export namespace Input {
-    export type Parsers = Input["parsers"];
-    export type Plugins = Input["plugins"];
-    export type Files = Input["files"];
-    export namespace Files {
-      export type Base = Files["files"];
-      export type Includes = Files["includes"];
-    }
-    export type Rules = Input["rules"];
-    export namespace Rules {
-      export type Base = Rules["rules"];
-      export type Overrides = Rules["overrides"];
-    }
-  }
-  export type Output = Output[];
-}
-
-export type { Core };
-
-// #endregion
