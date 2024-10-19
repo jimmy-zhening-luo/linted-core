@@ -1,3 +1,3 @@
-import type { Plugins as Imports } from "./imports/plugins";
+import type { Plugins } from "./imports/plugins";
 
-export type Plugins = Readonly<Record<Imports, { configs: unknown }>>;
+export type PluginsInput = Record<Plugins, { configs: unknown }>;

@@ -1,3 +1,5 @@
+export type { Scope, Input, Output } from "..";
+
 import js from "./js";
 import ts from "./ts";
 import svelte from "./svelte";
@@ -8,7 +10,6 @@ import jsonc from "./jsonc";
 import yml from "./yml";
 import md from "./md";
 
-export type { Input, Scope, Output } from "..";
 export default {
   js,
   ts,

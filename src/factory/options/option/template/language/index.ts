@@ -1,12 +1,12 @@
-import type { Ecma } from "./languageOptions/ecma";
-import type { Source } from "./languageOptions/source";
+import type { EcmaVersion } from "./ecma";
+import type { SourceType } from "./source";
 
 export type LanguageOptions<
   IsEcma extends boolean,
   ParserOptions extends object | boolean,
   GlobalTypes extends string,
 > =
- & (True<IsEcma> extends never ? object : { ecmaVersion: Ecma; sourceType: Source })
+ & (True<IsEcma> extends never ? object : { ecmaVersion: EcmaVersion; sourceType: SourceType })
  & (literalful<GlobalTypes> extends never ? object : { globals: Record<string, unknown> })
  & (
     ParserOptions extends boolean

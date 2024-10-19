@@ -1,3 +1,3 @@
-import type { Parsers as Imports } from "./imports/parsers";
+import type { Parsers } from "./imports/parsers";
 
-export type Parsers = Readonly<Record<Imports, unknown>>;
+export type ParsersInput = Record<Parsers, unknown>;

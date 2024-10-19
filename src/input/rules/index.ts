@@ -1,8 +1,14 @@
-import type { Preset } from "./preset";
-import type { Overrides } from "./overrides";
+import type { Scope } from "..";
+import type { RuleEntry } from "./entry";
 
-export type { Scope } from "..";
-export interface Rules {
-  rules: Preset;
-  overrides: Overrides;
+export interface RulesInput {
+  rules: Record<Scope, RuleEntry[]>;
+  overrides: Partial<Record<Scope, RuleEntry.Record>>;
+}
+export namespace RulesInput {
+  export type Entry = RuleEntry;
+  export namespace Entry {
+    export type Id = RuleEntry.Id;
+    export type Record = RuleEntry.Record;
+  }
 }

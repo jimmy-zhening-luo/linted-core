@@ -1,14 +1,14 @@
-import type { Ruleset } from "../../ruleset";
+import globals from "globals";
+import type { Ruleset } from "../../rulesets/ruleset";
 import type {
-  Input,
   Scope,
+  Input,
   Output,
   OptionTemplate,
   LanguageOptions,
   Plugins,
   Globals,
 } from "./template";
-import globals from "globals";
 
 export default abstract class Option<
   S extends Scope,
@@ -29,41 +29,33 @@ export default abstract class Option<
       : object;
 
   constructor(
-    public readonly files: readonly string[],
-    public readonly ruleset: Ruleset<S>,
     public readonly plugins: Plugins<Plugin>,
     public readonly parser: Tuple<unknown, ParserCount>,
+    public readonly files: string[],
+    public readonly ruleset: Ruleset,
   ) {}
 
   public get configs(): Output {
-    try {
-      const {
-        scope,
-        ruleset,
-        files,
-        option,
-      } = this;
+    const {
+      scope,
+      ruleset,
+      files,
+      option,
+    } = this;
 
-      if (ruleset.id !== scope)
-        throw new TypeError(`Option and Ruleset scope mismatch`, { cause: { option: scope, ruleset: ruleset.id } });
-      else if (files.length < 1)
-        return [];
-      else {
-        const baseName = `linted/scope:${scope}/rule:${ruleset.id}` as const;
+    if (ruleset.scope !== scope)
+      throw new TypeError(`Scope mismatch between option and ruleset`, { cause: { option: scope, ruleset: ruleset.scope } });
 
-        return ruleset.records.map(([ruleId, rules]) => {
-          const name = `${baseName}+${ruleId}` as const;
-
-          return {
-            name,
-            files,
-            rules,
-            ...option,
-          };
-        });
-      }
-    }
-    catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: configs`, { cause: e }); }
+    return files.length < 1
+      ? []
+      : ruleset.ruleset.map(({ id, rule }) => {
+        return {
+          name: `linted/${id}`,
+          files,
+          rules: rule,
+          ...option,
+        };
+      });
   }
 
   private get option() {

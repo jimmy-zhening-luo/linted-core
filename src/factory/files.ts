@@ -1,14 +1,26 @@
-import type { Scope, Input } from ".";
+import type { Input } from ".";
 
 export class Files {
-  constructor(private readonly input: Input["files"]) {}
+  private readonly _files = new Map<string, string[]>();
 
-  public files(scope: Scope): readonly string[] {
-    try {
-      const { files, includes } = this.input;
+  constructor(private readonly input: Input["files"]) {
+    const { files, includes } = this.input,
+    scopes = Object.keys(files) as (keyof typeof files)[];
 
-      return [...files[scope], ...includes[scope] ?? []];
-    }
-    catch (e) { throw new Error(`linted.factory.Files/scope:${scope}`, { cause: e }); }
+    for (const scope of scopes)
+      this._files.set(
+        scope,
+        [
+          ...files[scope],
+          ...scope in includes ? (includes[scope] as string[]) : [],
+        ],
+      );
+  }
+
+  public files(scope: string) {
+    if (!this._files.has(scope))
+      throw new ReferenceError(`Files not found for scope: ${scope}`);
+
+    return this._files.get(scope) as string[];
   }
 }

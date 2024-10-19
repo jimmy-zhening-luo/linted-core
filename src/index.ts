@@ -1,8 +1,9 @@
+export type { Scope } from "./scopes";
+
 import type { Input } from "./input";
-import type { Scope } from "./scopes";
 import type { Output } from "./output";
 
-export type { Input, Scope, Output };
+export type { Input, Output };
 
 import { scopes } from "./scopes";
 import {
@@ -23,66 +24,66 @@ export default function (
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
-          F.files("js"),
-          R.ruleset("js"),
           { "@stylistic": plugins["@stylistic"] },
           [],
+          F.files("js"),
+          R.ruleset("js"),
         ).configs,
       ts: new Options
         .ts(
-          F.files("ts"),
-          R.ruleset("ts"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"] },
           [parsers.ts],
+          F.files("ts"),
+          R.ruleset("ts"),
         ).configs,
       svelte: new Options
         .svelte(
-          F.files("svelte"),
-          R.ruleset("svelte"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], svelte: plugins.svelte },
           [parsers.svelte, parsers.ts],
+          F.files("svelte"),
+          R.ruleset("svelte"),
         ).configs,
       mocha: new Options
         .mocha(
-          F.files("mocha"),
-          R.ruleset("mocha"),
           { "@stylistic": plugins["@stylistic"], "@typescript-eslint": plugins["@typescript-eslint"], mocha: plugins.mocha },
           [parsers.ts],
+          F.files("mocha"),
+          R.ruleset("mocha"),
         ).configs,
       html: new Options
         .html(
-          F.files("html"),
-          R.ruleset("html"),
           { "@html-eslint": plugins["@html-eslint"] },
           [parsers.html],
+          F.files("html"),
+          R.ruleset("html"),
         ).configs,
       json: new Options
         .json(
-          F.files("json"),
-          R.ruleset("json"),
           { jsonc: plugins.jsonc },
           [parsers.jsonc],
+          F.files("json"),
+          R.ruleset("json"),
         ).configs,
       jsonc: new Options
         .jsonc(
-          F.files("jsonc"),
-          R.ruleset("jsonc"),
           { jsonc: plugins.jsonc },
           [parsers.jsonc],
+          F.files("jsonc"),
+          R.ruleset("jsonc"),
         ).configs,
       yml: new Options
         .yml(
-          F.files("yml"),
-          R.ruleset("yml"),
           { yml: plugins.yml },
           [parsers.yml],
+          F.files("yml"),
+          R.ruleset("yml"),
         ).configs,
       md: new Options
         .md(
-          F.files("md"),
-          R.ruleset("md"),
           { markdownlint: plugins.markdownlint },
           [parsers.md],
+          F.files("md"),
+          R.ruleset("md"),
         ).configs,
     };
 
@@ -91,8 +92,9 @@ export default function (
   catch (e) { throw new Error(`linted-core`, { cause: e }); }
 }
 
+// #region DEPRECATED
 namespace Core {
-  export type Scopes = Scope;
+  export type Scopes = typeof scopes[number];
   export namespace Input {
     export type Parsers = Input["parsers"];
     export type Plugins = Input["plugins"];
@@ -111,3 +113,5 @@ namespace Core {
 }
 
 export type { Core };
+
+// #endregion

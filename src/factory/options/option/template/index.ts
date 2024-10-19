@@ -1,9 +1,10 @@
-import type { LanguageOptions } from "./params/language";
-import type { Linter } from "./params/linter";
-import type { Plugins } from "./params/plugins";
-import type { Globals } from "./params/globals";
+export type { Scope, Input, Output } from "../..";
 
-export type { Input, Scope, Output } from "..";
+import type { LanguageOptions } from "./language";
+import type { Linter } from "./linter";
+import type { Plugins } from "./plugins";
+import type { Globals } from "./globals";
+
 export type {
   LanguageOptions,
   Linter,

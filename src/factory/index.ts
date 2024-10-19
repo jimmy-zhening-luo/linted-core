@@ -1,6 +1,7 @@
-import { Rulesets } from "./rulesets";
-import { Files } from "./files";
+export type { Scope, Input, Output } from "..";
+
 import Options from "./options";
+import { Files } from "./files";
+import { Rulesets } from "./rulesets";
 
 export { Options, Files, Rulesets };
-export type { Input, Scope, Output } from "..";
