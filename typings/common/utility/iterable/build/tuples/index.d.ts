@@ -1,0 +1,10 @@
+declare type Monad<I = string> = Tuple<1, I>;
+declare type Dyad<I = string> = Tuple<2, I>;
+declare type Triad<I = string> = Tuple<3, I>;
+declare type Quad<I = string> = Tuple<4, I>;
+declare type Pentad<I = string> = Tuple<5, I>;
+declare type Hexad<I = string> = Tuple<6, I>;
+declare type Heptad<I = string> = Tuple<7, I>;
+declare type Octad<I = string> = Tuple<8, I>;
+declare type Nonad<I = string> = Tuple<9, I>;
+declare type Decad<I = string> = Tuple<10, I>;

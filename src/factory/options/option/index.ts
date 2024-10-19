@@ -30,7 +30,7 @@ export default abstract class Option<
 
   constructor(
     public readonly plugins: Plugins<Plugin>,
-    public readonly parser: Tuple<unknown, ParserCount>,
+    public readonly parser: Tuple<ParserCount, unknown>,
     public readonly files: string[],
     public readonly ruleset: Ruleset,
   ) {}

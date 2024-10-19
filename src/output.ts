@@ -16,7 +16,7 @@ export type Output = (
       ecmaVersion?: "latest";
       globals?: Table<true>;
       parser?: unknown;
-      parserOptions?: Record<string, unknown>; // TODO: Change to Table<unknown> after lib update
+      parserOptions?: Table;
     };
     plugins: Table<Record<"configs", unknown>>;
     processor?: string;
