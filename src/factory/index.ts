@@ -3,8 +3,9 @@ export type { Scope, Input, Output } from "..";
 import type { Input } from "..";
 import { Files } from "./files";
 import { Rulesets } from "./rulesets";
+import Options from "./options";
 
-export Options from "./options";
+export { Options };
 export class Factory {
   public readonly files: Files;
   public readonly rulesets: Rulesets;
