@@ -14,9 +14,9 @@ import {
 
 export default function (input: Input): Output {
   try {
-    const files = new Files(input.files),
+    const { parsers, plugins } = input,
+    files = new Files(input.files),
     rulesets = new Rulesets(input.rules),
-    { parsers, plugins } = input,
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
