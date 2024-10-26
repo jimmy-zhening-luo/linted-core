@@ -53,6 +53,8 @@
     // "typeRoots": [],
     "types": [
       /* {CONFIGURE} */
+      "mocha",
+      "chai",
     ],
     // #endregion MODULES
 
