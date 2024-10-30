@@ -1,5 +1,5 @@
 {
-  "_schemaVersion": "20.18.2",
+  "_schemaVersion": "22.10.0",
   "name": "@eslinted/core",
   "version": "5.0.7",
   "description": "Core ESLint flat config factory npm package `linted`.",
@@ -22,8 +22,8 @@
   },
   "engineStrict": true,
   "engines": {
-    "node": ">=20.18.0",
-    "npm": ">=10.8.2"
+    "node": ">=22.10.0",
+    "npm": ">=10.9.0"
   },
   "peerDependenciesMeta": {},
   "dependencies": {
