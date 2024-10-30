@@ -9,4 +9,22 @@ describe("Scopes", function () {
         .that.has.lengthOf.at.least(1);
     });
   });
+  describe("order", function () {
+    it("jsonc > json", function () {
+      expect(scopes.indexOf("jsonc"))
+        .greaterThan(scopes.indexOf("json"));
+    });
+    it("ts > js", function () {
+      expect(scopes.indexOf("ts"))
+        .greaterThan(scopes.indexOf("js"));
+    });
+    it("mocha > ts", function () {
+      expect(scopes.indexOf("mocha"))
+        .greaterThan(scopes.indexOf("ts"));
+    });
+    it("svelte > ts", function () {
+      expect(scopes.indexOf("svelte"))
+        .greaterThan(scopes.indexOf("ts"));
+    });
+  });
 });
