@@ -1,1 +1,1 @@
-export type Plugins<PluginId extends string> = { [P in literalful<PluginId>]: { configs: unknown } };
+export type Plugins<PluginId extends string> = Record<literalful<PluginId>, { configs: unknown }>;
