@@ -1,5 +1,5 @@
 {
-  "_schemaVersion": "22.10.2-rc.0",
+  "_schemaVersion": "22.10.2",
   "name": "@eslinted/core",
   "version": "9.0.0",
   "description": "Core ESLint flat config factory npm package `linted`.",
