@@ -28,7 +28,7 @@
   },
   "peerDependenciesMeta": {},
   "dependencies": {
-    "globals": "^15.11.0"
+    "globals": "^15.12.0"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",

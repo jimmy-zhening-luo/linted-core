@@ -6,11 +6,11 @@ export type LanguageOptions<
   ParserOptions extends object | boolean,
   GlobalTypes extends string,
 > =
- & (True<IsEcma> extends never ? object : { ecmaVersion: EcmaVersion; sourceType: SourceType })
+ & (Truth<IsEcma> extends never ? object : { ecmaVersion: EcmaVersion; sourceType: SourceType })
  & (literalful<GlobalTypes> extends never ? object : { globals: Record<string, unknown> })
  & (
     ParserOptions extends boolean
-      ? True<ParserOptions> extends never
+      ? Truth<ParserOptions> extends never
         ? object
         : { parser: unknown }
       : ParserOptions extends object
