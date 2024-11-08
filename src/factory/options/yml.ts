@@ -2,8 +2,6 @@ import Option from "./option";
 
 export default class Yml extends Option<
   "yml",
-  "yml",
-  false,
   true,
   1
 > {

@@ -1,10 +1,9 @@
 import type { Input } from ".";
 
-export type Output = (
+export type Output = [
   {
-    name: `linted/${string}`;
-    rules: Input["rules"]["rules"]["html"][number][1];
-    files: string[];
+    name: `linted`;
+    plugins: Table<Record<"configs", unknown>>;
     linterOptions: {
       noInlineConfig: true;
       reportUnusedDisableDirectives: "error";
@@ -12,13 +11,58 @@ export type Output = (
     languageOptions: {
       sourceType?:
         | "module"
-        | "script";
-      ecmaVersion?: "latest";
-      globals?: Table<true>;
-      parser?: unknown;
-      parserOptions?: Table;
+        | "script"
+      ;
+      ecmaVersion?:
+        | "latest"
+        | 3
+        | 5
+        | ToNumber<`20${
+          | 15
+          | 16
+          | 17
+          | 18
+          | 19
+          | 20
+          | 21
+          | 22
+          | 23
+          | 24
+        }`>;
     };
-    plugins: Table<Record<"configs", unknown>>;
-    processor?: string;
-  }
-)[];
+  },
+  ...(
+    {
+      name: `linted/${string}`;
+      rules: Input["rules"]["rules"]["html"][number][1];
+      files: string[];
+      languageOptions: {
+        sourceType?:
+          | "module"
+          | "script"
+        ;
+        ecmaVersion?:
+          | "latest"
+          | 3
+          | 5
+          | ToNumber<`20${
+            | 15
+            | 16
+            | 17
+            | 18
+            | 19
+            | 20
+            | 21
+            | 22
+            | 23
+            | 24
+          }`>;
+        globals?: Table<true>;
+        parser?: unknown;
+        parserOptions?: Table;
+      };
+      processor?: string;
+      language?: string;
+    }
+  )[],
+]

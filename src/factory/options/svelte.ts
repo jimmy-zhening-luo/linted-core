@@ -3,9 +3,10 @@ import type Ts from "./ts";
 
 export default class Svelte extends Option<
   "svelte",
-  "svelte" | keyof Ts["option"]["plugins"],
-  true,
-  { parser: unknown } & { extraFileExtensions: readonly [".svelte"] } & Ts["option"]["languageOptions"]["parserOptions"],
+  {
+    parser: unknown;
+    extraFileExtensions: readonly [".svelte"];
+  } & Ts["option"]["languageOptions"]["parserOptions"],
   2,
   never,
   { processor: "svelte/svelte" }
@@ -18,15 +19,13 @@ export default class Svelte extends Option<
     const [parser, tsParser] = this.parser;
 
     return {
-      ecmaVersion: "latest",
-      sourceType: "module",
       parser,
       parserOptions: {
         parser: tsParser,
         extraFileExtensions: [".svelte"] as const,
         project: "tsconfig.json",
-        ecmaVersion: "latest",
         sourceType: "module",
+        ecmaVersion: 2023,
       },
     } as const;
   }

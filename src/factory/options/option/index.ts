@@ -6,22 +6,17 @@ import type {
   Output,
   OptionTemplate,
   LanguageOptions,
-  Plugins,
   Globals,
 } from "./template";
 
 export default abstract class Option<
   S extends Scope,
-  Plugin extends keyof Input["plugins"],
-  IsEcma extends boolean = true,
   ParserOptions extends object | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,
   Global extends Globals = never,
   Processor extends object = never,
   Language extends object = never,
 > {
-  private readonly linterOptions = { noInlineConfig: true, reportUnusedDisableDirectives: "error" } as const;
-
   public abstract readonly scope: literalful<S>;
   public abstract readonly processor: Interface<Processor> extends never
     ? object
@@ -35,7 +30,6 @@ export default abstract class Option<
       : object;
 
   constructor(
-    public readonly plugins: Plugins<Plugin>,
     public readonly parser: Tuple<ParserCount, unknown>,
     public readonly files: string[],
     public readonly ruleset: Ruleset,
@@ -67,22 +61,16 @@ export default abstract class Option<
   private get option() {
     try {
       const {
-        plugins,
-        linterOptions,
         languageOptions,
         processor,
         language,
       } = this;
 
       return {
-        plugins,
-        linterOptions,
         languageOptions,
         ...processor,
         ...language,
       } satisfies OptionTemplate<
-        Plugin,
-        IsEcma,
         ParserOptions,
         Global,
         Processor,
@@ -92,7 +80,7 @@ export default abstract class Option<
     catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }
   }
 
-  protected abstract get languageOptions(): LanguageOptions<IsEcma, ParserOptions, Global>;
+  protected abstract get languageOptions(): LanguageOptions<ParserOptions, Global>;
 
   protected globals(type: Global) {
     return globals[type];

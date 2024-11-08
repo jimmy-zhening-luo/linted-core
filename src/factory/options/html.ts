@@ -2,8 +2,6 @@ import Option from "./option";
 
 export default class Html extends Option<
   "html",
-  "@html-eslint",
-  false,
   true,
   1
 > {

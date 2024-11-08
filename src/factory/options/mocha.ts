@@ -3,8 +3,6 @@ import type Ts from "./ts";
 
 export default class Mocha extends Option<
   "mocha",
-  "mocha" | keyof Ts["option"]["plugins"],
-  true,
   Ts["option"]["languageOptions"]["parserOptions"],
   1,
   "mocha"
@@ -19,10 +17,12 @@ export default class Mocha extends Option<
     globals = this.globals("mocha");
 
     return {
-      ecmaVersion: "latest",
-      sourceType: "module",
       parser,
-      parserOptions: { project: "tsconfig.json", ecmaVersion: "latest", sourceType: "module" },
+      parserOptions: {
+        project: "tsconfig.json",
+        sourceType: "module",
+        ecmaVersion: 2023,
+      },
       globals,
     } as const;
   }

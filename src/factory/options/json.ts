@@ -2,8 +2,6 @@ import Option from "./option";
 
 export default class Json extends Option<
   "json",
-  "jsonc",
-  false,
   true,
   1
 > {
