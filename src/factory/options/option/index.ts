@@ -7,15 +7,13 @@ import type {
   OptionTemplate,
   LanguageOptions,
   Globals,
-} from "./template";
-
-import type { Ruleset } from "../../rulesets/ruleset";
+} from "./template";import type { Ruleset } from "../../rulesets/ruleset";
 
 export default abstract class Option<
   S extends Scope,
   ParserOptions extends
-    | object
-    | boolean = false,
+  | object
+  | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,
   Global extends Globals = never,
   Processor extends object = never,

@@ -7,8 +7,8 @@ export type {
 };
 export type OptionTemplate<
   ParserOptions extends
-    | boolean
-    | object,
+  | boolean
+  | object,
   GlobalTypes extends Globals,
   Processor extends object,
   Language extends object,

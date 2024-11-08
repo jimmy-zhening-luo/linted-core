@@ -90,7 +90,7 @@ export default function (input: Input): Output {
         languageOptions: {
           sourceType: "module",
           ecmaVersion: 2023,
-        }
+        },
       } as const,
       ...scopes.flatMap(scope => options[scope]),
     ];

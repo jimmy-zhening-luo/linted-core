@@ -8,4 +8,4 @@ export type GlobalConfigIgnores = Partial<Record<
   never
 >> & {
   ignores: string[];
-}
+};

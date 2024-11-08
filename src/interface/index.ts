@@ -5,7 +5,5 @@ export type {
   RuleRecord,
   Config,
   ConfigProperty,
-} from "..";
-
-export type { Input } from "./input";
+} from "..";export type { Input } from "./input";
 export type { Output } from "./output";
