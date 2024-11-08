@@ -53,14 +53,14 @@ export default function (input: Input): Output {
         ).configs,
       json: new Options
         .json(
-          { json: plugins.json },
-          [],
+          { jsonc: plugins.jsonc },
+          [parsers.jsonc],
           ...factory.produce("json"),
         ).configs,
       jsonc: new Options
         .jsonc(
-          { json: plugins.json },
-          [],
+          { jsonc: plugins.jsonc },
+          [parsers.jsonc],
           ...factory.produce("jsonc"),
         ).configs,
       yml: new Options

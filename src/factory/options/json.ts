@@ -2,22 +2,18 @@ import Option from "./option";
 
 export default class Json extends Option<
   "json",
-  "json",
-  true,
+  "jsonc",
   false,
-  0,
-  never,
-  never,
-  { language: "json/json" }
+  true,
+  1
 > {
   public readonly scope = "json";
   public readonly processor = {};
-  public readonly language = { language: "json/json" } as const;
+  public readonly language = {};
 
   public get languageOptions() {
-    return {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    } as const;
+    const [parser] = this.parser;
+
+    return { parser } as const;
   }
 }
