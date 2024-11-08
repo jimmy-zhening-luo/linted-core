@@ -78,7 +78,7 @@ export default function (input: Input): Output {
 
     return [
       {
-        ignores: [];
+        ignores: [],
       } as const,
       {
         name: "linted",
