@@ -2,7 +2,6 @@ import globals from "globals";
 import type { Ruleset } from "../../rulesets/ruleset";
 import type {
   Scope,
-  Input,
   Output,
   OptionTemplate,
   LanguageOptions,
@@ -35,7 +34,7 @@ export default abstract class Option<
     public readonly ruleset: Ruleset,
   ) {}
 
-  public get configs(): Output {
+  public get configs(): Output[1][] {
     const {
       scope,
       ruleset,
