@@ -1,10 +1,9 @@
 import Option from "./option";
-import type Json from "./json";
 
 export default class Jsonc extends Option<
   "jsonc",
   true,
-  ConstructorParameters<typeof Json>[1]["length"]
+  1,
 > {
   public readonly scope = "jsonc";
   public readonly processor = {};
