@@ -29,7 +29,7 @@ export default function (input: Input): Output {
       languageOptions: {
         sourceType: "module",
         ecmaVersion: 2023,
-      }
+      },
     } as const,
     factory = new Factory(files, rules),
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
