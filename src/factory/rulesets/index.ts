@@ -1,7 +1,9 @@
+export type {
+  RuleEntry,
+  RuleRecord,
+} from "..";
+
 import type { Input } from "..";
-
-export type { Input };
-
 import { Ruleset } from "./ruleset";
 
 export class Rulesets {

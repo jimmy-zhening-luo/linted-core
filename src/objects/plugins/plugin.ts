@@ -1,4 +1,4 @@
-export type Plugins = (
+export type Plugin = (
   | "@stylistic"
   | "@typescript-eslint"
   | "svelte"

@@ -1,4 +1,4 @@
-import type { Scope } from "..";
+import type { Scope } from ".";
 
 export type Parsers = Scope
   & (

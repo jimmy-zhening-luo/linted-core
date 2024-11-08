@@ -1,12 +1,15 @@
-import type { Input } from ".";
+import type {
+  RuleEntry,
+  RuleRecord,
+} from ".";
 
 export class Ruleset {
-  public readonly ruleset: { id: string; rule: Input.Rule.Entry.Record }[];
+  public readonly ruleset: { id: string; rule: RuleRecord }[];
 
   constructor(
     public readonly scope: string,
-    rules: (readonly [string, Input.Rule.Entry.Record])[],
-    override?: Input.Rule.Entry.Record,
+    rules: RuleEntry[],
+    override?: RuleRecord,
   ) {
     const map = ([id, rule]: typeof rules[number]) => {
       return {

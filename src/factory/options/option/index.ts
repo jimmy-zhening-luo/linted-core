@@ -1,16 +1,21 @@
 import globals from "globals";
-import type { Ruleset } from "../../rulesets/ruleset";
 import type {
   Scope,
-  Output,
+  Config,
+} from "..";
+import type {
   OptionTemplate,
   LanguageOptions,
   Globals,
 } from "./template";
 
+import type { Ruleset } from "../../rulesets/ruleset";
+
 export default abstract class Option<
   S extends Scope,
-  ParserOptions extends object | boolean = false,
+  ParserOptions extends
+    | object
+    | boolean = false,
   ParserCount extends 0 | 1 | 2 = 0,
   Global extends Globals = never,
   Processor extends object = never,
@@ -34,7 +39,7 @@ export default abstract class Option<
     public readonly ruleset: Ruleset,
   ) {}
 
-  public get configs(): Output[1][] {
+  public get configs(): Config[] {
     const {
       scope,
       ruleset,
@@ -51,6 +56,7 @@ export default abstract class Option<
         return {
           name: `linted/${id}`,
           files,
+          ignores: [],
           rules: rule,
           ...option,
         };

@@ -1,5 +1,3 @@
-export type { Scope, Input, Output } from "../..";
-
 import type { LanguageOptions } from "./languageOptions";
 import type { Globals } from "./globals";
 
@@ -8,7 +6,9 @@ export type {
   Globals,
 };
 export type OptionTemplate<
-  ParserOptions extends boolean | object,
+  ParserOptions extends
+    | boolean
+    | object,
   GlobalTypes extends Globals,
   Processor extends object,
   Language extends object,

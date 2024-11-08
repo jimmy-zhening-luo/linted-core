@@ -1,9 +1,22 @@
 export type { Scope } from "./scopes";
+export type {
+  Plugins,
+  RuleEntry,
+  RuleRecord,
+  RuleState,
+  Config,
+  ConfigProperty,
+} from "./objects";
 
-import type { Input } from "./input";
-import type { Output } from "./output";
+import type {
+  Input,
+  Output,
+} from "./interface";
 
-export type { Input, Output };
+export type {
+  Input,
+  Output,
+};
 
 import { scopes } from "./scopes";
 import {
@@ -19,18 +32,6 @@ export default function (input: Input): Output {
       files,
       rules,
     } = input,
-    base = {
-      name: "linted",
-      plugins,
-      linterOptions: {
-        noInlineConfig: true,
-        reportUnusedDisableDirectives: "error",
-      },
-      languageOptions: {
-        sourceType: "module",
-        ecmaVersion: 2023,
-      },
-    } as const,
     factory = new Factory(files, rules),
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
@@ -76,7 +77,21 @@ export default function (input: Input): Output {
     };
 
     return [
-      base,
+      {
+        ignores: [];
+      } as const,
+      {
+        name: "linted",
+        plugins,
+        linterOptions: {
+          noInlineConfig: true,
+          reportUnusedDisableDirectives: "error",
+        },
+        languageOptions: {
+          sourceType: "module",
+          ecmaVersion: 2023,
+        }
+      } as const,
       ...scopes.flatMap(scope => options[scope]),
     ];
   }

@@ -1,6 +1,11 @@
-export type { Scope, Input, Output } from "..";
+export type {
+  Scope,
+  Input,
+  Config,
+  RuleEntry,
+  RuleRecord,
+} from "..";
 
-import type { Input } from "..";
 import { Files } from "./files";
 import { Rulesets } from "./rulesets";
 import Options from "./options";

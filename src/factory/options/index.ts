@@ -1,4 +1,7 @@
-export type { Scope, Input, Output } from "..";
+export type { 
+  Scope,
+  Config,
+} from "..";
 
 import js from "./js";
 import ts from "./ts";
