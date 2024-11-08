@@ -12,6 +12,7 @@ export default class Svelte extends Option<
 > {
   public readonly scope = "svelte";
   public readonly processor = { processor: "svelte/svelte" } as const;
+  public readonly language = {};
 
   public get languageOptions() {
     const [parser, tsParser] = this.parser;

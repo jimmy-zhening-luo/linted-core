@@ -18,6 +18,7 @@ export default abstract class Option<
   ParserCount extends 0 | 1 | 2 = 0,
   Global extends Globals = never,
   Processor extends object = never,
+  Language extends object = never,
 > {
   private readonly linterOptions = { noInlineConfig: true, reportUnusedDisableDirectives: "error" } as const;
 
@@ -26,6 +27,11 @@ export default abstract class Option<
     ? object
     : Interface<Processor> extends Readonly<Record<"processor", string>>
       ? Interface<Processor>
+      : object;
+  public abstract readonly language: Interface<Language> extends never
+    ? object
+    : Interface<Language> extends Readonly<Record<"language", string>>
+      ? Interface<Language>
       : object;
 
   constructor(
@@ -65,6 +71,7 @@ export default abstract class Option<
         linterOptions,
         languageOptions,
         processor,
+        language,
       } = this;
 
       return {
@@ -72,12 +79,14 @@ export default abstract class Option<
         linterOptions,
         languageOptions,
         ...processor,
+        ...language,
       } satisfies OptionTemplate<
         Plugin,
         IsEcma,
         ParserOptions,
         Global,
-        Processor
+        Processor,
+        Language
       >;
     }
     catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }

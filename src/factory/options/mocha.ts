@@ -10,7 +10,8 @@ export default class Mocha extends Option<
   "mocha"
 > {
   public readonly scope = "mocha";
-  public readonly processor = {} as const;
+  public readonly processor = {};
+  public readonly language = {};
   public readonly types = ["mocha"] as const;
 
   public get languageOptions() {

@@ -53,14 +53,14 @@ export default function (input: Input): Output {
         ).configs,
       json: new Options
         .json(
-          { jsonc: plugins.jsonc },
-          [parsers.jsonc],
+          { json: plugins.json },
+          [],
           ...factory.produce("json"),
         ).configs,
       jsonc: new Options
         .jsonc(
-          { jsonc: plugins.jsonc },
-          [parsers.jsonc],
+          { json: plugins.json },
+          [],
           ...factory.produce("jsonc"),
         ).configs,
       yml: new Options
@@ -73,5 +73,5 @@ export default function (input: Input): Output {
 
     return scopes.flatMap(scope => options[scope]);
   }
-  catch (e) { throw new Error(`linted-core`, { cause: e }); }
+  catch (e) { throw new Error(`Linted Core`, { cause: e }); }
 }

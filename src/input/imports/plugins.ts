@@ -4,6 +4,6 @@ export type Plugins = (
   | "svelte"
   | "mocha"
   | "@html-eslint"
-  | "jsonc"
+  | "json"
   | "yml"
 );

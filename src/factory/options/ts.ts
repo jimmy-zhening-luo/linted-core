@@ -9,7 +9,8 @@ export default class Ts extends Option<
   1
 > {
   public readonly scope = "ts";
-  public readonly processor = {} as const;
+  public readonly processor = {};
+  public readonly language = {};
 
   public get languageOptions() {
     const [parser] = this.parser;

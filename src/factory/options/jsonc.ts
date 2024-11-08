@@ -2,17 +2,23 @@ import Option from "./option";
 
 export default class Jsonc extends Option<
   "jsonc",
-  "jsonc",
-  false,
+  "json",
   true,
-  1
+  false,
+  0,
+  never,
+  never,
+  { language: "json/jsonc" }
 > {
   public readonly scope = "jsonc";
-  public readonly processor = {} as const;
+  public readonly processor = {};
+  public readonly language = { language: "json/jsonc" } as const;
 
   public get languageOptions() {
-    const [parser] = this.parser;
-
-    return { parser } as const;
+    return {
+      allowTrailingCommas: true,
+      ecmaVersion: "latest",
+      sourceType: "module",
+    } as const;
   }
 }

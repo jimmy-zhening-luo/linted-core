@@ -8,7 +8,8 @@ export default class Html extends Option<
   1
 > {
   public readonly scope = "html";
-  public readonly processor = {} as const;
+  public readonly processor = {};
+  public readonly language = {};
 
   public get languageOptions() {
     const [parser] = this.parser;

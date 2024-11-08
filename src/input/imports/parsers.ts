@@ -5,6 +5,5 @@ export type Parsers = Scope
     | "ts"
     | "svelte"
     | "html"
-    | "jsonc"
     | "yml"
 );

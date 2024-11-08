@@ -8,7 +8,8 @@ export default class Yml extends Option<
   1
 > {
   public readonly scope = "yml";
-  public readonly processor = {} as const;
+  public readonly processor = {};
+  public readonly language = {};
 
   public get languageOptions() {
     const [parser] = this.parser;
