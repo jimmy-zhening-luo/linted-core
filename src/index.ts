@@ -53,13 +53,13 @@ export default function (input: Input): Output {
         ).configs,
       json: new Options
         .json(
-          { "@stylistic": plugins["@stylistic"], json: plugins.json },
+          { json: plugins.json },
           [],
           ...factory.produce("json"),
         ).configs,
       jsonc: new Options
         .jsonc(
-          { "@stylistic": plugins["@stylistic"], json: plugins.json },
+          { json: plugins.json },
           [],
           ...factory.produce("jsonc"),
         ).configs,
