@@ -3,7 +3,7 @@ import Option from "./option";
 export default class Jsonc extends Option<
   "jsonc",
   true,
-  1,
+  1
 > {
   public readonly scope = "jsonc";
   public readonly processor = {};
