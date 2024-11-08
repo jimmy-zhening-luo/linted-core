@@ -1,8 +1,9 @@
 import Option from "./option";
+import type Js from "./js";
 
 export default class Json extends Option<
   "json",
-  "json",
+  "json" | keyof Js["option"]["plugins"],
   true,
   false,
   0,

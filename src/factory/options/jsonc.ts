@@ -1,11 +1,12 @@
 import Option from "./option";
+import type Json from "./json";
 
 export default class Jsonc extends Option<
   "jsonc",
-  "json",
+  keyof Json["plugins"],
   true,
   false,
-  0,
+  ConstructorParameters<typeof Json>[1]["length"],
   never,
   never,
   { language: "json/jsonc" }
