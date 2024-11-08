@@ -16,11 +16,11 @@ export class Factory {
   public readonly rulesets: Rulesets;
 
   constructor(
-    ...files: ConstructorParameters<typeof Files>,
-    ...rules: ConstructorParameters<typeof Rulesets>,
+    files: ConstructorParameters<typeof Files>[0],
+    rules: ConstructorParameters<typeof Rulesets>[0],
   ) {
-    this.files = new Files(...files);
-    this.rulesets = new Rulesets(...rules);
+    this.files = new Files(files);
+    this.rulesets = new Rulesets(rules);
   }
 
   public produce(scope: string) {
