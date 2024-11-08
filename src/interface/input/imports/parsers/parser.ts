@@ -1,6 +1,6 @@
 import type { Scope } from ".";
 
-export type Parsers = Scope
+export type Parser = Scope
   & (
     | "ts"
     | "svelte"
