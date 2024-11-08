@@ -1,5 +1,5 @@
 export type {
-  Scope
+  Scope,
   Plugins,
   RuleEntry,
   RuleRecord,
