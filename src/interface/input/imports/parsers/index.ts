@@ -2,7 +2,7 @@ export type { Scope } from "..";
 
 import type { Parser } from "./parser";
 
-export type Parsers = Record<
+export type InputParsers = Record<
   Parser,
   unknown
 >;
