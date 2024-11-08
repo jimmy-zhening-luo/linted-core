@@ -14,7 +14,6 @@ export type OptionTemplate<
   Language extends object,
 > =
   & {
-    linterOptions: Linter;
     languageOptions: LanguageOptions<ParserOptions, GlobalTypes>;
   }
   & (Interface<Processor> extends never ? object : Interface<Processor> extends { processor: string } ? Interface<Processor> : object)
