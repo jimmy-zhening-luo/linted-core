@@ -1,7 +1,7 @@
 {
   "_schemaVersion": "22.11.0",
   "name": "@eslinted/core",
-  "version": "11.1.0-rc.0",
+  "version": "11.1.0",
   "description": "Core ESLint flat config factory npm package `linted`.",
   "keywords": [],
   "repository": "github:jimmy-zhening-luo/linted-core",
