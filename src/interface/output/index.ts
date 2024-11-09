@@ -3,7 +3,7 @@ export type {
   GlobalConfigSystem,
 } from "..";
 
-import type { GlobalConfigs } from "./globals";
+import type { GlobalConfigs } from "./global";
 import type { ScopedConfig } from "..";
 
 export type Output = [

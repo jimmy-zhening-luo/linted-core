@@ -13,7 +13,7 @@ export type GlobalConfigSystem = Partial<Record<
   >,
   never
 >> & {
-  name: `linted`;
+  name: "linted/global/settings";
   plugins: Plugins;
   linterOptions: {
     noInlineConfig: boolean;

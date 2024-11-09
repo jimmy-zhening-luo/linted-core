@@ -86,6 +86,7 @@ export default function (input: Input): Output {
 
     return [
       {
+        name: "linted/global/ignores",
         ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
           ? globals.ignores.ignores
           : [
@@ -96,7 +97,7 @@ export default function (input: Input): Output {
             ],
       },
       {
-        name: "linted",
+        name: "linted/global/settings",
         plugins,
         linterOptions: {
           noInlineConfig: settings.noInlineConfig,

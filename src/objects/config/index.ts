@@ -4,5 +4,5 @@ export type {
 } from "..";
 export type { ConfigProperty } from "./property";
 export type { ScopedConfig } from "./scoped";
-export type { GlobalConfigIgnores } from "./globals/ignores";
-export type { GlobalConfigSystem } from "./globals/system";
+export type { GlobalConfigIgnores } from "./global/ignores";
+export type { GlobalConfigSystem } from "./global/system";
