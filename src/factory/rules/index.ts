@@ -6,7 +6,7 @@ export type {
 import type { Input } from "..";
 import { Ruleset } from "./ruleset";
 
-export class Rulesets {
+export class Rules {
   private readonly rulesets = new Map<string, Ruleset>();
 
   constructor(rules: Input["rules"]) {
@@ -17,7 +17,7 @@ export class Rulesets {
       this.rulesets.set(scope, new Ruleset(scope, base[scope], overrides[scope]));
   }
 
-  public ruleset(scope: string): Ruleset {
+  public rules(scope: string): Ruleset {
     if (!this.rulesets.has(scope))
       throw new ReferenceError(`Ruleset not found for scope: ${scope}`);
 

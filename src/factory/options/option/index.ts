@@ -8,7 +8,7 @@ import type {
   LanguageOptions,
   Globals,
 } from "./template";
-import type { Ruleset } from "../../rulesets/ruleset";
+import type { Ruleset } from "../../rules/ruleset";
 
 export default abstract class Option<
   S extends Scope,
@@ -35,14 +35,16 @@ export default abstract class Option<
   constructor(
     public readonly parser: Tuple<ParserCount, unknown>,
     public readonly files: string[],
+    public readonly ignores: string[],
     public readonly ruleset: Ruleset,
   ) {}
 
   public get configs(): ScopedConfig[] {
     const {
       scope,
-      ruleset,
       files,
+      ignores,
+      ruleset,
       option,
     } = this;
 
@@ -51,12 +53,12 @@ export default abstract class Option<
 
     return files.length < 1
       ? []
-      : ruleset.ruleset.map(({ id, rule }) => {
+      : ruleset.ruleset.map(({ id, rules }) => {
         return {
           name: `linted/${id}`,
           files,
-          ignores: [],
-          rules: rule,
+          ignores,
+          rules,
           ...option,
         };
       });

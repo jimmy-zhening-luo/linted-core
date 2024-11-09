@@ -4,14 +4,14 @@ export class Files {
   private readonly _files = new Map<string, string[]>();
 
   constructor(files: Input["files"]) {
-    const { files: base, includes } = files,
-    scopes = Object.keys(base) as (keyof typeof base)[];
+    const { files: defaults, includes } = files,
+    scopes = Object.keys(defaults) as (keyof typeof defaults)[];
 
     for (const scope of scopes)
       this._files.set(
         scope,
         [
-          ...base[scope],
+          ...defaults[scope],
           ...scope in includes ? (includes[scope] as string[]) : [],
         ],
       );

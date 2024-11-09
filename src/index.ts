@@ -31,11 +31,16 @@ export default function (input: Input): Output {
       plugins,
       parsers,
       settings,
-      ignores,
+      globals,
       files,
+      ignores,
       rules,
     } = input,
-    factory = new Factory(files, rules),
+    factory = new Factory(
+      files,
+      ignores,
+      rules,
+    ),
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
         .js(
@@ -81,13 +86,13 @@ export default function (input: Input): Output {
 
     return [
       {
-        ignores: typeof ignores.extend.ignores === "undefined" || ignores.extend.ignores.length < 1
-          ? ignores.ignores.ignores
+        ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
+          ? globals.ignores.ignores
           : [
-              ...ignores.extend.inherit === false
+              ...globals.extend.inherit === false
                 ? []
-                : ignores.ignores.ignores,
-              ...ignores.extend.ignores,
+                : globals.ignores.ignores,
+              ...globals.extend.ignores,
             ],
       },
       {

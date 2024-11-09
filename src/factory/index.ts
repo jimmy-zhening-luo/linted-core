@@ -7,26 +7,31 @@ export type {
 } from "..";
 
 import { Files } from "./files";
-import { Rulesets } from "./rulesets";
+import { Ignores } from "./ignores";
+import { Rules } from "./rules";
 import Options from "./options";
 
 export { Options };
 export class Factory {
   public readonly files: Files;
-  public readonly rulesets: Rulesets;
+  public readonly ignores: Ignores;
+  public readonly rules: Rules;
 
   constructor(
     files: ConstructorParameters<typeof Files>[0],
-    rules: ConstructorParameters<typeof Rulesets>[0],
+    ignores: ConstructorParameters<typeof Ignores>[0],
+    rules: ConstructorParameters<typeof Rules>[0],
   ) {
     this.files = new Files(files);
-    this.rulesets = new Rulesets(rules);
+    this.ignores = new Ignores(ignores);
+    this.rules = new Rules(rules);
   }
 
   public produce(scope: string) {
     return [
       this.files.files(scope),
-      this.rulesets.ruleset(scope),
+      this.ignores.ignores(scope),
+      this.rules.rules(scope),
     ] as const;
   }
 }
