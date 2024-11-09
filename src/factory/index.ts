@@ -12,6 +12,7 @@ import { Rules } from "./rules";
 import Options from "./options";
 
 export { Options };
+export { Global } from "./global";
 export class Factory {
   public readonly files: Files;
   public readonly ignores: Ignores;

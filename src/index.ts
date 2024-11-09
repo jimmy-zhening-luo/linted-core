@@ -21,21 +21,28 @@ export type {
 
 import { scopes } from "./scopes";
 import {
+  Global,
   Factory,
   Options,
 } from "./factory";
 
-export default function (input: Input): Output {
+export default function (
+  {
+    plugins,
+    parsers,
+    settings,
+    globals,
+    files,
+    ignores,
+    rules,
+  }: Input,
+): Output {
   try {
-    const {
+    const global = new Global(
       plugins,
-      parsers,
       settings,
       globals,
-      files,
-      ignores,
-      rules,
-    } = input,
+    ),
     factory = new Factory(
       files,
       ignores,
@@ -85,29 +92,7 @@ export default function (input: Input): Output {
     };
 
     return [
-      {
-        name: "linted/global/settings",
-        plugins,
-        linterOptions: {
-          noInlineConfig: settings.noInlineConfig,
-          reportUnusedDisableDirectives: settings.reportUnusedDisableDirectives,
-        },
-        languageOptions: {
-          sourceType: settings.sourceType,
-          ecmaVersion: settings.ecmaVersion,
-        },
-      },
-      {
-        name: "linted/global/ignores",
-        ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
-          ? globals.ignores.ignores
-          : [
-              ...globals.extend.inherit === false
-                ? []
-                : globals.ignores.ignores,
-              ...globals.extend.ignores,
-            ],
-      },
+      ...global.configs,
       ...scopes.flatMap(scope => options[scope]),
     ];
   }
