@@ -1,7 +1,9 @@
-import type { RuleRecord } from ".";
-import type { RulesDefaults } from "./defaults";
+import type {
+  Scope,
+  RuleRecord,
+} from ".";
 
-export type RulesOverrides = Partially<
-  keyof RulesDefaults,
+export type RulesOverrides = Partial<Record<
+  Scope,
   RuleRecord
->;
+>>;
