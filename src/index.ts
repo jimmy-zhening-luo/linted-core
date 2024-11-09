@@ -4,8 +4,9 @@ export type {
   RuleEntry,
   RuleRecord,
   RuleState,
-  Config,
-  ConfigProperty,
+  ScopedConfig,
+  GlobalConfigIgnores,
+  GlobalConfigSystem,
 } from "./objects";
 
 import type {
@@ -29,6 +30,8 @@ export default function (input: Input): Output {
     const {
       plugins,
       parsers,
+      settings,
+      ignores,
       files,
       rules,
     } = input,
@@ -78,20 +81,27 @@ export default function (input: Input): Output {
 
     return [
       {
-        ignores: [],
-      } as const,
+        ignores: typeof ignores.extend.ignores === "undefined" || ignores.extend.ignores.length < 1
+          ? ignores.ignores.ignores
+          : [
+              ...ignores.extend.inherit === false
+                ? []
+                : ignores.ignores.ignores,
+              ...ignores.extend.ignores,
+            ],
+      },
       {
         name: "linted",
         plugins,
         linterOptions: {
-          noInlineConfig: true,
-          reportUnusedDisableDirectives: "error",
+          noInlineConfig: settings.noInlineConfig,
+          reportUnusedDisableDirectives: settings.reportUnusedDisableDirectives,
         },
         languageOptions: {
-          sourceType: "module",
-          ecmaVersion: 2023,
+          sourceType: settings.sourceType,
+          ecmaVersion: settings.ecmaVersion,
         },
-      } as const,
+      },
       ...scopes.flatMap(scope => options[scope]),
     ];
   }

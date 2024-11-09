@@ -7,7 +7,7 @@ export type {
 import type { InputFiles } from "./files";
 import type { InputRules } from "./rules";
 
-export interface User {
+export interface InputScoped {
   files: InputFiles;
   rules: InputRules;
 }

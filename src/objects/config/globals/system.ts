@@ -1,7 +1,7 @@
 import type {
   Plugins,
   ConfigProperty,
-} from ".";
+} from "..";
 
 export type GlobalConfigSystem = Partial<Record<
   Exclude<

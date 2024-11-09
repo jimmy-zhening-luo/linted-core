@@ -1,7 +1,7 @@
 export type {
   Scope,
   Input,
-  Config,
+  ScopedConfig,
   RuleEntry,
   RuleRecord,
 } from "..";

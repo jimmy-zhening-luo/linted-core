@@ -1,13 +1,14 @@
 import globals from "globals";
 import type {
   Scope,
-  Config,
+  ScopedConfig,
 } from "..";
 import type {
   OptionTemplate,
   LanguageOptions,
   Globals,
-} from "./template";import type { Ruleset } from "../../rulesets/ruleset";
+} from "./template";
+import type { Ruleset } from "../../rulesets/ruleset";
 
 export default abstract class Option<
   S extends Scope,
@@ -37,7 +38,7 @@ export default abstract class Option<
     public readonly ruleset: Ruleset,
   ) {}
 
-  public get configs(): Config[] {
+  public get configs(): ScopedConfig[] {
     const {
       scope,
       ruleset,

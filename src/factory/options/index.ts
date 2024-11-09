@@ -1,6 +1,6 @@
 export type {
   Scope,
-  Config,
+  ScopedConfig,
 } from "..";
 
 import js from "./js";

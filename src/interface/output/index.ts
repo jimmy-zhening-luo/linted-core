@@ -1,11 +1,10 @@
 export type {
-  Plugins,
-  Config,
-  ConfigProperty,
+  GlobalConfigIgnores,
+  GlobalConfigSystem,
 } from "..";
 
-import type { GlobalConfigs } from "./global";
-import type { ScopedConfig } from "./scoped";
+import type { GlobalConfigs } from "./globals";
+import type { ScopedConfig } from "..";
 
 export type Output = [
   ...GlobalConfigs,

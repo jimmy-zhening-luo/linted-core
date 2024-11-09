@@ -6,7 +6,7 @@ export type {
 import type { InputPlugins } from "./plugins";
 import type { InputParsers } from "./parsers";
 
-export interface Imports {
+export interface InputImports {
   plugins: InputPlugins;
   parsers: InputParsers;
 }

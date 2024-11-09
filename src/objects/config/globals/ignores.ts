@@ -1,4 +1,4 @@
-import type { ConfigProperty } from ".";
+import type { ConfigProperty } from "..";
 
 export type GlobalConfigIgnores = Partial<Record<
   Exclude<
