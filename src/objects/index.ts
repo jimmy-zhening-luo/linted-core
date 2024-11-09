@@ -5,7 +5,7 @@ export type {
   RuleState,
 } from "./rule";
 export type {
-  ScopedConfig,
-  GlobalConfigIgnores,
   GlobalConfigSystem,
+  GlobalConfigIgnores,
+  ScopedConfig,
 } from "./config";

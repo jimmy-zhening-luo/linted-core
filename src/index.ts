@@ -4,9 +4,9 @@ export type {
   RuleEntry,
   RuleRecord,
   RuleState,
-  ScopedConfig,
-  GlobalConfigIgnores,
   GlobalConfigSystem,
+  GlobalConfigIgnores,
+  ScopedConfig,
 } from "./objects";
 
 import type {
@@ -86,17 +86,6 @@ export default function (input: Input): Output {
 
     return [
       {
-        name: "linted/global/ignores",
-        ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
-          ? globals.ignores.ignores
-          : [
-              ...globals.extend.inherit === false
-                ? []
-                : globals.ignores.ignores,
-              ...globals.extend.ignores,
-            ],
-      },
-      {
         name: "linted/global/settings",
         plugins,
         linterOptions: {
@@ -107,6 +96,17 @@ export default function (input: Input): Output {
           sourceType: settings.sourceType,
           ecmaVersion: settings.ecmaVersion,
         },
+      },
+      {
+        name: "linted/global/ignores",
+        ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
+          ? globals.ignores.ignores
+          : [
+              ...globals.extend.inherit === false
+                ? []
+                : globals.ignores.ignores,
+              ...globals.extend.ignores,
+            ],
       },
       ...scopes.flatMap(scope => options[scope]),
     ];

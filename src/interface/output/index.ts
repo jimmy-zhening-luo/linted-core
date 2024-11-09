@@ -1,6 +1,6 @@
 export type {
-  GlobalConfigIgnores,
   GlobalConfigSystem,
+  GlobalConfigIgnores,
 } from "..";
 
 import type { GlobalConfigs } from "./global";

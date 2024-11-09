@@ -3,6 +3,6 @@ export type {
   RuleRecord,
 } from "..";
 export type { ConfigProperty } from "./property";
-export type { ScopedConfig } from "./scoped";
-export type { GlobalConfigIgnores } from "./global/ignores";
 export type { GlobalConfigSystem } from "./global/system";
+export type { GlobalConfigIgnores } from "./global/ignores";
+export type { ScopedConfig } from "./scoped";

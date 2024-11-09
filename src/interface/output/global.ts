@@ -1,9 +1,9 @@
 import type {
-  GlobalConfigIgnores,
   GlobalConfigSystem,
+  GlobalConfigIgnores,
 } from ".";
 
 export type GlobalConfigs = readonly [
-  GlobalConfigIgnores,
   GlobalConfigSystem,
+  GlobalConfigIgnores,
 ];
