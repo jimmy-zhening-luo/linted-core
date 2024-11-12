@@ -2,8 +2,7 @@ import Option from "./option";
 
 export default class Html extends Option<
   "html",
-  true,
-  1
+  true
 > {
   public readonly scope = "html";
   public readonly processor = {};

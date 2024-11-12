@@ -9,12 +9,27 @@ export type OptionTemplate<
   ParserOptions extends
   | boolean
   | object,
-  GlobalTypes extends Globals,
+  GlobalTypes extends Globals | false,
   Processor extends object,
   Language extends object,
-> =
-  & {
-    languageOptions: LanguageOptions<ParserOptions, GlobalTypes>;
-  }
-  & (Interface<Processor> extends never ? object : Interface<Processor> extends { processor: string } ? Interface<Processor> : object)
-  & (Interface<Language> extends never ? object : Interface<Language> extends { language: string } ? Interface<Language> : object);
+> = (
+{ languageOptions: LanguageOptions<ParserOptions, GlobalTypes> }
+& (
+    Processor extends never
+      ? object
+      : Processor extends { processor: infer P }
+        ? string extends P
+          ? object
+          : { processor: P }
+        : object
+    )
+    & (
+    Language extends never
+      ? object
+      : Language extends { language: infer L }
+        ? string extends L
+          ? object
+          : { language: L }
+        : object
+    )
+);

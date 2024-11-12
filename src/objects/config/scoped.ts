@@ -5,11 +5,7 @@ export interface ScopedConfig {
   rules: RuleRecord;
   files: string[];
   ignores: string[];
-  languageOptions: {
-    parser?: unknown;
-    parserOptions?: Table;
-    globals?: Table<true>;
-  };
+  languageOptions: object;
   processor?: string;
   language?: string;
 }

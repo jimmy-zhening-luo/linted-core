@@ -2,8 +2,7 @@ import Option from "./option";
 
 export default class Json extends Option<
   "json",
-  true,
-  1
+  true
 > {
   public readonly scope = "json";
   public readonly processor = {};

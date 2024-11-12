@@ -15,25 +15,28 @@ export default abstract class Option<
   ParserOptions extends
   | object
   | boolean = false,
-  ParserCount extends 0 | 1 | 2 = 0,
-  Global extends Globals = never,
-  Processor extends object = never,
-  Language extends object = never,
+  ParserCount extends 0 | 1 | 2 = ParserOptions extends false ? 0 : 1,
+  Global extends Globals | false = false,
+  Processor extends object = object,
+  Language extends object = object,
 > {
-  public abstract readonly scope: literalful<S>;
-  public abstract readonly processor: Interface<Processor> extends never
+  public abstract readonly scope: S;
+  public abstract readonly processor: (Processor extends never
     ? object
-    : Interface<Processor> extends Readonly<Record<"processor", string>>
-      ? Interface<Processor>
-      : object;
-  public abstract readonly language: Interface<Language> extends never
+    : Processor extends { processor: infer P }
+      ? string extends P
+        ? object
+        : { processor: P }
+      : object);
+  public abstract readonly language: (Language extends never
     ? object
-    : Interface<Language> extends Readonly<Record<"language", string>>
-      ? Interface<Language>
-      : object;
-
+    : Language extends { language: infer L }
+      ? string extends L
+        ? object
+        : { language: L }
+      : object);
   constructor(
-    public readonly parser: Tuple<ParserCount, unknown>,
+    public readonly parser: unknown[] & { length: ParserCount },
     public readonly files: string[],
     public readonly ignores: string[],
     public readonly ruleset: Ruleset,
@@ -88,7 +91,7 @@ export default abstract class Option<
 
   protected abstract get languageOptions(): LanguageOptions<ParserOptions, Global>;
 
-  protected globals(type: Global) {
+  protected globals(type: Globals) {
     return globals[type];
   }
 }

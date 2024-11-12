@@ -8,7 +8,7 @@ export default class Svelte extends Option<
     extraFileExtensions: readonly [".svelte"];
   } & Ts["option"]["languageOptions"]["parserOptions"],
   2,
-  never,
+  false,
   { processor: "svelte/svelte" }
 > {
   public readonly scope = "svelte";
