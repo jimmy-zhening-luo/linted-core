@@ -1,3 +1,6 @@
+import type { Input, Output } from "./interface";
+
+export type { Input, Output };
 export type { Scope } from "./scopes";
 export type {
   Plugins,
@@ -8,16 +11,6 @@ export type {
   GlobalConfigIgnores,
   ScopedConfig,
 } from "./objects";
-
-import type {
-  Input,
-  Output,
-} from "./interface";
-
-export type {
-  Input,
-  Output,
-};
 
 import { scopes } from "./scopes";
 import {
