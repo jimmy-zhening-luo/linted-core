@@ -1,41 +1,43 @@
-import type { Input } from ".";
+import type { Input } from "..";
 
-export class Global {
+export class GlobalFactory {
   constructor(
-    public readonly plugins: Input["plugins"],
-    public readonly settings: Input["settings"],
-    public readonly globals: Input["globals"],
+    public readonly plugins: Input["imports"]["plugins"],
+    public readonly defaultSettings: Input["defaults"]["settings"],
+    public readonly defaultGlobalIgnores: Input["defaults"]["ignores"]["*"],
+    public readonly globalExtensions: Input["extensions"]["*"] = {},
   ) {}
 
   public get configs() {
     const {
       plugins,
-      settings,
-      globals,
+      defaultSettings,
+      defaultGlobalIgnores,
+      globalExtensions,
     } = this;
 
     return [
       {
-        name: "linted/global/settings",
+        name: "linted/*/settings",
         plugins,
         linterOptions: {
-          noInlineConfig: settings.noInlineConfig,
-          reportUnusedDisableDirectives: settings.reportUnusedDisableDirectives,
+          noInlineConfig: globalExtensions?.noInlineConfig ?? defaultSettings.noInlineConfig,
+          reportUnusedDisableDirectives: globalExtensions?.reportUnusedDisableDirectives ?? defaultSettings.reportUnusedDisableDirectives,
         },
         languageOptions: {
-          sourceType: settings.sourceType,
-          ecmaVersion: settings.ecmaVersion,
+          sourceType: globalExtensions?.sourceType ?? defaultSettings.sourceType,
+          ecmaVersion: globalExtensions?.ecmaVersion ?? defaultSettings.ecmaVersion,
         },
       },
       {
-        name: "linted/global/ignores",
-        ignores: typeof globals.extend.ignores === "undefined" || globals.extend.ignores.length < 1
-          ? globals.ignores.ignores
+        name: "linted/*/ignores",
+        ignores: typeof globalExtensions?.ignores === "undefined" || globalExtensions.ignores.length < 1
+          ? defaultGlobalIgnores
           : [
-              ...globals.extend.inherit === false
+              ...globalExtensions.override === true
                 ? []
-                : globals.ignores.ignores,
-              ...globals.extend.ignores,
+                : defaultGlobalIgnores,
+              ...globalExtensions.ignores,
             ],
       },
     ] as const;

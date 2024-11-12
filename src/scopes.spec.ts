@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { scopes } from ".";
+import { scopes } from "./scopes";
 
 describe("Scopes", function () {
   describe("shape", function () {

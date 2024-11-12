@@ -1,17 +1,14 @@
-export type {
-  Scope,
-  ScopedConfig,
-} from "..";
+import js from "./scopes/js";
+import ts from "./scopes/ts";
+import svelte from "./scopes/svelte";
+import mocha from "./scopes/mocha";
+import html from "./scopes/html";
+import json from "./scopes/json";
+import jsonc from "./scopes/jsonc";
+import yml from "./scopes/yml";
 
-import js from "./js";
-import ts from "./ts";
-import svelte from "./svelte";
-import mocha from "./mocha";
-import html from "./html";
-import json from "./json";
-import jsonc from "./jsonc";
-import yml from "./yml";
-
+export type * from "./option";
+export type * from "./proto";
 export default {
   js,
   ts,

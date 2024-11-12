@@ -1,44 +1,36 @@
 import type { Input, Output } from "./interface";
 
-export type { Input, Output };
-export type { Scope } from "./scopes";
-export type {
-  Plugins,
-  LinterOptions,
-  BaseLanguageOptions,
-  RuleEntry,
-  RuleRecord,
-  RuleState,
-} from "./objects";
+export type { Scopes } from "./scopes";
 
 import { scopes } from "./scopes";
 import {
-  Global,
-  Factory,
+  GlobalFactory,
+  ScopeFactory,
   Options,
 } from "./factory";
 
+export type * from "./interface";
+export type * from "./config";
 export default function (
   {
-    plugins,
-    parsers,
-    settings,
-    globals,
-    files,
-    ignores,
-    rules,
+    imports: {
+      plugins,
+      parsers,
+    },
+    defaults,
+    extensions,
   }: Input,
 ): Output {
   try {
-    const global = new Global(
+    const global = new GlobalFactory(
       plugins,
-      settings,
-      globals,
+      defaults.settings,
+      defaults.ignores["*"],
+      extensions["*"],
     ),
-    factory = new Factory(
-      files,
-      ignores,
-      rules,
+    factory = new ScopeFactory(
+      defaults,
+      extensions,
     ),
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]>["configs"] } = {
       js: new Options
