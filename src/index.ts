@@ -4,12 +4,11 @@ export type { Input, Output };
 export type { Scope } from "./scopes";
 export type {
   Plugins,
+  LinterOptions,
+  BaseLanguageOptions,
   RuleEntry,
   RuleRecord,
   RuleState,
-  GlobalConfigSystem,
-  GlobalConfigIgnores,
-  ScopedConfig,
 } from "./objects";
 
 import { scopes } from "./scopes";

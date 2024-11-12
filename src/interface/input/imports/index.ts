@@ -1,12 +1,9 @@
-export type {
-  Scope,
-  Plugins,
-} from "..";
+export type { Scope } from "..";
 
-import type { InputPlugins } from "./plugins";
-import type { InputParsers } from "./parsers";
+import type { Plugins } from "..";
+import type { Parsers } from "./parsers";
 
 export interface InputImports {
-  plugins: InputPlugins;
-  parsers: InputParsers;
+  plugins: Plugins;
+  parsers: Parsers;
 }

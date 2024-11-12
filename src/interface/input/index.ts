@@ -1,10 +1,10 @@
 export type {
   Scope,
   Plugins,
+  LinterOptions,
+  BaseLanguageOptions,
   RuleEntry,
   RuleRecord,
-  GlobalConfigSystem,
-  GlobalConfigIgnores,
 } from "..";
 
 import type { InputImports } from "./imports";
