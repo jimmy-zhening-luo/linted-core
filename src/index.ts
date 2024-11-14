@@ -80,5 +80,7 @@ export default function (
       ...scopes.flatMap(scope => options[scope]),
     ];
   }
-  catch (e) { throw new Error(`Linted Core`, { cause: e }); }
+  catch (e) {
+    throw new Error(`Linted Core`, { cause: e });
+  }
 }
