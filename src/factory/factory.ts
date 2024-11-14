@@ -1,4 +1,5 @@
-import type { Input } from "..";
+import type { Scopes, Input } from "..";
+import { Ruleset } from "./ruleset";
 
 export class Factory {
   public readonly extendGlobal: NonNullable<Input["extensions"]["*"]>;
@@ -14,7 +15,7 @@ export class Factory {
     this.extendScopes = scopes;
   }
 
-  public get globalSettings() {
+  public get settings() {
     const {
       defaultGlobalSettings: defaults,
       extendGlobal: {
@@ -38,7 +39,7 @@ export class Factory {
     } as const;
   }
 
-  public get globalIgnores() {
+  public get ignores() {
     const {
       defaultGlobalIgnores: defaults,
       extendGlobal: {
@@ -54,5 +55,13 @@ export class Factory {
         ...ignores,
       ] as const,
     } as const;
+  }
+
+  public scope(scope: Scopes) {
+    return [
+      [...this.defaultScopes.files[scope], ...this.extendScopes[scope]?.files ?? []] as string[],
+      [...this.defaultScopes.ignores[scope], ...this.extendScopes[scope]?.ignores ?? []] as string[],
+      new Ruleset(scope, this.defaultScopes.rules[scope], this.extendScopes[scope]?.rules),
+    ] as const;
   }
 }
