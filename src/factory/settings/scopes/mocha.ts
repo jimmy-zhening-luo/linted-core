@@ -1,4 +1,3 @@
-import { mocha } from "globals";
 import { ScopeSetting } from "../setting";
 import type TsSetting from "./ts";
 
@@ -23,7 +22,7 @@ export default class MochaSetting extends ScopeSetting<
         sourceType: "module",
         ecmaVersion: 2023,
       } as const,
-      globals: mocha,
+      globals: this.globals("mocha"),
     } as const;
   }
 }

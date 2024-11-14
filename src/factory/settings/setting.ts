@@ -1,4 +1,4 @@
-import type globals from "globals";
+import globals from "globals";
 import type { Scopes } from "../..";
 
 export abstract class ScopeSetting<
@@ -7,9 +7,7 @@ export abstract class ScopeSetting<
   | object
   | boolean = false,
   ParserCount extends 0 | 1 | 2 = ParserOptions extends false ? 0 : 1,
-  G extends keyof typeof globals & (
-    | "mocha"
-  ) | false = false,
+  G extends keyof typeof globals | false = false,
   Processor extends object = object,
   Language extends object = object,
 > {
@@ -60,4 +58,11 @@ export abstract class ScopeSetting<
           ? { readonly parser: unknown }
           : object
         : { readonly parser: unknown; readonly parserOptions: ParserOptions };
+
+  protected globals(global: G & keyof typeof globals) {
+    if (typeof global === "boolean")
+      throw new TypeError("`global` must be a string key of `globals` package");
+
+    return globals[global];
+  }
 }
