@@ -15,8 +15,8 @@ export interface Input {
     readonly ignores: Input["defaults"]["files"];
     readonly rules: Readonly<Record<Scopes, readonly Rule.Entry[]>>;
   };
-  readonly extensions: Partial<
-    & Readonly<Record<"*", Partial<Input["defaults"]["settings"] & Pick<Config, "ignores"> & { readonly override?: boolean }>>>
-    & Readonly<Record<Scopes, Partial<Pick<Config, "files" | "ignores" | "rules">>>>
-  >;
+  readonly extensions: Readonly<Partial<
+    & Record<"*", Partial<Input["defaults"]["settings"] & Pick<Config, "ignores"> & { readonly override?: boolean }>>
+    & Record<Scopes, Partial<Pick<Config, "files" | "ignores" | "rules">>>
+  >>;
 }
