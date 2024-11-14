@@ -1,6 +1,6 @@
 import { ScopeSetting } from "../setting";
 
-export default class Html extends ScopeSetting<
+export default class HtmlSetting extends ScopeSetting<
   "html",
   true
 > {

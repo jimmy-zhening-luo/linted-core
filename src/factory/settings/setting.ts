@@ -1,9 +1,5 @@
 import type globals from "globals";
-import type {
-  Scopes,
-  Configs,
-} from "../..";
-import type { Ruleset } from "../ruleset";
+import type { Scopes } from "../..";
 
 export abstract class ScopeSetting<
   S extends Scopes,
@@ -32,31 +28,9 @@ export abstract class ScopeSetting<
         ? object
         : { readonly language: L }
       : object);
-  constructor(
-    public readonly parser: readonly unknown[] & { length: ParserCount },
-    public readonly files: readonly string[],
-    public readonly ignores: readonly string[],
-    public readonly ruleset: Ruleset,
-  ) {}
+  constructor(public readonly parser: readonly unknown[] & { length: ParserCount }) {}
 
-  public get configs(): readonly Configs.Scoped[] {
-    const { files, ignores, ruleset } = this;
-
-    if (ruleset.scope !== this.scope)
-      throw new TypeError(`Scope mismatch between config "${this.scope} and inner ruleset "${ruleset.scope}"`);
-
-    return files.length < 1
-      ? [] as const
-      : ruleset.ruleset.map(({ id, rules }) => ({
-        name: `linted/${id}`,
-        files,
-        ignores,
-        rules,
-        ...this.option,
-      } as const));
-  }
-
-  private get option() {
+  public get option() {
     try {
       const { languageOptions, processor, language } = this;
 

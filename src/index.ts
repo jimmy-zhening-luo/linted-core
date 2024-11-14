@@ -1,8 +1,5 @@
 import { scopes } from "./scopes";
-import {
-  Factory,
-  Options,
-} from "./factory";
+import { Factory, Options } from "./factory";
 import type { Input, Output } from "./interface";
 
 export type { Scopes } from "./scopes";
@@ -14,55 +11,23 @@ export default function ({
 }: Input): Output {
   try {
     const factory = new Factory(defaults, extensions),
-    options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]> } = {
-      js: new Options
-        .js(
-          [],
-          ...factory.scope("js"),
-        ),
-      ts: new Options
-        .ts(
-          [parsers.ts],
-          ...factory.scope("ts"),
-        ),
-      svelte: new Options
-        .svelte(
-          [parsers.svelte, parsers.ts],
-          ...factory.scope("svelte"),
-        ),
-      mocha: new Options
-        .mocha(
-          [parsers.ts],
-          ...factory.scope("mocha"),
-        ),
-      html: new Options
-        .html(
-          [parsers.html],
-          ...factory.scope("html"),
-        ),
-      json: new Options
-        .json(
-          [parsers.jsonc],
-          ...factory.scope("json"),
-        ),
-      jsonc: new Options
-        .jsonc(
-          [parsers.jsonc],
-          ...factory.scope("jsonc"),
-        ),
-      yml: new Options
-        .yml(
-          [parsers.yml],
-          ...factory.scope("yml"),
-        ),
+    options: { readonly [S in typeof scopes[number]]: InstanceType<typeof Options[S]> } = {
+      js: new Options.js([] as const),
+      ts: new Options.ts([parsers.ts] as const),
+      svelte: new Options.svelte([parsers.svelte, parsers.ts] as const),
+      mocha: new Options.mocha([parsers.ts] as const),
+      html: new Options.html([parsers.html] as const),
+      json: new Options.json([parsers.jsonc] as const),
+      jsonc: new Options.jsonc([parsers.jsonc] as const),
+      yml: new Options.yml([parsers.yml] as const),
     } as const;
 
     return [
       { name: `linted/*/plugins`, plugins } as const,
       factory.settings,
       factory.ignores,
-      ...scopes.flatMap(scope => options[scope].configs),
-    ];
+      ...scopes.flatMap(scope => factory.scope(scope, options[scope])),
+    ] as const;
   }
   catch (e) {
     throw new Error(`Linted Core`, { cause: e });

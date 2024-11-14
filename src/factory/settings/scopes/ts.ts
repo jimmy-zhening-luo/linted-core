@@ -1,6 +1,6 @@
 import { ScopeSetting } from "../setting";
 
-export default class Ts extends ScopeSetting<
+export default class TsSetting extends ScopeSetting<
   "ts",
   {
     readonly project: "tsconfig.json";
@@ -22,7 +22,7 @@ export default class Ts extends ScopeSetting<
         project: "tsconfig.json",
         sourceType: "module",
         ecmaVersion: 2023,
-      },
+      } as const,
     } as const;
   }
 }

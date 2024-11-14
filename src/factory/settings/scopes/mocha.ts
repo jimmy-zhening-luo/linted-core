@@ -1,10 +1,10 @@
 import { mocha } from "globals";
 import { ScopeSetting } from "../setting";
-import type Ts from "./ts";
+import type TsSetting from "./ts";
 
-export default class Mocha extends ScopeSetting<
+export default class MochaSetting extends ScopeSetting<
   "mocha",
-  Ts["option"]["languageOptions"]["parserOptions"],
+  TsSetting["option"]["languageOptions"]["parserOptions"],
   1,
   "mocha"
 > {
@@ -22,7 +22,7 @@ export default class Mocha extends ScopeSetting<
         project: "tsconfig.json",
         sourceType: "module",
         ecmaVersion: 2023,
-      },
+      } as const,
       globals: mocha,
     } as const;
   }

@@ -1,6 +1,6 @@
 import { ScopeSetting } from "../setting";
 
-export default class Jsonc extends ScopeSetting<
+export default class JsoncSetting extends ScopeSetting<
   "jsonc",
   true
 > {

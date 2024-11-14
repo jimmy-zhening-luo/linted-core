@@ -1,6 +1,6 @@
 import { ScopeSetting } from "../setting";
 
-export default class Js extends ScopeSetting<"js"> {
+export default class JsSetting extends ScopeSetting<"js"> {
   public readonly scope = "js";
   public readonly processor = {} as const;
   public readonly language = {} as const;

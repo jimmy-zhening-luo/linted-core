@@ -1,12 +1,12 @@
 import { ScopeSetting } from "../setting";
-import type Ts from "./ts";
+import type TsSetting from "./ts";
 
-export default class Svelte extends ScopeSetting<
+export default class SvelteSetting extends ScopeSetting<
   "svelte",
   {
     readonly parser: unknown;
     readonly extraFileExtensions: readonly [".svelte"];
-  } & Ts["option"]["languageOptions"]["parserOptions"],
+  } & TsSetting["option"]["languageOptions"]["parserOptions"],
   2,
   false,
   { readonly processor: "svelte/svelte" }
@@ -26,7 +26,7 @@ export default class Svelte extends ScopeSetting<
         project: "tsconfig.json",
         sourceType: "module",
         ecmaVersion: 2023,
-      },
+      } as const,
     } as const;
   }
 }

@@ -6,7 +6,7 @@ export class Ruleset {
   constructor(
     public readonly scope: Scopes,
     defaults: readonly Rule.Entry[],
-    extension?: Rule.Config,
+    override?: Rule.Config,
   ) {
     const map = ([id, rules]: Rule.Entry) => ({
       id: `${scope}:${id}`,
@@ -15,9 +15,9 @@ export class Ruleset {
 
     this.ruleset = [
       ...defaults.map(rule => map(rule)),
-      ...typeof extension === "undefined"
+      ...typeof override === "undefined"
         ? [] as const
-        : [map([`${scope}:override`, extension])] as const,
+        : [map([`${scope}:override`, override])] as const,
     ] as const;
   }
 }
