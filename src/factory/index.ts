@@ -1,5 +1,5 @@
 export * from "./global";
 export * from "./scoped";
-import Options from "./options";
+import Options from "./settings";
 
 export { Options };

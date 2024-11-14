@@ -1,6 +1,6 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 
-export default class Json extends Option<
+export default class Json extends ScopeSetting<
   "json",
   true
 > {

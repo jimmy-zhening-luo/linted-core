@@ -1,6 +1,6 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 
-export default class Html extends Option<
+export default class Html extends ScopeSetting<
   "html",
   true
 > {

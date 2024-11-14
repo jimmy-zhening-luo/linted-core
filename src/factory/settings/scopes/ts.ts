@@ -1,6 +1,6 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 
-export default class Ts extends Option<
+export default class Ts extends ScopeSetting<
   "ts",
   {
     project: "tsconfig.json";

@@ -1,7 +1,7 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 import type Ts from "./ts";
 
-export default class Mocha extends Option<
+export default class Mocha extends ScopeSetting<
   "mocha",
   Ts["option"]["languageOptions"]["parserOptions"],
   1,

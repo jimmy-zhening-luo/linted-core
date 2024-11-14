@@ -1,7 +1,7 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 import type Ts from "./ts";
 
-export default class Svelte extends Option<
+export default class Svelte extends ScopeSetting<
   "svelte",
   {
     parser: unknown;

@@ -4,9 +4,8 @@ import type {
   Output,
 } from "../..";
 import type { Ruleset } from "../ruleset";
-import type { OptionProto } from ".";
 
-export default abstract class Option<
+export abstract class ScopeSetting<
   S extends Scopes,
   ParserOptions extends
   | object
@@ -96,3 +95,49 @@ export default abstract class Option<
     return globals[group];
   }
 }
+export type OptionProto<
+  ParserOptions extends
+  | object
+  | boolean,
+  G extends string | boolean,
+  Processor extends object,
+  Language extends object,
+> = (
+{ languageOptions: (G extends never
+  ? object
+  : G extends boolean
+    ? object
+    : G extends string
+      ? string extends G
+        ? object
+        : { globals: Record<string, unknown> }
+      : object
+)
+& (
+   ParserOptions extends never
+     ? object
+     : ParserOptions extends boolean
+       ? ParserOptions extends true
+         ? { parser: unknown }
+         : object
+       : { parser: unknown; parserOptions: ParserOptions }
+); }
+& (
+    Processor extends never
+      ? object
+      : Processor extends { processor: infer P }
+        ? string extends P
+          ? object
+          : { processor: P }
+        : object
+    )
+    & (
+    Language extends never
+      ? object
+      : Language extends { language: infer L }
+        ? string extends L
+          ? object
+          : { language: L }
+        : object
+    )
+);

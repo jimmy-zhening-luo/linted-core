@@ -7,8 +7,7 @@ import json from "./scopes/json";
 import jsonc from "./scopes/jsonc";
 import yml from "./scopes/yml";
 
-export type * from "./option";
-export type * from "./proto";
+export type * from "./setting";
 export default {
   js,
   ts,

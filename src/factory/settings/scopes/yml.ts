@@ -1,6 +1,6 @@
-import Option from "../option";
+import { ScopeSetting } from "../setting";
 
-export default class Yml extends Option<
+export default class Yml extends ScopeSetting<
   "yml",
   true,
   1
