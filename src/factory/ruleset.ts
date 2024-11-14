@@ -20,8 +20,8 @@ export class Ruleset {
     this.ruleset = [
       ...defaults.map(rule => map(rule)),
       ...typeof extension === "undefined"
-        ? []
-        : [map([`${scope}:override`, extension])],
-    ];
+        ? [] as const
+        : [map([`${scope}:override`, extension])] as const,
+    ] as const;
   }
 }

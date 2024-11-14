@@ -2,11 +2,11 @@ export type RuleEntry = readonly [
   string,
   RuleRecord,
 ];
-export type RuleRecord = Record<
+export type RuleRecord = Readonly<Record<
   string,
   | RuleState
-  | readonly [RuleState, ...unknown[]]
->;
+  | readonly [RuleState, ...readonly unknown[]]
+>>;
 export type RuleState = (
   | "error"
   | "warn"

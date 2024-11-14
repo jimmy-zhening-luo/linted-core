@@ -8,8 +8,8 @@ export default class Mocha extends ScopeSetting<
   "mocha"
 > {
   public readonly scope = "mocha";
-  public readonly processor = {};
-  public readonly language = {};
+  public readonly processor = {} as const;
+  public readonly language = {} as const;
   public readonly types = ["mocha"] as const;
 
   public get languageOptions() {

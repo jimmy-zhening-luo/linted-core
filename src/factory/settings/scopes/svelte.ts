@@ -4,16 +4,16 @@ import type Ts from "./ts";
 export default class Svelte extends ScopeSetting<
   "svelte",
   {
-    parser: unknown;
-    extraFileExtensions: readonly [".svelte"];
+    readonly parser: unknown;
+    readonly extraFileExtensions: readonly [".svelte"];
   } & Ts["option"]["languageOptions"]["parserOptions"],
   2,
   false,
-  { processor: "svelte/svelte" }
+  { readonly processor: "svelte/svelte" }
 > {
   public readonly scope = "svelte";
   public readonly processor = { processor: "svelte/svelte" } as const;
-  public readonly language = {};
+  public readonly language = {} as const;
 
   public get languageOptions() {
     const [parser, tsParser] = this.parser;

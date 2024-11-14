@@ -28,18 +28,18 @@ export class GlobalFactory {
           sourceType: globalExtensions?.sourceType ?? defaultSettings.sourceType,
           ecmaVersion: globalExtensions?.ecmaVersion ?? defaultSettings.ecmaVersion,
         },
-      },
+      } as const,
       {
         name: "linted/*/ignores",
         ignores: typeof globalExtensions?.ignores === "undefined" || globalExtensions.ignores.length < 1
           ? defaultGlobalIgnores
           : [
               ...globalExtensions.override === true
-                ? []
+                ? [] as const
                 : defaultGlobalIgnores,
               ...globalExtensions.ignores,
-            ],
-      },
+            ] as const,
+      } as const,
     ] as const;
   }
 }

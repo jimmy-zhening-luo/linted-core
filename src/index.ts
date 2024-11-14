@@ -73,7 +73,7 @@ export default function (
           [parsers.yml],
           ...factory.produce("yml"),
         ).configs,
-    };
+    } as const;
 
     return [
       ...global.configs,

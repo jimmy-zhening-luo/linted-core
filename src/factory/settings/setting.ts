@@ -20,17 +20,17 @@ export abstract class ScopeSetting<
   public abstract readonly scope: S;
   public abstract readonly processor: (Processor extends never
     ? object
-    : Processor extends { processor: infer P }
+    : Processor extends { readonly processor: infer P }
       ? string extends P
         ? object
-        : { processor: P }
+        : { readonly processor: P }
       : object);
   public abstract readonly language: (Language extends never
     ? object
-    : Language extends { language: infer L }
+    : Language extends { readonly language: infer L }
       ? string extends L
         ? object
-        : { language: L }
+        : { readonly language: L }
       : object);
   constructor(
     public readonly parser: unknown[] & { length: ParserCount },
@@ -39,7 +39,7 @@ export abstract class ScopeSetting<
     public readonly ruleset: Ruleset,
   ) {}
 
-  public get configs(): Output[2][] {
+  public get configs(): readonly Output[2][] {
     const {
       scope,
       files,
@@ -103,14 +103,14 @@ export type OptionProto<
   Processor extends object,
   Language extends object,
 > = (
-{ languageOptions: (G extends never
+{ readonly languageOptions: (G extends never
   ? object
   : G extends boolean
     ? object
     : G extends string
       ? string extends G
         ? object
-        : { globals: Record<string, unknown> }
+        : { readonly globals: Record<string, unknown> }
       : object
 )
 & (
@@ -118,26 +118,26 @@ export type OptionProto<
      ? object
      : ParserOptions extends boolean
        ? ParserOptions extends true
-         ? { parser: unknown }
+         ? { readonly parser: unknown }
          : object
-       : { parser: unknown; parserOptions: ParserOptions }
+       : { readonly parser: unknown; parserOptions: ParserOptions }
 ); }
 & (
     Processor extends never
       ? object
-      : Processor extends { processor: infer P }
+      : Processor extends { readonly processor: infer P }
         ? string extends P
           ? object
-          : { processor: P }
+          : { readonly processor: P }
         : object
     )
     & (
     Language extends never
       ? object
-      : Language extends { language: infer L }
+      : Language extends { readonly language: infer L }
         ? string extends L
           ? object
-          : { language: L }
+          : { readonly language: L }
         : object
     )
 );

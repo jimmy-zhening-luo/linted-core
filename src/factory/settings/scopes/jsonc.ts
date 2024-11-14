@@ -5,8 +5,8 @@ export default class Jsonc extends ScopeSetting<
   true
 > {
   public readonly scope = "jsonc";
-  public readonly processor = {};
-  public readonly language = {};
+  public readonly processor = {} as const;
+  public readonly language = {} as const;
 
   public get languageOptions() {
     const [parser] = this.parser;

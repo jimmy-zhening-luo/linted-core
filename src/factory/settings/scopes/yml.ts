@@ -6,8 +6,8 @@ export default class Yml extends ScopeSetting<
   1
 > {
   public readonly scope = "yml";
-  public readonly processor = {};
-  public readonly language = {};
+  public readonly processor = {} as const;
+  public readonly language = {} as const;
 
   public get languageOptions() {
     const [parser] = this.parser;
