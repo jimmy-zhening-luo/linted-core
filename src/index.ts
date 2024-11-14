@@ -72,7 +72,10 @@ export default function (
     } as const;
 
     return [
-      { name: `linted/*/plugins`, plugins } as const,
+      {
+        name: `linted/*/plugins`,
+        plugins,
+      } as const,
       ...global.configs,
       ...scopes.flatMap(scope => options[scope].configs),
     ];
