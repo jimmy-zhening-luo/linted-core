@@ -7,21 +7,13 @@ import type { Input, Output } from "./interface";
 
 export type { Scopes } from "./scopes";
 export type * from "./interface";
-export default function (
-  {
-    imports: {
-      plugins,
-      parsers,
-    },
-    defaults,
-    extensions,
-  }: Input,
-): Output {
+export default function ({
+  imports: { plugins, parsers },
+  defaults,
+  extensions,
+}: Input): Output {
   try {
-    const factory = new Factory(
-      defaults,
-      extensions,
-    ),
+    const factory = new Factory(defaults, extensions),
     options: { [S in typeof scopes[number]]: InstanceType<typeof Options[S]> } = {
       js: new Options
         .js(
