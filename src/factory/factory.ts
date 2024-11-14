@@ -2,23 +2,21 @@ import type { Scopes, Input } from "..";
 import { Ruleset } from "./ruleset";
 
 export class Factory {
-  public readonly extendGlobal: NonNullable<Input["extensions"]["*"]>;
-  public readonly extendScopes: Omit<Input["extensions"], "*">;
+  public readonly globalExtension: NonNullable<Input["extensions"]["*"]>;
+  public readonly scopeExtensions: Omit<Input["extensions"], "*">;
 
   constructor(
     public readonly defaults: Input["defaults"],
-    { "*": extendGlobal = {}, ...extendScopes }: Input["extensions"] = {},
+    { "*": global = {}, ...scopes }: Input["extensions"] = {},
   ) {
-    this.extendGlobal = extendGlobal;
-    this.extendScopes = extendScopes;
+    this.globalExtension = global;
+    this.scopeExtensions = scopes;
   }
 
   public get settings() {
     const {
-      defaults: {
-        settings,
-      },
-      extendGlobal: {
+      defaults: { settings },
+      globalExtension: {
         noInlineConfig = settings.noInlineConfig,
         reportUnusedDisableDirectives = settings.reportUnusedDisableDirectives,
         sourceType = settings.sourceType,
@@ -28,25 +26,15 @@ export class Factory {
 
     return {
       name: "linted/*/settings",
-      linterOptions: {
-        noInlineConfig,
-        reportUnusedDisableDirectives,
-      },
-      languageOptions: {
-        sourceType,
-        ecmaVersion,
-      },
+      linterOptions: { noInlineConfig, reportUnusedDisableDirectives },
+      languageOptions: { sourceType, ecmaVersion },
     } as const;
   }
 
   public get ignores() {
     const {
-      defaults: {
-        ignores: {
-          "*": defaults,
-        },
-      },
-      extendGlobal: {
+      defaults: { ignores: { "*": defaults } },
+      globalExtension: {
         ignores = [] as const,
         override = false,
       },
@@ -64,13 +52,13 @@ export class Factory {
   public scope(scope: Scopes) {
     const {
       defaults: { files, ignores, rules },
-      extendScopes,
+      scopeExtensions,
     } = this;
 
     return [
-      [...files[scope], ...extendScopes[scope]?.files ?? []] as string[],
-      [...ignores[scope], ...extendScopes[scope]?.ignores ?? []] as string[],
-      new Ruleset(scope, rules[scope], extendScopes[scope]?.rules),
+      [...files[scope], ...scopeExtensions[scope]?.files ?? []] as const,
+      [...ignores[scope], ...scopeExtensions[scope]?.ignores ?? []] as const,
+      new Ruleset(scope, rules[scope], scopeExtensions[scope]?.rules),
     ] as const;
   }
 }

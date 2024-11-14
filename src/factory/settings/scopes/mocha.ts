@@ -1,3 +1,4 @@
+import { mocha } from "globals";
 import { ScopeSetting } from "../setting";
 import type Ts from "./ts";
 
@@ -13,8 +14,7 @@ export default class Mocha extends ScopeSetting<
   public readonly types = ["mocha"] as const;
 
   public get languageOptions() {
-    const [parser] = this.parser,
-    globals = this.globals("mocha");
+    const [parser] = this.parser;
 
     return {
       parser,
@@ -23,7 +23,7 @@ export default class Mocha extends ScopeSetting<
         sourceType: "module",
         ecmaVersion: 2023,
       },
-      globals,
+      globals: mocha,
     } as const;
   }
 }
