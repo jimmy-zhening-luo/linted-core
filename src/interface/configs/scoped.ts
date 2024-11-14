@@ -1,7 +1,7 @@
-import type { Scopes } from "../../scopes";
-import type { Config } from "./config";
+import type { Config } from "..";
+import type { Scopes } from "../..";
 
-export type ScopeConfig = {
+export type Scoped = {
   readonly name: `linted/${Scopes}:${string}`;
   readonly languageOptions: Omit<Config["languageOptions"], "sourceType" | "ecmaVersion">;
 } & Pick<Config, "files" | "ignores" | "rules" | "processor" | "language" | "settings">;

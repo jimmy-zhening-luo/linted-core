@@ -1,12 +1,12 @@
-import type { RuleRecord } from "./rule";
+import type * as Rule from "./rule";
 
-export type * from "./rule";
+export type { Rule };
 export interface Config<Plugins extends string = string> {
   readonly name: `linted/${string}`;
-  readonly plugins: Record<Plugins, { readonly configs: unknown }>;
+  readonly plugins: Readonly<Record<Plugins, { readonly configs: unknown }>>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];
-  readonly rules: RuleRecord;
+  readonly rules: Rule.Config;
   readonly linterOptions: {
     readonly noInlineConfig: boolean;
     readonly reportUnusedDisableDirectives:

@@ -1,26 +1,22 @@
-import type {
-  Scopes,
-  Config,
-  RuleEntry,
-} from "..";
-import type { ImportPlugins, ImportParsers } from "./imports";
+import type { Config, Rule, Imports } from ".";
+import type { Scopes } from "..";
 
 export interface Input {
-  imports: {
-    plugins: Config<ImportPlugins>["plugins"];
-    parsers: Record<
-      ImportParsers & Scopes,
+  readonly imports: {
+    readonly plugins: Config<Imports.Plugins>["plugins"];
+    readonly parsers: Readonly<Record<
+      Imports.Parsers,
       unknown
-    >;
+    >>;
   };
-  defaults: {
-    settings: Config["linterOptions"] & Pick<Config["languageOptions"], "ecmaVersion" | "sourceType">;
-    files: Record<"*" | Scopes, string[]>;
-    ignores: Input["defaults"]["files"];
-    rules: Record<Scopes, RuleEntry[]>;
+  readonly defaults: {
+    readonly settings: Config["linterOptions"] & Pick<Config["languageOptions"], "ecmaVersion" | "sourceType">;
+    readonly files: Readonly<Record<"*" | Scopes, readonly string[]>>;
+    readonly ignores: Input["defaults"]["files"];
+    readonly rules: Readonly<Record<Scopes, readonly Rule.Entry[]>>;
   };
-  extensions: Partial<
-    & Record<"*", Partial<Input["defaults"]["settings"] & Pick<Config, "ignores"> & { override?: boolean }>>
-    & Record<Scopes, Partial<Pick<Config, "files" | "ignores" | "rules">>>
+  readonly extensions: Partial<
+    & Readonly<Record<"*", Partial<Input["defaults"]["settings"] & Pick<Config, "ignores"> & { readonly override?: boolean }>>>
+    & Readonly<Record<Scopes, Partial<Pick<Config, "files" | "ignores" | "rules">>>>
   >;
 }

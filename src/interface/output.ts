@@ -1,9 +1,9 @@
-import type { Globals, ScopeConfig } from "./configs";
+import type * as Configs from "./configs";
 
-export type * from "./configs";
+export type { Configs };
 export type Output = readonly [
-  Globals.PluginsConfig,
-  Globals.SettingsConfig,
-  Globals.IgnoresConfig,
-  ...readonly ScopeConfig[],
+  Configs.Globals.Plugins,
+  Configs.Globals.Settings,
+  Configs.Globals.Ignores,
+  ...readonly Configs.Scoped[],
 ];

@@ -1,18 +1,14 @@
-import type {
-  Scopes,
-  RuleEntry,
-  RuleRecord,
-} from "..";
+import type { Scopes, Rule } from "..";
 
 export class Ruleset {
-  public readonly ruleset: { id: `${Scopes}:${string}`; rules: RuleRecord }[];
+  public readonly ruleset: { id: `${Scopes}:${string}`; rules: Rule.Config }[];
 
   constructor(
     public readonly scope: Scopes,
-    defaults: RuleEntry[],
-    extension?: RuleRecord,
+    defaults: readonly Rule.Entry[],
+    extension?: Rule.Config,
   ) {
-    const map = ([id, rules]: RuleEntry) => ({
+    const map = ([id, rules]: Rule.Entry) => ({
       id: `${scope}:${id}`,
       rules,
     } as const);

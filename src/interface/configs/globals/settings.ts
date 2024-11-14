@@ -1,7 +1,7 @@
+import type { Config } from "../..";
 import type { Only } from "./only";
-import type { Config } from "../config";
 
-export type SettingsConfig = Only<
+export type Settings = Only<
   Config,
   (
     & {
