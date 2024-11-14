@@ -2,7 +2,6 @@ import type { Input } from "..";
 
 export class GlobalFactory {
   constructor(
-    public readonly plugins: Input["imports"]["plugins"],
     public readonly defaultSettings: Input["defaults"]["settings"],
     public readonly defaultGlobalIgnores: Input["defaults"]["ignores"]["*"],
     public readonly globalExtensions: Input["extensions"]["*"] = {},
@@ -10,7 +9,6 @@ export class GlobalFactory {
 
   public get configs() {
     const {
-      plugins,
       defaultSettings,
       defaultGlobalIgnores,
       globalExtensions,
@@ -19,7 +17,6 @@ export class GlobalFactory {
     return [
       {
         name: "linted/*/settings",
-        plugins,
         linterOptions: {
           noInlineConfig: globalExtensions?.noInlineConfig ?? defaultSettings.noInlineConfig,
           reportUnusedDisableDirectives: globalExtensions?.reportUnusedDisableDirectives ?? defaultSettings.reportUnusedDisableDirectives,

@@ -1,16 +1,13 @@
-import type { Input, Output } from "./interface";
-
-export type { Scopes } from "./scopes";
-
 import { scopes } from "./scopes";
 import {
   GlobalFactory,
   ScopeFactory,
   Options,
 } from "./factory";
+import type { Input, Output } from "./interface";
 
+export type { Scopes } from "./scopes";
 export type * from "./interface";
-export type * from "./config";
 export default function (
   {
     imports: {
@@ -23,7 +20,6 @@ export default function (
 ): Output {
   try {
     const global = new GlobalFactory(
-      plugins,
       defaults.settings,
       defaults.ignores["*"],
       extensions["*"],
@@ -76,6 +72,10 @@ export default function (
     } as const;
 
     return [
+      {
+        name: `linted/*/plugins`,
+        plugins,
+      } as const,
       ...global.configs,
       ...scopes.flatMap(scope => options[scope]),
     ];

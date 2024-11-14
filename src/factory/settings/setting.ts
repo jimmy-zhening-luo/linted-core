@@ -1,7 +1,7 @@
 import globals from "globals";
 import type {
   Scopes,
-  Output,
+  ScopeConfig,
 } from "../..";
 import type { Ruleset } from "../ruleset";
 
@@ -39,7 +39,7 @@ export abstract class ScopeSetting<
     public readonly ruleset: Ruleset,
   ) {}
 
-  public get configs(): readonly Output[2][] {
+  public get configs(): readonly ScopeConfig[] {
     const {
       scope,
       files,

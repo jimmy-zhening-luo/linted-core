@@ -7,10 +7,3 @@ export type ImportPlugins = (
   | "jsonc"
   | "yml"
 );
-export type ImportParsers = (
-  | "ts"
-  | "svelte"
-  | "html"
-  | "jsonc"
-  | "yml"
-);
