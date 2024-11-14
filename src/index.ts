@@ -19,8 +19,6 @@ export default function (
 ): Output {
   try {
     const factory = new Factory(
-      defaults.settings,
-      defaults.ignores["*"],
       defaults,
       extensions,
     ),

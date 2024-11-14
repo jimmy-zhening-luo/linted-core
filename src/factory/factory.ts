@@ -6,23 +6,23 @@ export class Factory {
   public readonly extendScopes: Omit<Input["extensions"], "*">;
 
   constructor(
-    public readonly defaultGlobalSettings: Input["defaults"]["settings"],
-    public readonly defaultGlobalIgnores: Input["defaults"]["ignores"]["*"],
-    public readonly defaultScopes: Pick<Input["defaults"], "files" | "ignores" | "rules">,
-    { "*": globals = {}, ...scopes }: Input["extensions"] = {},
+    public readonly defaults: Input["defaults"],
+    { "*": extendGlobal = {}, ...extendScopes }: Input["extensions"] = {},
   ) {
-    this.extendGlobal = globals;
-    this.extendScopes = scopes;
+    this.extendGlobal = extendGlobal;
+    this.extendScopes = extendScopes;
   }
 
   public get settings() {
     const {
-      defaultGlobalSettings: defaults,
+      defaults: {
+        settings,
+      },
       extendGlobal: {
-        noInlineConfig = defaults.noInlineConfig,
-        reportUnusedDisableDirectives = defaults.reportUnusedDisableDirectives,
-        sourceType = defaults.sourceType,
-        ecmaVersion = defaults.ecmaVersion,
+        noInlineConfig = settings.noInlineConfig,
+        reportUnusedDisableDirectives = settings.reportUnusedDisableDirectives,
+        sourceType = settings.sourceType,
+        ecmaVersion = settings.ecmaVersion,
       },
     } = this;
 
@@ -41,7 +41,11 @@ export class Factory {
 
   public get ignores() {
     const {
-      defaultGlobalIgnores: defaults,
+      defaults: {
+        ignores: {
+          "*": defaults,
+        },
+      },
       extendGlobal: {
         ignores = [] as const,
         override = false,
@@ -58,10 +62,15 @@ export class Factory {
   }
 
   public scope(scope: Scopes) {
+    const {
+      defaults: { files, ignores, rules },
+      extendScopes,
+    } = this;
+
     return [
-      [...this.defaultScopes.files[scope], ...this.extendScopes[scope]?.files ?? []] as string[],
-      [...this.defaultScopes.ignores[scope], ...this.extendScopes[scope]?.ignores ?? []] as string[],
-      new Ruleset(scope, this.defaultScopes.rules[scope], this.extendScopes[scope]?.rules),
+      [...files[scope], ...extendScopes[scope]?.files ?? []] as string[],
+      [...ignores[scope], ...extendScopes[scope]?.ignores ?? []] as string[],
+      new Ruleset(scope, rules[scope], extendScopes[scope]?.rules),
     ] as const;
   }
 }
