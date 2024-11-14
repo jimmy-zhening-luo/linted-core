@@ -29,16 +29,13 @@ export abstract class ScopeSetting<
   constructor(public readonly parser: readonly unknown[] & { length: ParserCount }) {}
 
   public get option() {
-    try {
-      const { languageOptions, processor, language } = this;
+    const { languageOptions, processor, language } = this;
 
-      return {
-        languageOptions,
-        ...processor,
-        ...language,
-      } as const;
-    }
-    catch (e) { throw new Error(`linted.factory.Option/scope:${this.scope}: option`, { cause: e }); }
+    return {
+      languageOptions,
+      ...processor,
+      ...language,
+    } as const;
   }
 
   protected abstract get languageOptions():
