@@ -1,7 +1,6 @@
 import { scopes } from "./scopes";
 import {
-  GlobalFactory,
-  ScopeFactory,
+  Factory,
   Options,
 } from "./factory";
 import type { Input, Output } from "./interface";
@@ -19,12 +18,9 @@ export default function (
   }: Input,
 ): Output {
   try {
-    const global = new GlobalFactory(
+    const factory = new Factory(
       defaults.settings,
       defaults.ignores["*"],
-      extensions["*"],
-    ),
-    factory = new ScopeFactory(
       defaults,
       extensions,
     ),
@@ -32,51 +28,49 @@ export default function (
       js: new Options
         .js(
           [],
-          ...factory.produce("js"),
+          ...factory.scope("js"),
         ),
       ts: new Options
         .ts(
           [parsers.ts],
-          ...factory.produce("ts"),
+          ...factory.scope("ts"),
         ),
       svelte: new Options
         .svelte(
           [parsers.svelte, parsers.ts],
-          ...factory.produce("svelte"),
+          ...factory.scope("svelte"),
         ),
       mocha: new Options
         .mocha(
           [parsers.ts],
-          ...factory.produce("mocha"),
+          ...factory.scope("mocha"),
         ),
       html: new Options
         .html(
           [parsers.html],
-          ...factory.produce("html"),
+          ...factory.scope("html"),
         ),
       json: new Options
         .json(
           [parsers.jsonc],
-          ...factory.produce("json"),
+          ...factory.scope("json"),
         ),
       jsonc: new Options
         .jsonc(
           [parsers.jsonc],
-          ...factory.produce("jsonc"),
+          ...factory.scope("jsonc"),
         ),
       yml: new Options
         .yml(
           [parsers.yml],
-          ...factory.produce("yml"),
+          ...factory.scope("yml"),
         ),
     } as const;
 
     return [
-      {
-        name: `linted/*/plugins`,
-        plugins,
-      } as const,
-      ...global.configs,
+      { name: `linted/*/plugins`, plugins } as const,
+      factory.settings,
+      factory.ignores,
       ...scopes.flatMap(scope => options[scope].configs),
     ];
   }
