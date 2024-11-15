@@ -1,3 +1,4 @@
+export type * from "./imports";
 export type Scopes = typeof scopes[number];
 export const scopes = [
   "js",

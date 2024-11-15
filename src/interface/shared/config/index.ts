@@ -3,10 +3,13 @@ import type * as Rule from "./rule";
 export type { Rule };
 export interface Config<Plugins extends string = string> {
   readonly name: `linted/${string}`;
-  readonly plugins: Readonly<Record<Plugins, { readonly configs: unknown }>>;
+  readonly plugins: Readonly<Record<
+    Plugins,
+    { readonly configs: unknown }
+  >>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];
-  readonly rules: Rule.Config;
+  readonly rules: Rule.Bag;
   readonly linterOptions: {
     readonly noInlineConfig: boolean;
     readonly reportUnusedDisableDirectives:
@@ -35,8 +38,20 @@ export interface Config<Plugins extends string = string> {
       | 2023
       | 2024
     ;
-  };
+  } /* common language options -- not including extra language options for each scope */;
   readonly processor?: string;
   readonly language?: string;
   readonly settings?: Readonly<Record<string, unknown>>;
 }
+export type PartialConfig<
+  This extends object,
+  Picks extends Exclude<keyof Config, keyof This>,
+  Plugins extends string = string,
+> = (
+  & This
+  & Pick<Config<Plugins>, Picks>
+  & Readonly<Partial<Record<
+    Exclude<keyof Config, Picks | keyof This>,
+    never
+  >>>
+);

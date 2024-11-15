@@ -1,8 +1,8 @@
-export type Entry = readonly [
+export type NamedBag = readonly [
   string,
-  Config,
+  Bag,
 ];
-export type Config = Readonly<Record<
+export type Bag = Readonly<Record<
   string,
   | State
   | readonly [State, ...readonly unknown[]]
