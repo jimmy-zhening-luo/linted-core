@@ -1,10 +1,7 @@
+import type { Scopes, Plugins, Parsers } from "../scopes";
 import type * as Inputs from "./inputs";
 
-export interface Input<
-  Scopes extends string,
-  Plugins extends string,
-  Parsers extends string,
-> {
+export interface Input {
   readonly imports: Inputs.Imports<
     Plugins,
     Parsers

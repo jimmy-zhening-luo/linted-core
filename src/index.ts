@@ -1,5 +1,4 @@
 import type { Input, Output } from "./interface";
-import type { Scopes, Plugins, Parsers } from "./scopes";
 import { scopes } from "./scopes";
 import { Factory, Options } from "./factory";
 
@@ -9,7 +8,7 @@ export default function ({
   imports: { plugins, parsers },
   defaults,
   extensions,
-}: Input<Scopes, Plugins, Parsers>): Output<Scopes, Plugins> {
+}: Input): Output {
   try {
     const factory = new Factory(defaults, extensions),
     options: { readonly [S in typeof scopes[number]]: InstanceType<typeof Options[S]> } = {

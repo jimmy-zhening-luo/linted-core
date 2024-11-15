@@ -1,17 +1,15 @@
-import type { Scopes } from "..";
-import type Core from "..";
-import { Ruleset } from "./ruleset";
+import type { Scopes, Rule, Input } from "..";
 import type Options from "./settings";
 
 export class Factory {
   public readonly extensions: {
-    readonly global: NonNullable<Parameters<typeof Core>[0]["extensions"]["*"]>;
-    readonly scopes: Omit<Parameters<typeof Core>[0]["extensions"], "*">;
+    readonly global: NonNullable<Input["extensions"]["*"]>;
+    readonly scopes: Omit<Input["extensions"], "*">;
   };
 
   constructor(
-    public readonly defaults: Parameters<typeof Core>[0]["defaults"],
-    { "*": global = {}, ...scopes }: Parameters<typeof Core>[0]["extensions"] = {} as const,
+    public readonly defaults: Input["defaults"],
+    { "*": global = {}, ...scopes }: Input["extensions"] = {} as const,
   ) {
     this.extensions = { global, scopes } as const;
   }
@@ -57,6 +55,19 @@ export class Factory {
   }
 
   public scope<S extends Scopes>(scope: S, settings: InstanceType<typeof Options[S]>) {
+    function Ruleset<Scopes extends string>(
+      scope: Scopes,
+      defaults: readonly Rule.NamedBag[],
+      override?: Rule.Bag,
+    ) {
+      return [
+        ...defaults.map(([id, rules]: Rule.NamedBag) => ({ id: `${scope}:${id}`, rules } as const)),
+        ...typeof override === "undefined"
+          ? [] as const
+          : [{ id: `${scope}:override`, rules: override } as const] as const,
+      ] as const;
+    }
+
     const {
       defaults: {
         files: { [scope]: defaultFiles },
@@ -72,14 +83,11 @@ export class Factory {
     } = scopeExtension,
     files = [...defaultFiles, ...extendFiles] as const,
     ignores = [...defaultIgnores, ...extendIgnores] as const,
-    ruleset = new Ruleset<Scopes>(scope, defaultRules, extendRules);
-
-    if (ruleset.scope !== settings.scope)
-      throw new TypeError(`Scope mismatch between config "${settings.scope} and inner ruleset "${ruleset.scope}"`);
+    ruleset = Ruleset<Scopes>(scope, defaultRules, extendRules);
 
     return files.length < 1
       ? [] as const
-      : ruleset.ruleset.map(({ id, rules }) => ({
+      : ruleset.map(({ id, rules }) => ({
         name: `linted/${id}`,
         files,
         ignores,

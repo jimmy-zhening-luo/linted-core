@@ -1,10 +1,8 @@
+import type { Scopes, Plugins } from "../scopes";
 import type * as Configs from "./outputs";
 
 export type { Configs };
-export type Output<
-  Scopes extends string,
-  Plugins extends string,
-> = readonly [
+export type Output = readonly [
   Configs.Common.Plugins<Plugins>,
   Configs.Common.Settings,
   Configs.Common.Ignores,
