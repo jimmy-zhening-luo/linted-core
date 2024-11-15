@@ -1,4 +1,4 @@
-import type { Scopes } from "../..";
+import type { Scopes } from "..";
 import type Core from "..";
 import { Ruleset } from "./ruleset";
 import type Options from "./settings";
