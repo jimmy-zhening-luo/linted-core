@@ -10,8 +10,8 @@ import type {
 import type { Plugins, Scopes } from "../../scopes";
 
 export type Output = readonly [
-  CommonPlugins<Plugins>,
   CommonSettings,
+  CommonPlugins<Plugins>,
   CommonIgnores,
   ...readonly (ScopeSettings<Scopes> | ScopeRules<Scopes>)[],
 ];

@@ -28,7 +28,7 @@ export class Factory {
 
     this.common = {
       settings: {
-        name: "linted/*/settings",
+        name: "linted/*",
         linterOptions: { noInlineConfig, reportUnusedDisableDirectives } as const,
         languageOptions: { sourceType, ecmaVersion } as const,
       } as const,
@@ -108,7 +108,7 @@ export class Factory {
         ? [] as const
         : [
             {
-              name: `linted/${scope}/settings`,
+              name: `linted/${scope}`,
               files,
               ignores,
               languageOptions: loadedLanguageOptions,
