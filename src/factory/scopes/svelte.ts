@@ -12,7 +12,6 @@ export default class SvelteSetting extends ScopeSetting<
   false,
   { readonly processor: "svelte/svelte" }
 > {
-  public readonly scope = "svelte";
   public readonly processor = { processor: "svelte/svelte" } as const;
   public readonly language = {} as const;
   public readonly parserOptions = {

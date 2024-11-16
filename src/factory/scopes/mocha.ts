@@ -6,7 +6,6 @@ export default class MochaSetting extends ScopeSetting<
   TsSetting["parserOptions"],
   "mocha"
 > {
-  public readonly scope = "mocha";
   public readonly processor = {} as const;
   public readonly language = {} as const;
   public readonly types = ["mocha"] as const;

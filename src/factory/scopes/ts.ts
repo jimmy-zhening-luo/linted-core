@@ -10,7 +10,6 @@ export default class TsSetting extends ScopeSetting<
     };
   }
 > {
-  public readonly scope = "ts";
   public readonly processor = {} as const;
   public readonly language = {} as const;
   public readonly parserOptions = {
