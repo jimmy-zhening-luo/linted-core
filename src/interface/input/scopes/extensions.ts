@@ -1,6 +1,5 @@
 import type { Defaults } from "./defaults";
 
-export type * from "./defaults";
 export type Extensions<Scopes extends string> = (
   & {
     readonly "*"?: Partial<Defaults<Scopes>["settings"]> & {

@@ -1,6 +1,6 @@
 import type { PartialConfig } from "../../shared";
 
-export type Settings = PartialConfig<
+export type CommonSettings = PartialConfig<
   { readonly name: `linted/*/settings` },
   | "linterOptions"
   | "languageOptions"

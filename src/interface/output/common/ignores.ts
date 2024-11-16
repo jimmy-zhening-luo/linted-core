@@ -1,6 +1,6 @@
 import type { PartialConfig } from "../../shared";
 
-export type Ignores = PartialConfig<
+export type CommonIgnores = PartialConfig<
   { readonly name: "linted/*/ignores" },
   "ignores"
 >;
