@@ -1,14 +1,13 @@
 import globals from "globals";
-import type { Scopes } from "../../../scopes";
+import type { Parsers } from "../../../scopes";
 
 export abstract class ScopeSetting<
-  Parser extends Scopes | false = false,
+  Parser extends Parsers | false = false,
   ParserOptions extends object = object,
   Global extends keyof typeof globals | false = false,
   Processor extends object = object,
   Language extends object = object,
 > {
-  public abstract readonly scope: Scopes;
   public abstract readonly processor: (Processor extends { readonly processor: infer P }
     ? string extends P
       ? Record<string, never>
