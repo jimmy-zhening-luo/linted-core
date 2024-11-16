@@ -1,11 +1,13 @@
 import { ScopeSettings } from "./settings";
 import type { Input } from "../interface";
+import type { tree as Tree } from "../scopes";
 
 export class Factory {
   public readonly common;
   public readonly scopes;
 
   constructor(
+    tree: typeof Tree,
     public readonly parsers: Input["imports"]["parsers"],
     {
       settings: defaultSettings,
@@ -44,20 +46,31 @@ export class Factory {
       rules: defaultRules,
     } as const;
 
-    for (const s in scopeExtensions) {
+    for (const scope in scopeExtensions) {
       const {
-        [s as keyof typeof scopeExtensions]: {
+        [scope as keyof typeof scopeExtensions]: {
           files: moreFiles = [],
           ignores: moreIgnores = [],
           rules: moreRules = null,
         } = {} as const,
       } = scopeExtensions;
 
-      this.scopes.files[s as keyof typeof scopeExtensions].push(...moreFiles);
-      this.scopes.ignores[s as keyof typeof scopeExtensions].push(...moreIgnores);
+      this.scopes.files[scope as keyof typeof scopeExtensions].push(...moreFiles);
+      this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...moreIgnores);
 
       if (moreRules !== null)
-        this.scopes.rules[s as keyof typeof scopeExtensions].push([`${s}:override`, moreRules]);
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}:override`, moreRules]);
+
+      tree.forEach(([scope, parents]) => {
+        parents.forEach(parent => {
+          this.scopes.files[parent].push(
+            ...this.scopes.files[scope],
+          );
+          this.scopes.ignores[parent].push(
+            ...this.scopes.ignores[scope],
+          );
+        });
+      });
     }
   }
 

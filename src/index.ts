@@ -1,5 +1,5 @@
 import type { Input, Output } from "./interface";
-import { scopes } from "./scopes";
+import { scopes, tree } from "./scopes";
 import { Factory } from "./factory";
 
 export type * from "./interface";
@@ -10,7 +10,7 @@ export default function ({
   extensions,
 }: Input): Output {
   try {
-    const factory = new Factory(parsers, defaults, extensions);
+    const factory = new Factory(tree, parsers, defaults, extensions);
 
     return [
       { name: `linted/*/plugins`, plugins } as const,
