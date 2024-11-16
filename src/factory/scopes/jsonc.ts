@@ -1,6 +1,6 @@
-import { ScopeSetting } from "./setting";
+import { ScopeManifest } from "./manifest";
 
-export default class JsoncSetting extends ScopeSetting<
+export default class JsoncManifest extends ScopeManifest<
   "jsonc"
 > {
   public readonly processor = {} as const;

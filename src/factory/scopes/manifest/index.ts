@@ -1,7 +1,7 @@
 import globals from "globals";
 import type { Parsers } from "../../../scopes";
 
-export abstract class ScopeSetting<
+export abstract class ScopeManifest<
   Parser extends Parsers | false = false,
   ParserOptions extends object = object,
   Global extends keyof typeof globals | false = false,

@@ -1,6 +1,6 @@
-import { ScopeSetting } from "./setting";
+import { ScopeManifest } from "./manifest";
 
-export default class TsSetting extends ScopeSetting<
+export default class TsManifest extends ScopeManifest<
   "ts",
   {
     parserOptions: {

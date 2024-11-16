@@ -1,9 +1,9 @@
-import { ScopeSetting } from "./setting";
-import type TsSetting from "./ts";
+import { ScopeManifest } from "./manifest";
+import type TsManifest from "./ts";
 
-export default class SvelteSetting extends ScopeSetting<
+export default class SvelteManifest extends ScopeManifest<
   "svelte" | "ts",
-  TsSetting["parserOptions"] & {
+  TsManifest["parserOptions"] & {
     parserOptions: {
       readonly parser: "ts";
       readonly extraFileExtensions: readonly [".svelte"];

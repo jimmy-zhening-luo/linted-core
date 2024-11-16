@@ -1,6 +1,6 @@
-import { ScopeSetting } from "./setting";
+import { ScopeManifest } from "./manifest";
 
-export default class HtmlSetting extends ScopeSetting<
+export default class HtmlManifest extends ScopeManifest<
   "html"
 > {
   public readonly processor = {} as const;

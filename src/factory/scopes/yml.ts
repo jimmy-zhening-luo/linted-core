@@ -1,6 +1,6 @@
-import { ScopeSetting } from "./setting";
+import { ScopeManifest } from "./manifest";
 
-export default class YmlSetting extends ScopeSetting<
+export default class YmlManifest extends ScopeManifest<
   "yml"
 > {
   public readonly processor = {} as const;

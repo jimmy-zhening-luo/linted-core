@@ -69,7 +69,7 @@ export class Factory {
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
-    ruleset = rules.map(([id, rules]) => ({ id: `${scope}:${id}`, rules } as const)),
+    ruleset = rules.map(([id, rules]) => ({ id: `${scope}/${id}`, rules } as const)),
     settings = new ScopeSettings[scope](),
     { languageOptions, parserOptions } = settings,
     loadedLanguageOptions = {
@@ -91,14 +91,23 @@ export class Factory {
 
     return files.length < 1
       ? [] as const
-      : ruleset.map(({ id, rules }) => ({
-        name: `linted/${id}`,
-        files,
-        ignores,
-        rules,
-        languageOptions: loadedLanguageOptions,
-        ...settings.processor,
-        ...settings.language,
-      } as const));
+      : ruleset.length < 1
+        ? [] as const
+        : [
+            {
+              name: `linted/${scope}/settings`,
+              files,
+              ignores,
+              languageOptions: loadedLanguageOptions,
+              ...settings.processor,
+              ...settings.language,
+            } as const,
+            ...ruleset.map(({ id, rules }) => ({
+              name: `linted/${id}`,
+              files,
+              ignores,
+              rules,
+            } as const)),
+          ];
   }
 }

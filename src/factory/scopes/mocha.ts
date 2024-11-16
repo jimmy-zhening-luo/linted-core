@@ -1,9 +1,9 @@
-import { ScopeSetting } from "./setting";
-import type TsSetting from "./ts";
+import { ScopeManifest } from "./manifest";
+import type TsManifest from "./ts";
 
-export default class MochaSetting extends ScopeSetting<
+export default class MochaManifest extends ScopeManifest<
   "ts",
-  TsSetting["parserOptions"],
+  TsManifest["parserOptions"],
   "mocha"
 > {
   public readonly processor = {} as const;
