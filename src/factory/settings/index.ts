@@ -8,7 +8,7 @@ import jsonc from "./scopes/jsonc";
 import yml from "./scopes/yml";
 
 export type * from "./setting";
-export default {
+export const ScopeSettings = {
   js,
   ts,
   svelte,

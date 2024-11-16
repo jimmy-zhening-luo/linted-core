@@ -1,6 +1,6 @@
 import type { Input, Output } from "./interface";
 import { scopes } from "./scopes";
-import { Factory, Options } from "./factory";
+import { Factory, ScopeSettings } from "./factory";
 
 export type * from "./interface";
 export type * from "./scopes";
@@ -11,15 +11,15 @@ export default function ({
 }: Input): Output {
   try {
     const factory = new Factory(defaults, extensions),
-    options: { readonly [S in typeof scopes[number]]: InstanceType<typeof Options[S]> } = {
-      js: new Options.js([] as const),
-      ts: new Options.ts([parsers.ts] as const),
-      svelte: new Options.svelte([parsers.svelte, parsers.ts] as const),
-      mocha: new Options.mocha([parsers.ts] as const),
-      html: new Options.html([parsers.html] as const),
-      json: new Options.json([parsers.jsonc] as const),
-      jsonc: new Options.jsonc([parsers.jsonc] as const),
-      yml: new Options.yml([parsers.yml] as const),
+    options: { readonly [S in typeof scopes[number]]: InstanceType<typeof ScopeSettings[S]> } = {
+      js: new ScopeSettings.js([] as const),
+      ts: new ScopeSettings.ts([parsers.ts] as const),
+      svelte: new ScopeSettings.svelte([parsers.svelte, parsers.ts] as const),
+      mocha: new ScopeSettings.mocha([parsers.ts] as const),
+      html: new ScopeSettings.html([parsers.html] as const),
+      json: new ScopeSettings.json([parsers.jsonc] as const),
+      jsonc: new ScopeSettings.jsonc([parsers.jsonc] as const),
+      yml: new ScopeSettings.yml([parsers.yml] as const),
     } as const;
 
     return [

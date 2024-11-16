@@ -1,4 +1,4 @@
-import type Options from "./settings";
+import type { ScopeSettings } from "./settings";
 import type { Input } from "../interface/input";
 
 export class Factory {
@@ -60,7 +60,7 @@ export class Factory {
     }
   }
 
-  public scope<S extends keyof typeof Options>(scope: S, settings: InstanceType<typeof Options[S]>) {
+  public scope<S extends keyof typeof ScopeSettings>(scope: S, settings: InstanceType<typeof ScopeSettings[S]>) {
     const {
       files: {
         [scope]: files,
