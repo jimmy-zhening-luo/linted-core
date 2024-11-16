@@ -1,5 +1,5 @@
 import globals from "globals";
-import type { Scopes } from "../..";
+import type { Scopes } from "../../../scopes";
 
 export abstract class ScopeSetting<
   Parser extends Scopes | false = false,

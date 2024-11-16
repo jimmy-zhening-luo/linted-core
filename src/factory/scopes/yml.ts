@@ -1,4 +1,4 @@
-import { ScopeSetting } from "../setting";
+import { ScopeSetting } from "./setting";
 
 export default class YmlSetting extends ScopeSetting<
   "yml"

@@ -1,9 +1,9 @@
-import { ScopeSetting } from "../setting";
+import { ScopeSetting } from "./setting";
 
-export default class JsonSetting extends ScopeSetting<
+export default class JsoncSetting extends ScopeSetting<
   "jsonc"
 > {
-  public readonly scope = "json";
+  public readonly scope = "jsonc";
   public readonly processor = {} as const;
   public readonly language = {} as const;
   public readonly parserOptions = {} as const;

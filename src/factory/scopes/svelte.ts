@@ -1,4 +1,4 @@
-import { ScopeSetting } from "../setting";
+import { ScopeSetting } from "./setting";
 import type TsSetting from "./ts";
 
 export default class SvelteSetting extends ScopeSetting<

@@ -7,7 +7,6 @@ import json from "./scopes/json";
 import jsonc from "./scopes/jsonc";
 import yml from "./scopes/yml";
 
-export type * from "./setting";
 export const ScopeSettings = {
   js,
   ts,
