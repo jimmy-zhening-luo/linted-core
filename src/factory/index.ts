@@ -59,7 +59,7 @@ export class Factory {
       this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...moreIgnores);
 
       if (moreRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}:override`, moreRules]);
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}/override`, moreRules]);
 
       tree.forEach(([scope, parents]) => {
         parents.forEach(parent => {
@@ -68,6 +68,9 @@ export class Factory {
           );
           this.scopes.ignores[parent].push(
             ...this.scopes.ignores[scope],
+          );
+          this.scopes.rules[scope].unshift(
+            ...this.scopes.rules[parent]
           );
         });
       });
