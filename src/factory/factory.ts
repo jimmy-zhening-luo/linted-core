@@ -6,6 +6,7 @@ export class Factory {
   public readonly scopes;
 
   constructor(
+    public readonly parsers: Input["imports"]["parsers"],
     {
       settings: defaultSettings,
       files: defaultFiles,
@@ -68,7 +69,24 @@ export class Factory {
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
-    ruleset = rules.map(([id, rules]) => ({ id: `${scope}:${id}`, rules } as const));
+    ruleset = rules.map(([id, rules]) => ({ id: `${scope}:${id}`, rules } as const)),
+    { languageOptions, parserOptions } = settings,
+    loadedLanguageOptions = {
+      ...languageOptions,
+      ..."parserOptions" in parserOptions
+        ? {
+            parserOptions: {
+              ...parserOptions.parserOptions,
+              ..."parser" in parserOptions.parserOptions
+                ? { parser: this.parsers[parserOptions.parserOptions.parser] } as const
+                : {} as const,
+            } as const,
+          } as const
+        : {} as const,
+      ..."parser" in languageOptions
+        ? { parser: this.parsers[languageOptions.parser] } as const
+        : {} as const,
+    } as const;
 
     return files.length < 1
       ? [] as const
@@ -77,7 +95,9 @@ export class Factory {
         files,
         ignores,
         rules,
-        ...settings.option,
+        languageOptions: loadedLanguageOptions,
+        ...settings.processor,
+        ...settings.language,
       } as const));
   }
 }

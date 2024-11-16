@@ -10,16 +10,16 @@ export default function ({
   extensions,
 }: Input): Output {
   try {
-    const factory = new Factory(defaults, extensions),
+    const factory = new Factory(parsers, defaults, extensions),
     options: { readonly [S in typeof scopes[number]]: InstanceType<typeof ScopeSettings[S]> } = {
-      js: new ScopeSettings.js([] as const),
-      ts: new ScopeSettings.ts([parsers.ts] as const),
-      svelte: new ScopeSettings.svelte([parsers.svelte, parsers.ts] as const),
-      mocha: new ScopeSettings.mocha([parsers.ts] as const),
-      html: new ScopeSettings.html([parsers.html] as const),
-      json: new ScopeSettings.json([parsers.jsonc] as const),
-      jsonc: new ScopeSettings.jsonc([parsers.jsonc] as const),
-      yml: new ScopeSettings.yml([parsers.yml] as const),
+      js: new ScopeSettings.js(),
+      ts: new ScopeSettings.ts(),
+      svelte: new ScopeSettings.svelte(),
+      mocha: new ScopeSettings.mocha(),
+      html: new ScopeSettings.html(),
+      json: new ScopeSettings.json(),
+      jsonc: new ScopeSettings.jsonc(),
+      yml: new ScopeSettings.yml(),
     } as const;
 
     return [
