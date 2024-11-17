@@ -1,4 +1,4 @@
-import globals from "globals";
+import type globals from "globals";
 import type { Parsers } from "../../../scopes";
 
 export abstract class ScopeManifest<
@@ -31,13 +31,6 @@ export abstract class ScopeManifest<
   ) & (
     Global extends boolean
       ? { readonly globals?: never }
-      : { readonly globals: Readonly<Record<string, unknown>> }
+      : { readonly globals: Global }
   );
-
-  protected globals(global: Global & keyof typeof globals) {
-    if (typeof global === "boolean")
-      throw new TypeError("`global` must be a string key of `globals` package");
-
-    return globals[global];
-  }
 }

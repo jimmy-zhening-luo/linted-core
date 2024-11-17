@@ -17,6 +17,6 @@ export default class MochaManifest extends ScopeManifest<
   } as const;
   public readonly languageOptions = {
     parser: "ts",
-    globals: this.globals("mocha"),
+    globals: "mocha",
   } as const;
 }

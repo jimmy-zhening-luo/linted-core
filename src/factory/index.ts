@@ -1,3 +1,4 @@
+import globals from "globals";
 import { ScopeManifests } from "./manifests";
 import type { Input } from "../interface";
 import type { tree as Tree } from "../scopes";
@@ -107,6 +108,7 @@ export class Factory {
               ...language,
               languageOptions: {
                 ...languageOptionsStatic,
+                ..."globals" in languageOptionsStatic ? { globals: globals[languageOptionsStatic["globals"] as keyof typeof globals] } as const : {} as const,
                 ...parser === null ? {} as const : { parser: this.parsers[parser] } as const,
                 ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
                   ? {} as const
