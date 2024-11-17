@@ -1,8 +1,8 @@
 import { ScopeManifest } from "./manifest";
 
-export default class MochaManifest extends ScopeManifest<"ts"> {
+export default class MochaManifest extends ScopeManifest {
   public readonly languageOptions = {
-    parser: "ts",
+    parser: null,
     globals: "mocha",
   } as const;
   public readonly parserOptions = {
