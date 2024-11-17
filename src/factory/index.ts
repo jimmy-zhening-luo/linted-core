@@ -60,18 +60,18 @@ export class Factory {
 
       if (moreRules !== null)
         this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}/override`, moreRules]);
-
-      tree.forEach(([scope, parents]) => {
-        parents.forEach(parent => {
-          this.scopes.files[parent].push(
-            ...this.scopes.files[scope],
-          );
-          this.scopes.ignores[parent].push(
-            ...this.scopes.ignores[scope],
-          );
-        });
-      });
     }
+
+    tree.forEach(([scope, parents]) => {
+      parents.forEach(parent => {
+        this.scopes.files[parent].push(
+          ...this.scopes.files[scope],
+        );
+        this.scopes.ignores[parent].push(
+          ...this.scopes.ignores[scope],
+        );
+      });
+    });
   }
 
   public scope<S extends keyof typeof ScopeManifests>(scope: S) {
