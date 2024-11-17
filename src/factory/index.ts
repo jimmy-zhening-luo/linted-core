@@ -69,9 +69,6 @@ export class Factory {
           this.scopes.ignores[parent].push(
             ...this.scopes.ignores[scope],
           );
-          this.scopes.rules[scope].unshift(
-            ...this.scopes.rules[parent]
-          );
         });
       });
     }
