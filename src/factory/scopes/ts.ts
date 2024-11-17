@@ -1,13 +1,6 @@
 import { ScopeManifest } from "./manifest";
 
-export default class TsManifest extends ScopeManifest<
-  "ts",
-  {
-    readonly project: "tsconfig.json";
-    readonly sourceType: "module";
-    readonly ecmaVersion: 2023;
-  }
-> {
+export default class TsManifest extends ScopeManifest<"ts"> {
   public readonly processor = {} as const;
   public readonly language = {} as const;
   public readonly parserOptions = {
