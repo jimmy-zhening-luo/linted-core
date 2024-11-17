@@ -34,21 +34,6 @@ export abstract class ScopeManifest<
       : { readonly globals: Readonly<Record<string, unknown>> }
   );
 
-  public get option() {
-    const {
-      languageOptions, parserOptions, processor, language,
-    } = this;
-
-    return {
-      languageOptions: {
-        ...languageOptions,
-        ...parserOptions,
-      },
-      ...processor,
-      ...language,
-    } as const;
-  }
-
   protected globals(global: Global & keyof typeof globals) {
     if (typeof global === "boolean")
       throw new TypeError("`global` must be a string key of `globals` package");
