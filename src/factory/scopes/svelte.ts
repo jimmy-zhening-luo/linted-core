@@ -1,5 +1,4 @@
 import { ScopeManifest } from "./manifest";
-import type TsManifest from "./ts";
 
 export default class SvelteManifest extends ScopeManifest<"svelte" | "ts"> {
   public readonly processor = { processor: "svelte/svelte" } as const;
