@@ -114,7 +114,7 @@ export class Factory {
                       parserOptions: {
                         ...parserOptionsStatic,
                         ...subparser === null ? {} as const : { parser: this.parsers[subparser] } as const,
-                      },
+                      } as const,
                     } as const,
               } as const,
             } as const,
