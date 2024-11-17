@@ -4,7 +4,6 @@ import type { Parsers } from "../../../scopes";
 export abstract class ScopeManifest<
   Parser extends Parsers | false = false,
   ParserOptions extends object = object,
-  Global extends keyof typeof globals | false = false,
   Processor extends object = object,
   Language extends object = object,
 > {
@@ -29,8 +28,6 @@ export abstract class ScopeManifest<
       : { readonly parser: Parser }
 
   ) & (
-    Global extends boolean
-      ? { readonly globals?: never }
-      : { readonly globals: Global }
+    { readonly globals?: Global }
   );
 }

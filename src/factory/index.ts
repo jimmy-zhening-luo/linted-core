@@ -87,6 +87,7 @@ export class Factory {
       language,
       languageOptions: {
         parser = null,
+        globals: global = null,
         ...languageOptionsStatic
       },
       parserOptions: {
@@ -108,7 +109,7 @@ export class Factory {
               ...language,
               languageOptions: {
                 ...languageOptionsStatic,
-                ..."globals" in languageOptionsStatic ? { globals: globals[languageOptionsStatic["globals"] as keyof typeof globals] } as const : {} as const,
+                ...global !== null && global in globals ? { globals: globals[global as keyof typeof globals] } as const : {} as const,
                 ...parser === null ? {} as const : { parser: this.parsers[parser] } as const,
                 ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
                   ? {} as const

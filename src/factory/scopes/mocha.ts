@@ -3,8 +3,7 @@ import type TsManifest from "./ts";
 
 export default class MochaManifest extends ScopeManifest<
   "ts",
-  TsManifest["parserOptions"],
-  "mocha"
+  TsManifest["parserOptions"]
 > {
   public readonly processor = {} as const;
   public readonly language = {} as const;
