@@ -16,14 +16,17 @@ export class Factory {
       ignores: defaultIgnores,
       rules: defaultRules,
     }: Input["defaults"],
-    { "*": commonExtension = {}, ...scopeExtensions }: Input["extensions"] = {} as const,
+    {
+      "*": commonExtension = {},
+      ...scopeExtensions
+    }: Input["extensions"] = {} as const,
   ) {
     const {
       noInlineConfig = defaultSettings.noInlineConfig,
       reportUnusedDisableDirectives = defaultSettings.reportUnusedDisableDirectives,
       sourceType = defaultSettings.sourceType,
       ecmaVersion = defaultSettings.ecmaVersion,
-      ignores = [] as const,
+      ignores = [],
       override = false,
     } = commonExtension;
 
@@ -36,7 +39,7 @@ export class Factory {
       ignores: {
         name: "linted/*/ignores/",
         ignores: [
-          ...override ? [] as const : defaultIgnores["*"],
+          ...override ? [] : defaultIgnores["*"],
           ...ignores,
         ] as const,
       } as const,
@@ -60,7 +63,7 @@ export class Factory {
       this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...moreIgnores);
 
       if (moreRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}/override`, moreRules]);
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}/override`, moreRules] as const);
     }
 
     tree.forEach(([scope, parents]) => {
