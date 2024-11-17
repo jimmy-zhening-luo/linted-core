@@ -33,7 +33,7 @@ export class Factory {
         languageOptions: { sourceType, ecmaVersion } as const,
       } as const,
       ignores: {
-        name: "linted/*/ignores",
+        name: "linted/*/ignores/",
         ignores: [
           ...override ? [] as const : defaultIgnores["*"],
           ...ignores,
@@ -119,7 +119,7 @@ export class Factory {
               } as const,
             } as const,
             ...ruleset.map(({ id, rules }) => ({
-              name: `linted/${id}`,
+              name: `linted/${id}/`,
               files,
               ignores,
               rules,

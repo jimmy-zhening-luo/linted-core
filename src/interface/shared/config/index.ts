@@ -2,7 +2,7 @@ import type * as Rule from "./rule";
 
 export type { Rule };
 export interface Config<Plugins extends string = string> {
-  readonly name: `linted/${string}`;
+  readonly name: `linted/${string}/`;
   readonly plugins: Readonly<Record<
     Plugins,
     { readonly configs: unknown }
@@ -44,14 +44,25 @@ export interface Config<Plugins extends string = string> {
   readonly settings?: Readonly<Record<string, unknown>>;
 }
 export type PartialConfig<
-  This extends object,
-  Picks extends Exclude<keyof Config, keyof This>,
+  Name extends Config["name"],
+  Picks extends Exclude<
+    keyof Config,
+    | "name"
+    | keyof Rest
+  >,
   Plugins extends string = string,
+  Rest extends object = object,
 > = (
-  & This
+  & Rest
   & Pick<Config<Plugins>, Picks>
+  & { readonly name: Name }
   & Readonly<Partial<Record<
-    Exclude<keyof Config, Picks | keyof This>,
+    Exclude<
+      keyof Config,
+      | "name"
+      | keyof Rest
+      | Picks
+    >,
     never
   >>>
 );

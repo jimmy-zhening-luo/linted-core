@@ -14,7 +14,7 @@ export default function ({
 
     return [
       factory.common.settings,
-      { name: `linted/*/plugins`, plugins } as const,
+      { name: `linted/*/plugins/`, plugins } as const,
       factory.common.ignores,
       ...scopes.flatMap(scope => factory.scope(scope)),
     ] as const;

@@ -1,7 +1,7 @@
 import type { PartialConfig } from "../../shared";
 
 export type CommonSettings = PartialConfig<
-  { readonly name: `linted/*/` },
+  "linted/*/",
   | "linterOptions"
   | "languageOptions"
 >;
