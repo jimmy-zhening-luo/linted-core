@@ -6,8 +6,7 @@ export default class SvelteManifest extends ScopeManifest<
   Omit<TsManifest["parserOptions"], "parser"> & {
     readonly parser: "ts";
     readonly extraFileExtensions: readonly [".svelte"];
-  },
-  { readonly processor: "svelte/svelte" }
+  }
 > {
   public readonly processor = { processor: "svelte/svelte" } as const;
   public readonly language = {} as const;
