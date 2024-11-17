@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: RELEASE
-      url: https://www.npmjs.com/package/@eslinted/core
+      url: https://www.npmjs.com/package/@eslinted/core?activeTab=versions
     name: Build/Publish (RELEASE)
     steps:
       - name: Checkout
