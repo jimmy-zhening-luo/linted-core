@@ -1,4 +1,4 @@
-import { ScopeSettings } from "./settings";
+import { ScopeManifests } from "./manifests";
 import type { Input } from "../interface";
 import type { tree as Tree } from "../scopes";
 
@@ -74,33 +74,25 @@ export class Factory {
     }
   }
 
-  public scope<S extends keyof typeof ScopeSettings>(scope: S) {
+  public scope<S extends keyof typeof ScopeManifests>(scope: S) {
     const {
-      files: {
-        [scope]: files,
-      },
+      files: { [scope]: files },
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
     ruleset = rules.map(([id, rules]) => ({ id: `${scope}/${id}`, rules } as const)),
-    settings = new ScopeSettings[scope](),
-    { languageOptions, parserOptions } = settings,
-    loadedLanguageOptions = {
-      ...languageOptions,
-      ..."parserOptions" in parserOptions
-        ? {
-            parserOptions: {
-              ...parserOptions.parserOptions,
-              ..."parser" in parserOptions.parserOptions
-                ? { parser: this.parsers[parserOptions.parserOptions.parser] } as const
-                : {} as const,
-            } as const,
-          } as const
-        : {} as const,
-      ..."parser" in languageOptions
-        ? { parser: this.parsers[languageOptions.parser] } as const
-        : {} as const,
-    } as const;
+    {
+      processor,
+      language,
+      languageOptions: {
+        parser = null,
+        ...languageOptionsStatic
+      },
+      parserOptions: {
+        parser: subparser = null,
+        ...parserOptionsStatic
+      },
+    } = new ScopeManifests[scope]();
 
     return files.length < 1
       ? [] as const
@@ -111,9 +103,20 @@ export class Factory {
               name: `linted/${scope}`,
               files,
               ignores,
-              languageOptions: loadedLanguageOptions,
-              ...settings.processor,
-              ...settings.language,
+              ...processor,
+              ...language,
+              languageOptions: {
+                ...languageOptionsStatic,
+                ...parser === null ? {} as const : { parser: this.parsers[parser] } as const,
+                ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
+                  ? {} as const
+                  : {
+                      parserOptions: {
+                        ...parserOptionsStatic,
+                        ...subparser === null ? {} as const : { parser: this.parsers[subparser] } as const,
+                      },
+                    } as const,
+              } as const,
             } as const,
             ...ruleset.map(({ id, rules }) => ({
               name: `linted/${id}`,

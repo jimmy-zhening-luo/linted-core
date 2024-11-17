@@ -10,11 +10,10 @@ export default class MochaManifest extends ScopeManifest<
   public readonly language = {} as const;
   public readonly types = ["mocha"] as const;
   public readonly parserOptions = {
-    parserOptions: {
-      project: "tsconfig.json",
-      sourceType: "module",
-      ecmaVersion: 2023,
-    } as const,
+    parser: null,
+    project: "tsconfig.json",
+    sourceType: "module",
+    ecmaVersion: 2023,
   } as const;
   public readonly languageOptions = {
     parser: "ts",

@@ -7,7 +7,7 @@ import json from "./scopes/json";
 import jsonc from "./scopes/jsonc";
 import yml from "./scopes/yml";
 
-export const ScopeSettings = {
+export const ScopeManifests = {
   js,
   ts,
   svelte,

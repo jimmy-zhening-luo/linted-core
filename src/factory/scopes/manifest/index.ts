@@ -18,17 +18,15 @@ export abstract class ScopeManifest<
       ? Record<string, never>
       : { readonly language: L }
     : Record<string, never>);
-  public abstract readonly parserOptions: (ParserOptions extends { readonly parserOptions: infer PO }
-    ? PO extends { readonly parser: infer P }
-      ? P extends Parser
-        ? ParserOptions
-        : Record<string, never>
-      : ParserOptions
-    : Record<string, never>);
+  public abstract readonly parserOptions: (ParserOptions extends { readonly parser: infer P }
+    ? P extends Parser
+      ? ParserOptions
+      : (Omit<ParserOptions, "parser"> & { readonly parser: null })
+    : ParserOptions & { readonly parser: null });
   public abstract readonly languageOptions: (
     [Parser] extends [boolean]
-      ? { readonly parser?: never }
-      : { parser: Parser }
+      ? { readonly parser: null }
+      : { readonly parser: Parser }
 
   ) & (
     Global extends boolean
