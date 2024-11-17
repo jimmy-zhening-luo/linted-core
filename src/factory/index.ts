@@ -86,8 +86,6 @@ export class Factory {
     } = this.scopes,
     ruleset = rules.map(([id, rules]) => ({ id: `${scope}/${id}`, rules } as const)),
     {
-      processor,
-      language,
       languageOptions: {
         parser = null,
         globals: global = null,
@@ -97,6 +95,8 @@ export class Factory {
         parser: subparser = null,
         ...parserOptionsStatic
       },
+      processor,
+      language,
     } = new ScopeManifests[scope]();
 
     return files.length < 1
@@ -108,8 +108,6 @@ export class Factory {
               name: `linted/${scope}/`,
               files,
               ignores,
-              ...processor,
-              ...language,
               languageOptions: {
                 ...languageOptionsStatic,
                 ...global !== null && global in globals ? { globals: globals[global as keyof typeof globals] } as const : {} as const,
@@ -123,6 +121,8 @@ export class Factory {
                       } as const,
                     } as const,
               } as const,
+              ...processor,
+              ...language,
             } as const,
             ...ruleset.map(({ id, rules }) => ({
               name: `linted/${id}/`,
