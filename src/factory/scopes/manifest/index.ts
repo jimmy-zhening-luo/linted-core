@@ -4,19 +4,9 @@ import type { Parsers } from "../../../scopes";
 export abstract class ScopeManifest<
   Parser extends Parsers | false = false,
   ParserOptions extends object = object,
-  Processor extends object = object,
-  Language extends object = object,
 > {
-  public abstract readonly processor: (Processor extends { readonly processor: infer P }
-    ? string extends P
-      ? Record<string, never>
-      : { readonly processor: P }
-    : Record<string, never>);
-  public abstract readonly language: (Language extends { readonly language: infer L }
-    ? string extends L
-      ? Record<string, never>
-      : { readonly language: L }
-    : Record<string, never>);
+  public abstract readonly processor: { readonly processor: string } | Record<string, never>;
+  public abstract readonly language: { readonly language: string } | Record<string, never>;
   public abstract readonly parserOptions: (ParserOptions extends { readonly parser: infer P }
     ? P extends Parser
       ? ParserOptions
