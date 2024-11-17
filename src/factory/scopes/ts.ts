@@ -16,5 +16,8 @@ export default class TsManifest extends ScopeManifest<
     sourceType: "module",
     ecmaVersion: 2023,
   } as const;
-  public readonly languageOptions = { parser: "ts" } as const;
+  public readonly languageOptions = {
+    parser: "ts",
+    globals: null,
+  } as const;
 }

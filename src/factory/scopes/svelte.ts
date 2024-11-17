@@ -18,5 +18,8 @@ export default class SvelteManifest extends ScopeManifest<
     sourceType: "module",
     ecmaVersion: 2023,
   } as const;
-  public readonly languageOptions = { parser: "svelte" } as const;
+  public readonly languageOptions = {
+    parser: "svelte",
+    globals: null,
+  } as const;
 }

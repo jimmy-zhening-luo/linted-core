@@ -28,6 +28,6 @@ export abstract class ScopeManifest<
       : { readonly parser: Parser }
 
   ) & (
-    { readonly globals?: keyof typeof globals }
+    { readonly globals: null | keyof typeof globals }
   );
 }
