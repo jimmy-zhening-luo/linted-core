@@ -27,7 +27,9 @@ describe("Core", function () {
     });
     it("has only config-like members", function () {
       expect(configs)
-        .satisfies(configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string"));
+        .satisfies(function (configs: readonly object[]) {
+          return configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string")
+        });
     });
   });
   describe("configs", function () {
