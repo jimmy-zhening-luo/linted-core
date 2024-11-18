@@ -23,7 +23,6 @@ export const TestInput: Parameters<typeof Core>[0] = {
       reportUnusedDisableDirectives: "error",
     },
     files: {
-      "*": ["default.*"],
       js: ["default.js"],
       ts: ["default.ts"],
       svelte: ["default.svelte"],

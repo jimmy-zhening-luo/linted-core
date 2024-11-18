@@ -23,9 +23,9 @@ describe("Core", function () {
       // .not.empty;
       // replace with not.empty after new rule
     });
-    it(`has length >= common ignores + common settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
+    it(`has length >= */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
       expect(configs)
-        .lengthOf.at.least(scopes.length + 2);
+        .lengthOf.above(scopes.length + 2);
     });
     it("has only config-like members", function () {
       expect(configs)
