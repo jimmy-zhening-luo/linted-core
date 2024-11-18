@@ -17,17 +17,17 @@ describe("Core", function () {
       expect(configs)
         .an("array");
     });
-    it("is non-empty", function () {
+    it("non-empty", function () {
       expect(configs)
         .has.lengthOf.above(1);
       // .not.empty;
       // replace with not.empty after new rule
     });
-    it(`has length >= */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
+    it(`with length >= */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
       expect(configs)
         .lengthOf.above(scopes.length + 2);
     });
-    it("has only config-like members", function () {
+    it("containing only config-like members", function () {
       expect(configs)
         .satisfies((configs: readonly unknown[]) => configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string"));
     });
