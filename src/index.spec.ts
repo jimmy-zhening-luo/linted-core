@@ -19,7 +19,7 @@ describe("Core", function () {
     });
     it("is non-empty", function () {
       expect(configs)
-        .not.empty();
+        .not.empty;
     });
     it(`has length >= common ignores + common settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
       expect(configs)
