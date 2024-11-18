@@ -13,15 +13,10 @@ describe("Core", function () {
     });
   });
   describe("output", function () {
-    it("is an array", function () {
+    it("is a non-empty array", function () {
       expect(configs)
-        .an("array");
-    });
-    it("non-empty", function () {
-      expect(configs)
-        .has.lengthOf.above(1);
-      // .not.empty;
-      // replace with not.empty after new rule
+        .an("array")
+        .not.empty;
     });
     it(`with length >= plugins + */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 3}  [Actual: ${configs.length}`, function () {
       expect(configs)
