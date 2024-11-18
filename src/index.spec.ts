@@ -37,10 +37,13 @@ describe("Core", function () {
   describe("configs", function () {
     it("begin with common settings", function () {
       expect(configs[0])
-        .has.property("name", "linted/*/")
-        .and.property("linterOptions")
-        .and.nested.property("languageOptions.sourceType")
-        .and.nested.property("languageOptions.ecmaVersion");
+        .has.property("name", "linted/*/");
+      expect(configs[0])
+        .has.property("linterOptions");
+      expect(configs[0])
+        .has.nested.property("languageOptions.sourceType");
+      expect(configs[0])
+        .has.nested.property("languageOptions.ecmaVersion");
     });
   });
 });
