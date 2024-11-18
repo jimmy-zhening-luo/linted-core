@@ -8,11 +8,5 @@ export type ScopeSettings<Scopes extends string> = PartialConfig<
   | "language"
   | "settings"
   ,
-  string,
   { readonly languageOptions: object }
 >;
-
-// export type ScopeSettings<Scopes extends string> = {
-//   readonly name: `linted/${Scopes}/`;
-//   readonly languageOptions: object;
-// } & Pick<Config, "files" | "ignores" | "processor" | "language" | "settings">;

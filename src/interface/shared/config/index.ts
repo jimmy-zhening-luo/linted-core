@@ -1,12 +1,8 @@
 import type * as Rule from "./rule";
 
 export type { Rule };
-export interface Config<Plugins extends string = string> {
+export interface Config {
   readonly name: `linted/${string}/`;
-  readonly plugins: Readonly<Record<
-    Plugins,
-    { readonly configs: unknown }
-  >>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];
   readonly rules: Rule.Bag;
@@ -50,11 +46,10 @@ export type PartialConfig<
     | "name"
     | keyof Rest
   >,
-  Plugins extends string = string,
   Rest extends object = object,
 > = (
   & Rest
-  & Pick<Config<Plugins>, Picks>
+  & Pick<Config, Picks>
   & { readonly name: Name }
   & Readonly<Partial<Record<
     Exclude<

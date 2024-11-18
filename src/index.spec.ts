@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import core from ".";
+import { scopes } from ".";
 import { TestInput } from "./test/input";
 
 const configs = core(TestInput);
@@ -18,13 +19,24 @@ describe("Core", function () {
     });
     it("is non-empty", function () {
       expect(configs)
-        .lengthOf.at.least(1);
+        .not.empty;
+    });
+    it(`has length >= common ignores + common settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
+      expect(configs)
+        .lengthOf.at.least(scopes.length + 2);
+    });
+    it("has only config-like members", function () {
+      expect(configs)
+        .satisfies(configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string"));
     });
   });
-  describe("TBD: configs", function () {
-    it("have first three common", function () {
+  describe("configs", function () {
+    it("begin with common settings", function () {
       expect(configs[0])
-        .to.be.an("object");
+        .has.property("name", "linted/*/")
+        .property("linterOptions")
+        .nested.property("languageOptions.sourceType")
+        .and.nested.property("languageOptions.ecmaVersion");
     });
   });
 });

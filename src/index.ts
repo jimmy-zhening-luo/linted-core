@@ -5,7 +5,7 @@ import { Factory } from "./factory";
 export type * from "./interface";
 export type * from "./scopes";
 export default function ({
-  imports: { plugins, parsers },
+  imports: { parsers },
   defaults,
   extensions,
 }: Input): Output {
@@ -14,7 +14,6 @@ export default function ({
 
     return [
       factory.common.settings,
-      { name: `linted/*/plugins/`, plugins } as const,
       factory.common.ignores,
       ...scopes.flatMap(scope => factory.scope(scope)),
     ] as const;
