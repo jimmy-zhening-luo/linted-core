@@ -3,6 +3,7 @@ export type Plugins = (
   | "@typescript-eslint"
   | "svelte"
   | "mocha"
+  | "chai-friendly"
   | "@html-eslint"
   | "jsonc"
   | "yml"

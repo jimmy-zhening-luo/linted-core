@@ -12,6 +12,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       "@stylistic": Plugin,
       "@typescript-eslint": Plugin,
       mocha: Plugin,
+      "chai-friendly": Plugin,
       svelte: Plugin,
       jsonc: Plugin,
       yml: Plugin,
