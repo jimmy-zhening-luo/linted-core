@@ -29,7 +29,7 @@ describe("Core", function () {
     });
     it("has only config-like members", function () {
       expect(configs)
-        .satisfies(function (configs: readonly object[]) {
+        .satisfies(function (configs: readonly unknown[]) {
           return configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string")
         });
     });
