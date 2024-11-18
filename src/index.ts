@@ -5,7 +5,7 @@ import { Factory } from "./factory";
 export type * from "./interface";
 export type * from "./scopes";
 export default function ({
-  imports: { parsers },
+  imports: { plugins, parsers },
   defaults,
   extensions,
 }: Input): Output {
@@ -13,6 +13,7 @@ export default function ({
     const factory = new Factory(tree, parsers, defaults, extensions);
 
     return [
+      { name: "plugins", plugins } as const,
       factory.common.settings,
       factory.common.ignores,
       ...scopes.flatMap(scope => factory.scope(scope)),

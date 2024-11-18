@@ -2,10 +2,20 @@ import type Core from "..";
 
 const
 ERROR = "error",
-OFF = "off";
+OFF = "off",
+Plugin = "TEST_PLUGIN";
 
 export const TestInput: Parameters<typeof Core>[0] = {
   imports: {
+    plugins: {
+      "@html-eslint": Plugin,
+      "@stylistic": Plugin,
+      "@typescript-eslint": Plugin,
+      mocha: Plugin,
+      svelte: Plugin,
+      jsonc: Plugin,
+      yml: Plugin,
+    } as const,
     parsers: {
       ts: "parsers.ts",
       svelte: "parsers.svelte",

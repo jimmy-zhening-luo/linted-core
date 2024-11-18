@@ -1,8 +1,13 @@
 import type * as Rule from "./rule";
 
+export type * from "./partial";
 export type { Rule };
-export interface Config {
-  readonly name: `linted/${string}/`;
+export interface Config<Plugins extends string = string> {
+  readonly name: (
+    | "plugins"
+    | `linted/${string}/`
+  );
+  readonly plugins: Readonly<Record<Plugins, unknown>>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];
   readonly rules: Rule.Bag;
@@ -39,25 +44,3 @@ export interface Config {
   readonly language?: string;
   readonly settings?: Readonly<Record<string, unknown>>;
 }
-export type PartialConfig<
-  Name extends Config["name"],
-  Picks extends Exclude<
-    keyof Config,
-    | "name"
-    | keyof Rest
-  >,
-  Rest extends object = object,
-> = (
-  & Rest
-  & Pick<Config, Picks>
-  & { readonly name: Name }
-  & Readonly<Partial<Record<
-    Exclude<
-      keyof Config,
-      | "name"
-      | keyof Rest
-      | Picks
-    >,
-    never
-  >>>
-);

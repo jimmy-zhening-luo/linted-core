@@ -8,5 +8,6 @@ export type ScopeSettings<Scopes extends string> = PartialConfig<
   | "language"
   | "settings"
   ,
+  string,
   { readonly languageOptions: object }
 >;

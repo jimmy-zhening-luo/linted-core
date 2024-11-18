@@ -23,7 +23,7 @@ describe("Core", function () {
       // .not.empty;
       // replace with not.empty after new rule
     });
-    it(`with length >= */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
+    it(`with length >= plugins + */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 3}  [Actual: ${configs.length}`, function () {
       expect(configs)
         .lengthOf.above(scopes.length + 2);
     });
@@ -33,14 +33,23 @@ describe("Core", function () {
     });
   });
   describe("configs", function () {
+    it("begin with plugins", function () {
+      expect(configs[0])
+        .has.property("name", "plugins");
+      expect(configs[0])
+        .has.property("plugins")
+        .an("object");
+    });
     it("begin with common settings", function () {
-      expect(configs[0])
+      expect(configs[1])
         .has.property("name", "linted/*/");
-      expect(configs[0])
-        .has.property("linterOptions");
-      expect(configs[0])
-        .has.nested.property("languageOptions.sourceType");
-      expect(configs[0])
+      expect(configs[1])
+        .has.property("linterOptions")
+        .an("object");
+      expect(configs[1])
+        .has.nested.property("languageOptions.sourceType")
+        .a("string");
+      expect(configs[1])
         .has.nested.property("languageOptions.ecmaVersion");
     });
   });
