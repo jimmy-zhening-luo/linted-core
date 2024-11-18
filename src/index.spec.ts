@@ -19,7 +19,9 @@ describe("Core", function () {
     });
     it("is non-empty", function () {
       expect(configs)
-        .not.empty;
+        .has.lengthOf.above(1);
+        //.not.empty;
+        // replace with not.empty after new rule
     });
     it(`has length >= common ignores + common settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
       expect(configs)
@@ -36,8 +38,8 @@ describe("Core", function () {
     it("begin with common settings", function () {
       expect(configs[0])
         .has.property("name", "linted/*/")
-        .property("linterOptions")
-        .nested.property("languageOptions.sourceType")
+        .and.property("linterOptions")
+        .and.nested.property("languageOptions.sourceType")
         .and.nested.property("languageOptions.ecmaVersion");
     });
   });
