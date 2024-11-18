@@ -20,8 +20,8 @@ describe("Core", function () {
     it("is non-empty", function () {
       expect(configs)
         .has.lengthOf.above(1);
-        //.not.empty;
-        // replace with not.empty after new rule
+      // .not.empty;
+      // replace with not.empty after new rule
     });
     it(`has length >= common ignores + common settings + ${scopes.length} scopes = ${scopes.length + 2}  [Actual: ${configs.length}`, function () {
       expect(configs)
@@ -29,9 +29,7 @@ describe("Core", function () {
     });
     it("has only config-like members", function () {
       expect(configs)
-        .satisfies(function (configs: readonly unknown[]) {
-          return configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string")
-        });
+        .satisfies((configs: readonly unknown[]) => configs.every(config => typeof config === "object" && config !== null && "name" in config && typeof config.name === "string"));
     });
   });
   describe("configs", function () {
