@@ -5,5 +5,5 @@ export type Imports<Parsers extends string> = Readonly<Record<
   Readonly<Record<
     Parsers,
     unknown
-  >>;
+  >>
 >>;
