@@ -4,6 +4,7 @@ export type Plugins = (
   | "svelte"
   | "mocha"
   | "chai-friendly"
+  | "chai-expect"
   | "@html-eslint"
   | "jsonc"
   | "yml"

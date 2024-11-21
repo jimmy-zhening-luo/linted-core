@@ -6,8 +6,7 @@ export type ScopeSettings<Scopes extends string> = PartialConfig<
   | "ignores"
   | "processor"
   | "language"
-  | "settings"
-  ,
+  | "settings",
   string,
   { readonly languageOptions: object }
 >;

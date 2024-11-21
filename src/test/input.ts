@@ -13,6 +13,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       "@typescript-eslint": Plugin,
       mocha: Plugin,
       "chai-friendly": Plugin,
+      "chai-expect": Plugin,
       svelte: Plugin,
       jsonc: Plugin,
       yml: Plugin,
