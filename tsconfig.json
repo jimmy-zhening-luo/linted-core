@@ -55,6 +55,7 @@
       "mocha",
       "chai",
       /* {CONFIGURE} */
+      "node" /* @OVERRIDE: required for ts.parserOptions.tsconfigRootDir: import.meta.dirname */,
     ],
     // #endregion MODULES
 
