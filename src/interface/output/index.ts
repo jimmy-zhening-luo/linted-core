@@ -4,14 +4,14 @@ import type {
   CommonIgnores,
 } from "./common";
 import type {
-  ScopeSettings,
-  ScopeRules,
-} from "./scope";
+  ScopedSettings,
+  ScopedRules,
+} from "./scoped";
 import type { Plugins, Scopes } from "../../scopes";
 
 export type Output = readonly [
   CommonPlugins<Plugins>,
   CommonSettings,
   CommonIgnores,
-  ...readonly (ScopeSettings<Scopes> | ScopeRules<Scopes>)[],
+  ...readonly (ScopedSettings<Scopes> | ScopedRules<Scopes>)[],
 ];

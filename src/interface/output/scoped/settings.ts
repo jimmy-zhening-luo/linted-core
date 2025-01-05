@@ -1,7 +1,7 @@
 import type { PartialConfig } from "../../shared";
 
-export type ScopeSettings<Scopes extends string> = PartialConfig<
-  `linted/${Scopes}/`,
+export type ScopedSettings<Scope extends string> = PartialConfig<
+  `linted/${Scope}/`,
   | "files"
   | "ignores"
   | "processor"
