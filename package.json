@@ -1,18 +1,11 @@
 {
-  "$template": "22.13.2",
+  "$template": "22.13.4",
   "name": "@eslinted/core",
   "version": "15.2.8",
   "description": "Core ESLint flat config factory npm package `linted`.",
-  "keywords": [],
   "repository": "github:jimmy-zhening-luo/linted-core",
-  "homepage": "https://github.com/jimmy-zhening-luo/linted-core#readme",
-  "bugs": "https://github.com/jimmy-zhening-luo/linted-core/issues",
   "license": "MIT",
   "private": false,
-  "publishConfig": {
-    "access": "public",
-    "tag": "next"
-  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -89,10 +82,15 @@
     "predeploy": "npm test",
     "deploy": ""
   },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
   "mocha": {
     "spec": [
       "dist/**/*.spec.js"
     ]
   },
+  "keywords": [],
   "author": "Jimmy Zhening Luo <1450044+jimmy-zhening-luo@users.noreply.github.com> (https://jimm.my/)"
 }
