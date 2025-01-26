@@ -1,19 +1,11 @@
 {
-  "$template": "22.13.4",
+  "$template": "22.13.5",
   "name": "@eslinted/core",
   "version": "15.2.9",
   "description": "Core ESLint flat config factory npm package `linted`.",
   "repository": "github:jimmy-zhening-luo/linted-core",
   "license": "MIT",
   "private": false,
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "config": {
-    "language": "ts",
-    "rewrite": "true",
-    "lint": "false"
-  },
   "engineStrict": true,
   "engines": {
     "node": ">=22.13.1",
@@ -33,6 +25,14 @@
     "run-script-os": "^1.1.6",
     "ts-add-js-extension": "^1.6.5",
     "typescript": "^5.7.3"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "config": {
+    "language": "ts",
+    "rewrite": "true",
+    "lint": "false"
   },
   "scripts": {
     "build": "run-os",
