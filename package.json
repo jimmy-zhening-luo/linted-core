@@ -1,5 +1,5 @@
 {
-  "$template": "22.13.6",
+  "$template": "22.13.7",
   "name": "@eslinted/core",
   "version": "15.2.13",
   "description": "Core ESLint flat config factory npm package `linted`.",
@@ -69,11 +69,6 @@
     "test": "",
     "test:ts": "mocha",
     "test:svelte": "",
-    "dev": "run-os",
-    "dev:default": "npm run dev+os:$npm_package_config_language",
-    "dev:windows": "npm run dev+os:%npm_package_config_language%",
-    "dev+os:ts": "npm start",
-    "dev+os:svelte": "vite dev",
     "start": "run-os",
     "start:default": "npm run start+os:$npm_package_config_language",
     "start:windows": "npm run start+os:%npm_package_config_language%",
