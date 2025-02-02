@@ -8,13 +8,14 @@ Plugin = "TEST_PLUGIN";
 export const TestInput: Parameters<typeof Core>[0] = {
   imports: {
     plugins: {
-      "@html-eslint": Plugin,
       "@stylistic": Plugin,
       "@typescript-eslint": Plugin,
       mocha: Plugin,
       "chai-friendly": Plugin,
       "chai-expect": Plugin,
       svelte: Plugin,
+      "@html-eslint": Plugin,
+      css: Plugin,
       jsonc: Plugin,
       yml: Plugin,
     } as const,
@@ -37,9 +38,10 @@ export const TestInput: Parameters<typeof Core>[0] = {
     files: {
       js: ["default.js"],
       ts: ["default.ts"],
-      svelte: ["default.svelte"],
       mocha: ["default.mocha"],
+      svelte: ["default.svelte"],
       html: ["default.html"],
+      css: ["default.css"],
       json: ["default.json"],
       jsonc: ["default.jsonc"],
       yml: ["default.yml"],
@@ -48,9 +50,10 @@ export const TestInput: Parameters<typeof Core>[0] = {
       "*": ["ignore/default.*"],
       js: ["ignore/default.js"],
       ts: ["ignore/default.ts"],
-      svelte: ["ignore/default.svelte"],
       mocha: ["ignore/default.mocha"],
+      svelte: ["ignore/default.svelte"],
       html: ["ignore/default.html"],
+      css: ["ignore/default.css"],
       json: ["ignore/default.json"],
       jsonc: ["ignore/default.jsonc"],
       yml: ["ignore/default.yml"],
@@ -80,18 +83,19 @@ export const TestInput: Parameters<typeof Core>[0] = {
           },
         ] as const,
       ],
+      mocha: [
+        ["disable", { vanilla2: OFF }] as const,
+        ["disable/ts", { "@typescript-eslint/global": ERROR }] as const,
+        ["enable", { "mocha/test-expression": ERROR }] as const,
+      ],
       svelte: [
         ["disable", { vanilla1: OFF }] as const,
         ["disable/ts", { "@typescript-eslint/destructure-expression": ERROR }] as const,
         ["enable", { "svelte/destructure-expression": ERROR }] as const,
         ["enable-extension", { "svelte/tags": ERROR }] as const,
       ],
-      mocha: [
-        ["disable", { vanilla2: OFF }] as const,
-        ["disable/ts", { "@typescript-eslint/global": ERROR }] as const,
-        ["enable", { "mocha/test-expression": ERROR }] as const,
-      ],
       html: [["enable", { "html/attribute": ERROR }] as const],
+      css: [["enable", { "css/property": ERROR }] as const],
       json: [
         [
           "enable",

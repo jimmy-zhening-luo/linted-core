@@ -1,11 +1,12 @@
 export type Plugins = (
   | "@stylistic"
   | "@typescript-eslint"
-  | "svelte"
   | "mocha"
   | "chai-friendly"
   | "chai-expect"
+  | "svelte"
   | "@html-eslint"
+  | "css"
   | "jsonc"
   | "yml"
 );

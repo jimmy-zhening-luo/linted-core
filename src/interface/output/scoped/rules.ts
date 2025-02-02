@@ -6,7 +6,3 @@ export type ScopedRules<Scope extends string> = PartialConfig<
   | "ignores"
   | "rules"
 >;
-
-// export type ScopedRules<Scope extends string> = {
-//   readonly name: `linted/${Scope}/${string}/`;
-// } & Pick<Config, "files" | "ignores" | "rules">;

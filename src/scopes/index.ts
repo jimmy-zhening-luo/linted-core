@@ -4,9 +4,10 @@ export type Scopes = typeof scopes[number];
 export const scopes = [
   "js",
   "ts",
-  "svelte",
   "mocha",
+  "svelte",
   "html",
+  "css",
   "json",
   "jsonc",
   "yml",
