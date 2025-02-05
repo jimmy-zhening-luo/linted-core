@@ -1,7 +1,7 @@
 {
   "$template": "22.13.7",
   "name": "@eslinted/core",
-  "version": "16.0.1",
+  "version": "16.0.2",
   "description": "Core ESLint flat config factory npm package `linted`.",
   "repository": "github:jimmy-zhening-luo/linted-core",
   "license": "MIT",
