@@ -1,5 +1,5 @@
 {
-  "$template": "22.13.10",
+  "$template": "22.14.0",
   "name": "@eslinted/core",
   "version": "16.0.6",
   "description": "Core ESLint flat config factory npm package `linted`.",
@@ -8,7 +8,7 @@
   "private": false,
   "engineStrict": true,
   "engines": {
-    "node": ">=22.13.1",
+    "node": ">=22.14.0",
     "npm": ">=10.9.0"
   },
   "peerDependenciesMeta": {},
