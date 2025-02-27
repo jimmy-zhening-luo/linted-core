@@ -39,7 +39,7 @@ export interface Config<Plugins extends string = string> {
       | 2023
       | 2024
     ;
-  } /* common language options -- not including extra language options for each scope */;
+  };
   readonly processor?: string;
   readonly language?: string;
   readonly settings?: Readonly<Record<string, unknown>>;
