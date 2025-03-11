@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import core from ".";
 import { scopes } from "./scopes";
-import { TestInput } from "./test/input";
+import { TestInput } from "./tests/input";
 
 const configs = core(TestInput);
 
