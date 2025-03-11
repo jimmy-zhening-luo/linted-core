@@ -1,13 +1,13 @@
-export type NamedBag = readonly [
+export interface NamedRuleBag {
+  id: string;
+  readonly rules: RuleBag;
+}
+export type RuleBag = Readonly<Record<
   string,
-  Bag,
-];
-export type Bag = Readonly<Record<
-  string,
-  | State
-  | readonly [State, ...readonly unknown[]]
+  | RuleState
+  | readonly [RuleState, ...readonly unknown[]]
 >>;
-export type State = (
+export type RuleState = (
   | "error"
   | "warn"
   | "off"

@@ -10,7 +10,7 @@ export interface Config<Plugins extends string = string> {
   readonly plugins: Readonly<Record<Plugins, unknown>>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];
-  readonly rules: Rule.Bag;
+  readonly rules: Rule.RuleBag;
   readonly linterOptions: {
     readonly noInlineConfig: boolean;
     readonly reportUnusedDisableDirectives:

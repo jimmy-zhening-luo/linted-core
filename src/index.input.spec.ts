@@ -60,53 +60,91 @@ export const TestInput: Parameters<typeof Core>[0] = {
     } as const,
     rules: {
       js: [
-        [
-          "enable",
-          {
+        {
+          id: "enable",
+          rules: {
             vanilla: ERROR,
             vanilla0: ERROR,
             vanilla1: ERROR,
             vanilla2: ERROR,
           },
-        ] as const,
-        ["enable/stylistic", { "@stylistic/style-rule": ERROR }] as const,
+        } as const,
+        {
+          id: "enable/stylistic",
+          rules: { "@stylistic/style-rule": ERROR },
+        } as const,
       ],
       ts: [
-        ["disable", { vanilla0: OFF }] as const,
-        ["enable", { "@typescript-eslint/vanilla-typed": ERROR }] as const,
-        [
-          "enable/extension",
-          {
+        {
+          id: "disable",
+          rules: { vanilla0: OFF },
+        } as const,
+        {
+          id: "enable/extension",
+          rules: {
             "@typescript-eslint/enums": ERROR,
             "@typescript-eslint/destructure-expression": ERROR,
             "@typescript-eslint/global": ERROR,
           },
-        ] as const,
+        } as const,
       ],
       mocha: [
-        ["disable", { vanilla2: OFF }] as const,
-        ["disable/ts", { "@typescript-eslint/global": ERROR }] as const,
-        ["enable", { "mocha/test-expression": ERROR }] as const,
+        {
+          id: "disable",
+          rules: { vanilla2: OFF },
+        } as const,
+        {
+          id: "disable/ts",
+          rules: { "@typescript-eslint/global": ERROR },
+        } as const,
+        {
+          id: "enable",
+          rules: { "mocha/test-expression": ERROR },
+        } as const,
       ],
       svelte: [
-        ["disable", { vanilla1: OFF }] as const,
-        ["disable/ts", { "@typescript-eslint/destructure-expression": ERROR }] as const,
-        ["enable", { "svelte/destructure-expression": ERROR }] as const,
-        ["enable-extension", { "svelte/tags": ERROR }] as const,
+        {
+          id: "disable",
+          rules: { vanilla1: OFF },
+        } as const,
+        {
+          id: "enable-extension",
+          rules: { "svelte/tags": ERROR },
+        } as const,
       ],
-      html: [["enable", { "html/attribute": ERROR }] as const],
-      css: [["enable", { "css/property": ERROR }] as const],
+      html: [
+        {
+          id: "enable",
+          rules: { "html/attribute": ERROR },
+        } as const,
+      ],
+      css: [
+        {
+          id: "enable",
+          rules: { "css/property": ERROR },
+        } as const,
+      ],
       json: [
-        [
-          "enable",
-          {
+        {
+          id: "enable",
+          rules: {
             "jsonc/property-check": ERROR,
             "jsonc/trailing-comma": [ERROR, "always"],
           },
-        ] as const,
+        } as const,
       ],
-      jsonc: [["override", { "jsonc/trailing-comma": [ERROR, "never"] }] as const],
-      yml: [["enable", { "yml/property-check": ERROR }] as const],
+      jsonc: [
+        {
+          id: "override",
+          rules: { "jsonc/trailing-comma": [ERROR, "never"] },
+        } as const,
+      ],
+      yml: [
+        {
+          id: "enable",
+          rules: { "yml/property-check": ERROR },
+        } as const,
+      ],
     } as const,
   } as const,
 } as const;

@@ -53,17 +53,17 @@ export class Factory {
     for (const scope in scopeExtensions) {
       const {
         [scope as keyof typeof scopeExtensions]: {
-          files: moreFiles = [],
-          ignores: moreIgnores = [],
-          rules: moreRules = null,
+          files: userFiles = [],
+          ignores: userIgnores = [],
+          rules: userRules = null,
         } = {} as const,
       } = scopeExtensions;
 
-      this.scopes.files[scope as keyof typeof scopeExtensions].push(...moreFiles);
-      this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...moreIgnores);
+      this.scopes.files[scope as keyof typeof scopeExtensions].push(...userFiles);
+      this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...userIgnores);
 
-      if (moreRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push([`${scope}/override`, moreRules] as const);
+      if (userRules !== null)
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push({ id: `${scope}/override`, rules: userRules } as const);
     }
 
     tree.forEach(([scope, parents]) => {
@@ -84,7 +84,7 @@ export class Factory {
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
-    ruleset = rules.map(([id, rules]) => ({ id: `${scope}/${id}`, rules } as const)),
+    ruleset = rules.map(({ id, rules }) => ({ id: `${scope}/${id}`, rules } as const)),
     {
       languageOptions: {
         parser = null,

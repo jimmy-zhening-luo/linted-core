@@ -12,7 +12,7 @@ export type Extensions<Scopes extends string> = (
     {
       readonly files?: Defaults<Scopes>["files"][Scopes];
       readonly ignores?: Defaults<Scopes>["ignores"][Scopes];
-      readonly rules?: Defaults<Scopes>["rules"][Scopes][number][1];
+      readonly rules?: Defaults<Scopes>["rules"][Scopes][number]["rules"];
     }
   >>
 );
