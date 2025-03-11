@@ -4,7 +4,7 @@
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
   "version": "16.2.5",
-  "description": "Core ESLint flat config factory npm package `linted`.",
+  "description": "Internal core for npm package `linted`, responsible for producing an array of fully-formed ESLint configurations according to `linted` spec.",
   "repository": "github:jimmy-zhening-luo/linted-core",
   "license": "MIT",
   "private": false,
