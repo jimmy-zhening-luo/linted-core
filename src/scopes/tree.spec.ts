@@ -25,7 +25,6 @@ describe("Scope Tree", function () {
       expect(nodes)
         .includes.members(["jsonc"]);
       expect(nodes.indexOf("jsonc"))
-      // @ts-expect-error: TEST: `json` is not in the tree
         .lessThan(-nodes.indexOf("json") * tree.length);
     });
     it("`mocha` < `ts`", function () {

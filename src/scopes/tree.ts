@@ -1,4 +1,6 @@
-export const tree = [
+import type { Scopes } from ".";
+
+export const tree: [Scopes, readonly Scopes[]][] = [
   ["jsonc", ["json"] as const] as const,
   ["mocha", ["ts"] as const] as const,
   ["svelte", ["ts"] as const] as const,
