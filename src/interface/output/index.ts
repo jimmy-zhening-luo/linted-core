@@ -1,17 +1,9 @@
-import type {
-  CommonPlugins,
-  CommonSettings,
-  CommonIgnores,
-} from "./common";
-import type {
-  ScopedSettings,
-  ScopedRules,
-} from "./scoped";
+import type * as Configs from "./configs";
 import type { Import, Scope } from "../../scope";
 
 export type Output = readonly [
-  CommonPlugins<Import.Plugin>,
-  CommonSettings,
-  CommonIgnores,
-  ...readonly (ScopedSettings<Scope> | ScopedRules<Scope>)[],
+  Configs.Global.Plugins<Import.Plugin>,
+  Configs.Global.Settings,
+  Configs.Global.Ignores,
+  ...readonly (Configs.Scoped.Settings<Scope> | Configs.Scoped.Rules<Scope>)[],
 ];

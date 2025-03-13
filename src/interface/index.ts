@@ -1,3 +1,3 @@
 export type * from "./input";
 export type * from "./output";
-export type * from "./proto";
+export type * as Proto from "./proto";

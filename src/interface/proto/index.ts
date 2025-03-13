@@ -1,1 +1,1 @@
-export type * as Proto from "./config";
+export type * as Config from "./config";

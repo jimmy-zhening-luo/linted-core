@@ -1,6 +1,6 @@
-import type { Proto } from "../../proto";
+import type { Config } from "../../../proto";
 
-export type ScopedSettings<Scope extends string> = Proto.PickConfig<
+export type Settings<Scope extends string> = Config.PickConfig<
   `linted/${Scope}/`,
   | "files"
   | "ignores"
