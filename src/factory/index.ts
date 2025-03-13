@@ -10,22 +10,17 @@ export class Factory {
   constructor(
     tree: typeof Tree,
     public readonly parsers: Input["imports"]["parsers"],
-    {
-      settings: defaultSettings,
-      files: defaultFiles,
-      ignores: defaultIgnores,
-      rules: defaultRules,
-    }: Input["defaults"],
+    defaults: Input["defaults"],
     {
       "*": commonExtension = {},
       ...scopeExtensions
     }: Input["extensions"] = {} as const,
   ) {
     const {
-      noInlineConfig = defaultSettings.noInlineConfig,
-      reportUnusedDisableDirectives = defaultSettings.reportUnusedDisableDirectives,
-      sourceType = defaultSettings.sourceType,
-      ecmaVersion = defaultSettings.ecmaVersion,
+      noInlineConfig = defaults.settings.noInlineConfig,
+      reportUnusedDisableDirectives = defaults.settings.reportUnusedDisableDirectives,
+      sourceType = defaults.settings.sourceType,
+      ecmaVersion = defaults.settings.ecmaVersion,
       ignores = [],
       override = false,
     } = commonExtension;
@@ -39,15 +34,15 @@ export class Factory {
       ignores: {
         name: "linted/*/ignores/",
         ignores: [
-          ...override ? [] : defaultIgnores["*"],
+          ...override ? [] : defaults.ignores["*"],
           ...ignores,
         ] as const,
       } as const,
     } as const;
     this.scopes = {
-      files: defaultFiles,
-      ignores: defaultIgnores,
-      rules: defaultRules,
+      files: defaults.files,
+      ignores: defaults.ignores,
+      rules: defaults.rules,
     } as const;
 
     for (const scope in scopeExtensions) {
@@ -66,16 +61,15 @@ export class Factory {
         this.scopes.rules[scope as keyof typeof scopeExtensions].push({ id: `${scope}/override`, rules: userRules } as const);
     }
 
-    tree.forEach(([scope, parents]) => {
-      parents.forEach(parent => {
+    for (const [scope, parents] of tree)
+      for (const parent of parents) {
         this.scopes.files[parent].push(
           ...this.scopes.files[scope],
         );
         this.scopes.ignores[parent].push(
           ...this.scopes.ignores[scope],
         );
-      });
-    });
+      }
   }
 
   public scope<S extends keyof typeof ScopeManifests>(scope: S) {
