@@ -1,6 +1,6 @@
 import type { Proto } from "../proto";
 
-export interface Packages<
+export interface Imports<
   Plugins extends string,
   Parsers extends string,
 > {
