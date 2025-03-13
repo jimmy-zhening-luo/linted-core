@@ -1,6 +1,6 @@
-import type { Config } from ".";
+import type { Config } from "..";
 
-export type PartialConfig<
+export type PickConfig<
   Name extends Config["name"],
   Picks extends Exclude<
     keyof Config,

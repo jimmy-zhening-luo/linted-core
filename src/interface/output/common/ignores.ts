@@ -1,6 +1,6 @@
-import type { PartialConfig } from "../../shared";
+import type { PickConfig } from "../../shared";
 
-export type CommonIgnores = PartialConfig<
+export type CommonIgnores = PickConfig<
   "linted/*/ignores/",
   "ignores"
 >;

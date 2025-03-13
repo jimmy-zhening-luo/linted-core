@@ -1,6 +1,6 @@
-import type { PartialConfig } from "../../shared";
+import type { PickConfig } from "../../shared";
 
-export type CommonSettings = PartialConfig<
+export type CommonSettings = PickConfig<
   "linted/*/",
   | "linterOptions"
   | "languageOptions"

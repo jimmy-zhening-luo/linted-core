@@ -1,7 +1,7 @@
 import type * as Rule from "./rule";
 
 export type { Rule };
-export type * from "./partial";
+export type * from "./utility";
 export interface Config<Plugins extends string = string> {
   readonly name: (
     | "plugins"

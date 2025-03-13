@@ -1,6 +1,6 @@
-import type { PartialConfig } from "../../shared";
+import type { PickConfig } from "../../shared";
 
-export type ScopedRules<Scope extends string> = PartialConfig<
+export type ScopedRules<Scope extends string> = PickConfig<
   `linted/${Scope}/${string}/`,
   | "files"
   | "ignores"

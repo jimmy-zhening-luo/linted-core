@@ -1,6 +1,6 @@
-import type { PartialConfig } from "../../shared";
+import type { PickConfig } from "../../shared";
 
-export type CommonPlugins<Plugins extends string> = PartialConfig<
+export type CommonPlugins<Plugins extends string> = PickConfig<
   "plugins",
   "plugins",
   Plugins
