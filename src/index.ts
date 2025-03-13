@@ -1,5 +1,5 @@
 import type { Input, Output } from "./interface";
-import * as Scopes from "./scope";
+import { scopes, tree } from "./scope";
 import { Factory } from "./factory";
 
 export type * from "./interface";
@@ -10,13 +10,13 @@ export default function ({
   extensions,
 }: Input): Output {
   try {
-    const factory = new Factory(Scopes.tree, parsers, defaults, extensions);
+    const factory = new Factory(tree, parsers, defaults, extensions);
 
     return [
       { name: "plugins", plugins } as const,
       factory.common.settings,
       factory.common.ignores,
-      ...Scopes.scopes.flatMap(scope => factory.scope(scope)),
+      ...scopes.flatMap(scope => factory.scope(scope)),
     ] as const;
   }
   catch (e) {
