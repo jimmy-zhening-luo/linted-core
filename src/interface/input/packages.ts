@@ -1,6 +1,6 @@
 import type { Config } from "../shared";
 
-export interface Imports<
+export interface Packages<
   Plugins extends string,
   Parsers extends string,
 > {
