@@ -1,8 +1,8 @@
-import type { Config, Rule } from "../../shared";
+import type { Proto } from "../../proto";
 
 export interface Defaults<Scopes extends string> {
-  readonly settings: Config["linterOptions"] & Config["languageOptions"];
+  readonly settings: Proto.Config["linterOptions"] & Proto.Config["languageOptions"];
   readonly files: Readonly<Record<Scopes, string[]>>;
   readonly ignores: Readonly<Record<"*" | Scopes, string[]>>;
-  readonly rules: Readonly<Record<Scopes, Rule.NamedRuleBag[]>>;
+  readonly rules: Readonly<Record<Scopes, Proto.Rule.NamedRuleBag[]>>;
 }

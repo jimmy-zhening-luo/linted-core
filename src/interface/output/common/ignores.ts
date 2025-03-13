@@ -1,6 +1,6 @@
-import type { PickConfig } from "../../shared";
+import type { Proto } from "../../proto";
 
-export type CommonIgnores = PickConfig<
+export type CommonIgnores = Proto.PickConfig<
   "linted/*/ignores/",
   "ignores"
 >;

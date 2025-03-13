@@ -1,6 +1,6 @@
-import type { PickConfig } from "../../shared";
+import type { Proto } from "../../proto";
 
-export type CommonSettings = PickConfig<
+export type CommonSettings = Proto.PickConfig<
   "linted/*/",
   | "linterOptions"
   | "languageOptions"
