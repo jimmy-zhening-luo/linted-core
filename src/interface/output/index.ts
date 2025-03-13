@@ -7,11 +7,11 @@ import type {
   ScopedSettings,
   ScopedRules,
 } from "./scoped";
-import type { Import, Scopes } from "../../scopes";
+import type { Import, Scope } from "../../scope";
 
 export type Output = readonly [
-  CommonPlugins<Import.Plugins>,
+  CommonPlugins<Import.Plugin>,
   CommonSettings,
   CommonIgnores,
-  ...readonly (ScopedSettings<Scopes> | ScopedRules<Scopes>)[],
+  ...readonly (ScopedSettings<Scope> | ScopedRules<Scope>)[],
 ];

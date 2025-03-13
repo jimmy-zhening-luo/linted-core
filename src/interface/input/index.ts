@@ -1,12 +1,12 @@
 import type { Packages } from "./packages";
 import type { Defaults, Extensions } from "./scopes";
-import type { Import, Scopes } from "../../scopes";
+import type { Import, Scope } from "../../scope";
 
 export interface Input {
   readonly imports: Packages<
-    Import.Plugins,
-    Import.Parsers
+    Import.Plugin,
+    Import.Parser
   >;
-  readonly defaults: Defaults<Scopes>;
-  readonly extensions: Extensions<Scopes>;
+  readonly defaults: Defaults<Scope>;
+  readonly extensions: Extensions<Scope>;
 }

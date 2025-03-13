@@ -1,6 +1,5 @@
-export type * as Import from "./imports";
+export type * from "./types";
 export * from "./tree";
-export type Scopes = typeof scopes[number];
 export const scopes = [
   "js",
   "ts",
