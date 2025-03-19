@@ -105,9 +105,9 @@ export class Factory {
       language,
     } = new ScopeManifests[scope]();
 
-    return files.length < 1
+    return files.length === 0
       ? [] as const
-      : ruleset.length < 1
+      : ruleset.length === 0
         ? [] as const
         : [
             {
