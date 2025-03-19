@@ -13,9 +13,8 @@ export default function ({
     const factory = new Factory(tree, parsers, defaults, extensions);
 
     return [
-      { name: "plugins", plugins } as const,
-      factory.global.settings,
-      factory.global.ignores,
+      { name: "linted/*/plugins/", plugins } as const,
+      ...factory.globals,
       ...scopes.flatMap(scope => factory.scope(scope)),
     ] as const;
   }

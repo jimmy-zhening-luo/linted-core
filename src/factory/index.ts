@@ -27,7 +27,7 @@ export class Factory {
 
     this.global = {
       settings: {
-        name: "linted/*/",
+        name: "linted/*/settings/",
         linterOptions: { noInlineConfig, reportUnusedDisableDirectives } as const,
         languageOptions: { sourceType, ecmaVersion } as const,
       } as const,
@@ -70,6 +70,18 @@ export class Factory {
           ...this.scopes.ignores[scope],
         );
       }
+  }
+
+  public get globals() {
+    const {
+      settings,
+      ignores,
+    } = this.global;
+
+    return [
+      settings,
+      ignores,
+    ] as const;
   }
 
   public scope<S extends keyof typeof ScopeManifests>(scope: S) {

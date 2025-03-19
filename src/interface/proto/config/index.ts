@@ -3,10 +3,7 @@ import type * as Rule from "./rule";
 export type { Rule };
 export type * from "./utility";
 export interface Config<Plugins extends string = string> {
-  readonly name: (
-    | "plugins"
-    | `linted/${string}/`
-  );
+  readonly name: `linted/${string}/`;
   readonly plugins: Readonly<Record<Plugins, unknown>>;
   readonly files: readonly string[];
   readonly ignores: readonly string[];

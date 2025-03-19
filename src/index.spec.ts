@@ -30,14 +30,14 @@ describe("Core", function () {
   describe("configs", function () {
     it("begin with plugins", function () {
       expect(configs[0])
-        .has.property("name", "plugins");
+        .has.property("name", "linted/*/plugins/");
       expect(configs[0])
         .has.property("plugins")
         .an("object");
     });
-    it("begin with global settings", function () {
+    it("followed by global settings", function () {
       expect(configs[1])
-        .has.property("name", "linted/*/");
+        .has.property("name", "linted/*/settings/");
       expect(configs[1])
         .has.property("linterOptions")
         .an("object");
