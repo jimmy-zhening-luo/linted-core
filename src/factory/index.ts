@@ -4,7 +4,7 @@ import type { Input } from "../interface";
 import type { tree as Tree } from "../scope";
 
 export class Factory {
-  public readonly common;
+  public readonly global;
   public readonly scopes;
 
   constructor(
@@ -12,7 +12,7 @@ export class Factory {
     public readonly parsers: Input["imports"]["parsers"],
     defaults: Input["defaults"],
     {
-      "*": commonExtension = {},
+      "*": globalExtension = {},
       ...scopeExtensions
     }: Input["extensions"] = {} as const,
   ) {
@@ -23,9 +23,9 @@ export class Factory {
       ecmaVersion = defaults.settings.ecmaVersion,
       ignores = [],
       override = false,
-    } = commonExtension;
+    } = globalExtension;
 
-    this.common = {
+    this.global = {
       settings: {
         name: "linted/*/",
         linterOptions: { noInlineConfig, reportUnusedDisableDirectives } as const,

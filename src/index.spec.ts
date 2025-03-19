@@ -35,7 +35,7 @@ describe("Core", function () {
         .has.property("plugins")
         .an("object");
     });
-    it("begin with common settings", function () {
+    it("begin with global settings", function () {
       expect(configs[1])
         .has.property("name", "linted/*/");
       expect(configs[1])

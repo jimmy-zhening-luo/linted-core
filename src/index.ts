@@ -14,8 +14,8 @@ export default function ({
 
     return [
       { name: "plugins", plugins } as const,
-      factory.common.settings,
-      factory.common.ignores,
+      factory.global.settings,
+      factory.global.ignores,
       ...scopes.flatMap(scope => factory.scope(scope)),
     ] as const;
   }
