@@ -1,5 +1,5 @@
 {
-  "$template": "22.14.11",
+  "$pkg": "2214.0.0-rc.0",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
@@ -75,15 +75,11 @@
     "start-ts": "node .",
     "start-svelte": "vite preview --open",
     "prepublishOnly": "npm test",
-    "postpublish": "run-os",
-    "postpublish:default": "if [ \"${npm_package_version#*-}\" = \"${npm_package_version}\" ]; then npm dist-tag add \"$npm_package_name@$npm_package_version\" latest; fi",
-    "postpublish:windows": "cmd /c for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a\" == \"%npm_package_version%\" npm dist-tag add \"%npm_package_name%@%npm_package_version%\" latest",
     "predeploy": "npm test",
     "deploy": ""
   },
   "publishConfig": {
-    "access": "public",
-    "tag": "next"
+    "access": "public"
   },
   "mocha": {
     "spec": [
