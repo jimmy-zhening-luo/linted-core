@@ -11,6 +11,6 @@ export default class HtmlManifest extends ScopeManifest<"html"> {
   } as const;
   public readonly processor = {} as const;
   public readonly language = {
-    language: "html/html",
+    language: "@html-eslint/html",
   } as const;
 }
