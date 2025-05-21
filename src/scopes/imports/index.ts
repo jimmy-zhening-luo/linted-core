@@ -15,7 +15,6 @@ export namespace Imports {
     | "ts"
     | "svelte"
     | "html"
-    | "jsonc"
     | "yml"
   );
 }

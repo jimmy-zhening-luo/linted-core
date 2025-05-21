@@ -23,7 +23,6 @@ export const TestInput: Parameters<typeof Core>[0] = {
       ts: "parsers.ts",
       svelte: "parsers.svelte",
       html: "parsers.html",
-      jsonc: "parsers.jsonc",
       yml: "parsers.yml",
     } as const,
   } as const,

@@ -7,5 +7,7 @@ export default class JsoncManifest extends ScopeManifest {
   } as const;
   public readonly parserOptions = { parser: null } as const;
   public readonly processor = {} as const;
-  public readonly language = {} as const;
+  public readonly language = {
+    language: "json/jsonc",
+  } as const;
 }
