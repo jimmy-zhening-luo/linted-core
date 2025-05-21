@@ -1,11 +1,11 @@
 import { ScopeManifest } from "./manifest";
 
 export default class MochaManifest extends ScopeManifest {
-  public readonly languageOptions = {
+  public languageOptions = {
     parser: null,
-    globals: "mocha",
-  } as const;
-  public readonly parserOptions = {
+    globals: "mocha" as const,
+  };
+  public parserOptions = {
     // MUST BE IDENTICAL TO TS PARSER OPTIONS (eventually see if can inherit)
     parser: null,
     ecmaFeatures: {
@@ -19,6 +19,6 @@ export default class MochaManifest extends ScopeManifest {
     sourceType: "module",
     ecmaVersion: 2023,
   };
-  public readonly processor = {};
-  public readonly language = {};
+  public processor = {};
+  public language = {};
 }

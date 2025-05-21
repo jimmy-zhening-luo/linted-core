@@ -1,7 +1,7 @@
 import type { Config } from "../../../proto";
 
-export type Rules<Scope extends string> = Config.PickConfig<
-  `linted/${Scope}/${string}/`,
+export type Rules = Config.PickConfig<
+  `linted/${string}`,
   | "files"
   | "ignores"
   | "rules"

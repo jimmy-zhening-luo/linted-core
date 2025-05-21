@@ -12,8 +12,8 @@ export type PickConfig<
 > = (
   & Rest
   & Pick<Config<Plugins>, Picks>
-  & { readonly name: Name }
-  & Readonly<Partial<Record<
+  & { name: Name }
+  & Partial<Record<
     Exclude<
       keyof Config,
       | "name"
@@ -21,5 +21,5 @@ export type PickConfig<
       | Picks
     >,
     never
-  >>>
+  >>
 );

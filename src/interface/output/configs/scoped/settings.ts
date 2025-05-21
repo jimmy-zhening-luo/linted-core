@@ -1,12 +1,14 @@
 import type { Config } from "../../../proto";
 
-export type Settings<Scope extends string> = Config.PickConfig<
-  `linted/${Scope}/`,
+export type Settings = Config.PickConfig<
+  `linted/${string}`,
   | "files"
   | "ignores"
   | "processor"
   | "language"
   | "settings",
   string,
-  { readonly languageOptions: object }
+  {
+    languageOptions: object;
+  }
 >;

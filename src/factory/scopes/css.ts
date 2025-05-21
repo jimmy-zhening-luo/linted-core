@@ -1,17 +1,17 @@
 import { ScopeManifest } from "./manifest";
 
 export default class CssManifest extends ScopeManifest {
-  public readonly languageOptions = {
+  public languageOptions = {
     parser: null,
     globals: null,
     tolerant: false,
   };
-  public readonly parserOptions = {
+  public parserOptions = {
     /* DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration */
     parser: null,
   };
-  public readonly processor = {};
-  public readonly language = {
+  public processor = {};
+  public language = {
     language: "css/css",
   };
 }

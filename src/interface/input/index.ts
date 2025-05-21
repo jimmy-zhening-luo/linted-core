@@ -3,10 +3,10 @@ import type { Imported } from "./imported";
 import type { Defaults, Extensions } from "./scopes";
 
 export interface Input {
-  readonly imports: Imported<
+  imports: Imported<
     Imports.Plugins,
     Imports.Parsers
   >;
-  readonly defaults: Defaults<Scope>;
-  readonly extensions: Extensions<Scope>;
+  defaults: Defaults<Scope>;
+  extensions: Extensions<Scope>;
 }

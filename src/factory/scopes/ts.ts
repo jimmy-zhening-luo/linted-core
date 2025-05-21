@@ -1,11 +1,11 @@
 import { ScopeManifest } from "./manifest";
 
 export default class TsManifest extends ScopeManifest {
-  public readonly languageOptions = {
-    parser: "ts",
+  public languageOptions = {
+    parser: "ts" as const,
     globals: null,
-  } as const;
-  public readonly parserOptions = {
+  };
+  public parserOptions = {
     // DOC: https://typescript-eslint.io/packages/parser/#configuration
     // DOC:(USE-CASE): https://typescript-eslint.io/getting-started/typed-linting/
     parser: null,
@@ -20,6 +20,6 @@ export default class TsManifest extends ScopeManifest {
     sourceType: "module",
     ecmaVersion: 2023,
   };
-  public readonly processor = {};
-  public readonly language = {};
+  public processor = {};
+  public language = {};
 }

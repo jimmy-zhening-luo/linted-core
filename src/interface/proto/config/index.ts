@@ -3,25 +3,25 @@ import type * as Rule from "./rule";
 export type { Rule };
 export type * from "./utility";
 export interface Config<Plugins extends string = string> {
-  readonly name: `linted/${string}/`;
-  readonly plugins: Readonly<Record<Plugins, unknown>>;
-  readonly files: readonly string[];
-  readonly ignores: readonly string[];
-  readonly rules: Rule.RuleBag;
-  readonly linterOptions: {
-    readonly noInlineConfig: boolean;
-    readonly reportUnusedDisableDirectives:
+  name: `linted/${string}`;
+  plugins: Record<Plugins, unknown>;
+  files: string[];
+  ignores: string[];
+  rules: Rule.RuleBag;
+  linterOptions: {
+    noInlineConfig: boolean;
+    reportUnusedDisableDirectives:
       | "error"
       | "warn"
       | "off"
     ;
   };
-  readonly languageOptions: {
-    readonly sourceType:
+  languageOptions: {
+    sourceType:
       | "module"
       | "script"
     ;
-    readonly ecmaVersion:
+    ecmaVersion:
       | "latest"
       | 3
       | 5
@@ -37,7 +37,7 @@ export interface Config<Plugins extends string = string> {
       | 2024
     ;
   };
-  readonly processor?: string;
-  readonly language?: string;
-  readonly settings?: Readonly<Record<string, unknown>>;
+  processor?: string;
+  language?: string;
+  settings?: Record<string, unknown>;
 }

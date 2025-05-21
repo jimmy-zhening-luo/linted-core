@@ -1,13 +1,15 @@
 import { ScopeManifest } from "./manifest";
 
 export default class JsoncManifest extends ScopeManifest {
-  public readonly languageOptions = {
+  public languageOptions = {
     parser: null,
     globals: null,
   };
-  public readonly parserOptions = { parser: null };
-  public readonly processor = {};
-  public readonly language = {
+  public parserOptions = {
+    parser: null,
+  };
+  public processor = {};
+  public language = {
     language: "json/jsonc",
   };
 }

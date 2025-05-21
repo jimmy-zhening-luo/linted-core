@@ -1,15 +1,15 @@
 import globals from "globals";
 import { ScopeManifests } from "./manifests";
 import type { Input } from "../interface";
-import type { tree as Tree } from "../scopes";
+import type { Scope, tree as Tree } from "../scopes";
 
 export class Factory {
-  public readonly global;
-  public readonly scopes;
+  public global;
+  public scopes;
 
   constructor(
     tree: typeof Tree,
-    public readonly parsers: Input["imports"]["parsers"],
+    public parsers: Input["imports"]["parsers"],
     defaults: Input["defaults"],
     {
       "*": globalExtension = {},
@@ -27,18 +27,18 @@ export class Factory {
 
     this.global = {
       settings: {
-        name: "linted/*/settings/",
+        name: "linted/*/settings/" as const,
         linterOptions: { noInlineConfig, reportUnusedDisableDirectives },
         languageOptions: { sourceType, ecmaVersion },
       },
       ignores: {
-        name: "linted/*/ignores/",
+        name: "linted/*/ignores/" as const,
         ignores: [
           ...override ? [] : defaults.ignores["*"],
           ...ignores,
         ],
       },
-    } as const;
+    };
     this.scopes = {
       files: defaults.files,
       ignores: defaults.ignores,
@@ -84,13 +84,13 @@ export class Factory {
     ] as const;
   }
 
-  public scope<S extends keyof typeof ScopeManifests>(scope: S) {
+  public scope(scope: Scope) {
     const {
       files: { [scope]: files },
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
-    ruleset = rules.map(({ id, rules }) => ({ id: `${scope}/${id}`, rules } as const)),
+    ruleset = rules.map(({ id, rules }) => { return { id: `${scope}/${id}`, rules }; }),
     {
       languageOptions: {
         parser = null,
@@ -111,12 +111,12 @@ export class Factory {
         ? []
         : [
             {
-              name: `linted/${scope}/`,
+              name: `linted/${scope as string}/` as const,
               files,
               ignores,
               languageOptions: {
                 ...languageOptionsStatic,
-                ...global === null || !(global in globals) ? {} : { globals: globals[global as keyof typeof globals] },
+                ...global === null || !(global in globals) ? {} : { globals: globals[global as keyof typeof globals] as Record<string, boolean> },
                 ...parser === null ? {} : { parser: this.parsers[parser] },
                 ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
                   ? {}
@@ -129,13 +129,15 @@ export class Factory {
               },
               ...processor,
               ...language,
-            } as const,
-            ...ruleset.map(({ id, rules }) => ({
-              name: `linted/${id}/`,
-              files,
-              ignores,
-              rules,
-            } as const)),
+            },
+            ...ruleset.map(({ id, rules }) => {
+              return {
+                name: `linted/${id}/` as const,
+                files,
+                ignores,
+                rules,
+              };
+            }),
           ];
   }
 }

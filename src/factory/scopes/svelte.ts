@@ -1,12 +1,12 @@
 import { ScopeManifest } from "./manifest";
 
 export default class SvelteManifest extends ScopeManifest {
-  public readonly languageOptions = {
-    parser: "svelte",
+  public languageOptions = {
+    parser: "svelte" as const,
     globals: null,
-  } as const;
-  public readonly parserOptions = {
-    parser: "ts",
+  };
+  public parserOptions = {
+    parser: "ts" as const,
     extraFileExtensions: [".svelte"],
     ecmaFeatures: {
       jsx: false,
@@ -18,9 +18,9 @@ export default class SvelteManifest extends ScopeManifest {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  } as const;
-  public readonly processor = {
+  };
+  public processor = {
     processor: "svelte/svelte",
   };
-  public readonly language = {};
+  public language = {};
 }
