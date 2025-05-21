@@ -1,6 +1,6 @@
 import type { Config } from "../proto";
 
-export interface Imports<
+export interface Imported<
   Plugins extends string,
   Parsers extends string,
 > {

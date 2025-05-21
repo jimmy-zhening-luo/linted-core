@@ -1,7 +1,7 @@
 import globals from "globals";
 import { ScopeManifests } from "./manifests";
 import type { Input } from "../interface";
-import type { tree as Tree } from "../scope";
+import type { tree as Tree } from "../scopes";
 
 export class Factory {
   public readonly global;

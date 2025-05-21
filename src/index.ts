@@ -1,9 +1,9 @@
 import type { Input, Output } from "./interface";
-import { scopes, tree } from "./scope";
+import { scopes, tree } from "./scopes";
 import { Factory } from "./factory";
 
 export type * from "./interface";
-export type * from "./scope";
+export type * from "./scopes";
 export default function ({
   imports: { plugins, parsers },
   defaults,

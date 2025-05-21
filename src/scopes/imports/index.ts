@@ -1,7 +1,4 @@
-import type { scopes } from "..";
-
-export type Scope = typeof scopes[number];
-export namespace Import {
+export namespace Imports {
   export type Plugin = (
     | "@stylistic"
     | "@typescript-eslint"
@@ -14,7 +11,7 @@ export namespace Import {
     | "jsonc"
     | "yml"
   );
-  export type Parser = Scope & (
+  export type Parser = (
     | "ts"
     | "svelte"
     | "html"
