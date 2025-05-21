@@ -16,6 +16,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       svelte: Plugin,
       "@html-eslint": Plugin,
       css: Plugin,
+      json: Plugin,
       jsonc: Plugin,
       yml: Plugin,
     } as const,

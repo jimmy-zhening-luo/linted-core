@@ -8,6 +8,7 @@ export namespace Imports {
     | "svelte"
     | "@html-eslint"
     | "css"
+    | "json"
     | "jsonc"
     | "yml"
   );
