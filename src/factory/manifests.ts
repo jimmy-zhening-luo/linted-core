@@ -18,4 +18,4 @@ export const ScopeManifests = {
   json,
   jsonc,
   yml,
-} as const;
+};

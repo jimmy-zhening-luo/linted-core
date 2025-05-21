@@ -14,7 +14,7 @@ export class Factory {
     {
       "*": globalExtension = {},
       ...scopeExtensions
-    }: Input["extensions"] = {} as const,
+    }: Input["extensions"] = {},
   ) {
     const {
       noInlineConfig = defaults.settings.noInlineConfig,
@@ -28,22 +28,22 @@ export class Factory {
     this.global = {
       settings: {
         name: "linted/*/settings/",
-        linterOptions: { noInlineConfig, reportUnusedDisableDirectives } as const,
-        languageOptions: { sourceType, ecmaVersion } as const,
-      } as const,
+        linterOptions: { noInlineConfig, reportUnusedDisableDirectives },
+        languageOptions: { sourceType, ecmaVersion },
+      },
       ignores: {
         name: "linted/*/ignores/",
         ignores: [
           ...override ? [] : defaults.ignores["*"],
           ...ignores,
-        ] as const,
-      } as const,
+        ],
+      },
     } as const;
     this.scopes = {
       files: defaults.files,
       ignores: defaults.ignores,
       rules: defaults.rules,
-    } as const;
+    };
 
     for (const scope in scopeExtensions) {
       const {
@@ -51,14 +51,14 @@ export class Factory {
           files: userFiles = [],
           ignores: userIgnores = [],
           rules: userRules = null,
-        } = {} as const,
+        } = {},
       } = scopeExtensions;
 
       this.scopes.files[scope as keyof typeof scopeExtensions].push(...userFiles);
       this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...userIgnores);
 
       if (userRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push({ id: `${scope}/override`, rules: userRules } as const);
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push({ id: `${scope}/override`, rules: userRules });
     }
 
     for (const [scope, parents] of tree)
@@ -106,9 +106,9 @@ export class Factory {
     } = new ScopeManifests[scope]();
 
     return files.length === 0
-      ? [] as const
+      ? []
       : ruleset.length === 0
-        ? [] as const
+        ? []
         : [
             {
               name: `linted/${scope}/`,
@@ -116,17 +116,17 @@ export class Factory {
               ignores,
               languageOptions: {
                 ...languageOptionsStatic,
-                ...global !== null && global in globals ? { globals: globals[global as keyof typeof globals] } as const : {} as const,
-                ...parser === null ? {} as const : { parser: this.parsers[parser] } as const,
+                ...global === null || !(global in globals) ? {} : { globals: globals[global as keyof typeof globals] },
+                ...parser === null ? {} : { parser: this.parsers[parser] },
                 ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
-                  ? {} as const
+                  ? {}
                   : {
                       parserOptions: {
                         ...parserOptionsStatic,
-                        ...subparser === null ? {} as const : { parser: this.parsers[subparser] } as const,
-                      } as const,
-                    } as const,
-              } as const,
+                        ...subparser === null ? {} : { parser: this.parsers[subparser] },
+                      },
+                    },
+              },
               ...processor,
               ...language,
             } as const,

@@ -18,7 +18,7 @@ export default class MochaManifest extends ScopeManifest {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  } as const;
-  public readonly processor = {} as const;
-  public readonly language = {} as const;
+  };
+  public readonly processor = {};
+  public readonly language = {};
 }

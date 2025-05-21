@@ -1,6 +1,6 @@
 import { ScopeManifest } from "./manifest";
 
-export default class TsManifest extends ScopeManifest<"ts"> {
+export default class TsManifest extends ScopeManifest {
   public readonly languageOptions = {
     parser: "ts",
     globals: null,
@@ -19,7 +19,7 @@ export default class TsManifest extends ScopeManifest<"ts"> {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  } as const;
-  public readonly processor = {} as const;
-  public readonly language = {} as const;
+  };
+  public readonly processor = {};
+  public readonly language = {};
 }

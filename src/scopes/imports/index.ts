@@ -1,5 +1,5 @@
 export namespace Imports {
-  export type Plugin = (
+  export type Plugins = (
     | "@stylistic"
     | "@typescript-eslint"
     | "mocha"
@@ -12,7 +12,7 @@ export namespace Imports {
     | "jsonc"
     | "yml"
   );
-  export type Parser = (
+  export type Parsers = (
     | "ts"
     | "svelte"
     | "html"

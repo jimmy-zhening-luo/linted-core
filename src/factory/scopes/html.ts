@@ -1,6 +1,6 @@
 import { ScopeManifest } from "./manifest";
 
-export default class HtmlManifest extends ScopeManifest<"html"> {
+export default class HtmlManifest extends ScopeManifest {
   public readonly languageOptions = {
     parser: "html",
     globals: null,
@@ -8,9 +8,9 @@ export default class HtmlManifest extends ScopeManifest<"html"> {
   public readonly parserOptions = {
     parser: null,
     frontmatter: true /* DOC: https://github.com/yeonjuan/html-eslint/issues/291#issuecomment-2726307803 */,
-  } as const;
-  public readonly processor = {} as const;
+  };
+  public readonly processor = {};
   public readonly language = {
     language: "@html-eslint/html",
-  } as const;
+  };
 }
