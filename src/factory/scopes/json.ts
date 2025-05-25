@@ -11,6 +11,6 @@ export default class JsonManifest extends ScopeManifest {
   };
   public processor = {};
   public language = {
-    language: "json/json",
+    language: "json/jsonc",
   };
 }
