@@ -29,7 +29,13 @@ export default function (
         plugins,
       },
       ...factory.globals,
-      ...scopes.flatMap(scope => factory.scope(scope)),
+      ...scopes
+        .flatMap(
+          scope => factory
+            .scope(
+              scope,
+            ),
+        ),
     ] satisfies Output satisfies unknown[] as unknown[];
   }
   catch (e) {

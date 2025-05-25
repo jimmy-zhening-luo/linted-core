@@ -1,4 +1,4 @@
-import type Core from ".";
+import type Core from "..";
 
 const
 ERROR = "error",
@@ -19,14 +19,14 @@ export const TestInput: Parameters<typeof Core>[0] = {
       json: Plugin,
       jsonc: Plugin,
       yml: Plugin,
-    } as const,
+    },
     parsers: {
       ts: "parsers.ts",
       svelte: "parsers.svelte",
       html: "parsers.html",
       yml: "parsers.yml",
-    } as const,
-  } as const,
+    },
+  },
   extensions: {},
   defaults: {
     settings: {
@@ -45,7 +45,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       json: ["default.json"],
       jsonc: ["default.jsonc"],
       yml: ["default.yml"],
-    } as const,
+    },
     ignores: {
       "*": ["ignore/default.*"],
       js: ["ignore/default.js"],
@@ -57,7 +57,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       json: ["ignore/default.json"],
       jsonc: ["ignore/default.jsonc"],
       yml: ["ignore/default.yml"],
-    } as const,
+    },
     rules: {
       js: [
         {
@@ -68,17 +68,21 @@ export const TestInput: Parameters<typeof Core>[0] = {
             vanilla1: ERROR,
             vanilla2: ERROR,
           },
-        } as const,
+        },
         {
           id: "enable/stylistic",
-          rules: { "@stylistic/style-rule": ERROR },
-        } as const,
+          rules: {
+            "@stylistic/style-rule": ERROR,
+          },
+        },
       ],
       ts: [
         {
           id: "disable",
-          rules: { vanilla0: OFF },
-        } as const,
+          rules: {
+            vanilla0: OFF,
+          },
+        },
         {
           id: "enable/extension",
           rules: {
@@ -86,65 +90,89 @@ export const TestInput: Parameters<typeof Core>[0] = {
             "@typescript-eslint/destructure-expression": ERROR,
             "@typescript-eslint/global": ERROR,
           },
-        } as const,
+        },
       ],
       mocha: [
         {
           id: "disable",
-          rules: { vanilla2: OFF },
-        } as const,
+          rules: {
+            vanilla2: OFF,
+          },
+        },
         {
           id: "disable/ts",
-          rules: { "@typescript-eslint/global": ERROR },
-        } as const,
+          rules: {
+            "@typescript-eslint/global": ERROR,
+          },
+        },
         {
           id: "enable",
-          rules: { "mocha/test-expression": ERROR },
-        } as const,
+          rules: {
+            "mocha/test-expression": ERROR,
+          },
+        },
       ],
       svelte: [
         {
           id: "disable",
-          rules: { vanilla1: OFF },
-        } as const,
+          rules: {
+            vanilla1: OFF,
+          },
+        },
         {
           id: "enable-extension",
-          rules: { "svelte/tags": ERROR },
-        } as const,
+          rules: {
+            "svelte/tags": ERROR,
+          },
+        },
       ],
       html: [
         {
           id: "enable",
-          rules: { "html/attribute": ERROR },
-        } as const,
+          rules: {
+            "html/attribute": ERROR,
+          },
+        },
       ],
       css: [
         {
           id: "enable",
-          rules: { "css/property": ERROR },
-        } as const,
+          rules: {
+            "css/property": ERROR,
+          },
+        },
       ],
       json: [
         {
           id: "enable",
           rules: {
             "jsonc/property-check": ERROR,
-            "jsonc/trailing-comma": [ERROR, "always"],
+            "jsonc/trailing-comma": [
+              ERROR,
+              "always",
+            ],
           },
-        } as const,
+        },
       ],
       jsonc: [
         {
           id: "override",
-          rules: { "jsonc/trailing-comma": [ERROR, "never"] },
-        } as const,
+          rules: {
+            "jsonc/trailing-comma": [
+              ERROR,
+              "never",
+            ],
+          },
+        },
       ],
       yml: [
         {
           id: "enable",
-          rules: { "yml/property-check": ERROR },
-        } as const,
+          rules: {
+            "yml/property-check": ERROR,
+          },
+        },
       ],
-    } as const,
-  } as const,
-} as const;
+    },
+  },
+};
