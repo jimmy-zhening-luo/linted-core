@@ -107,9 +107,7 @@
     "shortcut_syntax": false,
   } /* MD052 */,
   "link-image-reference-definitions": {
-    "ignored_definitions": [
-      "//",
-    ] /* @default: ["//"] */,
+    "ignored_definitions": ["//"] /* @default: ["//"] */,
   } /* MD053 */,
   "link-image-style": {
     "autolink": true,
