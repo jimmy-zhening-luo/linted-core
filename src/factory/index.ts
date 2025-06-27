@@ -28,8 +28,14 @@ export class Factory {
     this.global = {
       settings: {
         name: "linted/*/settings/" as const,
-        linterOptions: { noInlineConfig, reportUnusedDisableDirectives },
-        languageOptions: { sourceType, ecmaVersion },
+        linterOptions: {
+          noInlineConfig,
+          reportUnusedDisableDirectives,
+        },
+        languageOptions: {
+          sourceType,
+          ecmaVersion,
+        },
       },
       ignores: {
         name: "linted/*/ignores/" as const,
@@ -58,7 +64,10 @@ export class Factory {
       this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...userIgnores);
 
       if (userRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push({ id: `${scope}/override`, rules: userRules });
+        this.scopes.rules[scope as keyof typeof scopeExtensions].push({
+          id: `${scope}/override`,
+          rules: userRules,
+        });
     }
 
     for (const [scope, parents] of tree)
@@ -90,7 +99,12 @@ export class Factory {
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = this.scopes,
-    ruleset = rules.map(({ id, rules }) => { return { id: `${scope}/${id}`, rules }; }),
+    ruleset = rules.map(({ id, rules }) => {
+      return {
+        id: `${scope}/${id}`,
+        rules,
+      };
+    }),
     {
       languageOptions: {
         parser = null,
