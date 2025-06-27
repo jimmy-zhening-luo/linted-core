@@ -1,7 +1,10 @@
 import globals from "globals";
 import { ScopeManifests } from "./manifests";
 import type { Input } from "../interface";
-import type { Scope, tree as Tree } from "../scopes";
+import type {
+  Scope,
+  tree as Tree,
+} from "../scopes";
 
 export class Factory {
   public global;
@@ -17,10 +20,18 @@ export class Factory {
     }: Input["extensions"] = {},
   ) {
     const {
-      noInlineConfig = defaults.settings.noInlineConfig,
-      reportUnusedDisableDirectives = defaults.settings.reportUnusedDisableDirectives,
-      sourceType = defaults.settings.sourceType,
-      ecmaVersion = defaults.settings.ecmaVersion,
+      noInlineConfig = defaults
+        .settings
+        .noInlineConfig,
+      reportUnusedDisableDirectives = defaults
+        .settings
+        .reportUnusedDisableDirectives,
+      sourceType = defaults
+        .settings
+        .sourceType,
+      ecmaVersion = defaults
+        .settings
+        .ecmaVersion,
       ignores = [],
       override = false,
     } = globalExtension;
@@ -40,15 +51,21 @@ export class Factory {
       ignores: {
         name: "linted/*/ignores/" as const,
         ignores: [
-          ...override ? [] : defaults.ignores["*"],
+          ...override
+            ? []
+            : defaults
+              .ignores["*"],
           ...ignores,
         ],
       },
     };
     this.scopes = {
-      files: defaults.files,
-      ignores: defaults.ignores,
-      rules: defaults.rules,
+      files: defaults
+        .files,
+      ignores: defaults
+        .ignores,
+      rules: defaults
+        .rules,
     };
 
     for (const scope in scopeExtensions) {
@@ -60,24 +77,45 @@ export class Factory {
         } = {},
       } = scopeExtensions;
 
-      this.scopes.files[scope as keyof typeof scopeExtensions].push(...userFiles);
-      this.scopes.ignores[scope as keyof typeof scopeExtensions].push(...userIgnores);
+      this
+        .scopes
+        .files[scope as keyof typeof scopeExtensions]
+        .push(...userFiles);
+      this
+        .scopes
+        .ignores[scope as keyof typeof scopeExtensions]
+        .push(...userIgnores);
 
       if (userRules !== null)
-        this.scopes.rules[scope as keyof typeof scopeExtensions].push({
-          id: `${scope}/override`,
-          rules: userRules,
-        });
+        this
+          .scopes
+          .rules[scope as keyof typeof scopeExtensions]
+          .push(
+            {
+              id: scope + "/override",
+              rules: userRules,
+            },
+          );
     }
 
     for (const [scope, parents] of tree)
       for (const parent of parents) {
-        this.scopes.files[parent].push(
-          ...this.scopes.files[scope],
-        );
-        this.scopes.ignores[parent].push(
-          ...this.scopes.ignores[scope],
-        );
+        this
+          .scopes
+          .files[parent]
+          .push(
+            ...this
+              .scopes
+              .files[scope],
+          );
+        this
+          .scopes
+          .ignores[parent]
+          .push(
+            ...this
+              .scopes
+              .ignores[scope],
+          );
       }
   }
 
@@ -85,7 +123,8 @@ export class Factory {
     const {
       settings,
       ignores,
-    } = this.global;
+    } = this
+      .global;
 
     return [
       settings,
@@ -95,16 +134,34 @@ export class Factory {
 
   public scope(scope: Scope) {
     const {
-      files: { [scope]: files },
-      ignores: { [scope]: ignores },
-      rules: { [scope]: rules },
+      files: {
+        [scope]: files,
+      },
+      ignores: {
+        [scope]: ignores,
+      },
+      rules: {
+        [scope]: rules,
+      },
     } = this.scopes,
-    ruleset = rules.map(({ id, rules }) => {
-      return {
-        id: `${scope}/${id}`,
-        rules,
-      };
-    }),
+    ruleset = rules
+      .map(
+        (
+          {
+            id,
+            rules,
+          },
+        ) => {
+          return {
+            id: [
+              scope,
+              id,
+            ]
+              .join("/"),
+            rules,
+          };
+        },
+      ),
     {
       languageOptions: {
         parser = null,
@@ -130,28 +187,53 @@ export class Factory {
               ignores,
               languageOptions: {
                 ...languageOptionsStatic,
-                ...global === null || !(global in globals) ? {} : { globals: globals[global as keyof typeof globals] as Record<string, boolean> },
-                ...parser === null ? {} : { parser: this.parsers[parser] },
-                ...Object.keys(parserOptionsStatic).length < 1 && subparser === null
+                ...global === null
+                || !(global in globals)
+                  ? {}
+                  : {
+                      globals: globals[global as keyof typeof globals] as Record<string, boolean>,
+                    },
+                ...parser === null
+                  ? {}
+                  : {
+                      parser: this
+                        .parsers[parser],
+                    },
+                ...Object
+                  .keys(parserOptionsStatic)
+                  .length < 1
+                  && subparser === null
                   ? {}
                   : {
                       parserOptions: {
                         ...parserOptionsStatic,
-                        ...subparser === null ? {} : { parser: this.parsers[subparser] },
+                        ...subparser === null
+                          ? {}
+                          : {
+                              parser: this
+                                .parsers[subparser],
+                            },
                       },
                     },
               },
               ...processor,
               ...language,
             },
-            ...ruleset.map(({ id, rules }) => {
-              return {
-                name: `linted/${id}/` as const,
-                files,
-                ignores,
-                rules,
-              };
-            }),
+            ...ruleset.map(
+              (
+                {
+                  id,
+                  rules,
+                },
+              ) => {
+                return {
+                  name: `linted/${id}/` as const,
+                  files,
+                  ignores,
+                  rules,
+                };
+              },
+            ),
           ];
   }
 }
