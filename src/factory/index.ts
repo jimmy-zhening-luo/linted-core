@@ -120,15 +120,9 @@ export class Factory {
   }
 
   public get globals() {
-    const {
-      settings,
-      ignores,
-    } = this
-      .global;
-
     return [
-      settings,
-      ignores,
+      this.global.settings,
+      this.global.ignores,
     ] as const;
   }
 

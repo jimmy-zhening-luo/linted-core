@@ -37,6 +37,7 @@ export interface Config<Plugins extends string = string> {
       | 2024
     ;
   };
+  basePath?: string;
   processor?: string;
   language?: string;
   settings?: Record<string, unknown>;
