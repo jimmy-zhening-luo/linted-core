@@ -49,16 +49,18 @@ describe(
       "order",
       function () {
         it(
-          "`jsonc` < [`json`]?",
+          "`jsoncc` < [`jsonc`]?",
           function () {
             nodes
               .should
               .include
-              .members(["jsonc"]);
+              .members(["jsoncc"]);
             nodes
-              .indexOf("jsonc")
+              .indexOf("jsoncc")
               .should.be
-              .lessThan(-nodes.indexOf("json") * tree.length);
+              .lessThan(
+                nodes.indexOf("jsonc") * tree.length,
+              );
           },
         );
         it(

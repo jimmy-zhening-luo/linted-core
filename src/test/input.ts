@@ -44,6 +44,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       css: ["default.css"],
       json: ["default.json"],
       jsonc: ["default.jsonc"],
+      jsoncc: ["default-comma.jsonc"],
       yml: ["default.yml"],
     },
     ignores: {
@@ -56,6 +57,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
       css: ["ignore/default.css"],
       json: ["ignore/default.json"],
       jsonc: ["ignore/default.jsonc"],
+      jsoncc: ["ignore/default-comma.jsonc"],
       yml: ["ignore/default.yml"],
     },
     rules: {
@@ -147,20 +149,35 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "enable",
           rules: {
             "jsonc/property-check": ERROR,
+            "jsonc/comment": [
+              ERROR,
+              "never",
+            ],
             "jsonc/trailing-comma": [
               ERROR,
-              "always",
+              "never",
             ],
           },
         },
       ],
       jsonc: [
         {
-          id: "override",
+          id: "override-comment",
+          rules: {
+            "jsonc/comment": [
+              ERROR,
+              "allow",
+            ],
+          },
+        },
+      ],
+      jsoncc: [
+        {
+          id: "override-comma",
           rules: {
             "jsonc/trailing-comma": [
               ERROR,
-              "never",
+              "allow",
             ],
           },
         },

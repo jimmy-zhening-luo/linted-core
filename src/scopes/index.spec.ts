@@ -39,16 +39,24 @@ describe(
       "order",
       function () {
         it(
-          "`jsonc` > `json`",
+          "`jsoncc` > `jsonc` > `json`",
           function () {
             scopes
               .should
               .include
               .members(
                 [
+                  "jsoncc",
                   "jsonc",
                   "json",
                 ],
+              );
+            scopes
+              .indexOf("jsoncc")
+              .should.be
+              .greaterThan(
+                scopes
+                  .indexOf("jsonc"),
               );
             scopes
               .indexOf("jsonc")

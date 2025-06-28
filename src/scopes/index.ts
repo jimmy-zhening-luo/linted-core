@@ -9,6 +9,7 @@ export const scopes = [
   "css",
   "json",
   "jsonc",
+  "jsoncc",
   "yml",
 ] as const;
 export type Scope = typeof scopes[number];
