@@ -8,7 +8,10 @@ import type {
   Output,
 } from "./interface";
 
-export type { Input };
+export type {
+  Input,
+  scopes,
+};
 export default function (
   {
     imports: {
