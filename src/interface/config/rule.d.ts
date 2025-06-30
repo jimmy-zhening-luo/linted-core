@@ -8,6 +8,6 @@ export type Rules = Record<
   | State
   | readonly [
     State,
-    ...unknown[]
+    ...unknown[],
   ]
 >;

@@ -20,11 +20,9 @@ export interface Defaults<
   >;
   rules: Record<
     Scope,
-    Array<
-      {
-        id: string,
-        rules: Config["rules"],
-      }
-    >
+    {
+      id: string;
+      rules: Config["rules"];
+    }[]
   >;
 }
