@@ -1,11 +1,9 @@
 import type { scopes } from "..";
 
-export const tree: Array<
-  [
+export const tree: [
     typeof scopes[number],
     typeof scopes[number][],
-  ]
-> = [
+][] = [
   ["jsoncc", ["jsonc"]] as const,
   ["jsonc", ["json"]] as const,
   ["mocha", ["ts"]] as const,

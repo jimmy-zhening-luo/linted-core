@@ -18,7 +18,7 @@ export type Extensions<
       {
         files?: string[];
         ignores?: string[];
-        rules?: Config["rules"],
+        rules?: Config["rules"];
       }
     >
   >
