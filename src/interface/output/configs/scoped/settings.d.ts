@@ -1,6 +1,6 @@
 import type { Config } from "../../../config";
 
-export type Rules = {
+export type Settings = {
   name: `linted/${string}`;
   languageOptions: object;
 } & Pick<
