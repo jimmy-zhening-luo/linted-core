@@ -9,8 +9,6 @@ import type {
   Output,
 } from "./interface";
 
-export type * from "./scope";
-export type * from "./interface";
 export default function (
   {
     imports: {
