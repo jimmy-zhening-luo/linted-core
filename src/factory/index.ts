@@ -4,8 +4,8 @@ import type { Input } from "../interface";
 import type {
   scopes,
   tree as Tree,
+  Dependencies,
 } from "../scope";
-import type { Dependencies } from "../scope";
 
 export class Factory {
   public global;
