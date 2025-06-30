@@ -13,11 +13,11 @@ export class Factory {
   constructor(
     tree: typeof Tree,
     public parsers: Input["imports"]["parsers"],
-    defaults: Input["defaults"],
+    defaults: Input["configuration"]["defaults"],
     {
       "*": globalExtension = {},
       ...scopeExtensions
-    }: Input["extensions"] = {},
+    }: Input["configuration"]["extensions"] = {},
   ) {
     const {
       noInlineConfig = defaults
