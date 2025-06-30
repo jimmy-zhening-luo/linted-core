@@ -1,7 +1,7 @@
 import "chai/register-should.js";
 import core from ".";
 import { scopes } from "./scopes";
-import { TestInput } from "./test/input";
+import { TestInput } from "./_test/input";
 
 const configs = core(TestInput);
 
