@@ -1,5 +1,5 @@
-import { Defaults } from "./defaults";
-import { Extensions } from "./extensions";
+import type { Defaults } from "./defaults";
+import type { Extensions } from "./extensions";
 
 export interface Configuration<
   Scope extends string,

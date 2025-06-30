@@ -23,7 +23,7 @@ export interface Defaults<
     Array<
       {
         id: string,
-        rules: Config[rules],
+        rules: Config["rules"],
       }
     >
   >;
