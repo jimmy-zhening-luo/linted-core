@@ -6,7 +6,7 @@ export type State = (
 export type Rules = Record<
   string,
   | State
-  | [
+  | readonly [
     State,
     ...unknown[]
   ]
