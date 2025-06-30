@@ -26,169 +26,171 @@ export const TEST_INPUT = {
       yml: Parser("YML"),
     },
   },
-  defaults: {
-    settings: {
-      ecmaVersion: 2024,
-      sourceType: "module",
-      noInlineConfig: true,
-      reportUnusedDisableDirectives: "error",
-    } as const,
-    files: {
-      js: ["default.js"],
-      ts: ["default.ts"],
-      mocha: ["default.mocha"],
-      svelte: ["default.svelte"],
-      html: ["default.html"],
-      css: ["default.css"],
-      json: ["default.json"],
-      jsonc: ["default.jsonc"],
-      jsoncc: ["default-comma.jsonc"],
-      yml: ["default.yml"],
+  configuration: {
+    defaults: {
+      settings: {
+        ecmaVersion: 2024,
+        sourceType: "module",
+        noInlineConfig: true,
+        reportUnusedDisableDirectives: "error",
+      } as const,
+      files: {
+        js: ["default.js"],
+        ts: ["default.ts"],
+        mocha: ["default.mocha"],
+        svelte: ["default.svelte"],
+        html: ["default.html"],
+        css: ["default.css"],
+        json: ["default.json"],
+        jsonc: ["default.jsonc"],
+        jsoncc: ["default-comma.jsonc"],
+        yml: ["default.yml"],
+      },
+      ignores: {
+        "*": ["ignore/default.*"],
+        js: ["ignore/default.js"],
+        ts: ["ignore/default.ts"],
+        mocha: ["ignore/default.mocha"],
+        svelte: ["ignore/default.svelte"],
+        html: ["ignore/default.html"],
+        css: ["ignore/default.css"],
+        json: ["ignore/default.json"],
+        jsonc: ["ignore/default.jsonc"],
+        jsoncc: ["ignore/default-comma.jsonc"],
+        yml: ["ignore/default.yml"],
+      },
+      rules: {
+        js: [
+          {
+            id: "enable",
+            rules: {
+              vanilla: ERROR,
+              vanilla0: ERROR,
+              vanilla1: ERROR,
+              vanilla2: ERROR,
+            } as const,
+          },
+          {
+            id: "enable/stylistic",
+            rules: {
+              "@stylistic/style-rule": ERROR,
+            } as const,
+          },
+        ],
+        ts: [
+          {
+            id: "disable",
+            rules: {
+              vanilla0: OFF,
+            } as const,
+          },
+          {
+            id: "enable/extension",
+            rules: {
+              "@typescript-eslint/enums": ERROR,
+              "@typescript-eslint/destructure-expression": ERROR,
+              "@typescript-eslint/global": ERROR,
+            } as const,
+          },
+        ],
+        mocha: [
+          {
+            id: "disable",
+            rules: {
+              vanilla2: OFF,
+            } as const,
+          },
+          {
+            id: "disable/ts",
+            rules: {
+              "@typescript-eslint/global": ERROR,
+            } as const,
+          },
+          {
+            id: "enable",
+            rules: {
+              "mocha/test-expression": ERROR,
+            } as const,
+          },
+        ],
+        svelte: [
+          {
+            id: "disable",
+            rules: {
+              vanilla1: OFF,
+            } as const,
+          },
+          {
+            id: "enable-extension",
+            rules: {
+              "svelte/tags": ERROR,
+            } as const,
+          },
+        ],
+        html: [
+          {
+            id: "enable",
+            rules: {
+              "html/attribute": ERROR,
+            } as const,
+          },
+        ],
+        css: [
+          {
+            id: "enable",
+            rules: {
+              "css/property": ERROR,
+            } as const,
+          },
+        ],
+        json: [
+          {
+            id: "enable",
+            rules: {
+              "jsonc/property-check": ERROR,
+              "jsonc/comment": [
+                ERROR,
+                "never",
+              ],
+              "jsonc/trailing-comma": [
+                ERROR,
+                "never",
+              ],
+            } as const,
+          },
+        ],
+        jsonc: [
+          {
+            id: "override-comment",
+            rules: {
+              "jsonc/comment": [
+                ERROR,
+                "allow",
+              ],
+            } as const,
+          },
+        ],
+        jsoncc: [
+          {
+            id: "override-comma",
+            rules: {
+              "jsonc/trailing-comma": [
+                ERROR,
+                "allow",
+              ],
+            } as const,
+          },
+        ],
+        yml: [
+          {
+            id: "enable",
+            rules: {
+              "yml/property-check": ERROR,
+            } as const,
+          },
+        ],
+      },
     },
-    ignores: {
-      "*": ["ignore/default.*"],
-      js: ["ignore/default.js"],
-      ts: ["ignore/default.ts"],
-      mocha: ["ignore/default.mocha"],
-      svelte: ["ignore/default.svelte"],
-      html: ["ignore/default.html"],
-      css: ["ignore/default.css"],
-      json: ["ignore/default.json"],
-      jsonc: ["ignore/default.jsonc"],
-      jsoncc: ["ignore/default-comma.jsonc"],
-      yml: ["ignore/default.yml"],
-    },
-    rules: {
-      js: [
-        {
-          id: "enable",
-          rules: {
-            vanilla: ERROR,
-            vanilla0: ERROR,
-            vanilla1: ERROR,
-            vanilla2: ERROR,
-          } as const,
-        },
-        {
-          id: "enable/stylistic",
-          rules: {
-            "@stylistic/style-rule": ERROR,
-          } as const,
-        },
-      ],
-      ts: [
-        {
-          id: "disable",
-          rules: {
-            vanilla0: OFF,
-          } as const,
-        },
-        {
-          id: "enable/extension",
-          rules: {
-            "@typescript-eslint/enums": ERROR,
-            "@typescript-eslint/destructure-expression": ERROR,
-            "@typescript-eslint/global": ERROR,
-          } as const,
-        },
-      ],
-      mocha: [
-        {
-          id: "disable",
-          rules: {
-            vanilla2: OFF,
-          } as const,
-        },
-        {
-          id: "disable/ts",
-          rules: {
-            "@typescript-eslint/global": ERROR,
-          } as const,
-        },
-        {
-          id: "enable",
-          rules: {
-            "mocha/test-expression": ERROR,
-          } as const,
-        },
-      ],
-      svelte: [
-        {
-          id: "disable",
-          rules: {
-            vanilla1: OFF,
-          } as const,
-        },
-        {
-          id: "enable-extension",
-          rules: {
-            "svelte/tags": ERROR,
-          } as const,
-        },
-      ],
-      html: [
-        {
-          id: "enable",
-          rules: {
-            "html/attribute": ERROR,
-          } as const,
-        },
-      ],
-      css: [
-        {
-          id: "enable",
-          rules: {
-            "css/property": ERROR,
-          } as const,
-        },
-      ],
-      json: [
-        {
-          id: "enable",
-          rules: {
-            "jsonc/property-check": ERROR,
-            "jsonc/comment": [
-              ERROR,
-              "never",
-            ],
-            "jsonc/trailing-comma": [
-              ERROR,
-              "never",
-            ],
-          } as const,
-        },
-      ],
-      jsonc: [
-        {
-          id: "override-comment",
-          rules: {
-            "jsonc/comment": [
-              ERROR,
-              "allow",
-            ],
-          } as const,
-        },
-      ],
-      jsoncc: [
-        {
-          id: "override-comma",
-          rules: {
-            "jsonc/trailing-comma": [
-              ERROR,
-              "allow",
-            ],
-          } as const,
-        },
-      ],
-      yml: [
-        {
-          id: "enable",
-          rules: {
-            "yml/property-check": ERROR,
-          } as const,
-        },
-      ],
-    },
+    extensions: {},
   },
-  extensions: {},
 };
