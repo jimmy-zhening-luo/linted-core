@@ -1,3 +1,5 @@
+export type * as Dependencies from "./dependencies";
+export { tree } from "./tree";
 export const scopes = [
   "js",
   "ts",
@@ -10,5 +12,3 @@ export const scopes = [
   "jsoncc",
   "yml",
 ] as const;
-export { tree } from "./tree";
-export type * as Dependencies from "./dependencies";
