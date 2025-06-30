@@ -1,4 +1,4 @@
-import type { Parsers } from "../../../interface";
+import type { Dependencies } from "../../../scope";
 
 export abstract class ScopeManifest {
   public abstract processor:
@@ -16,13 +16,13 @@ export abstract class ScopeManifest {
   public abstract parserOptions: {
     parser:
       | null
-      | Imports.Parsers
+      | Dependencies.Parsers
     ;
   };
   public abstract languageOptions: {
     parser:
       | null
-      | Imports.Parsers
+      | Dependencies.Parsers
     ;
     globals:
       | null
