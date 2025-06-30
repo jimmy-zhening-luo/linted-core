@@ -3,7 +3,7 @@ import type {
   Dependencies,
 } from "../../scope";
 import type { Imports } from "./imports";
-import type { Confuguration } from "./configuration";
+import type { Configuration } from "./configuration";
 
 export interface Input {
   imports: Imports<
