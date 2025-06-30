@@ -5,6 +5,7 @@ import type {
   scopes,
   tree as Tree,
 } from "../scope";
+import type { Dependencies } from "../scope";
 
 export class Factory {
   public global;
@@ -12,12 +13,12 @@ export class Factory {
 
   constructor(
     tree: typeof Tree,
-    public parsers: Input["imports"]["parsers"],
-    defaults: Input["configuration"]["defaults"],
+    public parsers: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["imports"]["parsers"],
+    defaults: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["configuration"]["defaults"],
     {
       "*": globalExtension = {},
       ...scopeExtensions
-    }: Input["configuration"]["extensions"] = {},
+    }: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["configuration"]["extensions"] = {},
   ) {
     const {
       noInlineConfig = defaults
