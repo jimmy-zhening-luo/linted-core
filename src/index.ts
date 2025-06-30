@@ -3,15 +3,14 @@ import {
   scopes,
   tree,
 } from "./scope";
+import type { Dependencies } from "./scope";
 import type {
   Input,
   Output,
 } from "./interface";
 
-export type {
-  Input,
-  scopes,
-};
+export type * from "./scope";
+export type * from "./interface";
 export default function (
   {
     imports: {
@@ -22,7 +21,11 @@ export default function (
       defaults,
       extensions,
     },
-  }: Input,
+  }: Input<
+    Dependencies.Plugins,
+    Dependencies.Parsers,
+    typeof scopes[number]
+  >,
 ) {
   try {
     const factory = new Factory(
@@ -42,7 +45,7 @@ export default function (
         .flatMap(
           scope => factory.scope(scope),
         ),
-    ] satisfies Output satisfies unknown[] as unknown[];
+    ] satisfies Output as unknown[];
   }
   catch (e) {
     throw new Error(

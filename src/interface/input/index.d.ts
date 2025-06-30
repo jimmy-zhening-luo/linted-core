@@ -1,16 +1,16 @@
-import type {
-  scopes,
-  Dependencies,
-} from "../../scope";
 import type { Imports } from "./imports";
 import type { Configuration } from "./configuration";
 
-export interface Input {
+export interface Input<
+  Plugins extends string,
+  Parsers extends string,
+  Scope extends string,
+> {
   imports: Imports<
-    Dependencies.Plugins,
-    Dependencies.Parsers
+    Plugins,
+    Parsers
   >;
   configuration: Configuration<
-    typeof scopes[number]
+    Scope
   >;
 }
