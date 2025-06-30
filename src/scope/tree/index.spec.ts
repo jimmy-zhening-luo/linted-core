@@ -4,7 +4,7 @@ import { tree } from ".";
 const nodes = tree.map(([scope]) => scope);
 
 describe(
-  "Scope Tree",
+  "Tree",
   function () {
     describe(
       "shape",

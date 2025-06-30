@@ -1,5 +1,3 @@
-export type * from "./imports";
-export * from "./tree";
 export const scopes = [
   "js",
   "ts",
@@ -12,4 +10,5 @@ export const scopes = [
   "jsoncc",
   "yml",
 ] as const;
-export type Scope = typeof scopes[number];
+export { tree } from "./tree";
+export type * as Dependencies from "./dependencies";

@@ -1,18 +1,24 @@
-import type { Input, Output } from "./interface";
-import { scopes, tree } from "./scopes";
 import { Factory } from "./factory";
+import {
+  scopes,
+  tree,
+} from "./scope";
+import type {
+  Input,
+  Output,
+} from "./interface";
 
-export type * from "./interface/input";
-export type * from "./interface/proto";
-export type * from "./scopes";
+export type { Input };
 export default function (
   {
     imports: {
       plugins,
       parsers,
     },
-    defaults,
-    extensions,
+    configuration: {
+      defaults,
+      extensions,
+    },
   }: Input,
 ) {
   try {
@@ -31,10 +37,7 @@ export default function (
       ...factory.globals,
       ...scopes
         .flatMap(
-          scope => factory
-            .scope(
-              scope,
-            ),
+          scope => factory.scope(scope),
         ),
     ] satisfies Output satisfies unknown[] as unknown[];
   }

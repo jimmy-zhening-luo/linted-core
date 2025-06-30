@@ -1,13 +1,11 @@
 import type * as Rule from "./rule";
 
-export type { Rule };
-export type * from "./utility";
-export interface Config<Plugins extends string = string> {
+export interface Config {
   name: `linted/${string}`;
-  plugins: Record<Plugins, unknown>;
+  plugins: Record<string, unknown>;
   files: string[];
   ignores: string[];
-  rules: Rule.RuleBag;
+  rules: Rule.Rules;
   linterOptions: {
     noInlineConfig: boolean;
     reportUnusedDisableDirectives:

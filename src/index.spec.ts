@@ -1,9 +1,9 @@
 import "chai/register-should.js";
-import core from ".";
-import { scopes } from "./scopes";
-import { TestInput } from "./_test/input";
+import Core from ".";
+import { scopes } from "./scope";
+import { TEST_INPUT } from "./_test";
 
-const configs = core(TestInput);
+const configs = Core(TEST_INPUT);
 
 describe(
   "Core",
@@ -14,7 +14,7 @@ describe(
         it(
           "is a function",
           function () {
-            core
+            Core
               .should.be
               .a("function");
           },

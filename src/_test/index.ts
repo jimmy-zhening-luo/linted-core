@@ -1,11 +1,10 @@
-import type Core from "..";
-
 const
 ERROR = "error",
 OFF = "off",
-Plugin = "TEST_PLUGIN";
+Plugin = "MOCK_PLUGIN",
+Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
-export const TestInput: Parameters<typeof Core>[0] = {
+export const TEST_INPUT = {
   imports: {
     plugins: {
       "@stylistic": Plugin,
@@ -21,20 +20,19 @@ export const TestInput: Parameters<typeof Core>[0] = {
       yml: Plugin,
     },
     parsers: {
-      ts: "parsers.ts",
-      svelte: "parsers.svelte",
-      html: "parsers.html",
-      yml: "parsers.yml",
+      ts: Parser("TS"),
+      svelte: Parser("SVELTE"),
+      html: Parser("HTML"),
+      yml: Parser("YML"),
     },
   },
-  extensions: {},
   defaults: {
     settings: {
       ecmaVersion: 2024,
       sourceType: "module",
       noInlineConfig: true,
       reportUnusedDisableDirectives: "error",
-    },
+    } as const,
     files: {
       js: ["default.js"],
       ts: ["default.ts"],
@@ -69,13 +67,13 @@ export const TestInput: Parameters<typeof Core>[0] = {
             vanilla0: ERROR,
             vanilla1: ERROR,
             vanilla2: ERROR,
-          },
+          } as const,
         },
         {
           id: "enable/stylistic",
           rules: {
             "@stylistic/style-rule": ERROR,
-          },
+          } as const,
         },
       ],
       ts: [
@@ -83,7 +81,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "disable",
           rules: {
             vanilla0: OFF,
-          },
+          } as const,
         },
         {
           id: "enable/extension",
@@ -91,7 +89,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
             "@typescript-eslint/enums": ERROR,
             "@typescript-eslint/destructure-expression": ERROR,
             "@typescript-eslint/global": ERROR,
-          },
+          } as const,
         },
       ],
       mocha: [
@@ -99,19 +97,19 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "disable",
           rules: {
             vanilla2: OFF,
-          },
+          } as const,
         },
         {
           id: "disable/ts",
           rules: {
             "@typescript-eslint/global": ERROR,
-          },
+          } as const,
         },
         {
           id: "enable",
           rules: {
             "mocha/test-expression": ERROR,
-          },
+          } as const,
         },
       ],
       svelte: [
@@ -119,13 +117,13 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "disable",
           rules: {
             vanilla1: OFF,
-          },
+          } as const,
         },
         {
           id: "enable-extension",
           rules: {
             "svelte/tags": ERROR,
-          },
+          } as const,
         },
       ],
       html: [
@@ -133,7 +131,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "enable",
           rules: {
             "html/attribute": ERROR,
-          },
+          } as const,
         },
       ],
       css: [
@@ -141,7 +139,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "enable",
           rules: {
             "css/property": ERROR,
-          },
+          } as const,
         },
       ],
       json: [
@@ -157,7 +155,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
               ERROR,
               "never",
             ],
-          },
+          } as const,
         },
       ],
       jsonc: [
@@ -168,7 +166,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
               ERROR,
               "allow",
             ],
-          },
+          } as const,
         },
       ],
       jsoncc: [
@@ -179,7 +177,7 @@ export const TestInput: Parameters<typeof Core>[0] = {
               ERROR,
               "allow",
             ],
-          },
+          } as const,
         },
       ],
       yml: [
@@ -187,9 +185,10 @@ export const TestInput: Parameters<typeof Core>[0] = {
           id: "enable",
           rules: {
             "yml/property-check": ERROR,
-          },
+          } as const,
         },
       ],
     },
   },
+  extensions: {},
 };

@@ -1,4 +1,4 @@
-import type { Imports } from "../../../scopes";
+import type { Parsers } from "../../../interface";
 
 export abstract class ScopeManifest {
   public abstract processor:

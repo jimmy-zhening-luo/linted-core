@@ -1,10 +1,10 @@
 import globals from "globals";
-import { ScopeManifests } from "./manifests";
+import { Manifests } from "./register";
 import type { Input } from "../interface";
 import type {
-  Scope,
+  scopes,
   tree as Tree,
-} from "../scopes";
+} from "../scope";
 
 export class Factory {
   public global;
@@ -126,7 +126,7 @@ export class Factory {
     ] as const;
   }
 
-  public scope(scope: Scope) {
+  public scope(scope: typeof scopes[number]) {
     const {
       files: {
         [scope]: files,
@@ -168,7 +168,7 @@ export class Factory {
       },
       processor,
       language,
-    } = new ScopeManifests[scope]();
+    } = new Manifests[scope]();
 
     return files.length === 0
       ? []
