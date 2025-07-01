@@ -1,4 +1,4 @@
-export type Parsers = (
+export type Parser = (
   | "ts"
   | "svelte"
   | "html"

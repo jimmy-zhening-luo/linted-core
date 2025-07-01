@@ -1,6 +1,4 @@
-import type { IManifest } from "./manifest";
-
-export const js: IManifest = {
+export const js = {
   languageOptions: {
     parser: null,
     globals: null,

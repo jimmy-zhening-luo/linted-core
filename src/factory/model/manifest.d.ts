@@ -1,11 +1,9 @@
-import type { Dependencies } from "../../../scope";
-
-export interface IManifest {
+export interface IManifest<Parser> {
   languageOptions: {
     [property: string]: unknown;
     parser:
       | null
-      | Dependencies.Parsers
+      | Parser
     ;
     globals:
       | null
@@ -16,7 +14,7 @@ export interface IManifest {
     [property: string]: unknown;
     parser:
       | null
-      | Dependencies.Parsers
+      | Parser
     ;
   };
   language?: string;

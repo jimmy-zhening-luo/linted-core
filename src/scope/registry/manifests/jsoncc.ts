@@ -1,6 +1,4 @@
-import type { IManifest } from "./manifest";
-
-export const jsonc: IManifest = {
+export const jsoncc = {
   languageOptions: {
     parser: null,
     globals: null,

@@ -1,13 +1,13 @@
 export interface Imports<
-  Plugins extends string,
-  Parsers extends string,
+  Plugin extends string,
+  Parser extends string,
 > {
   plugins: Record<
-    Plugins,
+    Plugin,
     unknown
   >;
   parsers: Record<
-    Parsers,
+    Parser,
     unknown
   >;
 }

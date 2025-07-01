@@ -1,24 +1,24 @@
 import globals from "globals";
-import { Manifests } from "./register";
 import type { Input } from "../interface";
-import type {
-  scopes,
-  tree as Tree,
-  Dependencies,
-} from "../scope";
+import type * as Model from "./model";
 
-export class Factory {
+export class Factory<
+  Plugin extends string,
+  Parser extends string,
+  Scope extends string,
+> {
   public global;
   public scopes;
 
   constructor(
-    tree: typeof Tree,
-    public parsers: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["imports"]["parsers"],
-    defaults: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["configuration"]["defaults"],
+    tree: Model.ITree<Scope>,
+    private readonly registry: Record<Scope, Model.IManifest<Parser>>,
+    public parsers: Record<Parser, unknown>,
+    defaults: Input<Plugin, Parser, Scope>["configuration"]["defaults"],
     {
       "*": globalExtension = {},
       ...scopeExtensions
-    }: Input<Dependencies.Plugins, Dependencies.Parsers, typeof scopes[number]>["configuration"]["extensions"] = {},
+    }: Input<Plugin, Parser, Scope>["configuration"]["extensions"] = {},
   ) {
     const {
       noInlineConfig = defaults
@@ -33,6 +33,8 @@ export class Factory {
       ecmaVersion = defaults
         .settings
         .ecmaVersion,
+    } = globalExtension,
+    {
       ignores = [],
       override = false,
     } = globalExtension;
@@ -127,7 +129,7 @@ export class Factory {
     ] as const;
   }
 
-  public scope(scope: typeof scopes[number]) {
+  public scope(scope: Scope) {
     const {
       files: {
         [scope]: files,
@@ -169,7 +171,7 @@ export class Factory {
       },
       processor = null,
       language = null,
-    } = Manifests[scope];
+    } = this.registry[scope];
 
     return files.length === 0
       ? []

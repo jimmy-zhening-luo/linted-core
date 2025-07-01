@@ -9,7 +9,7 @@ import { jsonc } from "./manifests/jsonc";
 import { jsoncc } from "./manifests/jsoncc";
 import { yml } from "./manifests/yml";
 
-export const Manifests = {
+export const registry = {
   js,
   ts,
   mocha,

@@ -1,13 +1,12 @@
-import type { IManifest } from "./manifest";
-
-export const svelte: IManifest = {
+export const ts = {
   languageOptions: {
-    parser: "svelte" as const,
+    parser: "ts" as const,
     globals: null,
   },
   parserOptions: {
-    parser: "ts" as const,
-    extraFileExtensions: [".svelte"],
+    // DOC: https://typescript-eslint.io/packages/parser/#configuration
+    // DOC:(USE-CASE): https://typescript-eslint.io/getting-started/typed-linting/
+    parser: null,
     ecmaFeatures: {
       jsx: false,
       globalReturn: true,
@@ -19,5 +18,4 @@ export const svelte: IManifest = {
     sourceType: "module",
     ecmaVersion: 2023,
   },
-  processor: "svelte/svelte",
 };

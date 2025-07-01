@@ -1,6 +1,4 @@
-import type { IManifest } from "./manifest";
-
-export const mocha: IManifest = {
+export const mocha = {
   languageOptions: {
     parser: null,
     globals: "mocha" as const,

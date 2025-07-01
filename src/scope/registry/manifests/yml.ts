@@ -1,6 +1,4 @@
-import type { IManifest } from "./manifest";
-
-export const yml: IManifest = {
+export const yml = {
   languageOptions: {
     parser: "yml" as const,
     globals: null,

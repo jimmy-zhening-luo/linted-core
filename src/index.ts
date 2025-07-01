@@ -2,12 +2,18 @@ import { Factory } from "./factory";
 import {
   scopes,
   tree,
+  registry,
 } from "./scope";
-import type { Dependencies } from "./scope";
+import type {
+  Plugin,
+  Parser,
+} from "./scope";
 import type {
   Input,
   Output,
 } from "./interface";
+
+type Scope = typeof scopes[number];
 
 export default function (
   {
@@ -20,14 +26,19 @@ export default function (
       extensions,
     },
   }: Input<
-    Dependencies.Plugins,
-    Dependencies.Parsers,
-    typeof scopes[number]
+    Plugin,
+    Parser,
+    Scope
   >,
 ) {
   try {
-    const factory = new Factory(
+    const factory = new Factory<
+      Plugin,
+      Parser,
+      Scope
+    >(
       tree,
+      registry,
       parsers,
       defaults,
       extensions,
