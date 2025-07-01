@@ -169,7 +169,7 @@ export class Factory {
       },
       processor = null,
       language = null,
-    } = new Manifests[scope]();
+    } = Manifests[scope];
 
     return files.length === 0
       ? []
