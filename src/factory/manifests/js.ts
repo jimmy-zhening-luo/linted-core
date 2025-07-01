@@ -1,13 +1,11 @@
-import { ScopeManifest } from "./manifest";
+import type { IManifest } from "./manifest";
 
-export default class JsManifest extends ScopeManifest {
-  public languageOptions = {
+export const js: IManifest = {
+  languageOptions: {
     parser: null,
     globals: null,
-  };
-  public parserOptions = {
+  },
+  parserOptions: {
     parser: null,
-  };
-  public processor = {};
-  public language = {};
+  },
 }

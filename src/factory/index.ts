@@ -167,8 +167,8 @@ export class Factory {
         parser: subparser = null,
         ...parserOptionsStatic
       },
-      processor,
-      language,
+      processor = null,
+      language = null,
     } = new Manifests[scope]();
 
     return files.length === 0
@@ -211,8 +211,12 @@ export class Factory {
                       },
                     },
               },
-              ...processor,
-              ...language,
+              ...processor === null
+                ? {}
+                : { processor },
+              ...language === null
+                ? {}
+                : { language },
             },
             ...ruleset.map(
               (

@@ -1,11 +1,11 @@
-import { ScopeManifest } from "./manifest";
+import type { IManifest } from "./manifest";
 
-export default class MochaManifest extends ScopeManifest {
-  public languageOptions = {
+export const mocha: IManifest = {
+  languageOptions: {
     parser: null,
     globals: "mocha" as const,
-  };
-  public parserOptions = {
+  },
+  parserOptions: {
     // MUST BE IDENTICAL TO TS PARSER OPTIONS (eventually see if can inherit)
     parser: null,
     ecmaFeatures: {
@@ -18,7 +18,5 @@ export default class MochaManifest extends ScopeManifest {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  };
-  public processor = {};
-  public language = {};
+  },
 }

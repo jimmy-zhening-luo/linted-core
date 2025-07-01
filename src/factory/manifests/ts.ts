@@ -1,11 +1,11 @@
-import { ScopeManifest } from "./manifest";
+import type { IManifest } from "./manifest";
 
-export default class TsManifest extends ScopeManifest {
-  public languageOptions = {
+export const ts: IManifest = {
+  languageOptions: {
     parser: "ts" as const,
     globals: null,
-  };
-  public parserOptions = {
+  },
+  parserOptions: {
     // DOC: https://typescript-eslint.io/packages/parser/#configuration
     // DOC:(USE-CASE): https://typescript-eslint.io/getting-started/typed-linting/
     parser: null,
@@ -19,7 +19,5 @@ export default class TsManifest extends ScopeManifest {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  };
-  public processor = {};
-  public language = {};
+  },
 }

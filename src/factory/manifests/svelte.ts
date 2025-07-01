@@ -1,11 +1,11 @@
-import { ScopeManifest } from "./manifest";
+import type { IManifest } from "./manifest";
 
-export default class SvelteManifest extends ScopeManifest {
-  public languageOptions = {
+export const svelte: IManifest = {
+  languageOptions: {
     parser: "svelte" as const,
     globals: null,
-  };
-  public parserOptions = {
+  },
+  parserOptions: {
     parser: "ts" as const,
     extraFileExtensions: [".svelte"],
     ecmaFeatures: {
@@ -18,9 +18,6 @@ export default class SvelteManifest extends ScopeManifest {
     warnOnUnsupportedTypeScriptVersion: false,
     sourceType: "module",
     ecmaVersion: 2023,
-  };
-  public processor = {
-    processor: "svelte/svelte",
-  };
-  public language = {};
+  },
+  processor: "svelte/svelte",
 }
