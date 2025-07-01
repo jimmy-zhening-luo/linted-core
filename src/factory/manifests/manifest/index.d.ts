@@ -2,6 +2,7 @@ import type { Dependencies } from "../../../scope";
 
 export interface IManifest {
   languageOptions: {
+    [property: string]: unknown;
     parser:
       | null
       | Dependencies.Parsers
@@ -10,14 +11,13 @@ export interface IManifest {
       | null
       | string
     ;
-    [property: string]: unknown;
   };
   parserOptions: {
+    [property: string]: unknown;
     parser:
       | null
       | Dependencies.Parsers
     ;
-    [property: string]: unknown;
   };
   language?: string;
   processor?: string;
