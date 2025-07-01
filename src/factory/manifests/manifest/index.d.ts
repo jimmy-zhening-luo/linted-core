@@ -11,14 +11,14 @@ export interface IManifest {
       | string
     ;
     [property: string]: unknown;
-  },
+  };
   parserOptions: {
     parser:
       | null
       | Dependencies.Parsers
     ;
     [property: string]: unknown;
-  },
+  };
   language?: string;
   processor?: string;
 }

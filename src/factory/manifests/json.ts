@@ -10,4 +10,4 @@ export const json: IManifest = {
     parser: null,
   },
   language: "json/jsonc",
-}
+};

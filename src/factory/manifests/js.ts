@@ -8,4 +8,4 @@ export const js: IManifest = {
   parserOptions: {
     parser: null,
   },
-}
+};

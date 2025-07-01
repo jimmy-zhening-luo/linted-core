@@ -10,4 +10,4 @@ export const yml: IManifest = {
     parser: null,
     defaultYAMLVersion: "1.2" /* @default: "1.2" | "1.1" */,
   },
-}
+};

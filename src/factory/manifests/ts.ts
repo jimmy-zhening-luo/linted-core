@@ -20,4 +20,4 @@ export const ts: IManifest = {
     sourceType: "module",
     ecmaVersion: 2023,
   },
-}
+};

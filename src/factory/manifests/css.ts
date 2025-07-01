@@ -11,4 +11,4 @@ export const css: IManifest = {
     parser: null,
   },
   language: "css/css",
-}
+};

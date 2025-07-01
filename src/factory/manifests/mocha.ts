@@ -19,4 +19,4 @@ export const mocha: IManifest = {
     sourceType: "module",
     ecmaVersion: 2023,
   },
-}
+};

@@ -20,4 +20,4 @@ export const svelte: IManifest = {
     ecmaVersion: 2023,
   },
   processor: "svelte/svelte",
-}
+};
