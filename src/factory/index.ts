@@ -179,7 +179,7 @@ export class Factory<
     )
       throw new ReferenceError(
         "Global does not exist",
-        { cause: { global } }
+        { cause: { global } },
       );
 
     return files.length === 0
