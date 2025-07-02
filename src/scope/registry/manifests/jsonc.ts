@@ -1,9 +1,9 @@
 export const jsonc = {
   languageOptions: {
-    // Inherits from `json`
+    // Inherits `json`
   },
   parserOptions: {
-    // Inherits from `json`
+    // Inherits `json`
   },
   language: "json/jsonc",
 };
