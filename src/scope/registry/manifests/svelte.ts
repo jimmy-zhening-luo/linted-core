@@ -1,5 +1,3 @@
-import { ts } from "./ts";
-
 export const svelte = {
   languageOptions: {
     parser: "svelte" as const,
@@ -7,7 +5,6 @@ export const svelte = {
   parserOptions: {
     parser: "ts" as const,
     extraFileExtensions: [".svelte"],
-    ...ts.parserOptions,
   },
   processor: "svelte/svelte",
 };
