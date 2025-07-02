@@ -1,4 +1,3 @@
-import type { Imports } from "./imports";
 import type { Configuration } from "./configuration";
 
 export interface Input<
@@ -6,10 +5,16 @@ export interface Input<
   Parser extends string,
   Scope extends string,
 > {
-  imports: Imports<
-    Plugin,
-    Parser
-  >;
+  imports: {
+    plugins: Record<
+      Plugin,
+      unknown
+    >;
+    parsers: Record<
+      Parser,
+      unknown
+    >;
+  };
   configuration: Configuration<
     Scope
   >;
