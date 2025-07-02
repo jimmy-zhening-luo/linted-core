@@ -5,8 +5,8 @@ import {
   registry,
 } from "./scope";
 import type {
-  Plugin,
-  Parser,
+  IPlugin,
+  IParser,
 } from "./scope";
 import type {
   Input,
@@ -26,15 +26,15 @@ export default function (
       extensions,
     },
   }: Input<
-    Plugin,
-    Parser,
+    IPlugin,
+    IParser,
     Scope
   >,
 ) {
   try {
     const factory = new Factory<
-      Plugin,
-      Parser,
+      IPlugin,
+      IParser,
       Scope
     >(
       tree,

@@ -1,2 +1,2 @@
-export type { Plugin } from "./plugins";
-export type { Parser } from "./parsers";
+export type { IPlugin } from "./plugins";
+export type { IParser } from "./parsers";

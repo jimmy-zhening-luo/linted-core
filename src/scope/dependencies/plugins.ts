@@ -1,4 +1,4 @@
-export type Plugin = (
+export type IPlugin = (
   | "@stylistic"
   | "@typescript-eslint"
   | "mocha"
