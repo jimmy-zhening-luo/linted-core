@@ -1,12 +1,9 @@
 export const css = {
   languageOptions: {
-    parser: null,
-    globals: null,
     tolerant: false,
   },
   parserOptions: {
-    /* DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration */
-    parser: null,
+    // DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration
   },
   language: "css/css",
 };

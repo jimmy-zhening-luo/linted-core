@@ -173,6 +173,15 @@ export class Factory<
       language = null,
     } = this.registry[scope];
 
+    if (
+      global !== null
+      && !(global in globals)
+    )
+      throw new ReferenceError(
+        "Global does not exist",
+        { cause: { global } }
+      );
+
     return files.length === 0
       ? []
       : ruleset.length === 0
@@ -185,7 +194,6 @@ export class Factory<
               languageOptions: {
                 ...languageOptionsStatic,
                 ...global === null
-                || !(global in globals)
                   ? {}
                   : {
                       globals: globals[global as keyof typeof globals] as Record<string, boolean>,

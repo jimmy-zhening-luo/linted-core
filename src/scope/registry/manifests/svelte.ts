@@ -1,7 +1,6 @@
 export const svelte = {
   languageOptions: {
     parser: "svelte" as const,
-    globals: null,
   },
   parserOptions: {
     parser: "ts" as const,

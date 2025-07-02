@@ -1,12 +1,10 @@
 export const ts = {
   languageOptions: {
     parser: "ts" as const,
-    globals: null,
   },
   parserOptions: {
     // DOC: https://typescript-eslint.io/packages/parser/#configuration
     // DOC:(USE-CASE): https://typescript-eslint.io/getting-started/typed-linting/
-    parser: null,
     ecmaFeatures: {
       jsx: false,
       globalReturn: true,

@@ -1,11 +1,9 @@
 export const mocha = {
   languageOptions: {
-    parser: null,
     globals: "mocha" as const,
   },
   parserOptions: {
     // MUST BE IDENTICAL TO TS PARSER OPTIONS (eventually see if can inherit)
-    parser: null,
     ecmaFeatures: {
       jsx: false,
       globalReturn: true,

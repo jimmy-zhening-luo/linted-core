@@ -1,11 +1,9 @@
 export const yml = {
   languageOptions: {
     parser: "yml" as const,
-    globals: null,
   },
   parserOptions: {
-    /* DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration */
-    parser: null,
+    // DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration
     defaultYAMLVersion: "1.2" /* @default: "1.2" | "1.1" */,
   },
 };

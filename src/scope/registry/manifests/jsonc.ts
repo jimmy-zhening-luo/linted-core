@@ -1,10 +1,5 @@
 export const jsonc = {
-  languageOptions: {
-    parser: null,
-    globals: null,
-  },
-  parserOptions: {
-    parser: null,
-  },
+  languageOptions: {},
+  parserOptions: {},
   language: "json/jsonc",
 };

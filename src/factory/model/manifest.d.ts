@@ -1,21 +1,12 @@
 export interface IManifest<Parser> {
   languageOptions: {
     [property: string]: unknown;
-    parser:
-      | null
-      | Parser
-    ;
-    globals:
-      | null
-      | string
-    ;
+    parser?: Parser;
+    globals?: string;
   };
   parserOptions: {
     [property: string]: unknown;
-    parser:
-      | null
-      | Parser
-    ;
+    parser?: Parser;
   };
   language?: string;
   processor?: string;
