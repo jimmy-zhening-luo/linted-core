@@ -1,9 +1,9 @@
 export const css = {
   languageOptions: {
-    tolerant: false,
+    // DOC: https://github.com/eslint/css?tab=readme-ov-file#languages
+    tolerant: false /* @default: true | DOC: https://github.com/eslint/css?tab=readme-ov-file#tolerant-mode */,
+    // customSyntax: {} /* DOC: Tailwind: https://github.com/eslint/css?tab=readme-ov-file#configuring-tailwind-syntax | DOC: https://github.com/eslint/css?tab=readme-ov-file#configuring-custom-syntax */,
   },
-  parserOptions: {
-    // DOC: https://github.com/ota-meshi/yaml-eslint-parser?tab=readme-ov-file#advanced-configuration
-  },
+  parserOptions: {},
   language: "css/css",
 };

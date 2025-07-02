@@ -3,7 +3,8 @@ export const html = {
     parser: "html" as const,
   },
   parserOptions: {
-    frontmatter: true /* DOC: https://github.com/yeonjuan/html-eslint/issues/291#issuecomment-2726307803 */,
+    // templateEngineSyntax: {} /* DOC: https://html-eslint.org/docs/integrating-template-engine */,
+    frontmatter: true /* @default: false | DOC: https://html-eslint.org/docs/integrating-template-engine#skip-frontmatter */,
   },
   language: "@html-eslint/html",
 };

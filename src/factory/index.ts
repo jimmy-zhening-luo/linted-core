@@ -163,19 +163,25 @@ export class Factory<
       languageOptions: {
         parser = null,
         globals: global = null,
-        ...languageOptionsStatic
+        ...extraLanguageOptions
       },
       parserOptions: {
         parser: subparser = null,
-        ...parserOptionsStatic
+        ...extraParserOptions
       },
       processor = null,
       language = null,
     } = this.registry[scope];
 
+    function isGlobal(
+      global: string,
+    ): global is keyof typeof globals {
+      return global in globals;
+    }
+
     if (
       global !== null
-      && !(global in globals)
+      && !isGlobal(global)
     )
       throw new ReferenceError(
         "Global does not exist",
@@ -191,36 +197,41 @@ export class Factory<
               name: `linted/${scope as string}/` as const,
               files,
               ignores,
-              languageOptions: {
-                ...languageOptionsStatic,
-                ...global === null
-                  ? {}
-                  : {
-                      globals: globals[global as keyof typeof globals] as Record<string, boolean>,
-                    },
-                ...parser === null
-                  ? {}
-                  : {
-                      parser: this
-                        .parsers[parser],
-                    },
-                ...Object
-                  .keys(parserOptionsStatic)
-                  .length < 1
-                  && subparser === null
-                  ? {}
-                  : {
-                      parserOptions: {
-                        ...parserOptionsStatic,
-                        ...subparser === null
-                          ? {}
-                          : {
-                              parser: this
-                                .parsers[subparser],
+              ...parser === null
+              && global === null
+              && subparser === null
+              && [...Object.keys(extraLanguageOptions)].length === 0
+              && [...Object.keys(extraParserOptions)].length === 0
+                ? {}
+                : {
+                    languageOptions: {
+                      ...extraLanguageOptions,
+                      ...global === null
+                        ? {}
+                        : {
+                            globals: globals[global],
+                          },
+                      ...parser === null
+                        ? {}
+                        : {
+                            parser: this.parsers[parser],
+                          },
+                      ...subparser === null
+                      && [...Object.keys(extraParserOptions)].length === 0
+                        ? {}
+                        : {
+                            parserOptions: {
+                              ...extraParserOptions,
+                              ...subparser === null
+                                ? {}
+                                : {
+                                    parser: this
+                                      .parsers[subparser],
+                                  },
                             },
-                      },
+                          },
                     },
-              },
+                  },
               ...processor === null
                 ? {}
                 : { processor },

@@ -1,4 +1,8 @@
 export const js = {
-  languageOptions: {},
-  parserOptions: {},
+  languageOptions: {
+    // DOC: https://eslint.org/docs/latest/use/configure/language-options
+  },
+  parserOptions: {
+    // DOC: https://eslint.org/docs/latest/use/configure/language-options#specifying-parser-options
+  },
 };
