@@ -5,10 +5,10 @@ import type {
 import type {
   RequiredPlugin,
   RequiredParser,
-  OptionalImport,
 } from "./scope";
 import {
   scopes,
+  optionalScopes,
   tree,
   registry,
 } from "./scope";
@@ -30,7 +30,7 @@ export default function (
   }: Input<
     RequiredPlugin,
     RequiredParser,
-    OptionalImport,
+    (typeof optionalScopes[number]),
     (typeof scopes[number])
   >,
 ) {
@@ -38,9 +38,10 @@ export default function (
     const factory = new Factory<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
+      (typeof optionalScopes[number]),
       (typeof scopes[number])
     >(
+        optionalScopes,
         tree,
         registry,
         {

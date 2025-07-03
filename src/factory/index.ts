@@ -5,19 +5,20 @@ import type * as Model from "./model";
 export class Factory<
   RequiredPlugin extends string,
   RequiredParser extends string,
-  OptionalImport extends string,
+  OptionalScope extends string,
   Scope extends string,
 > {
   public global;
   public scopes;
 
   constructor(
+    optionalScopes: readonly Scope[],
     tree: Model.ITree<Scope>,
     private readonly registry: Record<
       Scope,
       Model.IManifest<
         | RequiredParser
-        | OptionalImport
+        | OptionalScope
       >
     >,
     public parsers: Record<
@@ -25,14 +26,14 @@ export class Factory<
       unknown
     > & Partial<
       Record<
-        OptionalImport,
+        OptionalScope,
         unknown
       >
     >,
     defaults: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
+      OptionalScope,
       Scope
     >["configuration"]["defaults"],
     {
@@ -41,7 +42,7 @@ export class Factory<
     }: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
+      OptionalScope,
       Scope
     >["configuration"]["extensions"] = {},
   ) {
@@ -126,25 +127,33 @@ export class Factory<
           );
     }
 
+    const OptionalScopes = new Set<Scope>(
+      optionalScopes,
+    );
+
     for (const [scope, parents] of tree)
-      for (const parent of parents) {
-        this
-          .scopes
-          .files[parent]
-          .push(
-            ...this
-              .scopes
-              .files[scope],
-          );
-        this
-          .scopes
-          .ignores[parent]
-          .push(
-            ...this
-              .scopes
-              .ignores[scope],
-          );
-      }
+      if (
+        !OptionalScopes.has(scope)
+        || scope in parsers
+      )
+        for (const parent of parents) {
+          this
+            .scopes
+            .files[parent]
+            .push(
+              ...this
+                .scopes
+                .files[scope],
+            );
+          this
+            .scopes
+            .ignores[parent]
+            .push(
+              ...this
+                .scopes
+                .ignores[scope],
+            );
+        }
   }
 
   public get globals() {

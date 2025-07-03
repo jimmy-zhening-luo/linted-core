@@ -10,10 +10,10 @@ export const scopes = [
   "jsoncc",
   "yml",
 ] as const;
+export const optionalScopes = ["svelte"] as const;
 export { tree } from "./tree";
 export { registry } from "./registry";
 export type {
   RequiredPlugin,
   RequiredParser,
-  OptionalImport,
 } from "./dependencies";
