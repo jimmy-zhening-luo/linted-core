@@ -1,53 +1,71 @@
-import { Factory } from "./factory";
+import type {
+  Input,
+  Output,
+} from "./interface";
+import type {
+  RequiredPlugin,
+  RequiredParser,
+  OptionalImport,
+} from "./scope";
 import {
   scopes,
   tree,
   registry,
 } from "./scope";
-import type {
-  IPlugin,
-  IParser,
-} from "./scope";
-import type {
-  Input,
-  Output,
-} from "./interface";
-
-type Scope = typeof scopes[number];
+import { Factory } from "./factory";
 
 export default function (
   {
     imports: {
-      plugins,
-      parsers,
+      required: {
+        plugins,
+        parsers,
+      },
+      optional = {},
     },
     configuration: {
       defaults,
       extensions,
     },
   }: Input<
-    IPlugin,
-    IParser,
-    Scope
+    RequiredPlugin,
+    RequiredParser,
+    OptionalImport,
+    (typeof scopes[number])
   >,
 ) {
   try {
     const factory = new Factory<
-      IPlugin,
-      IParser,
-      Scope
+      RequiredPlugin,
+      RequiredParser,
+      OptionalImport,
+      (typeof scopes[number])
     >(
-      tree,
-      registry,
-      parsers,
-      defaults,
-      extensions,
-    );
+        tree,
+        registry,
+        {
+          ...parsers,
+          ..."svelte" in optional
+            ? {
+                svelte: optional.svelte.parser,
+              }
+            : {},
+        },
+        defaults,
+        extensions,
+        );
 
     return [
       {
         name: "linted/*/plugins/",
-        plugins,
+        plugins: {
+          ...plugins,
+          ..."svelte" in optional
+            ? {
+                svelte: optional.svelte.plugin,
+              }
+            : {},
+        },
       },
       ...factory.globals,
       ...scopes

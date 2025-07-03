@@ -6,24 +6,24 @@ Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
 export const TEST_INPUT = {
   imports: {
-    plugins: {
-      "@stylistic": Plugin,
-      "@typescript-eslint": Plugin,
-      mocha: Plugin,
-      "chai-friendly": Plugin,
-      "chai-expect": Plugin,
-      svelte: Plugin,
-      "@html-eslint": Plugin,
-      css: Plugin,
-      json: Plugin,
-      jsonc: Plugin,
-      yml: Plugin,
-    },
-    parsers: {
-      ts: Parser("TS"),
-      svelte: Parser("SVELTE"),
-      html: Parser("HTML"),
-      yml: Parser("YML"),
+    required: {
+      plugins: {
+        "@stylistic": Plugin,
+        "@typescript-eslint": Plugin,
+        mocha: Plugin,
+        "chai-friendly": Plugin,
+        "chai-expect": Plugin,
+        "@html-eslint": Plugin,
+        css: Plugin,
+        json: Plugin,
+        jsonc: Plugin,
+        yml: Plugin,
+      },
+      parsers: {
+        ts: Parser("TS"),
+        html: Parser("HTML"),
+        yml: Parser("YML"),
+      },
     },
   },
   configuration: {

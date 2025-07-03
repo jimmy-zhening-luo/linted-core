@@ -3,8 +3,9 @@ import type { Input } from "../interface";
 import type * as Model from "./model";
 
 export class Factory<
-  Plugin extends string,
-  Parser extends string,
+  RequiredPlugin extends string,
+  RequiredParser extends string,
+  OptionalImport extends string,
   Scope extends string,
 > {
   public global;
@@ -12,13 +13,37 @@ export class Factory<
 
   constructor(
     tree: Model.ITree<Scope>,
-    private readonly registry: Record<Scope, Model.IManifest<Parser>>,
-    public parsers: Record<Parser, unknown>,
-    defaults: Input<Plugin, Parser, Scope>["configuration"]["defaults"],
+    private readonly registry: Record<
+      Scope,
+      Model.IManifest<
+        | RequiredParser
+        | OptionalImport
+      >
+    >,
+    public parsers: Record<
+      RequiredParser,
+      unknown
+    > & Partial<
+      Record<
+        OptionalImport,
+        unknown
+      >
+    >,
+    defaults: Input<
+      RequiredPlugin,
+      RequiredParser,
+      OptionalImport,
+      Scope
+    >["configuration"]["defaults"],
     {
       "*": globalExtension = {},
       ...scopeExtensions
-    }: Input<Plugin, Parser, Scope>["configuration"]["extensions"] = {},
+    }: Input<
+      RequiredPlugin,
+      RequiredParser,
+      OptionalImport,
+      Scope
+    >["configuration"]["extensions"] = {},
   ) {
     const {
       noInlineConfig = defaults
@@ -192,68 +217,72 @@ export class Factory<
       ? []
       : ruleset.length === 0
         ? []
-        : [
-            {
-              name: `linted/${scope as string}/` as const,
-              files,
-              ignores,
-              ...parser === null
-              && global === null
-              && subparser === null
-              && [...Object.keys(extraLanguageOptions)].length === 0
-              && [...Object.keys(extraParserOptions)].length === 0
-                ? {}
-                : {
-                    languageOptions: {
-                      ...extraLanguageOptions,
-                      ...global === null
-                        ? {}
-                        : {
-                            globals: globals[global],
-                          },
-                      ...parser === null
-                        ? {}
-                        : {
-                            parser: this.parsers[parser],
-                          },
-                      ...subparser === null
-                      && [...Object.keys(extraParserOptions)].length === 0
-                        ? {}
-                        : {
-                            parserOptions: {
-                              ...extraParserOptions,
-                              ...subparser === null
-                                ? {}
-                                : {
-                                    parser: this
-                                      .parsers[subparser],
-                                  },
+        : parser !== null
+          && !(parser in this.parsers)
+          || subparser !== null
+          && !(subparser in this.parsers)
+          ? []
+          : [
+              {
+                name: `linted/${scope as string}/` as const,
+                files,
+                ignores,
+                ...parser === null
+                && global === null
+                && subparser === null
+                && [...Object.keys(extraLanguageOptions)].length === 0
+                && [...Object.keys(extraParserOptions)].length === 0
+                  ? {}
+                  : {
+                      languageOptions: {
+                        ...extraLanguageOptions,
+                        ...global === null
+                          ? {}
+                          : {
+                              globals: globals[global],
                             },
-                          },
+                        ...parser === null
+                          ? {}
+                          : {
+                              parser: this.parsers[parser],
+                            },
+                        ...subparser === null
+                        && [...Object.keys(extraParserOptions)].length === 0
+                          ? {}
+                          : {
+                              parserOptions: {
+                                ...extraParserOptions,
+                                ...subparser === null
+                                  ? {}
+                                  : {
+                                      parser: this.parsers[subparser],
+                                    },
+                              },
+                            },
+                      },
                     },
-                  },
-              ...processor === null
-                ? {}
-                : { processor },
-              ...language === null
-                ? {}
-                : { language },
-            },
-            ...ruleset.map(
-              (
-                {
-                  id,
-                  rules,
-                },
-              ) => {
-                return {
-                  name: `linted/${id}/` as const,
-                  files,
-                  ignores,
-                  rules,
-                };
+                ...processor === null
+                  ? {}
+                  : { processor },
+                ...language === null
+                  ? {}
+                  : { language },
               },
-            ),
-          ];
+              ...ruleset.map(
+                (
+                  {
+                    id,
+                    rules,
+                  },
+                ) => {
+                  return {
+                    name: `linted/${id}/` as const,
+                    files,
+                    ignores,
+                    rules,
+                  };
+                },
+              ),
+            ];
   }
 }

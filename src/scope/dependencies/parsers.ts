@@ -1,6 +1,5 @@
-export type IParser = (
+export type RequiredParser = (
   | "ts"
-  | "svelte"
   | "html"
   | "yml"
 );

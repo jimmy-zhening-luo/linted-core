@@ -1,4 +1,6 @@
-export interface IManifest<Parser> {
+export interface IManifest<
+  Parser,
+> {
   languageOptions: {
     [property: string]: unknown;
     parser?: Parser;

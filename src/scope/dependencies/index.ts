@@ -1,2 +1,3 @@
-export type { IPlugin } from "./plugins";
-export type { IParser } from "./parsers";
+export type { RequiredPlugin } from "./plugins";
+export type { RequiredParser } from "./parsers";
+export type { OptionalImport } from "./optional";

@@ -13,6 +13,7 @@ export const scopes = [
 export { tree } from "./tree";
 export { registry } from "./registry";
 export type {
-  IPlugin,
-  IParser,
+  RequiredPlugin,
+  RequiredParser,
+  OptionalImport,
 } from "./dependencies";
