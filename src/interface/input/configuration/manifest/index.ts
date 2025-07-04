@@ -1,5 +1,5 @@
-export interface IManifest<
-  Parser,
+export interface ScopeManifest<
+  Parser extends string,
 > {
   languageOptions: {
     [property: string]: unknown;

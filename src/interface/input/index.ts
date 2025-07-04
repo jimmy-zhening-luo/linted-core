@@ -13,6 +13,7 @@ export interface Input<
     OptionalImport
   >;
   configuration: Configuration<
-    Scope
+    Scope,
+    RequiredParser | OptionalImport
   >;
 }

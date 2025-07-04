@@ -10,7 +10,6 @@ import {
   scopes,
   optionalScopes,
   tree,
-  registry,
 } from "./scope";
 import { Factory } from "./factory";
 
@@ -24,6 +23,7 @@ export default function (
       optional = {},
     },
     configuration: {
+      settings,
       defaults,
       extensions,
     },
@@ -43,7 +43,7 @@ export default function (
     >(
         optionalScopes,
         tree,
-        registry,
+        settings,
         {
           ...parsers,
           ..."svelte" in optional

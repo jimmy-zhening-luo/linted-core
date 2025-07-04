@@ -3,10 +3,6 @@ import type { Config } from "../../config";
 export interface Defaults<
   Scope extends string,
 > {
-  settings: (
-    & Config["linterOptions"]
-    & Config["languageOptions"]
-  );
   files: Record<
     Scope,
     string[]

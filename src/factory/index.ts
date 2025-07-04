@@ -1,11 +1,10 @@
 import globals from "globals";
 import type { Input } from "../interface";
-import type * as Model from "./model";
 
 export class Factory<
   RequiredPlugin extends string,
   RequiredParser extends string,
-  OptionalScope extends string,
+  OptionalImport extends string,
   Scope extends string,
 > {
   public global;
@@ -13,27 +12,31 @@ export class Factory<
 
   constructor(
     optionalScopes: readonly Scope[],
-    tree: Model.ITree<Scope>,
-    private readonly registry: Record<
-      Scope,
-      Model.IManifest<
-        | RequiredParser
-        | OptionalScope
-      >
+    tree: Array<
+      readonly [
+        Scope,
+        readonly Scope[],
+      ]
     >,
+    private readonly settings: Input<
+      RequiredPlugin,
+      RequiredParser,
+      OptionalImport,
+      Scope
+    >["configuration"]["settings"],
     public parsers: Record<
       RequiredParser,
       unknown
     > & Partial<
       Record<
-        OptionalScope,
+        OptionalImport,
         unknown
       >
     >,
     defaults: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalScope,
+      OptionalImport,
       Scope
     >["configuration"]["defaults"],
     {
@@ -42,22 +45,22 @@ export class Factory<
     }: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalScope,
+      OptionalImport,
       Scope
     >["configuration"]["extensions"] = {},
   ) {
     const {
-      noInlineConfig = defaults
-        .settings
+      noInlineConfig = settings
+        .global
         .noInlineConfig,
-      reportUnusedDisableDirectives = defaults
-        .settings
+      reportUnusedDisableDirectives = settings
+        .global
         .reportUnusedDisableDirectives,
-      sourceType = defaults
-        .settings
+      sourceType = settings
+        .global
         .sourceType,
-      ecmaVersion = defaults
-        .settings
+      ecmaVersion = settings
+        .global
         .ecmaVersion,
     } = globalExtension,
     {
@@ -205,7 +208,7 @@ export class Factory<
       },
       processor = null,
       language = null,
-    } = this.registry[scope];
+    } = this.settings.registry[scope];
 
     function isGlobal(
       global: string,

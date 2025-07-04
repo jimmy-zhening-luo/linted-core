@@ -12,7 +12,6 @@ export const scopes = [
 ] as const;
 export const optionalScopes = ["svelte"] as const;
 export { tree } from "./tree";
-export { registry } from "./registry";
 export type {
   RequiredPlugin,
   RequiredParser,

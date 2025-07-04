@@ -27,13 +27,82 @@ export const TEST_INPUT = {
     },
   },
   configuration: {
-    defaults: {
-      settings: {
+    settings: {
+      global: {
         ecmaVersion: 2024,
         sourceType: "module",
         noInlineConfig: true,
         reportUnusedDisableDirectives: "error",
       } as const,
+      registry: {
+        js: {
+          languageOptions: {},
+          parserOptions: {},
+        },
+        ts: {
+          languageOptions: {
+            parser: "ts" as const,
+          },
+          parserOptions: {},
+        },
+        mocha: {
+          languageOptions: {
+            globals: "mocha" as const,
+          },
+          parserOptions: {},
+        },
+        svelte: {
+          languageOptions: {
+            parser: "svelte" as const,
+          },
+          parserOptions: {
+            parser: "ts" as const,
+            extraFileExtensions: [".svelte"],
+          },
+          processor: "svelte/svelte",
+        },
+        html: {
+          languageOptions: {
+            parser: "html" as const,
+          },
+          parserOptions: {
+            frontmatter: true,
+          },
+          language: "@html-eslint/html",
+        },
+        css: {
+          languageOptions: {
+            tolerant: false,
+          },
+          parserOptions: {},
+          language: "css/css",
+        },
+        json: {
+          languageOptions: {
+            allowTrailingCommas: true,
+          },
+          parserOptions: {},
+          language: "json/jsonc",
+        },
+        jsonc: {
+          languageOptions: {},
+          parserOptions: {},
+          language: "json/jsonc",
+        },
+        jsoncc: {
+          languageOptions: {},
+          parserOptions: {},
+          language: "json/jsonc",
+        },
+        yml: {
+          languageOptions: {
+            parser: "yml" as const,
+          },
+          parserOptions: {},
+        },
+      },
+    },
+    defaults: {
       files: {
         js: ["default.js"],
         ts: ["default.ts"],
