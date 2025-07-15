@@ -7,6 +7,6 @@ export type Output = readonly [
   ...(
     | Config.ScopeSettings
     | Config.ScopeRules
+    | Config.Attachment
   )[],
-  ...Config.Attachment[],
 ];
