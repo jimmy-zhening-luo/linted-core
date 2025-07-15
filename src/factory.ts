@@ -9,7 +9,6 @@ export class Factory<
 > {
   public global;
   public scopes;
-  public attachments;
 
   constructor(
     optionalScopes: readonly Scope[],
@@ -49,7 +48,7 @@ export class Factory<
       OptionalImport,
       Scope
     >["configuration"]["extensions"] = {},
-    attachments: Input<
+    public readonly attachments: Input<
       RequiredPlugin,
       RequiredParser,
       OptionalImport,
@@ -106,9 +105,6 @@ export class Factory<
       rules: defaults
         .rules,
     };
-    this.attachments = Array.isArray(attachments)
-      ? attachments
-      : [attachments];
 
     for (const scope in scopeExtensions) {
       const {

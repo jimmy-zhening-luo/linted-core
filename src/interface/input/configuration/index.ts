@@ -13,7 +13,5 @@ export interface Configuration<
   >;
   defaults: Defaults<Scope>;
   extensions: Extensions<Scope>;
-  attachments:
-    | IAttachment
-    | readonly IAttachment[];
+  attachments: readonly IAttachment[];
 }
