@@ -1,3 +1,3 @@
-export type * from "./plugins";
-export type * from "./settings";
-export type * from "./ignores";
+export type { Plugins } from "./plugins";
+export type { Settings } from "./settings";
+export type { GlobalIgnores } from "./ignores";

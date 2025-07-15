@@ -1,5 +1,5 @@
 import globals from "globals";
-import type { Input } from "../interface";
+import type { Input } from "./interface";
 
 export class Factory<
   RequiredPlugin extends string,
@@ -9,6 +9,7 @@ export class Factory<
 > {
   public global;
   public scopes;
+  public attachments;
 
   constructor(
     optionalScopes: readonly Scope[],
@@ -48,6 +49,12 @@ export class Factory<
       OptionalImport,
       Scope
     >["configuration"]["extensions"] = {},
+    attachments: Input<
+      RequiredPlugin,
+      RequiredParser,
+      OptionalImport,
+      Scope
+    >["configuration"]["attachments"] = [],
   ) {
     const {
       noInlineConfig = settings
@@ -99,6 +106,9 @@ export class Factory<
       rules: defaults
         .rules,
     };
+    this.attachments = Array.isArray(attachments)
+      ? attachments
+      : [attachments];
 
     for (const scope in scopeExtensions) {
       const {

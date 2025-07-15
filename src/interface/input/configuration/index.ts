@@ -1,6 +1,7 @@
 import type { Settings } from "./settings";
 import type { Defaults } from "./defaults";
 import type { Extensions } from "./extensions";
+import type { IAttachment } from "./attachment";
 
 export interface Configuration<
   Scope extends string,
@@ -12,4 +13,7 @@ export interface Configuration<
   >;
   defaults: Defaults<Scope>;
   extensions: Extensions<Scope>;
+  attachments:
+    | IAttachment
+    | readonly IAttachment[];
 }

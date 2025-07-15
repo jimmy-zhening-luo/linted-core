@@ -1,9 +1,11 @@
-import type { Config } from "../../../config";
+import type { IConfig } from "../../../config";
 
 export type Settings = {
   name: "linted/*/settings/";
 } & Pick<
-  Config,
-  | "linterOptions"
-  | "languageOptions"
+  IConfig,
+  (
+    | "linterOptions"
+    | "languageOptions"
+  )
 >;

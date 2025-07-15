@@ -1,12 +1,12 @@
-import type { Config } from "../../config";
+import type { IConfig } from "../../config";
 
 export type Extensions<
   Scope extends string,
 > = (
   & {
     "*"?: Partial<
-      & Config["linterOptions"]
-      & Config["languageOptions"]
+      & IConfig["linterOptions"]
+      & IConfig["languageOptions"]
     > & {
       ignores?: string[];
       override?: boolean;
@@ -18,7 +18,7 @@ export type Extensions<
       {
         files?: string[];
         ignores?: string[];
-        rules?: Config["rules"];
+        rules?: IConfig["rules"];
       }
     >
   >

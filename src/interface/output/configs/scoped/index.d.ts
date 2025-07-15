@@ -1,2 +1,2 @@
-export type * from "./rules";
-export type * from "./settings";
+export type { ScopeSettings } from "./settings";
+export type { ScopeRules } from "./rules";

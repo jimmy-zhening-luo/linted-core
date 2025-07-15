@@ -1,2 +1,3 @@
-export type * as Global from "./global";
-export type * as Scoped from "./scoped";
+export type * from "./global";
+export type * from "./scoped";
+export type { Attachment } from "./attachment";

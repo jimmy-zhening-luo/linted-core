@@ -1,6 +1,6 @@
-import type { Config } from "../../../config";
+import type { IConfig } from "../../../config";
 
-export interface Ignores {
+export interface GlobalIgnores {
   name: "linted/*/ignores/";
-  ignores: Config["ignores"];
+  ignores: IConfig["ignores"];
 }

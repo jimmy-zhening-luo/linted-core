@@ -14,6 +14,9 @@ export interface Input<
   >;
   configuration: Configuration<
     Scope,
-    RequiredParser | OptionalImport
+    (
+      | RequiredParser
+      | OptionalImport
+    )
   >;
 }

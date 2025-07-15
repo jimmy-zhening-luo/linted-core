@@ -1,10 +1,12 @@
-import type { Config } from "../../../config";
+import type { IConfig } from "../../../config";
 
-export type Rules = {
+export type ScopeRules = {
   name: `linted/${string}`;
 } & Pick<
-  Config,
-  | "files"
-  | "ignores"
-  | "rules"
+  IConfig,
+  (
+    | "files"
+    | "ignores"
+    | "rules"
+  )
 >;

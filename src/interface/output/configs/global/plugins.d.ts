@@ -1,6 +1,6 @@
-import type { Config } from "../../../config";
+import type { IConfig } from "../../../config";
 
 export interface Plugins {
   name: "linted/*/plugins/";
-  plugins: Config["plugins"];
+  plugins: IConfig["plugins"];
 }

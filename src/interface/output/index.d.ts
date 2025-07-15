@@ -1,11 +1,12 @@
-import type * as Configs from "./configs";
+import type * as Config from "./configs";
 
 export type Output = readonly [
-  Configs.Global.Plugins,
-  Configs.Global.Settings,
-  Configs.Global.Ignores,
+  Config.Plugins,
+  Config.Settings,
+  Config.GlobalIgnores,
   ...(
-    | Configs.Scoped.Settings
-    | Configs.Scoped.Rules
+    | Config.ScopeSettings
+    | Config.ScopeRules
   )[],
+  ...Config.Attachment[],
 ];

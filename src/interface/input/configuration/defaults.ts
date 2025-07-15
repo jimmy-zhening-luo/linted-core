@@ -1,4 +1,4 @@
-import type { Config } from "../../config";
+import type { IConfig } from "../../config";
 
 export interface Defaults<
   Scope extends string,
@@ -18,7 +18,7 @@ export interface Defaults<
     Scope,
     {
       id: string;
-      rules: Config["rules"];
+      rules: IConfig["rules"];
     }[]
   >;
 }

@@ -1,6 +1,6 @@
 import type * as Rule from "./rule";
 
-export interface Config {
+export interface IConfig {
   name: `linted/${string}`;
   plugins: Record<string, unknown>;
   files: string[];

@@ -1,13 +1,15 @@
-import type { Config } from "../../../config";
+import type { IConfig } from "../../../config";
 
-export type Settings = {
+export type ScopeSettings = {
   name: `linted/${string}`;
   languageOptions?: object;
 } & Pick<
-  Config,
-  | "files"
-  | "ignores"
-  | "processor"
-  | "language"
-  | "settings"
+  IConfig,
+  (
+    | "files"
+    | "ignores"
+    | "processor"
+    | "language"
+    | "settings"
+  )
 >;
