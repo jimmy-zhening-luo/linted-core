@@ -1,5 +1,5 @@
-export type RequiredParser = (
-  | "ts"
-  | "html"
-  | "yml"
-);
+export type RequiredParser
+  = | "ts"
+    | "html"
+    | "yml";
+

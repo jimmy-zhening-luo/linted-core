@@ -5,10 +5,10 @@ export interface Settings<
   Scope extends string,
   Parser extends string,
 > {
-  global: (
+  global:
     & IConfig["linterOptions"]
     & IConfig["languageOptions"]
-  );
+  ;
   registry: Record<
     Scope,
     ScopeManifest<

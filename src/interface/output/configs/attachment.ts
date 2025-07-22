@@ -1,7 +1,7 @@
 import type { IConfig } from "../../config";
 
-export type Attachment = (
-  & {
+export type Attachment
+  = & {
     files: string[];
   }
   & Partial<
@@ -9,5 +9,5 @@ export type Attachment = (
       IConfig,
       "files"
     >
-  >
-);
+  >;
+

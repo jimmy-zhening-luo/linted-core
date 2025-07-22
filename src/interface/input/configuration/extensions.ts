@@ -2,8 +2,8 @@ import type { IConfig } from "../../config";
 
 export type Extensions<
   Scope extends string,
-> = (
-  & {
+>
+  = & {
     "*"?: Partial<
       & IConfig["linterOptions"]
       & IConfig["languageOptions"]
@@ -21,5 +21,5 @@ export type Extensions<
         rules?: IConfig["rules"];
       }
     >
-  >
-);
+  >;
+
