@@ -50,7 +50,7 @@
     "start:svelte": "vite preview --open",
     "prepublishOnly": "npm test",
     "postpublish": "npm run postpublish:windows || npm run postpublish:default",
-    "postpublish:windows": "cmd /c for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a-rc.1\" == \"%npm_package_version%\" npm dist-tag add \"%npm_package_name%@%npm_package_version%\" latest",
+    "postpublish:windows": "cmd /c for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a\" == \"%npm_package_version%\" npm dist-tag add \"%npm_package_name%@%npm_package_version%\" latest",
     "postpublish:default": "if [ \"${npm_package_version#*-}\" = \"${npm_package_version}\" ]; then npm dist-tag add \"$npm_package_name@$npm_package_version\" latest; fi",
     "predeploy": "npm test",
     "deploy": ""
