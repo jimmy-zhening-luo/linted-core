@@ -9,4 +9,3 @@ export type RequiredPlugin
     | "json"
     | "jsonc"
     | "yml";
-
