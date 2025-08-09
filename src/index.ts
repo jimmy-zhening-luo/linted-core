@@ -42,21 +42,21 @@ export default function (
       (typeof optionalScopes[number]),
       (typeof scopes[number])
     >(
-        optionalScopes,
-        tree,
-        settings,
-        {
-          ...parsers,
-          ..."svelte" in optional
-            ? {
-                svelte: optional.svelte.parser,
-              }
-            : {},
-        },
-        defaults,
-        extensions,
-        attachments,
-        );
+      optionalScopes,
+      tree,
+      settings,
+      {
+        ...parsers,
+        ..."svelte" in optional
+          ? {
+              svelte: optional.svelte.parser,
+            }
+          : {},
+      },
+      defaults,
+      extensions,
+      attachments,
+    );
 
     return [
       {
