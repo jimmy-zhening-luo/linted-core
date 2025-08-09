@@ -4,7 +4,6 @@ export interface ScopeManifest<
   languageOptions: {
     [property: string]: unknown;
     parser?: Parser;
-    globals?: string;
   };
   parserOptions: {
     [property: string]: unknown;

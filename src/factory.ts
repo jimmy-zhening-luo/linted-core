@@ -1,4 +1,3 @@
-import globals from "globals";
 import type { Input } from "./interface";
 
 export class Factory<
@@ -205,7 +204,6 @@ export class Factory<
     {
       languageOptions: {
         parser = null,
-        globals: global = null,
         ...extraLanguageOptions
       },
       parserOptions: {
@@ -215,21 +213,6 @@ export class Factory<
       processor = null,
       language = null,
     } = this.settings.registry[scope];
-
-    function isGlobal(
-      global: string,
-    ): global is keyof typeof globals {
-      return global in globals;
-    }
-
-    if (
-      global !== null
-      && !isGlobal(global)
-    )
-      throw new ReferenceError(
-        "Global does not exist",
-        { cause: { global } },
-      );
 
     return files.length === 0
       ? []
@@ -246,7 +229,6 @@ export class Factory<
                 files,
                 ignores,
                 ...parser === null
-                && global === null
                 && subparser === null
                 && [...Object.keys(extraLanguageOptions)].length === 0
                 && [...Object.keys(extraParserOptions)].length === 0
@@ -254,11 +236,6 @@ export class Factory<
                   : {
                       languageOptions: {
                         ...extraLanguageOptions,
-                        ...global === null
-                          ? {}
-                          : {
-                              globals: globals[global],
-                            },
                         ...parser === null
                           ? {}
                           : {

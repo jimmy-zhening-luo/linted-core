@@ -46,9 +46,7 @@ export const TEST_INPUT = {
           parserOptions: {},
         },
         mocha: {
-          languageOptions: {
-            globals: "mocha" as const,
-          },
+          languageOptions: {},
           parserOptions: {},
         },
         svelte: {
