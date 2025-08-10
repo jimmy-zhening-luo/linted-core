@@ -1,5 +1,5 @@
 {
-  "$pkg": "2211.2.0",
+  "$pkg": "2211.2.1",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
@@ -33,7 +33,7 @@
     "build:ts": "tsc && ts-add-js-extension --dir=dist",
     "build:svelte": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && vite build",
     "postbuild": "npm run lint || echo \"Lint failed. Continuing...\"",
-    "lint": "eslint --cache --fix -- ",
+    "lint": "eslint --cache --fix",
     "pretest": "npm run build",
     "test": "npm run --if-present test:mocha",
     "test:mocha": "mocha",
