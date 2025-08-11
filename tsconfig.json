@@ -76,7 +76,7 @@
     "outDir": "dist",
     // "outFile": "./",
     // "preserveConstEnums": true,
-    "removeComments": true,
+    "removeComments": true /* @OVERRIDE */,
     "sourceMap": true,
     // "sourceRoot": "",
     // "stripInternal": true,
