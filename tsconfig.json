@@ -99,7 +99,7 @@
     // "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     // "isolatedDeclarations": false,
-    // "isolatedModules": true,
+    "isolatedModules": true /* @OVERRIDE */,
     // "preserveSymlinks": true,
     "verbatimModuleSyntax": true,
     // #endregion
