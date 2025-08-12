@@ -190,16 +190,14 @@ export class Factory<
             id,
             rules,
           },
-        ) => {
-          return {
-            id: [
-              scope,
-              id,
-            ]
-              .join("/"),
-            rules,
-          };
-        },
+        ) => ({
+          id: [
+            scope,
+            id,
+          ]
+            .join("/"),
+          rules,
+        }),
       ),
     {
       languageOptions: {
@@ -269,14 +267,12 @@ export class Factory<
                     id,
                     rules,
                   },
-                ) => {
-                  return {
-                    name: `linted/${id}/` as const,
-                    files,
-                    ignores,
-                    rules,
-                  };
-                },
+                ) => ({
+                  name: `linted/${id}/` as const,
+                  files,
+                  ignores,
+                  rules,
+                }),
               ),
             ];
   }
