@@ -1,10 +1,13 @@
 {
-  "$pkg": "2211.2.1",
+  "$pkg": "2211.4.0",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
   "version": "23.1.1",
   "repository": "github:jimmy-zhening-luo/linted-core",
+  "description": "Internal core for npm package `linted`, responsible for producing an array of fully-formed ESLint configurations according to `linted` spec.",
+  "keywords": [],
+  "license": "MIT",
   "private": false,
   "engineStrict": true,
   "engines": {
@@ -26,8 +29,7 @@
   "scripts": {
     "clean": "cmd --% /c \"(if exist dist rmdir /s /q dist) & (if exist build rmdir /s /q build) & (if exist .svelte-kit rmdir /s /q .svelte-kit) & (if exist .eslintcache del /f /q .eslintcache)\" || rm -rf dist build .svelte-kit .eslintcache",
     "prebuild": "npm run clean",
-    "build": "cmd --% /c \"(if exist svelte.config.js (npm run build:svelte) else (npm run build:ts))\" || npm run build-unix",
-    "build-unix": "if [ -f svelte.config.js ]; then npm run build:svelte; else npm run build:ts; fi",
+    "build": "cmd /c \"(if exist svelte.config.js (npm run build:svelte) else (npm run build:ts))\" || bash -c 'if [ -f svelte.config.js ]; then npm run build:svelte; else npm run build:ts; fi'",
     "build:ts": "tsc && ts-add-js-extension --dir=dist",
     "build:svelte": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && vite build",
     "postbuild": "npm run lint || echo \"Lint failed. Continuing...\"",
@@ -36,21 +38,16 @@
     "test": "npm run --if-present test:mocha",
     "test:mocha": "mocha",
     "prestart": "npm test",
-    "start": "cmd --% /c \"(if exist svelte.config.js (npm run start:svelte) else (npm run start:ts))\" || npm run start-unix",
-    "start-unix": "if [ -f svelte.config.js ]; then npm run start:svelte; else npm run start:ts; fi",
+    "start": "cmd --% /c \"(if exist svelte.config.js (npm run start:svelte) else (npm run start:ts))\" || bash -c 'if [ -f svelte.config.js ]; then npm run start:svelte; else npm run start:ts; fi'",
     "start:ts": "node .",
     "start:svelte": "vite preview --open",
     "prepublishOnly": "npm test",
-    "postpublish": "cmd --% /c \"for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a\" == \"%npm_package_version%\" npm dist-tag add \"%npm_package_name%@%npm_package_version%\" latest\" || npm run postpublish-unix",
-    "postpublish-unix": "if [ \"${npm_package_version#*-}\" = \"${npm_package_version}\" ]; then npm dist-tag add \"$npm_package_name@$npm_package_version\" latest; fi",
+    "postpublish": "cmd --% /c \"for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a\" == \"%npm_package_version%\" npm dist-tag add \"%npm_package_name%@%npm_package_version%\" latest\" || bash -c 'if [ \"${npm_package_version#*-}\" = \"${npm_package_version}\" ]; then npm dist-tag add \"$npm_package_name@$npm_package_version\" latest; fi'",
     "predeploy": "npm test",
     "deploy": ""
   },
   "publishConfig": {
     "tag": "next"
   },
-  "license": "MIT",
-  "description": "Internal core for npm package `linted`, responsible for producing an array of fully-formed ESLint configurations according to `linted` spec.",
-  "keywords": [],
   "author": "Jimmy Zhening Luo <jimmy-zhening-luo@users.noreply.github.com> (https://jimm.my/)"
 }
