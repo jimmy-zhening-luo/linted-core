@@ -1,7 +1,7 @@
 export type State
-  = | "error"
-    | "warn"
-    | "off";
+= | "error"
+  | "warn"
+  | "off";
 export type Rules = Record<
   string,
   | State

@@ -1,4 +1,4 @@
 export type RequiredParser
-  = | "ts"
-    | "html"
-    | "yml";
+= | "ts"
+  | "html"
+  | "yml";
