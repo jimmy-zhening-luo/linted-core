@@ -4,7 +4,7 @@ export class Factory<
   RequiredPlugin extends string,
   RequiredParser extends string,
   Scope extends string,
-  OptionalScope extends string,
+  OptionalScope extends "svelte",
 > {
   public globalConfigs;
   public scopes;
