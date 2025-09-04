@@ -78,7 +78,7 @@ export class Factory<
               } as unknown as Partial<
                 Record<
                   OptionalScope,
-                  unknown,
+                  unknown
                 >
               >
             : {},
