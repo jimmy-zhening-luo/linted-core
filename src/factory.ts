@@ -4,7 +4,7 @@ export class Factory<
   RequiredPlugin extends string,
   RequiredParser extends Scope,
   Scope extends string,
-  OptionalScope extends "svelte",
+  OptionalScope extends Scope,
 > {
   public globalConfigs;
   public scopes;
@@ -75,7 +75,12 @@ export class Factory<
           ..."svelte" in scopeExtensions && "plugin" in scopeExtensions.svelte
             ? {
                 svelte: scopeExtensions.svelte.plugin,
-              }
+              } as unknown as Partial<
+                Record<
+                  OptionalScope,
+                  unknown,
+                >
+              >
             : {},
         },
       },
