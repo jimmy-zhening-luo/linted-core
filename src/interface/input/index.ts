@@ -5,7 +5,7 @@ export interface Input<
   RequiredPlugin extends string,
   RequiredParser extends string,
   Scope extends string,
-  OptionalScope extends string,
+  OptionalScope extends Scope,
 > {
   imports: Imports<
     RequiredPlugin,
