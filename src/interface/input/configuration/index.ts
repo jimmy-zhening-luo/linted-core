@@ -6,7 +6,7 @@ import type { IAttachment } from "./attachment";
 export interface Configuration<
   Parser extends string,
   Scope extends string,
-  OptionalScope extends string,
+  OptionalScope extends Scope,
 > {
   settings: Settings<
     Scope,
