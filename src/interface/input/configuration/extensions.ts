@@ -2,7 +2,7 @@ import type { IConfig } from "../../config";
 
 export type Extensions<
   Scope extends string,
-  OptionalScope extends string,
+  OptionalScope extends Scope,
 >
 = & {
   "*"?: Partial<

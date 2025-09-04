@@ -3,7 +3,7 @@ import type { ScopeManifest } from "./manifest";
 
 export interface Settings<
   Scope extends string,
-  Parser extends string,
+  Parser extends Scope,
 > {
   global:
     & IConfig["linterOptions"]

@@ -3,7 +3,7 @@ import type { Configuration } from "./configuration";
 
 export interface Input<
   RequiredPlugin extends string,
-  RequiredParser extends string,
+  RequiredParser extends Scope,
   Scope extends string,
   OptionalScope extends Scope,
 > {
