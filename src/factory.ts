@@ -72,15 +72,10 @@ export class Factory<
         name: "linted/*/plugins/" as const,
         plugins: {
           ...imports.plugins,
-          ..."svelte" in scopeExtensions && "plugin" in scopeExtensions.svelte
+          ..."svelte" in scopeExtensions && "plugin" in (scopeExtensions.svelte as object)
             ? {
-                svelte: scopeExtensions.svelte.plugin,
-              } as unknown as Partial<
-                Record<
-                  OptionalScope,
-                  unknown
-                >
-              >
+                svelte: (scopeExtensions.svelte as { plugin: unknown }).plugin,
+              }
             : {},
         },
       },
@@ -98,7 +93,7 @@ export class Factory<
       ignores: {
         name: "linted/*/ignores/" as const,
         ignores: [
-          ...globalExtension.override
+          ...globalExtension.override === true
             ? []
             : defaults.ignores["*"],
           ...globalExtension.ignores ?? [],
@@ -112,12 +107,17 @@ export class Factory<
     };
     this.parsers = {
       ...imports.parsers,
-      ..."svelte" in scopeExtensions && "parser" in scopeExtensions.svelte
+      ...("svelte" in scopeExtensions && "parser" in (scopeExtensions.svelte as object)
         ? {
-            svelte: scopeExtensions.svelte.parser,
+            svelte: (scopeExtensions.svelte as { parser: unknown }).parser,
           }
-        : {},
-    }
+        : {}) as unknown as Partial<
+        Record<
+          OptionalScope,
+          unknown
+        >
+      >,
+    };
 
     for (const scope in scopeExtensions) {
       const {
