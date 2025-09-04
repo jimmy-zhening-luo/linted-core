@@ -2,7 +2,7 @@ import type { Input } from "./interface";
 
 export class Factory<
   RequiredPlugin extends string,
-  RequiredParser extends string,
+  RequiredParser extends Scope,
   Scope extends string,
   OptionalScope extends Scope,
 > {
