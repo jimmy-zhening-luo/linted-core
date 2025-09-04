@@ -15,13 +15,7 @@ import { Factory } from "./factory";
 
 export default function (
   {
-    imports: {
-      required: {
-        plugins,
-        parsers,
-      },
-      optional = {},
-    },
+    imports,
     configuration: {
       settings,
       defaults,
@@ -31,50 +25,31 @@ export default function (
   }: Input<
     RequiredPlugin,
     RequiredParser,
-    (typeof optionalScopes[number]),
-    (typeof scopes[number])
+    (typeof scopes[number]),
+    (typeof optionalScopes[number])
   >,
 ) {
   try {
     const factory = new Factory<
       RequiredPlugin,
       RequiredParser,
-      (typeof optionalScopes[number]),
-      (typeof scopes[number])
+      (typeof scopes[number]),
+      (typeof optionalScopes[number])
     >(
-      optionalScopes,
       tree,
+      optionalScopes,
+      imports,
       settings,
-      {
-        ...parsers,
-        ..."svelte" in optional
-          ? {
-              svelte: optional.svelte.parser,
-            }
-          : {},
-      },
       defaults,
       extensions,
       attachments,
     );
 
     return [
-      {
-        name: "linted/*/plugins/",
-        plugins: {
-          ...plugins,
-          ..."svelte" in optional
-            ? {
-                svelte: optional.svelte.plugin,
-              }
-            : {},
-        },
-      },
       ...factory.globals,
-      ...scopes
-        .flatMap(
-          scope => factory.scope(scope),
-        ),
+      ...scopes.flatMap(
+        scope => factory.scope(scope),
+      ),
       ...factory.attachments,
     ] satisfies Output as unknown[];
   }

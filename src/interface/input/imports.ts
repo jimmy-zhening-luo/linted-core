@@ -1,4 +1,4 @@
-export interface RequiredImports<
+export interface Imports<
   RequiredPlugin extends string,
   RequiredParser extends string,
 > {

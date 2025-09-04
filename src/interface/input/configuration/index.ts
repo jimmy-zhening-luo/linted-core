@@ -4,14 +4,18 @@ import type { Extensions } from "./extensions";
 import type { IAttachment } from "./attachment";
 
 export interface Configuration<
-  Scope extends string,
   Parser extends string,
+  Scope extends string,
+  OptionalScope extends string,
 > {
   settings: Settings<
     Scope,
     Parser
   >;
   defaults: Defaults<Scope>;
-  extensions: Extensions<Scope>;
+  extensions: Extensions<
+    Scope,
+    OptionalScope
+  >;
   attachments: readonly IAttachment[];
 }

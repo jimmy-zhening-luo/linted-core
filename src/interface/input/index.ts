@@ -4,19 +4,19 @@ import type { Configuration } from "./configuration";
 export interface Input<
   RequiredPlugin extends string,
   RequiredParser extends string,
-  OptionalImport extends string,
   Scope extends string,
+  OptionalScope extends string,
 > {
   imports: Imports<
     RequiredPlugin,
-    RequiredParser,
-    OptionalImport
+    RequiredParser
   >;
   configuration: Configuration<
-    Scope,
     (
       | RequiredParser
-      | OptionalImport
-    )
+      | OptionalScope
+    ),
+    Scope,
+    OptionalScope
   >;
 }

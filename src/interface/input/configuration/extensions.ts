@@ -2,6 +2,7 @@ import type { IConfig } from "../../config";
 
 export type Extensions<
   Scope extends string,
+  OptionalScope extends string,
 >
 = & {
   "*"?: Partial<
@@ -19,6 +20,15 @@ export type Extensions<
       files?: string[];
       ignores?: string[];
       rules?: IConfig["rules"];
+    }
+  >
+>
+& Partial<
+  Record<
+    OptionalScope,
+    {
+      plugin: unknown;
+      parser: unknown;
     }
   >
 >;

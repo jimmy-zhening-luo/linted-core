@@ -3,40 +3,38 @@ import type { Input } from "./interface";
 export class Factory<
   RequiredPlugin extends string,
   RequiredParser extends string,
-  OptionalImport extends string,
   Scope extends string,
+  OptionalScope extends string,
 > {
-  public global;
+  public globalConfigs;
   public scopes;
+  public parsers;
 
   constructor(
-    optionalScopes: readonly Scope[],
     tree: Array<
       readonly [
         Scope,
         readonly Scope[],
       ]
     >,
+    optionalScopes: readonly Scope[],
+    imports: Input<
+      RequiredPlugin,
+      RequiredParser,
+      Scope,
+      OptionalScope
+    >["imports"],
     private readonly settings: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
-      Scope
+      Scope,
+      OptionalScope
     >["configuration"]["settings"],
-    public parsers: Record<
-      RequiredParser,
-      unknown
-    > & Partial<
-      Record<
-        OptionalImport,
-        unknown
-      >
-    >,
     defaults: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
-      Scope
+      Scope,
+      OptionalScope
     >["configuration"]["defaults"],
     {
       "*": globalExtension = {},
@@ -44,14 +42,14 @@ export class Factory<
     }: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
-      Scope
+      Scope,
+      OptionalScope
     >["configuration"]["extensions"] = {},
     public readonly attachments: Input<
       RequiredPlugin,
       RequiredParser,
-      OptionalImport,
-      Scope
+      Scope,
+      OptionalScope
     >["configuration"]["attachments"] = [],
   ) {
     const {
@@ -67,13 +65,20 @@ export class Factory<
       ecmaVersion = settings
         .global
         .ecmaVersion,
-    } = globalExtension,
-    {
-      ignores = [],
-      override = false,
     } = globalExtension;
 
-    this.global = {
+    this.globalConfigs = {
+      plugins: {
+        name: "linted/*/plugins/" as const,
+        plugins: {
+          ...imports.plugins,
+          ..."svelte" in scopeExtensions && "plugin" in scopeExtensions.svelte
+            ? {
+                svelte: scopeExtensions.svelte.plugin,
+              }
+            : {},
+        },
+      },
       settings: {
         name: "linted/*/settings/" as const,
         linterOptions: {
@@ -88,61 +93,63 @@ export class Factory<
       ignores: {
         name: "linted/*/ignores/" as const,
         ignores: [
-          ...override
+          ...globalExtension.override
             ? []
-            : defaults
-              .ignores["*"],
-          ...ignores,
+            : defaults.ignores["*"],
+          ...globalExtension.ignores ?? [],
         ],
       },
     };
     this.scopes = {
-      files: defaults
-        .files,
-      ignores: defaults
-        .ignores,
-      rules: defaults
-        .rules,
+      files: defaults.files,
+      ignores: defaults.ignores,
+      rules: defaults.rules,
     };
+    this.parsers = {
+      ...imports.parsers,
+      ..."svelte" in scopeExtensions && "parser" in scopeExtensions.svelte
+        ? {
+            svelte: scopeExtensions.svelte.parser,
+          }
+        : {},
+    }
 
     for (const scope in scopeExtensions) {
       const {
         [scope as keyof typeof scopeExtensions]: {
-          files: userFiles = [],
-          ignores: userIgnores = [],
-          rules: userRules = null,
+          files = [],
+          ignores = [],
+          rules = null,
         } = {},
       } = scopeExtensions;
 
       this
         .scopes
         .files[scope as keyof typeof scopeExtensions]
-        .push(...userFiles);
+        .push(...files);
       this
         .scopes
         .ignores[scope as keyof typeof scopeExtensions]
-        .push(...userIgnores);
+        .push(...ignores);
 
-      if (userRules !== null)
+      if (rules !== null)
         this
           .scopes
           .rules[scope as keyof typeof scopeExtensions]
           .push(
             {
               id: scope + "/override",
-              rules: userRules,
+              rules,
             },
           );
     }
 
-    const OptionalScopes = new Set<Scope>(
-      optionalScopes,
-    );
+    const OptionalScopes = new Set<Scope>(optionalScopes);
 
     for (const [scope, parents] of tree)
       if (
         !OptionalScopes.has(scope)
-        || scope in parsers
+        || scope in this.parsers
       )
         for (const parent of parents) {
           this
@@ -166,8 +173,9 @@ export class Factory<
 
   public get globals() {
     return [
-      this.global.settings,
-      this.global.ignores,
+      this.globalConfigs.plugins,
+      this.globalConfigs.settings,
+      this.globalConfigs.ignores,
     ] as const;
   }
 
