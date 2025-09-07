@@ -1,6 +1,6 @@
 const
-ERROR = "error",
-OFF = "off",
+ERROR = 2,
+OFF = 0,
 Plugin = "MOCK_PLUGIN",
 Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
