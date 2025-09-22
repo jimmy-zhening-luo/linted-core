@@ -34,7 +34,7 @@ describe(
           },
         );
         it(
-          `with length >= plugins + */ignores + */settings + ${scopes.length} scopes = ${scopes.length + 3}  [Actual: ${configs.length}`,
+          `length >= (plugins + global/ignores + global/settings + ${scopes.length} scopes = ${scopes.length + 3}) [Actual: ${configs.length}]`,
           function () {
             configs
               .should.have

@@ -143,7 +143,7 @@ export class Factory<
           .rules[scope as keyof typeof scopeExtensions]
           .push(
             {
-              id: scope + "/override",
+              id: scope.concat("/override"),
               rules,
             },
           );
@@ -204,11 +204,10 @@ export class Factory<
             rules,
           },
         ) => ({
-          id: [
-            scope,
+          id: scope.concat(
+            "/",
             id,
-          ]
-            .join("/"),
+          ),
           rules,
         }),
       ),
