@@ -54,7 +54,7 @@ export default function (
     ] satisfies Output as unknown[];
   }
   catch (e) {
-    throw new Error(
+    throw TypeError(
       "linted-core: ",
       { cause: e },
     );
