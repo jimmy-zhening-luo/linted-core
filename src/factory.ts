@@ -108,7 +108,7 @@ export class Factory<
     };
     this.parsers = parsers;
 
-    const extended = new Set<Scope>(Object.keys(extensions) as readonly Scope[]);
+    const extended = new Set<Scope>(Object.keys(extensions) as unknown[] as readonly Scope[]);
 
     extended.delete("*" as unknown as Scope);
 
