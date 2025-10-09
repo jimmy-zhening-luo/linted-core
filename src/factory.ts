@@ -39,10 +39,7 @@ export class Factory<
       Scope,
       OptionalScope
     >["configuration"]["defaults"],
-    {
-      "*": globalExtension = {},
-      ...scopeExtensions
-    }: Input<
+    extensions: Input<
       RequiredPlugin,
       RequiredParser,
       Scope,
@@ -68,16 +65,20 @@ export class Factory<
       ecmaVersion = settings
         .global
         .ecmaVersion,
-    } = globalExtension;
+    } = extensions["*"] ?? {};
 
-    if ("svelte" in scopeExtensions && "plugin" in (scopeExtensions.svelte as object)) {
+    if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
       Object.assign(plugins, {
-        svelte: (scopeExtensions.svelte as { plugin: unknown }).plugin,
+        svelte: (extensions.svelte as { plugin: unknown }).plugin,
       });
       Object.assign(parsers, {
-        svelte: (scopeExtensions.svelte as { parser: unknown }).parser,
+        svelte: (extensions.svelte as { parser: unknown }).parser,
       });
     }
+
+    const ignores = extensions["*"]?.override === true
+      ? extensions["*"].ignores ?? []
+      : defaults.ignores["*"].concat(extensions["*"]?.ignores ?? []);
 
     this.globalConfigs = {
       plugins: {
@@ -97,12 +98,7 @@ export class Factory<
       },
       ignores: {
         name: "linted/*/ignores/" as const,
-        ignores: [
-          ...globalExtension.override === true
-            ? []
-            : defaults.ignores["*"],
-          ...globalExtension.ignores ?? [],
-        ],
+        ignores,
       },
     };
     this.scopes = {
@@ -112,28 +108,28 @@ export class Factory<
     };
     this.parsers = parsers;
 
-    for (const scope in scopeExtensions) {
+    for (const scope in extensions) {
       const {
-        [scope as keyof typeof scopeExtensions]: {
+        [scope as keyof typeof extensions]: {
           files = [],
           ignores = [],
           rules = null,
         } = {},
-      } = scopeExtensions;
+      } = extensions;
 
       this
         .scopes
-        .files[scope as keyof typeof scopeExtensions]
+        .files[scope as Scope]
         .push(...files);
       this
         .scopes
-        .ignores[scope as keyof typeof scopeExtensions]
+        .ignores[scope as Scope]
         .push(...ignores);
 
       if (rules !== null)
         this
           .scopes
-          .rules[scope as keyof typeof scopeExtensions]
+          .rules[scope as Scope]
           .push(
             {
               id: scope.concat("/override"),
