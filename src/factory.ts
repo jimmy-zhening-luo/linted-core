@@ -133,7 +133,7 @@ export class Factory<
 
       if (ignores.length !== 0) {
         const defaultIgnores = this.scopes.ignores[scope],
-        iEnd = defaultFiles.length;
+        iEnd = defaultIgnores.length;
 
         defaultIgnores.length += ignores.length;
 
