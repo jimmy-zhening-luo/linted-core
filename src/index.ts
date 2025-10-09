@@ -1,7 +1,4 @@
-import type {
-  Input,
-  Output,
-} from "./interface";
+import type { Input } from "./interface";
 import type {
   RequiredPlugin,
   RequiredParser,
@@ -45,13 +42,13 @@ export default function (
       attachments,
     );
 
-    return [
-      ...factory.globals,
-      ...scopes.flatMap(
-        scope => factory.scope(scope),
-      ),
-      ...factory.attachments,
-    ] satisfies Output as unknown[];
+    return (factory.globals as unknown[])
+      .concat(
+        scopes.flatMap(
+          scope => factory.scope(scope),
+        ),
+        factory.attachments,
+      ) as unknown[];
   }
   catch (e) {
     throw TypeError(
