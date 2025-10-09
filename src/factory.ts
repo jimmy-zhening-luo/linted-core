@@ -142,15 +142,12 @@ export class Factory<
       }
 
       if (rules !== null)
-        this
-          .scopes
-          .rules[scope]
-          .push(
-            {
-              id: scope.concat("/override"),
-              rules,
-            },
-          );
+        this.scopes.rules[scope][
+          this.scopes.rules[scope].length
+        ] = {
+          id: scope.concat("/override"),
+          rules,
+        };
     }
 
     const OptionalScopes = new Set<Scope>(optionalScopes);
