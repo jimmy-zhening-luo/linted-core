@@ -128,7 +128,7 @@ export class Factory<
         defaultFiles.length += files.length;
 
         for (let i = 0; i < files.length; i++)
-          defaultFiles[fEnd + i] = files[i];
+          defaultFiles[fEnd + i] = files[i] as string;
       }
 
       if (ignores.length !== 0) {
@@ -138,7 +138,7 @@ export class Factory<
         defaultIgnores.length += ignores.length;
 
         for (let i = 0; i < ignores.length; i++)
-          defaultIgnores[iEnd + i] = ignores[i];
+          defaultIgnores[iEnd + i] = ignores[i] as string;
       }
 
       if (rules !== null)
@@ -171,7 +171,7 @@ export class Factory<
             parentFiles.length += files.length;
 
             for (let i = 0; i < files.length; i++)
-              parentFiles[fEnd + i] = files[i];
+              parentFiles[fEnd + i] = files[i] as string;
           }
 
         if (ignores.length !== 0)
@@ -182,7 +182,7 @@ export class Factory<
             parentIgnores.length += ignores.length;
 
             for (let i = 0; i < ignores.length; i++)
-              parentIgnores[iEnd + i] = ignores[i];
+              parentIgnores[iEnd + i] = ignores[i] as string;
           }
       }
   }
