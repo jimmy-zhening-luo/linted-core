@@ -18,7 +18,10 @@ export class Factory<
       ]
     >,
     optionalScopes: readonly Scope[],
-    imports: Input<
+    {
+      plugins,
+      parsers,
+    }: Input<
       RequiredPlugin,
       RequiredParser,
       Scope,
@@ -67,17 +70,19 @@ export class Factory<
         .ecmaVersion,
     } = globalExtension;
 
+    if ("svelte" in scopeExtensions && "plugin" in (scopeExtensions.svelte as object)) {
+      Object.assign(plugins, {
+        svelte: (scopeExtensions.svelte as { plugin: unknown }).plugin,
+      });
+      Object.assign(parsers, {
+        svelte: (scopeExtensions.svelte as { parser: unknown }).parser,
+      });
+    }
+
     this.globalConfigs = {
       plugins: {
         name: "linted/*/plugins/" as const,
-        plugins: {
-          ...imports.plugins,
-          ..."svelte" in scopeExtensions && "plugin" in (scopeExtensions.svelte as object)
-            ? {
-                svelte: (scopeExtensions.svelte as { plugin: unknown }).plugin,
-              }
-            : {},
-        },
+        plugins,
       },
       settings: {
         name: "linted/*/settings/" as const,
@@ -105,19 +110,7 @@ export class Factory<
       ignores: defaults.ignores,
       rules: defaults.rules,
     };
-    this.parsers = {
-      ...imports.parsers,
-      ...("svelte" in scopeExtensions && "parser" in (scopeExtensions.svelte as object)
-        ? {
-            svelte: (scopeExtensions.svelte as { parser: unknown }).parser,
-          }
-        : {}) as unknown as Partial<
-        Record<
-          OptionalScope,
-          unknown
-        >
-      >,
-    };
+    this.parsers = parsers;
 
     for (const scope in scopeExtensions) {
       const {
@@ -249,7 +242,7 @@ export class Factory<
                         ...parser === null
                           ? {}
                           : {
-                              parser: this.parsers[parser],
+                              parser: this.parsers[parser as RequiredParser],
                             },
                         ...subparser === null
                         && [...Object.keys(extraParserOptions)].length === 0
@@ -260,7 +253,7 @@ export class Factory<
                                 ...subparser === null
                                   ? {}
                                   : {
-                                      parser: this.parsers[subparser],
+                                      parser: this.parsers[subparser as RequiredParser],
                                     },
                               },
                             },
