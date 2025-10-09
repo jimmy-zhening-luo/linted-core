@@ -248,8 +248,8 @@ export class Factory<
                 ignores,
                 ...parser === null
                 && subparser === null
-                && [...Object.keys(extraLanguageOptions)].length === 0
-                && [...Object.keys(extraParserOptions)].length === 0
+                && Object.keys(extraLanguageOptions).length === 0
+                && Object.keys(extraParserOptions).length === 0
                   ? {}
                   : {
                       languageOptions: {
