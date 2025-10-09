@@ -108,23 +108,36 @@ export class Factory<
     };
     this.parsers = parsers;
 
-    for (const scope in extensions) {
+    const extended = new Set<Scope>(Object.keys(extensions) as readonly Scope[]);
+
+    extended.delete("*" as unknown as Scope);
+
+    for (const scope of extended) {
       const {
-        [scope as keyof typeof extensions]: {
+        [scope]: {
           files = [],
           ignores = [],
           rules = null,
         } = {},
       } = extensions;
 
-      this
-        .scopes
-        .files[scope as Scope]
-        .push(...files);
-      this
-        .scopes
-        .ignores[scope as Scope]
-        .push(...ignores);
+      if (files.length !== 0) {
+        const fEnd = this.scopes.files.length;
+
+        this.scopes.files.length += files.length;
+
+        for (let i = 0; i < files.length; i++)
+          this.scopes.files[fEnd + i] = files[i];
+      }
+
+      if (ignores.length !== 0) {
+        const iEnd = this.scopes.ignores.length;
+
+        this.scopes.ignores.length += ignores.length;
+
+        for (let i = 0; i < ignores.length; i++)
+          this.scopes.ignores[iEnd + i] = ignores[i];
+      }
 
       if (rules !== null)
         this
@@ -144,25 +157,32 @@ export class Factory<
       if (
         !OptionalScopes.has(scope)
         || scope in this.parsers
-      )
-        for (const parent of parents) {
-          this
-            .scopes
-            .files[parent]
-            .push(
-              ...this
-                .scopes
-                .files[scope],
-            );
-          this
-            .scopes
-            .ignores[parent]
-            .push(
-              ...this
-                .scopes
-                .ignores[scope],
-            );
-        }
+      ) {
+        const files = this.scopes.files[scope],
+        ignores = this.scopes.ignores[scope];
+
+        if (files.length !== 0)
+          for (const parent of parents) {
+            const parentFiles = this.scopes.files[parent],
+            fEnd = parentFiles.length;
+
+            parentFiles.length += files.length;
+
+            for (let i = 0; i < files.length; i++)
+              parentFiles[fEnd + i] = files[i];
+          }
+
+        if (ignores.length !== 0)
+          for (const parent of parents) {
+            const parentIgnores = this.scopes.ignores[parent],
+            iEnd = parentIgnores.length;
+
+            parentIgnores.length += ignores.length;
+
+            for (let i = 0; i < ignores.length; i++)
+              parentIgnores[iEnd + i] = ignores[i];
+          }
+      }
   }
 
   public get globals() {
