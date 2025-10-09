@@ -48,7 +48,7 @@ export default function (
           scope => factory.scope(scope),
         ),
         factory.attachments,
-      ) as unknown[];
+      );
   }
   catch (e) {
     throw TypeError(
