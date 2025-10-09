@@ -42,7 +42,7 @@ export default function (
       attachments,
     );
 
-    return (factory.globals as readonly unknown[])
+    return (factory.globals as unknown[])
       .concat(
         scopes.flatMap(
           scope => factory.scope(scope),

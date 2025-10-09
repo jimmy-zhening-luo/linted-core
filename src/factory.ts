@@ -170,7 +170,7 @@ export class Factory<
       this.globalConfigs.plugins,
       this.globalConfigs.settings,
       this.globalConfigs.ignores,
-    ] as const;
+    ];
   }
 
   public scope(scope: Scope) {
