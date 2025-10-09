@@ -1,4 +1,3 @@
---- # rc.yml
 name: NPM Publish (rc)
 on:
   push:
@@ -29,5 +28,3 @@ jobs:
         id: publish
         run: npm publish
         env: { NODE_AUTH_TOKEN: "${{secrets.NPM_TOKEN}}" }
-
-...
