@@ -122,21 +122,23 @@ export class Factory<
       } = extensions;
 
       if (files.length !== 0) {
-        const fEnd = this.scopes.files.length;
+        const defaultFiles = this.scopes.files[scope],
+        fEnd = defaultFiles.length;
 
-        this.scopes.files.length += files.length;
+        defaultFiles.length += files.length;
 
         for (let i = 0; i < files.length; i++)
-          this.scopes.files[fEnd + i] = files[i];
+          defaultFiles[fEnd + i] = files[i];
       }
 
       if (ignores.length !== 0) {
-        const iEnd = this.scopes.ignores.length;
+        const defaultIgnores = this.scopes.ignores[scope],
+        iEnd = defaultFiles.length;
 
-        this.scopes.ignores.length += ignores.length;
+        defaultIgnores.length += ignores.length;
 
         for (let i = 0; i < ignores.length; i++)
-          this.scopes.ignores[iEnd + i] = ignores[i];
+          defaultIgnores[iEnd + i] = ignores[i];
       }
 
       if (rules !== null)
