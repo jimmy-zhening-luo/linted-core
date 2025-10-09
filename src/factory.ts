@@ -144,7 +144,7 @@ export class Factory<
       if (rules !== null)
         this
           .scopes
-          .rules[scope as Scope]
+          .rules[scope]
           .push(
             {
               id: scope.concat("/override"),
