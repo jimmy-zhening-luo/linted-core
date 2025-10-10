@@ -88,11 +88,11 @@ export class Factory<
 
     this.globalConfigs = {
       plugins: {
-        name: "linted/*/plugins/" as const,
+        name: "linted/*/plugins",
         plugins,
       },
       settings: {
-        name: "linted/*/settings/" as const,
+        name: "linted/*/settings",
         linterOptions: {
           noInlineConfig,
           reportUnusedDisableDirectives,
@@ -103,7 +103,7 @@ export class Factory<
         },
       },
       ignores: {
-        name: "linted/*/ignores/" as const,
+        name: "linted/*/ignores",
         ignores,
       },
     };
@@ -114,7 +114,7 @@ export class Factory<
     };
     this.parsers = parsers;
 
-    const extended = new Set<Scope>(Object.keys(extensions) as unknown[] as readonly Scope[]);
+    const extended = new Set<Scope>(Object.keys(extensions) as unknown[] as Scope[]);
 
     extended.delete("*" as unknown as Scope);
 
@@ -203,97 +203,75 @@ export class Factory<
       files: { [scope]: files },
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
-    } = this.scopes,
-    ruleset = rules
-      .map(
-        (
-          {
-            id,
-            rules,
-          },
-        ) => ({
-          id: scope.concat(
-            "/",
-            id,
-          ),
-          rules,
-        }),
-      ),
-    {
-      languageOptions: {
-        parser = null,
-        ...extraLanguageOptions
-      },
-      parserOptions: {
-        parser: subparser = null,
-        ...extraParserOptions
-      },
-      processor = null,
-      language = null,
-    } = this.settings.registry[scope];
+    } = this.scopes;
 
-    return files.length === 0
-      ? []
-      : ruleset.length === 0
-        ? []
-        : parser !== null
-          && !(parser in this.parsers)
-          || subparser !== null
-          && !(subparser in this.parsers)
-          ? []
-          : [
-              {
-                name: `linted/${scope as string}/` as const,
-                files,
-                ignores,
-                ...parser === null
-                && subparser === null
-                && Object.keys(extraLanguageOptions).length === 0
-                && Object.keys(extraParserOptions).length === 0
-                  ? {}
-                  : {
-                      languageOptions: {
-                        ...extraLanguageOptions,
-                        ...parser === null
-                          ? {}
-                          : {
-                              parser: this.parsers[parser as RequiredParser],
-                            },
-                        ...subparser === null
-                        && [...Object.keys(extraParserOptions)].length === 0
-                          ? {}
-                          : {
-                              parserOptions: {
-                                ...extraParserOptions,
-                                ...subparser === null
-                                  ? {}
-                                  : {
-                                      parser: this.parsers[subparser as RequiredParser],
-                                    },
-                              },
-                            },
-                      },
-                    },
-                ...processor === null
-                  ? {}
-                  : { processor },
-                ...language === null
-                  ? {}
-                  : { language },
-              },
-              ...ruleset.map(
-                (
-                  {
-                    id,
-                    rules,
-                  },
-                ) => ({
-                  name: `linted/${id}/` as const,
-                  files,
-                  ignores,
-                  rules,
-                }),
-              ),
-            ];
+    if (files.length === 0 || rules.length === 0)
+      return [];
+    else {
+      const {
+        languageOptions,
+        parserOptions,
+        processor,
+        language,
+      } = this.settings.registry[scope];
+
+      if ("parser" in languageOptions)
+        if (languageOptions.parser in this.parsers)
+          languageOptions.parser = this.parsers[languageOptions.parser as RequiredParser] as unknown as RequiredParser;
+        else
+          return [];
+
+      if ("parser" in parserOptions)
+        if (parserOptions.parser in this.parsers)
+          parserOptions.parser = this.parsers[parserOptions.parser as RequiredParser] as unknown as RequiredParser;
+        else
+          return [];
+
+      const manifest = {
+        name: "linted/".concat(scope),
+        files,
+        ignores,
+      };
+
+      if (Object.keys(languageOptions).length !== 0)
+        Object.assign(
+          manifest,
+          { languageOptions },
+        );
+
+      if (Object.keys(parserOptions).length !== 0)
+        Object.assign(
+          manifest,
+          { parserOptions },
+        );
+
+      if (processor !== undefined)
+        Object.assign(
+          manifest,
+          { processor },
+        );
+
+      if (language !== undefined)
+        Object.assign(
+          manifest,
+          { language },
+        );
+
+      return [manifest].concat(
+        rules.map(
+          (
+            {
+              id,
+              rules,
+            },
+          ) => ({
+            name: "linted/".concat(scope, "/", id),
+            files,
+            ignores,
+            rules,
+          }),
+        ),
+      );
+    }
   }
 }
