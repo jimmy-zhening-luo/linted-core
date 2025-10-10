@@ -70,7 +70,7 @@ describe(
               .should.have
               .property(
                 "name",
-                "linted/*/plugins/",
+                "linted/*/plugins",
               );
             first
               .should.have
@@ -85,7 +85,7 @@ describe(
               .should.have
               .property(
                 "name",
-                "linted/*/settings/",
+                "linted/*/settings",
               );
             second
               .should.have
