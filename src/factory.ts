@@ -71,7 +71,7 @@ export class Factory<
       Object.assign(
         plugins,
         {
-          svelte: (extensions.svelte as { plugin: unknown}).plugin,
+          svelte: (extensions.svelte as { plugin: unknown }).plugin,
         },
       );
       Object.assign(
