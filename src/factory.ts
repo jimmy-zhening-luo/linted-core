@@ -68,12 +68,18 @@ export class Factory<
     } = extensions["*"] ?? {};
 
     if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
-      Object.assign(plugins, {
-        svelte: (extensions.svelte as { plugin: unknown }).plugin,
-      });
-      Object.assign(parsers, {
-        svelte: (extensions.svelte as { parser: unknown }).parser,
-      });
+      Object.assign(
+        plugins,
+        {
+          svelte: (extensions.svelte as { plugin: unknown}).plugin,
+        },
+      );
+      Object.assign(
+        parsers,
+        {
+          svelte: (extensions.svelte as { parser: unknown }).parser,
+        },
+      );
     }
 
     const ignores = extensions["*"]?.override === true
