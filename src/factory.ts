@@ -200,15 +200,9 @@ export class Factory<
 
   public scope(scope: Scope) {
     const {
-      files: {
-        [scope]: files,
-      },
-      ignores: {
-        [scope]: ignores,
-      },
-      rules: {
-        [scope]: rules,
-      },
+      files: { [scope]: files },
+      ignores: { [scope]: ignores },
+      rules: { [scope]: rules },
     } = this.scopes,
     ruleset = rules
       .map(
