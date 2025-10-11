@@ -233,16 +233,16 @@ export class Factory<
         ignores,
       };
 
+      if (Object.keys(parserOptions).length !== 0)
+        Object.assign(
+          languageOptions,
+          { parserOptions },
+        );
+
       if (Object.keys(languageOptions).length !== 0)
         Object.assign(
           manifest,
           { languageOptions },
-        );
-
-      if (Object.keys(parserOptions).length !== 0)
-        Object.assign(
-          manifest,
-          { parserOptions },
         );
 
       if (processor !== undefined)
