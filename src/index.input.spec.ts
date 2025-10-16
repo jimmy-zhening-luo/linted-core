@@ -249,6 +249,5 @@ export const TEST_INPUT = {
       },
     },
     extensions: {},
-    attachments: [],
   },
 };
