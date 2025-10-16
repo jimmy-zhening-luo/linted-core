@@ -6,14 +6,6 @@ export interface IConfig {
   files: string[];
   ignores: string[];
   rules: Rule.Rules;
-  linterOptions: {
-    noInlineConfig: boolean;
-    reportUnusedDisableDirectives:
-      | "error"
-      | "warn"
-      | "off"
-    ;
-  };
   languageOptions: {
     sourceType:
       | "module"

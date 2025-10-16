@@ -4,15 +4,15 @@ export type Extensions<
   Scope extends string,
   OptionalScope extends Scope,
 >
-= & {
-  "*"?: Partial<
-    & IConfig["linterOptions"]
-    & IConfig["languageOptions"]
-  > & {
-    ignores?: string[];
-    override?: boolean;
-  };
-}
+= & Partial<
+  Record<
+    "*",
+    {
+      ignores?: string[];
+      override?: boolean;
+    }
+  >
+>
 & Partial<
   Record<
     Scope,
