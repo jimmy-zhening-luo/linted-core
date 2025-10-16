@@ -26,76 +26,68 @@ export const TEST_INPUT = {
   },
   configuration: {
     settings: {
-      global: {
-        ecmaVersion: 2024,
-        sourceType: "module",
-        noInlineConfig: true,
-        reportUnusedDisableDirectives: "error",
-      } as const,
-      registry: {
-        js: {
-          languageOptions: {},
-          parserOptions: {},
+      js: {
+        languageOptions: {},
+        parserOptions: {},
+      },
+      ts: {
+        languageOptions: {
+          parser: "ts" as const,
         },
-        ts: {
-          languageOptions: {
-            parser: "ts" as const,
-          },
-          parserOptions: {},
+        parserOptions: {},
+      },
+      mocha: {
+        languageOptions: {},
+        parserOptions: {},
+      },
+      svelte: {
+        languageOptions: {
+          parser: "svelte" as const,
         },
-        mocha: {
-          languageOptions: {},
-          parserOptions: {},
+        parserOptions: {
+          parser: "ts" as const,
+          extraFileExtensions: [".svelte"],
         },
-        svelte: {
-          languageOptions: {
-            parser: "svelte" as const,
-          },
-          parserOptions: {
-            parser: "ts" as const,
-            extraFileExtensions: [".svelte"],
-          },
-          processor: "svelte/svelte",
+        processor: "svelte/svelte",
+      },
+      html: {
+        languageOptions: {
+          parser: "html" as const,
         },
-        html: {
-          languageOptions: {
-            parser: "html" as const,
-          },
-          parserOptions: {
-            frontmatter: true,
-          },
-          language: "@html-eslint/html",
+        parserOptions: {
+          frontmatter: true,
         },
-        css: {
-          languageOptions: {
-            tolerant: false,
-          },
-          parserOptions: {},
-          language: "css/css",
+        language: "@html-eslint/html",
+      },
+      css: {
+        languageOptions: {
+          tolerant: false,
         },
-        json: {
-          languageOptions: {
-            allowTrailingCommas: true,
-          },
-          parserOptions: {},
-          language: "json/jsonc",
+        parserOptions: {},
+        language: "css/css",
+      },
+      json: {
+        languageOptions: {
+          allowTrailingCommas: true,
         },
-        jsonc: {
-          languageOptions: {},
-          parserOptions: {},
-          language: "json/jsonc",
+        parserOptions: {},
+        language: "json/jsonc",
+      },
+      jsonc: {
+        languageOptions: {},
+        parserOptions: {},
+        language: "json/jsonc",
+      },
+      jsoncc: {
+        languageOptions: {},
+        parserOptions: {},
+        language: "json/jsonc",
+      },
+      yml: {
+        languageOptions: {
+          parser: "yml" as const,
         },
-        jsoncc: {
-          languageOptions: {},
-          parserOptions: {},
-          language: "json/jsonc",
-        },
-        yml: {
-          languageOptions: {
-            parser: "yml" as const,
-          },
-          parserOptions: {},
-        },
+        parserOptions: {},
       },
     },
     defaults: {

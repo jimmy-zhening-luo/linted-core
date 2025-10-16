@@ -1,18 +1,11 @@
-import type { IConfig } from "../../config";
 import type { ScopeManifest } from "./manifest";
 
-export interface Settings<
+export type Settings<
   Scope extends string,
   Parser extends Scope,
-> {
-  global:
-    & IConfig["linterOptions"]
-    & IConfig["languageOptions"]
-  ;
-  registry: Record<
-    Scope,
-    ScopeManifest<
-      Parser
-    >
-  >;
-}
+> = Record<
+  Scope,
+  ScopeManifest<
+    Parser
+  >
+>;

@@ -186,7 +186,7 @@ export class Factory<
         parserOptions,
         processor,
         language,
-      } = this.settings.registry[scope];
+      } = this.settings[scope];
 
       if ("parser" in languageOptions)
         if (languageOptions.parser in this.parsers)
