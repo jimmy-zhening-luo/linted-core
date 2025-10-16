@@ -1,14 +1,15 @@
 import type { Input } from "./interface";
 
 export class Factory<
-  RequiredPlugin extends string,
-  RequiredParser extends Scope,
   Scope extends string,
   OptionalScope extends Scope,
+  RequiredPlugin extends string,
+  RequiredParser extends Scope,
 > {
   public globalConfigs;
   public scopes;
   public parsers;
+  private readonly settings;
 
   constructor(
     tree: Array<
@@ -22,30 +23,26 @@ export class Factory<
       plugins,
       parsers,
     }: Input<
-      RequiredPlugin,
-      RequiredParser,
       Scope,
-      OptionalScope
+      OptionalScope,
+      RequiredPlugin,
+      RequiredParser
     >["imports"],
-    private readonly settings: Input<
-      RequiredPlugin,
-      RequiredParser,
-      Scope,
-      OptionalScope
-    >["configuration"]["settings"],
     defaults: Input<
-      RequiredPlugin,
-      RequiredParser,
       Scope,
-      OptionalScope
+      OptionalScope,
+      RequiredPlugin,
+      RequiredParser
     >["configuration"]["defaults"],
     extensions: Input<
-      RequiredPlugin,
-      RequiredParser,
       Scope,
-      OptionalScope
+      OptionalScope,
+      RequiredPlugin,
+      RequiredParser
     >["configuration"]["extensions"] = {},
   ) {
+    this.settings = defaults.settings;
+
     if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
       Object.assign(
         plugins,
@@ -176,8 +173,8 @@ export class Factory<
       return [];
     else {
       const {
-        languageOptions,
-        parserOptions,
+        languageOptions = {},
+        parserOptions = {},
         processor,
         language,
       } = this.settings[scope];

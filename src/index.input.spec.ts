@@ -4,7 +4,7 @@ OFF = 0,
 Plugin = "MOCK_PLUGIN",
 Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
-export const TEST_INPUT = {
+export const MOCK_INPUT = {
   imports: {
     plugins: {
       "@stylistic": Plugin,
@@ -25,72 +25,58 @@ export const TEST_INPUT = {
     },
   },
   configuration: {
-    settings: {
-      js: {
-        languageOptions: {},
-        parserOptions: {},
-      },
-      ts: {
-        languageOptions: {
-          parser: "ts" as const,
-        },
-        parserOptions: {},
-      },
-      mocha: {
-        languageOptions: {},
-        parserOptions: {},
-      },
-      svelte: {
-        languageOptions: {
-          parser: "svelte" as const,
-        },
-        parserOptions: {
-          parser: "ts" as const,
-          extraFileExtensions: [".svelte"],
-        },
-        processor: "svelte/svelte",
-      },
-      html: {
-        languageOptions: {
-          parser: "html" as const,
-        },
-        parserOptions: {
-          frontmatter: true,
-        },
-        language: "@html-eslint/html",
-      },
-      css: {
-        languageOptions: {
-          tolerant: false,
-        },
-        parserOptions: {},
-        language: "css/css",
-      },
-      json: {
-        languageOptions: {
-          allowTrailingCommas: true,
-        },
-        parserOptions: {},
-        language: "json/jsonc",
-      },
-      jsonc: {
-        languageOptions: {},
-        parserOptions: {},
-        language: "json/jsonc",
-      },
-      jsoncc: {
-        languageOptions: {},
-        parserOptions: {},
-        language: "json/jsonc",
-      },
-      yml: {
-        languageOptions: {
-          parser: "yml" as const,
-        },
-        parserOptions: {},
-      },
-    },
     defaults: {
+      settings: {
+        js: {},
+        ts: {
+          languageOptions: {
+            parser: "ts" as const,
+          },
+        },
+        mocha: {},
+        svelte: {
+          languageOptions: {
+            parser: "svelte" as const,
+          },
+          parserOptions: {
+            parser: "ts" as const,
+            extraFileExtensions: [".svelte"],
+          },
+          processor: "svelte/svelte",
+        },
+        html: {
+          languageOptions: {
+            parser: "html" as const,
+          },
+          parserOptions: {
+            frontmatter: true,
+          },
+          language: "@html-eslint/html",
+        },
+        css: {
+          languageOptions: {
+            tolerant: false,
+          },
+          language: "css/css",
+        },
+        json: {
+          languageOptions: {
+            allowTrailingCommas: true,
+          },
+          language: "json/jsonc",
+        },
+        jsonc: {
+          language: "json/jsonc",
+        },
+        jsoncc: {
+          language: "json/jsonc",
+        },
+        yml: {
+          languageOptions: {
+            parser: "yml" as const,
+          },
+        },
+      },
       files: {
         js: ["default.js"],
         ts: ["default.ts"],

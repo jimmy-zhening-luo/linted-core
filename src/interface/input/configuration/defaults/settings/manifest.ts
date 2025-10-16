@@ -1,11 +1,11 @@
 export interface ScopeManifest<
   Parser extends string,
 > {
-  languageOptions: {
+  languageOptions?: {
     [property: string]: unknown;
     parser?: Parser;
   };
-  parserOptions: {
+  parserOptions?: {
     [property: string]: unknown;
     parser?: Parser;
   };

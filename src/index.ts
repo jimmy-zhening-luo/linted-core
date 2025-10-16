@@ -14,28 +14,26 @@ export default function (
   {
     imports,
     configuration: {
-      settings,
       defaults,
       extensions,
     },
   }: Input<
-    RequiredPlugin,
-    RequiredParser,
     (typeof scopes[number]),
-    (typeof optionalScopes[number])
+    (typeof optionalScopes[number]),
+    RequiredPlugin,
+    RequiredParser
   >,
 ) {
   try {
     const factory = new Factory<
-      RequiredPlugin,
-      RequiredParser,
       (typeof scopes[number]),
-      (typeof optionalScopes[number])
+      (typeof optionalScopes[number]),
+      RequiredPlugin,
+      RequiredParser
     >(
       tree,
       optionalScopes,
       imports,
-      settings,
       defaults,
       extensions,
     );
