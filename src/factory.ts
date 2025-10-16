@@ -45,12 +45,6 @@ export class Factory<
       Scope,
       OptionalScope
     >["configuration"]["extensions"] = {},
-    public readonly attachments: Input<
-      RequiredPlugin,
-      RequiredParser,
-      Scope,
-      OptionalScope
-    >["configuration"]["attachments"] = [],
   ) {
     if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
       Object.assign(

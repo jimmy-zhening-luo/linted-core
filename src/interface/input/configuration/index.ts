@@ -1,7 +1,6 @@
 import type { Settings } from "./settings";
 import type { Defaults } from "./defaults";
 import type { Extensions } from "./extensions";
-import type { IAttachment } from "./attachment";
 
 export interface Configuration<
   Parser extends Scope,
@@ -17,5 +16,4 @@ export interface Configuration<
     Scope,
     OptionalScope
   >;
-  attachments: readonly IAttachment[];
 }

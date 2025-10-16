@@ -17,7 +17,6 @@ export default function (
       settings,
       defaults,
       extensions,
-      attachments,
     },
   }: Input<
     RequiredPlugin,
@@ -39,7 +38,6 @@ export default function (
       settings,
       defaults,
       extensions,
-      attachments,
     );
 
     return (factory.globals as unknown[])
@@ -47,7 +45,6 @@ export default function (
         scopes.flatMap(
           scope => factory.scope(scope),
         ),
-        factory.attachments,
       );
   }
   catch (e) {
