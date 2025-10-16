@@ -79,25 +79,18 @@ describe(
           },
         );
         it(
-          "followed by global settings",
+          "followed by global ignores",
           function () {
             second
               .should.have
               .property(
                 "name",
-                "linted/*/settings",
+                "linted/*/ignores",
               );
             second
               .should.have
-              .property("linterOptions")
-              .an("object");
-            second
-              .should.have
-              .nested.property("languageOptions.sourceType")
-              .a("string");
-            second
-              .should.have
-              .nested.property("languageOptions.ecmaVersion");
+              .property("ignores")
+              .an("array");
           },
         );
       },

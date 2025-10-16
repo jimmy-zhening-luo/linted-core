@@ -52,21 +52,6 @@ export class Factory<
       OptionalScope
     >["configuration"]["attachments"] = [],
   ) {
-    const {
-      noInlineConfig = settings
-        .global
-        .noInlineConfig,
-      reportUnusedDisableDirectives = settings
-        .global
-        .reportUnusedDisableDirectives,
-      sourceType = settings
-        .global
-        .sourceType,
-      ecmaVersion = settings
-        .global
-        .ecmaVersion,
-    } = extensions["*"] ?? {};
-
     if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
       Object.assign(
         plugins,
@@ -90,17 +75,6 @@ export class Factory<
       plugins: {
         name: "linted/*/plugins",
         plugins,
-      },
-      settings: {
-        name: "linted/*/settings",
-        linterOptions: {
-          noInlineConfig,
-          reportUnusedDisableDirectives,
-        },
-        languageOptions: {
-          sourceType,
-          ecmaVersion,
-        },
       },
       ignores: {
         name: "linted/*/ignores",
@@ -193,7 +167,6 @@ export class Factory<
   public get globals() {
     return [
       this.globalConfigs.plugins,
-      this.globalConfigs.settings,
       this.globalConfigs.ignores,
     ];
   }
