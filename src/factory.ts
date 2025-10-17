@@ -174,7 +174,7 @@ export class Factory<
     else {
       const {
         languageOptions = {},
-        parserOptions = {},
+        parserOptions,
         processor,
         language,
       } = this.settings[scope];
@@ -185,7 +185,7 @@ export class Factory<
         else
           return [];
 
-      if ("parser" in parserOptions)
+      if (parserOptions !== undefined && "parser" in parserOptions)
         if (parserOptions.parser in this.parsers)
           parserOptions.parser = this.parsers[parserOptions.parser as RequiredParser] as unknown as RequiredParser;
         else
@@ -197,7 +197,7 @@ export class Factory<
         ignores,
       };
 
-      if (Object.keys(parserOptions).length !== 0)
+      if (parserOptions !== undefined && Object.keys(parserOptions).length !== 0)
         Object.assign(
           languageOptions,
           { parserOptions },
