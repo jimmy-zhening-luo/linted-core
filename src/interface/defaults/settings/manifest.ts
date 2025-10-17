@@ -2,9 +2,7 @@ export interface ScopeManifest<
   Plugin extends string,
   Parser extends string,
 > {
-  plugins?: {
-    readonly Plugin[];
-  };
+  plugins?: readonly Plugin[];
   languageOptions?: {
     [property: string]: unknown;
     parser?: Parser;
