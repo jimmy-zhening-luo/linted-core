@@ -3,8 +3,8 @@ import type { Input } from "./interface";
 export default function factory<
   Scope extends string,
   Optional extends Scope,
-  BundledPlugin extends string,
-  BundledParser extends Scope,
+  Plugin extends string,
+  Parser extends Scope,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
@@ -18,20 +18,20 @@ export default function factory<
     plugins,
     parsers,
   }: {
-    plugins: Record<BundledPlugin, unknown>;
-    parsers: Record<BundledParser, unknown>;
+    plugins: Record<Plugin, unknown>;
+    parsers: Record<Parser, unknown>;
   },
   defaults: Input<
     Scope,
     Optional,
-    BundledPlugin,
-    BundledParser
+    Plugin,
+    Parser
   >["configuration"]["defaults"],
   extensions: Input<
     Scope,
     Optional,
-    BundledPlugin,
-    BundledParser
+    Plugin,
+    Parser
   >["configuration"]["extensions"] = {},
 ) {
   for (const scope of optional)
@@ -209,10 +209,10 @@ export default function factory<
           } = settings;
 
           if (languageOptions.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser as BundledParser] as unknown as BundledParser;
+            languageOptions.parser = parsers[languageOptions.parser as Parser] as unknown as Parser;
 
           if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser as BundledParser] as unknown as BundledParser;
+            parserOptions.parser = parsers[parserOptions.parser as Parser] as unknown as Parser;
 
           if (parserOptions !== undefined && Object.keys(parserOptions).length !== 0)
             Object.assign(

@@ -1,2 +1,2 @@
-export type { BundledPlugin } from "./plugins";
-export type { BundledParser } from "./parsers";
+export type { Plugin } from "./plugins";
+export type { Parser } from "./parsers";

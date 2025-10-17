@@ -1,7 +1,7 @@
 import type { Input } from "./interface";
 import type {
-  BundledPlugin,
-  BundledParser,
+  Plugin,
+  Parser,
 } from "./scope";
 import {
   scopes,
@@ -20,8 +20,8 @@ export default function (
   }: Input<
     (typeof scopes[number]),
     (typeof optional[number]),
-    BundledPlugin,
-    BundledParser
+    Plugin,
+    Parser
   >,
 ) {
   return factory(

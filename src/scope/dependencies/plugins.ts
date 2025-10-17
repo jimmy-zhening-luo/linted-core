@@ -1,4 +1,4 @@
-export type BundledPlugin
+export type Plugin
 = | "@stylistic"
   | "@typescript-eslint"
   | "mocha"
