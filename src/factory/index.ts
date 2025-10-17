@@ -162,6 +162,26 @@ export default function factory<
             }
     }
 
+  if (extensions["*"] !== undefined)
+    if (extensions["*"].override)
+      Object.assign(
+        defaults.ignores,
+        { "*": extensions["*"].ignores ?? [] },
+      );
+    else {
+      if (extensions["*"].ignores !== undefined)
+        if (extensions["*"].ignores.length !== 0) {
+          const { ignores } = extensions["*"],
+          defaultGlobals = defaults.ignores["*"],
+          L = defaultGlobals.length;
+
+          defaultGlobals.length += ignores.length;
+
+          for (let i = 0; i < ignores.length; i++)
+            defaultGlobals[L + i] = ignores[i]!;
+        }
+    }
+
   const configs: unknown[] = [
     {
       name: "linted/*/plugins",
@@ -169,9 +189,7 @@ export default function factory<
     },
     {
       name: "linted/*/ignores",
-      ignores: extensions["*"]?.override === true
-        ? extensions["*"].ignores ?? []
-        : defaults.ignores["*"].concat(extensions["*"]?.ignores ?? []),
+      ignores: defaults.ignores["*"],
     },
   ],
   scopeConfigs: unknown[] = scopes.flatMap(
@@ -202,29 +220,48 @@ export default function factory<
 
         if (settings !== undefined) {
           const {
-            languageOptions = {},
+            languageOptions,
             parserOptions,
             processor,
             language,
           } = settings;
 
-          if (languageOptions.parser !== undefined)
+          if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser as Parser] as unknown as Parser;
 
           if (parserOptions?.parser !== undefined)
             parserOptions.parser = parsers[parserOptions.parser as Parser] as unknown as Parser;
 
-          if (parserOptions !== undefined && Object.keys(parserOptions).length !== 0)
-            Object.assign(
-              languageOptions,
-              { parserOptions },
-            );
-
-          if (Object.keys(languageOptions).length !== 0)
-            Object.assign(
-              manifest,
-              { languageOptions },
-            );
+          if (languageOptions === undefined) {
+            if (
+              parserOptions !== undefined
+              && Object.keys(parserOptions).length !== 0
+            )
+              Object.assign(
+                manifest,
+                {
+                  languageOptions: {
+                    parserOptions,
+                  }
+                },
+              );
+          }
+          else {
+            if (
+              parserOptions !== undefined
+              && Object.keys(parserOptions).length !== 0
+            )
+              Object.assign(
+                languageOptions,
+                { parserOptions },
+              );
+  
+            if (Object.keys(languageOptions).length !== 0)
+              Object.assign(
+                manifest,
+                { languageOptions },
+              );
+          }
 
           if (processor !== undefined)
             Object.assign(
