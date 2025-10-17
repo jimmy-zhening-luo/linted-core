@@ -1,7 +1,9 @@
-const
-ERROR = 2,
-OFF = 0,
-Plugin = "MOCK_PLUGIN",
+const enum State {
+  OFF = 0,
+  WARN = 1,
+  ERROR = 2,
+}
+const Plugin = "MOCK_PLUGIN",
 Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
 export const MOCK_INPUT = {
@@ -107,99 +109,99 @@ export const MOCK_INPUT = {
           {
             id: "enable",
             rules: {
-              vanilla: ERROR,
-              vanilla0: ERROR,
-              vanilla1: ERROR,
-              vanilla2: ERROR,
-            } as const,
+              vanilla: State.ERROR,
+              vanilla0: State.ERROR,
+              vanilla1: State.ERROR,
+              vanilla2: State.ERROR,
+            },
           },
           {
             id: "enable/stylistic",
             rules: {
-              "@stylistic/style-rule": ERROR,
-            } as const,
+              "@stylistic/style-rule": State.ERROR,
+            },
           },
         ],
         ts: [
           {
             id: "disable",
             rules: {
-              vanilla0: OFF,
-            } as const,
+              vanilla0: State.OFF,
+            },
           },
           {
             id: "enable/extension",
             rules: {
-              "@typescript-eslint/enums": ERROR,
-              "@typescript-eslint/destructure-expression": ERROR,
-              "@typescript-eslint/global": ERROR,
-            } as const,
+              "@typescript-eslint/enums": State.ERROR,
+              "@typescript-eslint/destructure-expression": State.ERROR,
+              "@typescript-eslint/global": State.ERROR,
+            },
           },
         ],
         mocha: [
           {
             id: "disable",
             rules: {
-              vanilla2: OFF,
-            } as const,
+              vanilla2: State.OFF,
+            },
           },
           {
             id: "disable/ts",
             rules: {
-              "@typescript-eslint/global": ERROR,
-            } as const,
+              "@typescript-eslint/global": State.ERROR,
+            },
           },
           {
             id: "enable",
             rules: {
-              "mocha/test-expression": ERROR,
-            } as const,
+              "mocha/test-expression": State.ERROR,
+            },
           },
         ],
         svelte: [
           {
             id: "disable",
             rules: {
-              vanilla1: OFF,
-            } as const,
+              vanilla1: State.OFF,
+            },
           },
           {
             id: "enable-extension",
             rules: {
-              "svelte/tags": ERROR,
-            } as const,
+              "svelte/tags": State.ERROR,
+            },
           },
         ],
         html: [
           {
             id: "enable",
             rules: {
-              "html/attribute": ERROR,
-            } as const,
+              "html/attribute": State.ERROR,
+            },
           },
         ],
         css: [
           {
             id: "enable",
             rules: {
-              "css/property": ERROR,
-            } as const,
+              "css/property": State.ERROR,
+            },
           },
         ],
         json: [
           {
             id: "enable",
             rules: {
-              "jsonc/property-check": ERROR,
+              "jsonc/property-check": State.ERROR,
               "jsonc/comment": [
-                ERROR,
+                State.ERROR,
                 "never",
-              ],
+              ] as const,
               "jsonc/trailing-comma": [
-                ERROR,
+                State.ERROR,
                 "never",
-              ],
-            } as const,
+              ] as const,
+            },
           },
         ],
         jsonc: [
@@ -207,10 +209,10 @@ export const MOCK_INPUT = {
             id: "override-comment",
             rules: {
               "jsonc/comment": [
-                ERROR,
+                State.ERROR,
                 "allow",
-              ],
-            } as const,
+              ] as const,
+            },
           },
         ],
         jsoncc: [
@@ -218,18 +220,18 @@ export const MOCK_INPUT = {
             id: "override-comma",
             rules: {
               "jsonc/trailing-comma": [
-                ERROR,
+                State.ERROR,
                 "allow",
-              ],
-            } as const,
+              ] as const,
+            },
           },
         ],
         yml: [
           {
             id: "enable",
             rules: {
-              "yml/property-check": ERROR,
-            } as const,
+              "yml/property-check": State.ERROR,
+            },
           },
         ],
       },
