@@ -1,35 +1,41 @@
-import type { Input } from "./interface";
-import type {
-  Plugin,
-  Parser,
-} from "./scope";
-import {
-  scopes,
-  optional,
-  tree,
-} from "./scope";
 import factory from "./factory";
 
-export default function (
-  {
-    imports,
-    configuration: {
-      defaults,
-      extensions,
-    },
-  }: Input<
-    (typeof scopes[number]),
-    (typeof optional[number]),
-    Plugin,
-    Parser
+export default function <
+  Scope extends string,
+  Optional extends Scope,
+  Plugin extends string,
+  Parser extends Scope,
+>(
+  scopes: readonly Scope[],
+  optional: readonly Optional[],
+  tree: Array<
+    readonly [
+      Scope,
+      readonly Scope[],
+    ]
   >,
+  imports: {
+    plugins: Record<Plugin, unknown>;
+    parsers: Record<Parser, unknown>;
+  },
+  configuration: {
+    defaults: Defaults<
+      Scope,
+      Parser
+    >;
+    extensions: Partial<
+      Extensions<
+        Scope,
+        Optional
+      >
+    >;
+  },
 ) {
   return factory(
     scopes,
     optional,
     tree,
     imports,
-    defaults,
-    extensions,
+    configuration,
   );
 }

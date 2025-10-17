@@ -21,18 +21,21 @@ export default function factory<
     plugins: Record<Plugin, unknown>;
     parsers: Record<Parser, unknown>;
   },
-  defaults: Input<
-    Scope,
-    Optional,
-    Plugin,
-    Parser
-  >["configuration"]["defaults"],
-  extensions: Input<
-    Scope,
-    Optional,
-    Plugin,
-    Parser
-  >["configuration"]["extensions"] = {},
+  {
+    defaults,
+    extensions = {},
+  }: {
+    defaults: Defaults<
+      Scope,
+      Parser
+    >;
+    extensions: Partial<
+      Extensions<
+        Scope,
+        Optional
+      >
+    >;
+  },
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {

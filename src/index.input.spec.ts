@@ -6,8 +6,41 @@ const enum State {
 const Plugin = "MOCK_PLUGIN",
 Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 
-export const MOCK_INPUT = {
-  imports: {
+export default [
+  [
+    "js",
+    "ts",
+    "mocha",
+    "svelte",
+    "html",
+    "json",
+    "jsonc",
+    "jsoncc",
+  ],
+  ["svelte"],
+  [
+    [
+      "jsoncc",
+      ["jsonc"],
+    ] as const,
+    [
+      "jsonc",
+      ["json"],
+    ] as const,
+    [
+      "mocha",
+      ["ts"],
+    ] as const,
+    [
+      "svelte",
+      ["ts"],
+    ] as const,
+    [
+      "ts",
+      ["js"],
+    ] as const,
+  ],
+  {
     plugins: {
       "@stylistic": Plugin,
       "@typescript-eslint": Plugin,
@@ -18,15 +51,13 @@ export const MOCK_INPUT = {
       css: Plugin,
       json: Plugin,
       jsonc: Plugin,
-      yml: Plugin,
     },
     parsers: {
       ts: Parser("TS"),
       html: Parser("HTML"),
-      yml: Parser("YML"),
     },
   },
-  configuration: {
+  {
     defaults: {
       settings: {
         js: {},
@@ -238,4 +269,4 @@ export const MOCK_INPUT = {
     },
     extensions: {},
   },
-};
+];
