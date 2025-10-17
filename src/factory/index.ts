@@ -1,4 +1,4 @@
-import type { Input } from "./interface";
+import type { Input } from "../interface";
 
 export default function factory<
   Scope extends string,
