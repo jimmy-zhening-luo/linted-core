@@ -1,4 +1,4 @@
-import type { IConfig } from "../../../config";
+import type { Rules } from "../../rules";
 
 export type ScopeExtensions<
   Scope extends string,
@@ -9,7 +9,7 @@ export type ScopeExtensions<
   {
     files?: string[];
     ignores?: string[];
-    rules?: IConfig["rules"];
+    rules?: Rules;
   }
 >
 & Record<

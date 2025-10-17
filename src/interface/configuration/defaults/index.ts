@@ -1,5 +1,5 @@
 import type { Settings } from "./settings";
-import type { IConfig } from "../../../config";
+import type { Rules } from "../../rules";
 
 export interface Defaults<
   Scope extends string,
@@ -24,7 +24,7 @@ export interface Defaults<
     Scope,
     {
       id: string;
-      rules: IConfig["rules"];
+      rules: Rules;
     }[]
   >;
 }

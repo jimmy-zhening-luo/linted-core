@@ -1,10 +1,3 @@
-export type State
-= | 0
-  | 1
-  | 2
-  | "off"
-  | "warn"
-  | "error";
 export type Rules = Record<
   string,
   | State
@@ -13,3 +6,10 @@ export type Rules = Record<
     ...unknown[],
   ]
 >;
+export type State
+= | 0
+  | 1
+  | 2
+  | "off"
+  | "warn"
+  | "error";
