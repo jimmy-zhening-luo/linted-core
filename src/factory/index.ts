@@ -223,10 +223,10 @@ export default function factory<
           } = settings;
 
           if (languageOptions?.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser] as unknown as Parser;
+            languageOptions.parser = parsers[languageOptions.parser] as Parser;
 
           if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser] as unknown as Parser;
+            parserOptions.parser = parsers[parserOptions.parser] as Parser;
 
           if (languageOptions === undefined) {
             if (
