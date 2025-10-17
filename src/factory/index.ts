@@ -18,8 +18,8 @@ export default function factory<
     plugins,
     parsers,
   }: {
-    plugins: Record<Plugin, unknown>;
-    parsers: Record<Parser, unknown>;
+    plugins: Record<RequiredPlugin, unknown>;
+    parsers: Record<RequiredParser, unknown>;
   },
   {
     defaults,
@@ -27,7 +27,7 @@ export default function factory<
   }: Configuration<
     Scope,
     Optional,
-    Parser
+    RequiredParser | Optional
   >,
 ) {
   for (const scope of optional)

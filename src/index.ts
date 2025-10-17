@@ -16,13 +16,13 @@ export default function <
     ]
   >,
   imports: {
-    plugins: Record<Plugin, unknown>;
-    parsers: Record<Parser, unknown>;
+    plugins: Record<RequiredPlugin, unknown>;
+    parsers: Record<RequiredParser, unknown>;
   },
   configuration: Configuration<
     Scope,
     Optional,
-    Parser
+    RequiredParser | Optional
   >,
 ) {
   return factory(

@@ -8,7 +8,7 @@ export interface Configuration<
 > {
   defaults: Defaults<
     Scope,
-    Parser | Optional
+    Parser
   >;
   extensions: Partial<
     Extensions<
