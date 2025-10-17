@@ -3,8 +3,8 @@ import type { Configuration } from "../interface";
 export default function factory<
   Scope extends string,
   Optional extends Scope,
-  Plugin extends string,
-  Parser extends Scope,
+  RequiredPlugin extends string,
+  RequiredParser extends Scope,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],

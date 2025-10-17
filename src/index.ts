@@ -4,8 +4,8 @@ import factory from "./factory";
 export default function <
   Scope extends string,
   Optional extends Scope,
-  Plugin extends string,
-  Parser extends Scope,
+  RequiredPlugin extends string,
+  RequiredParser extends Scope,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
