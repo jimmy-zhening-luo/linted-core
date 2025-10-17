@@ -59,16 +59,16 @@ configuration = {
   defaults: {
     settings: {
       js: {
-        plugins: ["@stylistic"],
+        plugins: ["@stylistic"] as const,
       },
       ts: {
-        plugins: ["@typescript-eslint"],
+        plugins: ["@typescript-eslint"] as const,
         languageOptions: {
           parser: "ts" as const,
         },
       },
       svelte: {
-        plugins: ["svelte"],
+        plugins: ["svelte"] as const,
         languageOptions: {
           parser: "svelte" as const,
         },
@@ -79,7 +79,7 @@ configuration = {
         processor: "svelte/svelte",
       },
       html: {
-        plugins: ["html"],
+        plugins: ["html"] as const,
         languageOptions: {
           parser: "html" as const,
         },
@@ -92,7 +92,7 @@ configuration = {
         plugins: [
           "json",
           "jsonc",
-        ],
+        ] as const,
         languageOptions: {
           allowTrailingCommas: true,
         },
