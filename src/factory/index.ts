@@ -225,7 +225,7 @@ export default function factory<
             language,
           } = settings;
 
-          if (scopePlugins !== undefined) {
+          if (scopePlugins !== undefined)
             if (scopePlugins.length === 1) {
               const plugin = scopePlugins[0]!;
 
@@ -251,7 +251,6 @@ export default function factory<
                 },
               );
             }
-          }
 
           if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser] as Parser;
