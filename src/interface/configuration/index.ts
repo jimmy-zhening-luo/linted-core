@@ -10,8 +10,10 @@ export interface Configuration<
     Scope,
     Parser
   >;
-  extensions: Extensions<
-    Scope,
-    OptionalScope
+  extensions: Partial<
+    Extensions<
+      Scope,
+      OptionalScope
+    >
   >;
 }

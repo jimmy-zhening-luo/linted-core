@@ -1,4 +1,4 @@
-export type RequiredParser
+export type BundledParser
 = | "ts"
   | "html"
   | "yml";

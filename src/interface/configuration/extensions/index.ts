@@ -5,5 +5,5 @@ export type Extensions<
   Scope extends string,
   OptionalScope extends Scope,
 >
-= & Partial<GlobalExtension>
-  & Partial<ScopeExtensions<Scope, OptionalScope>>;
+= & GlobalExtension
+  & ScopeExtensions<Scope, OptionalScope>;

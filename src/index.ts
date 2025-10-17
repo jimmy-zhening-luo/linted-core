@@ -1,14 +1,14 @@
 import type { Input } from "./interface";
 import type {
-  RequiredPlugin,
-  RequiredParser,
+  BundledPlugin,
+  BundledParser,
 } from "./scope";
 import {
   scopes,
   optionalScopes,
   tree,
 } from "./scope";
-import { Factory } from "./factory";
+import factory from "./factory";
 
 export default function (
   {
@@ -20,27 +20,16 @@ export default function (
   }: Input<
     (typeof scopes[number]),
     (typeof optionalScopes[number]),
-    RequiredPlugin,
-    RequiredParser
+    BundledPlugin,
+    BundledParser
   >,
 ) {
-  const factory = new Factory<
-    (typeof scopes[number]),
-    (typeof optionalScopes[number]),
-    RequiredPlugin,
-    RequiredParser
-  >(
-    tree,
+  return factory(
+    scopes,
     optionalScopes,
+    tree,
     imports,
     defaults,
     extensions,
   );
-
-  return (factory.globals as unknown[])
-    .concat(
-      scopes.flatMap(
-        scope => factory.scope(scope),
-      ),
-    );
 }

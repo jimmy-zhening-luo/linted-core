@@ -1,13 +1,13 @@
 export interface Imports<
-  RequiredPlugin extends string,
-  RequiredParser extends string,
+  BundledPlugin extends string,
+  BundledParser extends string,
 > {
   plugins: Record<
-    RequiredPlugin,
+    BundledPlugin,
     unknown
   >;
   parsers: Record<
-    RequiredParser,
+    BundledParser,
     unknown
   >;
 }

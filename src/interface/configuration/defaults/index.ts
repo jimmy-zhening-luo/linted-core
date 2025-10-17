@@ -5,26 +5,28 @@ export interface Defaults<
   Scope extends string,
   Parser extends Scope,
 > {
-  settings: Settings<
+  settings: Partial<Settings<
     Scope,
     Parser
-  >;
-  files: Record<
+  >>;
+  files: Partial<Record<
     Scope,
     string[]
-  >;
-  ignores: Record<
-    (
-      | "*"
-      | Scope
-    ),
-    string[]
-  >;
-  rules: Record<
+  >>;
+  ignores:
+    & Record<
+      "*",
+      string[]
+    >
+    & Partial<Record<
+      Scope,
+      string[]
+    >>;
+  rules: Partial<Record<
     Scope,
     {
       id: string;
       rules: Rules;
     }[]
-  >;
+  >>;
 }

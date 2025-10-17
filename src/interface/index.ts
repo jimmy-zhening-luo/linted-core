@@ -4,18 +4,18 @@ import type { Configuration } from "./configuration";
 export interface Input<
   Scope extends string,
   OptionalScope extends Scope,
-  RequiredPlugin extends string,
-  RequiredParser extends Scope,
+  BundledPlugin extends string,
+  BundledParser extends Scope,
 > {
   imports: Imports<
-    RequiredPlugin,
-    RequiredParser
+    BundledPlugin,
+    BundledParser
   >;
   configuration: Configuration<
     Scope,
     OptionalScope,
     (
-      | RequiredParser
+      | BundledParser
       | OptionalScope
     )
   >;

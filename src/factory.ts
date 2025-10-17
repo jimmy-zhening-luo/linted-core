@@ -1,89 +1,58 @@
 import type { Input } from "./interface";
 
-export class Factory<
+export default function factory<
   Scope extends string,
   OptionalScope extends Scope,
-  RequiredPlugin extends string,
-  RequiredParser extends Scope,
-> {
-  public globalConfigs;
-  public scopes;
-  public parsers;
-  private readonly settings;
-
-  constructor(
-    tree: Array<
-      readonly [
-        Scope,
-        readonly Scope[],
-      ]
-    >,
-    optionalScopes: readonly Scope[],
-    {
-      plugins,
-      parsers,
-    }: Input<
+  BundledPlugin extends string,
+  BundledParser extends Scope,
+  // Tree,
+>(
+  scopes: readonly Scope[],
+  optionalScopes: readonly OptionalScope[],
+  tree: Array<
+    readonly [
       Scope,
-      OptionalScope,
-      RequiredPlugin,
-      RequiredParser
-    >["imports"],
-    defaults: Input<
-      Scope,
-      OptionalScope,
-      RequiredPlugin,
-      RequiredParser
-    >["configuration"]["defaults"],
-    extensions: Input<
-      Scope,
-      OptionalScope,
-      RequiredPlugin,
-      RequiredParser
-    >["configuration"]["extensions"] = {},
-  ) {
-    this.settings = defaults.settings;
-
-    if ("svelte" in extensions && "plugin" in (extensions.svelte as object)) {
+      readonly Scope[],
+    ]
+  >,
+  {
+    plugins,
+    parsers,
+  }: {
+    plugins: Record<BundledPlugin, unknown>;
+    parsers: Record<BundledParser, unknown>;
+  },
+  defaults: Input<
+    Scope,
+    OptionalScope,
+    BundledPlugin,
+    BundledParser
+  >["configuration"]["defaults"],
+  extensions: Input<
+    Scope,
+    OptionalScope,
+    BundledPlugin,
+    BundledParser
+  >["configuration"]["extensions"] = {},
+) {
+  for (const scope of optionalScopes)
+    if (extensions[scope] !== undefined) {
       Object.assign(
         plugins,
         {
-          svelte: (extensions.svelte as { plugin: unknown }).plugin,
+          [scope]: extensions[scope].plugin,
         },
       );
       Object.assign(
         parsers,
         {
-          svelte: (extensions.svelte as { parser: unknown }).parser,
+          [scope]: extensions[scope].parser,
         },
       );
     }
 
-    const ignores = extensions["*"]?.override === true
-      ? extensions["*"].ignores ?? []
-      : defaults.ignores["*"].concat(extensions["*"]?.ignores ?? []);
-
-    this.globalConfigs = {
-      plugins: {
-        name: "linted/*/plugins",
-        plugins,
-      },
-      ignores: {
-        name: "linted/*/ignores",
-        ignores,
-      },
-    };
-    this.scopes = {
-      files: defaults.files,
-      ignores: defaults.ignores,
-      rules: defaults.rules,
-    };
-    this.parsers = parsers;
-
-    const extended = new Set<Scope>(Object.keys(extensions) as unknown[] as Scope[]);
-
-    extended.delete("*" as unknown as Scope);
-
-    for (const scope of extended) {
+  for (const scope of scopes)
+    if (extensions[scope] !== undefined) {
       const {
         [scope]: {
           files = [],
@@ -92,150 +61,212 @@ export class Factory<
         } = {},
       } = extensions;
 
-      if (files.length !== 0) {
-        const defaultFiles = this.scopes.files[scope],
-        fEnd = defaultFiles.length;
+      if (files.length !== 0)
+        if (defaults.files[scope] === undefined)
+          Object.assign(
+            defaults.files,
+            { [scope]: files },
+          );
+        else {
+          const defaultFiles = defaults.files[scope],
+          L = defaultFiles.length;
 
-        defaultFiles.length += files.length;
+          defaultFiles.length += files.length;
 
-        for (let i = 0; i < files.length; i++)
-          defaultFiles[fEnd + i] = files[i] as string;
-      }
+          for (let i = 0; i < files.length; i++)
+            defaultFiles[L + i] = files[i] as string;
+        }
 
-      if (ignores.length !== 0) {
-        const defaultIgnores = this.scopes.ignores[scope],
-        iEnd = defaultIgnores.length;
+      if (ignores.length !== 0)
+        if (defaults.ignores[scope] === undefined)
+          Object.assign(
+            defaults.ignores,
+            { [scope]: ignores },
+          );
+        else {
+          const defaultIgnores = defaults.ignores[scope],
+          L = defaultIgnores.length;
 
-        defaultIgnores.length += ignores.length;
+          defaultIgnores.length += ignores.length;
 
-        for (let i = 0; i < ignores.length; i++)
-          defaultIgnores[iEnd + i] = ignores[i] as string;
-      }
+          for (let i = 0; i < ignores.length; i++)
+            defaultIgnores[L + i] = ignores[i] as string;
+        }
 
       if (rules !== null)
-        this.scopes.rules[scope][
-          this.scopes.rules[scope].length
-        ] = {
-          id: scope.concat("/override"),
-          rules,
-        };
-    }
-
-    const OptionalScopes = new Set<Scope>(optionalScopes);
-
-    for (const [scope, parents] of tree)
-      if (
-        !OptionalScopes.has(scope)
-        || scope in this.parsers
-      ) {
-        const files = this.scopes.files[scope],
-        ignores = this.scopes.ignores[scope];
-
-        if (files.length !== 0)
-          for (const parent of parents) {
-            const parentFiles = this.scopes.files[parent],
-            fEnd = parentFiles.length;
-
-            parentFiles.length += files.length;
-
-            for (let i = 0; i < files.length; i++)
-              parentFiles[fEnd + i] = files[i] as string;
-          }
-
-        if (ignores.length !== 0)
-          for (const parent of parents) {
-            const parentIgnores = this.scopes.ignores[parent],
-            iEnd = parentIgnores.length;
-
-            parentIgnores.length += ignores.length;
-
-            for (let i = 0; i < ignores.length; i++)
-              parentIgnores[iEnd + i] = ignores[i] as string;
-          }
-      }
-  }
-
-  public get globals() {
-    return [
-      this.globalConfigs.plugins,
-      this.globalConfigs.ignores,
-    ];
-  }
-
-  public scope(scope: Scope) {
-    const {
-      files: { [scope]: files },
-      ignores: { [scope]: ignores },
-      rules: { [scope]: rules },
-    } = this.scopes;
-
-    if (files.length === 0 || rules.length === 0)
-      return [];
-    else {
-      const {
-        languageOptions = {},
-        parserOptions,
-        processor,
-        language,
-      } = this.settings[scope];
-
-      if ("parser" in languageOptions)
-        if (languageOptions.parser in this.parsers)
-          languageOptions.parser = this.parsers[languageOptions.parser as RequiredParser] as unknown as RequiredParser;
-        else
-          return [];
-
-      if (parserOptions !== undefined && "parser" in parserOptions)
-        if (parserOptions.parser in this.parsers)
-          parserOptions.parser = this.parsers[parserOptions.parser as RequiredParser] as unknown as RequiredParser;
-        else
-          return [];
-
-      const manifest = {
-        name: "linted/".concat(scope),
-        files,
-        ignores,
-      };
-
-      if (parserOptions !== undefined && Object.keys(parserOptions).length !== 0)
-        Object.assign(
-          languageOptions,
-          { parserOptions },
-        );
-
-      if (Object.keys(languageOptions).length !== 0)
-        Object.assign(
-          manifest,
-          { languageOptions },
-        );
-
-      if (processor !== undefined)
-        Object.assign(
-          manifest,
-          { processor },
-        );
-
-      if (language !== undefined)
-        Object.assign(
-          manifest,
-          { language },
-        );
-
-      return [manifest].concat(
-        rules.map(
-          (
+        if (defaults.rules[scope] === undefined)
+          Object.assign(
+            defaults.rules,
             {
-              id,
-              rules,
+              [scope]: [
+                {
+                  id: scope.concat("/override"),
+                  rules,
+                },
+              ],
             },
-          ) => ({
-            name: "linted/".concat(scope, "/", id),
-            files,
-            ignores,
+          );
+        else
+        /* eslint-disable no-param-reassign */
+          defaults.rules[scope][
+            defaults.rules[scope].length
+          ] = {
+            id: scope.concat("/override"),
             rules,
-          }),
-        ),
-      );
+          };
     }
+
+  const OptionalScope = new Set<Scope>(optionalScopes);
+
+  for (const [scope, parents] of tree)
+    if (
+      !OptionalScope.has(scope)
+      || scope in parsers
+    ) {
+      const files = defaults.files[scope],
+      ignores = defaults.ignores[scope];
+
+      if (files !== undefined)
+        if (files.length !== 0)
+          for (const parent of parents)
+            if (defaults.files[parent] === undefined)
+              Object.assign(
+                defaults.files,
+                { [parent]: files },
+              );
+            else {
+              const parentFiles = defaults.files[parent],
+              L = parentFiles.length;
+
+              parentFiles.length += files.length;
+
+              for (let i = 0; i < files.length; i++)
+                parentFiles[L + i] = files[i]!;
+            }
+
+      if (ignores !== undefined)
+        if (ignores.length !== 0)
+          for (const parent of parents)
+            if (defaults.ignores[parent] === undefined)
+              Object.assign(
+                defaults.ignores,
+                { [parent]: ignores },
+              );
+            else {
+              const parentIgnores = defaults.ignores[parent],
+              L = parentIgnores.length;
+
+              parentIgnores.length += ignores.length;
+
+              for (let i = 0; i < ignores.length; i++)
+                parentIgnores[L + i] = ignores[i]!;
+            }
+    }
+
+  const configs: unknown[] = [
+    {
+      name: "linted/*/plugins",
+      plugins,
+    },
+    {
+      name: "linted/*/ignores",
+      ignores: extensions["*"]?.override === true
+        ? extensions["*"].ignores ?? []
+        : defaults.ignores["*"].concat(extensions["*"]?.ignores ?? []),
+    },
+  ],
+  scopeConfigs: unknown[] = scopes.flatMap(
+    scope => {
+      const {
+        files: { [scope]: files },
+        ignores: { [scope]: ignores = [] },
+        rules: { [scope]: rules },
+        settings: { [scope]: settings },
+      } = defaults;
+
+      if (
+        files === undefined
+        || rules === undefined
+        || files.length === 0
+        || rules.length === 0
+        || OptionalScope.has(scope)
+        && !(scope in parsers)
+
+      )
+        return [];
+      else {
+        const manifest = {
+          name: "linted/".concat(scope),
+          files,
+          ignores,
+        };
+
+        if (settings !== undefined) {
+          const {
+            languageOptions = {},
+            parserOptions,
+            processor,
+            language,
+          } = settings;
+
+          if (languageOptions.parser !== undefined)
+            languageOptions.parser = parsers[languageOptions.parser as BundledParser] as unknown as BundledParser;
+
+          if (parserOptions?.parser !== undefined)
+            parserOptions.parser = parsers[parserOptions.parser as BundledParser] as unknown as BundledParser;
+
+          if (parserOptions !== undefined && Object.keys(parserOptions).length !== 0)
+            Object.assign(
+              languageOptions,
+              { parserOptions },
+            );
+
+          if (Object.keys(languageOptions).length !== 0)
+            Object.assign(
+              manifest,
+              { languageOptions },
+            );
+
+          if (processor !== undefined)
+            Object.assign(
+              manifest,
+              { processor },
+            );
+
+          if (language !== undefined)
+            Object.assign(
+              manifest,
+              { language },
+            );
+        }
+
+        return [manifest].concat(
+          rules.map(
+            (
+              {
+                id,
+                rules,
+              },
+            ) => ({
+              name: "linted/".concat(scope, "/", id),
+              files,
+              ignores,
+              rules,
+            }),
+          ),
+        );
+      }
+    },
+  );
+
+  if (scopeConfigs.length !== 0) {
+    const L = configs.length;
+
+    configs.length += scopeConfigs.length;
+
+    for (let i = 0; i < scopeConfigs.length; i++)
+      configs[L + i] = scopeConfigs[i];
   }
+
+  return configs;
 }

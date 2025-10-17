@@ -13,6 +13,6 @@ export const scopes = [
 export const optionalScopes = ["svelte"] as const;
 export { tree } from "./tree";
 export type {
-  RequiredPlugin,
-  RequiredParser,
+  BundledPlugin,
+  BundledParser,
 } from "./dependencies";
