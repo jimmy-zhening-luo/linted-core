@@ -168,7 +168,7 @@ export default function factory<
         defaults.ignores,
         { "*": extensions["*"].ignores ?? [] },
       );
-    else {
+    else
       if (extensions["*"].ignores !== undefined)
         if (extensions["*"].ignores.length !== 0) {
           const { ignores } = extensions["*"],
@@ -180,7 +180,6 @@ export default function factory<
           for (let i = 0; i < ignores.length; i++)
             defaultGlobals[L + i] = ignores[i]!;
         }
-    }
 
   const configs: unknown[] = [
     {
@@ -242,7 +241,7 @@ export default function factory<
                 {
                   languageOptions: {
                     parserOptions,
-                  }
+                  },
                 },
               );
           }
@@ -255,7 +254,7 @@ export default function factory<
                 languageOptions,
                 { parserOptions },
               );
-  
+
             if (Object.keys(languageOptions).length !== 0)
               Object.assign(
                 manifest,
