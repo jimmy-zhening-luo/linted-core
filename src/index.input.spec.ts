@@ -14,7 +14,7 @@ export const MOCK_INPUT = {
       mocha: Plugin,
       "chai-friendly": Plugin,
       "chai-expect": Plugin,
-      "@html-eslint": Plugin,
+      html: Plugin,
       css: Plugin,
       json: Plugin,
       jsonc: Plugin,
@@ -53,7 +53,7 @@ export const MOCK_INPUT = {
           parserOptions: {
             frontmatter: true,
           },
-          language: "@html-eslint/html",
+          language: "html/html",
         },
         css: {
           languageOptions: {

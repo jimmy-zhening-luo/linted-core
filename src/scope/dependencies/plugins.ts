@@ -4,7 +4,7 @@ export type RequiredPlugin
   | "mocha"
   | "chai-friendly"
   | "chai-expect"
-  | "@html-eslint"
+  | "html"
   | "css"
   | "json"
   | "jsonc"
