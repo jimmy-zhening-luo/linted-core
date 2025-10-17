@@ -3,7 +3,7 @@ import type { Extensions } from "./extensions";
 
 export interface Configuration<
   Scope extends string,
-  OptionalScope extends Scope,
+  Optional extends Scope,
   Parser extends Scope,
 > {
   defaults: Defaults<
@@ -13,7 +13,7 @@ export interface Configuration<
   extensions: Partial<
     Extensions<
       Scope,
-      OptionalScope
+      Optional
     >
   >;
 }

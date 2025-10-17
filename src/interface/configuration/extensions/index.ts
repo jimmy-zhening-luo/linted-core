@@ -3,7 +3,7 @@ import type { ScopeExtensions } from "./scopes";
 
 export type Extensions<
   Scope extends string,
-  OptionalScope extends Scope,
+  Optional extends Scope,
 >
 = & GlobalExtension
-  & ScopeExtensions<Scope, OptionalScope>;
+  & ScopeExtensions<Scope, Optional>;

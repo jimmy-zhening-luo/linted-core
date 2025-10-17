@@ -2,12 +2,12 @@ import type { Input } from "./interface";
 
 export default function factory<
   Scope extends string,
-  OptionalScope extends Scope,
+  Optional extends Scope,
   BundledPlugin extends string,
   BundledParser extends Scope,
 >(
   scopes: readonly Scope[],
-  optional: readonly OptionalScope[],
+  optional: readonly Optional[],
   tree: Array<
     readonly [
       Scope,
@@ -23,13 +23,13 @@ export default function factory<
   },
   defaults: Input<
     Scope,
-    OptionalScope,
+    Optional,
     BundledPlugin,
     BundledParser
   >["configuration"]["defaults"],
   extensions: Input<
     Scope,
-    OptionalScope,
+    Optional,
     BundledPlugin,
     BundledParser
   >["configuration"]["extensions"] = {},
@@ -115,11 +115,11 @@ export default function factory<
           };
     }
 
-  const OptionalScope = new Set<Scope>(optional);
+  const Optional = new Set<Scope>(optional);
 
   for (const [scope, parents] of tree)
     if (
-      !OptionalScope.has(scope)
+      !Optional.has(scope)
       || scope in parsers
     ) {
       const files = defaults.files[scope],
@@ -188,7 +188,7 @@ export default function factory<
         || rules === undefined
         || files.length === 0
         || rules.length === 0
-        || OptionalScope.has(scope)
+        || Optional.has(scope)
         && !(scope in parsers)
 
       )

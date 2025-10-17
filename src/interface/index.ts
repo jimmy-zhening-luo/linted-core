@@ -3,7 +3,7 @@ import type { Configuration } from "./configuration";
 
 export interface Input<
   Scope extends string,
-  OptionalScope extends Scope,
+  Optional extends Scope,
   BundledPlugin extends string,
   BundledParser extends Scope,
 > {
@@ -13,10 +13,10 @@ export interface Input<
   >;
   configuration: Configuration<
     Scope,
-    OptionalScope,
+    Optional,
     (
       | BundledParser
-      | OptionalScope
+      | Optional
     )
   >;
 }

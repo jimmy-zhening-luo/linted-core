@@ -2,7 +2,7 @@ import type { Rules } from "../../rules";
 
 export type ScopeExtensions<
   Scope extends string,
-  OptionalScope extends Scope,
+  Optional extends Scope,
 >
 = & Record<
   Scope,
@@ -13,7 +13,7 @@ export type ScopeExtensions<
   }
 >
 & Record<
-  OptionalScope,
+  Optional,
   {
     plugin: unknown;
     parser: unknown;
