@@ -1,9 +1,20 @@
 import "chai/register-should.js";
 import Core from ".";
-import MOCK_INPUT from "./index.input.spec";
+import {
+  scopes,
+  optional,
+  tree,
+  imports,
+  configuration,
+} from "./index.input.spec";
 
-const [scopes] = MOCK_INPUT,
-configs = Core(...MOCK_INPUT);
+const configs = Core(
+  scopes,
+  optional,
+  tree,
+  imports,
+  configuration,
+);
 
 describe(
   "Core",
