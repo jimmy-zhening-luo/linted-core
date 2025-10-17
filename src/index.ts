@@ -24,31 +24,23 @@ export default function (
     RequiredParser
   >,
 ) {
-  try {
-    const factory = new Factory<
-      (typeof scopes[number]),
-      (typeof optionalScopes[number]),
-      RequiredPlugin,
-      RequiredParser
-    >(
-      tree,
-      optionalScopes,
-      imports,
-      defaults,
-      extensions,
-    );
+  const factory = new Factory<
+    (typeof scopes[number]),
+    (typeof optionalScopes[number]),
+    RequiredPlugin,
+    RequiredParser
+  >(
+    tree,
+    optionalScopes,
+    imports,
+    defaults,
+    extensions,
+  );
 
-    return (factory.globals as unknown[])
-      .concat(
-        scopes.flatMap(
-          scope => factory.scope(scope),
-        ),
-      );
-  }
-  catch (e) {
-    throw TypeError(
-      "linted-core: ",
-      { cause: e },
+  return (factory.globals as unknown[])
+    .concat(
+      scopes.flatMap(
+        scope => factory.scope(scope),
+      ),
     );
-  }
 }
