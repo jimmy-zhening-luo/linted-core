@@ -45,11 +45,11 @@ describe(
           },
         );
         it(
-          `length >= (plugins + global/ignores + global/settings + ${scopes.length} scopes = ${scopes.length + 3}) [Actual: ${configs.length}]`,
+          `length >= (global/ignores + ${scopes.length} scopes = ${scopes.length + 1}) [Actual: ${configs.length}]`,
           function () {
             configs
               .should.have
-              .lengthOf.above(scopes.length + 2);
+              .lengthOf.above(scopes.length + 1);
           },
         );
         it(
@@ -69,36 +69,18 @@ describe(
     describe(
       "configs",
       function () {
-        const [
-          first,
-          second,
-        ] = configs as [object, object];
+        const [global] = configs as [object];
 
         it(
-          "begin with plugins",
+          "begin with global ignores",
           function () {
-            first
-              .should.have
-              .property(
-                "name",
-                "linted/*/plugins",
-              );
-            first
-              .should.have
-              .property("plugins")
-              .an("object");
-          },
-        );
-        it(
-          "followed by global ignores",
-          function () {
-            second
+            global
               .should.have
               .property(
                 "name",
                 "linted/*/ignores",
               );
-            second
+            global
               .should.have
               .property("ignores")
               .an("array");

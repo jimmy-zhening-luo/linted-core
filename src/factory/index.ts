@@ -5,6 +5,7 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
@@ -19,8 +20,12 @@ export default function factory<
     plugins,
     parsers,
   }: {
-    plugins: Record<RequiredPlugin, unknown>;
-    parsers: Record<RequiredParser, unknown> & Partial<Record<Optional, unknown>>;
+    plugins:
+      & Record<RequiredPlugin, unknown>
+      & Partial<Record<Optional, unknown>>;
+    parsers:
+      & Record<RequiredParser, unknown>
+      & Partial<Record<Optional, unknown>>;
   },
   {
     defaults,
@@ -180,10 +185,6 @@ export default function factory<
 
   const configs: unknown[] = [
     {
-      name: "linted/*/plugins",
-      plugins,
-    },
-    {
       name: "linted/*/ignores",
       ignores: defaults.ignores["*"],
     },
@@ -216,11 +217,43 @@ export default function factory<
 
         if (settings !== undefined) {
           const {
+            plugins: scopePlugins,
             languageOptions,
             parserOptions,
             processor,
             language,
           } = settings;
+
+          if (scopePlugins !== undefined) {
+            if (scopePlugins.length === 1) {
+              [plugin] = scopePlugins;
+
+              Object.assign(
+                manifest,
+                {
+                  plugins: {
+                    [plugin]: plugins[plugin],
+                  },
+                },
+              );
+            }
+            else {
+              Object.assign(
+                manifest,
+                {
+                  plugins: {},
+                },
+              );
+
+              for (const plugin of scopePlugins)
+                Object.assign(
+                  manifest.plugins,
+                  {
+                    [plugin]: plugins[plugin],
+                  },
+                );
+            }
+          }
 
           if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser] as Parser;

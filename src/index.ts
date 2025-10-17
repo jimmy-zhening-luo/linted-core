@@ -6,6 +6,7 @@ export default function<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
@@ -17,12 +18,17 @@ export default function<
     ]
   >,
   imports: {
-    plugins: Record<RequiredPlugin, unknown>;
-    parsers: Record<RequiredParser, unknown> & Partial<Record<Optional, unknown>>;
+    plugins:
+      & Record<RequiredPlugin, unknown>
+      & Partial<Record<Optional, unknown>>;
+    parsers:
+      & Record<RequiredParser, unknown>
+      & Partial<Record<Optional, unknown>>;
   },
   configuration: Configuration<
     Scope,
     Optional,
+    Plugin,
     Parser
   >,
 ) {
