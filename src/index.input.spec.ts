@@ -269,4 +269,4 @@ export default [
     },
     extensions: {},
   },
-];
+] as const;
