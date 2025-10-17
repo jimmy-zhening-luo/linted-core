@@ -5,6 +5,7 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
@@ -19,7 +20,7 @@ export default function factory<
     parsers,
   }: {
     plugins: Record<RequiredPlugin, unknown>;
-    parsers: Record<RequiredParser, unknown>;
+    parsers: Record<RequiredParser, unknown> & Partial<Record<Optional, unknown>>;
   },
   {
     defaults,
@@ -27,7 +28,7 @@ export default function factory<
   }: Configuration<
     Scope,
     Optional,
-    RequiredParser | Optional
+    Parser
   >,
 ) {
   for (const scope of optional)
@@ -222,10 +223,10 @@ export default function factory<
           } = settings;
 
           if (languageOptions?.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser as Parser] as unknown as Parser;
+            languageOptions.parser = parsers[languageOptions.parser] as unknown as Parser;
 
           if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser as Parser] as unknown as Parser;
+            parserOptions.parser = parsers[parserOptions.parser] as unknown as Parser;
 
           if (languageOptions === undefined) {
             if (

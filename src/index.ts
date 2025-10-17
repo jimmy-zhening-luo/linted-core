@@ -1,11 +1,12 @@
-import { Configuration } from "./interface";
+import type { Configuration } from "./interface";
 import factory from "./factory";
 
-export default function <
+export default function<
   Scope extends string,
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
@@ -17,12 +18,12 @@ export default function <
   >,
   imports: {
     plugins: Record<RequiredPlugin, unknown>;
-    parsers: Record<RequiredParser, unknown>;
+    parsers: Record<RequiredParser, unknown> & Partial<Record<Optional, unknown>>;
   },
   configuration: Configuration<
     Scope,
     Optional,
-    RequiredParser | Optional
+    Parser
   >,
 ) {
   return factory(

@@ -15,8 +15,8 @@ export const scopes = [
   "json",
   "jsonc",
   "jsoncc",
-],
-optional = ["svelte"],
+] as const,
+optional = ["svelte"] as const,
 tree = [
   [
     "jsoncc",
