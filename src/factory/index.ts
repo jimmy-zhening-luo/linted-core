@@ -163,7 +163,7 @@ export default function factory<
     }
 
   if (extensions["*"] !== undefined)
-    if (extensions["*"].override)
+    if (extensions["*"].override === true)
       Object.assign(
         defaults.ignores,
         { "*": extensions["*"].ignores ?? [] },
