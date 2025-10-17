@@ -33,6 +33,7 @@ export default function factory<
   }: Configuration<
     Scope,
     Optional,
+    Plugin,
     Parser
   >,
 ) {
