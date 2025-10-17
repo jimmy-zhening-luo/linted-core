@@ -1,4 +1,4 @@
-import type { Rules } from "../../rules";
+import type { Rules } from "../rules";
 
 export type ScopeExtensions<
   Scope extends string,

@@ -1,3 +1,4 @@
+import { Configuration } from "./interface";
 import factory from "./factory";
 
 export default function <
@@ -18,18 +19,11 @@ export default function <
     plugins: Record<Plugin, unknown>;
     parsers: Record<Parser, unknown>;
   },
-  configuration: {
-    defaults: Defaults<
-      Scope,
-      Parser
-    >;
-    extensions: Partial<
-      Extensions<
-        Scope,
-        Optional
-      >
-    >;
-  },
+  configuration: Configuration<
+    Scope,
+    Optional,
+    Parser
+  >,
 ) {
   return factory(
     scopes,

@@ -1,5 +1,5 @@
 import type { Settings } from "./settings";
-import type { Rules } from "../../rules";
+import type { Rules } from "../rules";
 
 export interface Defaults<
   Scope extends string,

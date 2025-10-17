@@ -1,22 +1,19 @@
-import type { Imports } from "./imports";
-import type { Configuration } from "./configuration";
+import type { Defaults } from "./defaults";
+import type { Extensions } from "./extensions";
 
-export interface Input<
+export interface Configuration<
   Scope extends string,
   Optional extends Scope,
-  Plugin extends string,
   Parser extends Scope,
 > {
-  imports: Imports<
-    Plugin,
-    Parser
-  >;
-  configuration: Configuration<
+  defaults: Defaults<
     Scope,
-    Optional,
-    (
-      | Parser
-      | Optional
-    )
+    Parser | Optional
+  >;
+  extensions: Partial<
+    Extensions<
+      Scope,
+      Optional
+    >
   >;
 }

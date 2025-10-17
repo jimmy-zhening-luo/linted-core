@@ -1,4 +1,4 @@
-import type { Input } from "../interface";
+import type { Configuration } from "../interface";
 
 export default function factory<
   Scope extends string,
@@ -24,18 +24,11 @@ export default function factory<
   {
     defaults,
     extensions = {},
-  }: {
-    defaults: Defaults<
-      Scope,
-      Parser
-    >;
-    extensions: Partial<
-      Extensions<
-        Scope,
-        Optional
-      >
-    >;
-  },
+  }: Configuration<
+    Scope,
+    Optional,
+    Parser
+  >,
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
