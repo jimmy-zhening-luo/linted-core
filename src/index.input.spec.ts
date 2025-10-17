@@ -47,7 +47,6 @@ imports = {
     "chai-friendly": Plugin,
     "chai-expect": Plugin,
     html: Plugin,
-    css: Plugin,
     json: Plugin,
     jsonc: Plugin,
   },
@@ -59,13 +58,11 @@ imports = {
 configuration = {
   defaults: {
     settings: {
-      js: {},
       ts: {
         languageOptions: {
           parser: "ts" as const,
         },
       },
-      mocha: {},
       svelte: {
         languageOptions: {
           parser: "svelte" as const,
@@ -85,12 +82,6 @@ configuration = {
         },
         language: "html/html",
       },
-      css: {
-        languageOptions: {
-          tolerant: false,
-        },
-        language: "css/css",
-      },
       json: {
         languageOptions: {
           allowTrailingCommas: true,
@@ -103,11 +94,6 @@ configuration = {
       jsoncc: {
         language: "json/jsonc",
       },
-      yml: {
-        languageOptions: {
-          parser: "yml" as const,
-        },
-      },
     },
     files: {
       js: ["default.js"],
@@ -115,11 +101,9 @@ configuration = {
       mocha: ["default.mocha"],
       svelte: ["default.svelte"],
       html: ["default.html"],
-      css: ["default.css"],
       json: ["default.json"],
       jsonc: ["default.jsonc"],
       jsoncc: ["default-comma.jsonc"],
-      yml: ["default.yml"],
     },
     ignores: {
       "*": ["ignore/default.*"],
@@ -128,11 +112,9 @@ configuration = {
       mocha: ["ignore/default.mocha"],
       svelte: ["ignore/default.svelte"],
       html: ["ignore/default.html"],
-      css: ["ignore/default.css"],
       json: ["ignore/default.json"],
       jsonc: ["ignore/default.jsonc"],
       jsoncc: ["ignore/default-comma.jsonc"],
-      yml: ["ignore/default.yml"],
     },
     rules: {
       js: [
@@ -210,14 +192,6 @@ configuration = {
           },
         },
       ],
-      css: [
-        {
-          id: "enable",
-          rules: {
-            "css/property": State.ERROR,
-          },
-        },
-      ],
       json: [
         {
           id: "enable",
@@ -253,14 +227,6 @@ configuration = {
               State.ERROR,
               "allow",
             ] as const,
-          },
-        },
-      ],
-      yml: [
-        {
-          id: "enable",
-          rules: {
-            "yml/property-check": State.ERROR,
           },
         },
       ],
