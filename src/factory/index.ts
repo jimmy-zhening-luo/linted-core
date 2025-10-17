@@ -73,7 +73,7 @@ export default function factory<
           defaultFiles.length += files.length;
 
           for (let i = 0; i < files.length; i++)
-            defaultFiles[L + i] = files[i] as string;
+            defaultFiles[L + i] = files[i]!;
         }
 
       if (ignores.length !== 0)
@@ -89,7 +89,7 @@ export default function factory<
           defaultIgnores.length += ignores.length;
 
           for (let i = 0; i < ignores.length; i++)
-            defaultIgnores[L + i] = ignores[i] as string;
+            defaultIgnores[L + i] = ignores[i]!;
         }
 
       if (rules !== null)
