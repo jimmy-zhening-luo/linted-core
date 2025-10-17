@@ -5,7 +5,7 @@ import type {
 } from "./scope";
 import {
   scopes,
-  optionalScopes,
+  optional,
   tree,
 } from "./scope";
 import factory from "./factory";
@@ -19,14 +19,14 @@ export default function (
     },
   }: Input<
     (typeof scopes[number]),
-    (typeof optionalScopes[number]),
+    (typeof optional[number]),
     BundledPlugin,
     BundledParser
   >,
 ) {
   return factory(
     scopes,
-    optionalScopes,
+    optional,
     tree,
     imports,
     defaults,

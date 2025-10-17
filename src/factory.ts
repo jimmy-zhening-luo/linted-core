@@ -7,7 +7,7 @@ export default function factory<
   BundledParser extends Scope,
 >(
   scopes: readonly Scope[],
-  optionalScopes: readonly OptionalScope[],
+  optional: readonly OptionalScope[],
   tree: Array<
     readonly [
       Scope,
@@ -34,7 +34,7 @@ export default function factory<
     BundledParser
   >["configuration"]["extensions"] = {},
 ) {
-  for (const scope of optionalScopes)
+  for (const scope of optional)
     if (extensions[scope] !== undefined) {
       Object.assign(
         plugins,
@@ -115,7 +115,7 @@ export default function factory<
           };
     }
 
-  const OptionalScope = new Set<Scope>(optionalScopes);
+  const OptionalScope = new Set<Scope>(optional);
 
   for (const [scope, parents] of tree)
     if (

@@ -10,7 +10,7 @@ export const scopes = [
   "jsoncc",
   "yml",
 ] as const;
-export const optionalScopes = ["svelte"] as const;
+export const optional = ["svelte"] as const;
 export { tree } from "./tree";
 export type {
   BundledPlugin,
