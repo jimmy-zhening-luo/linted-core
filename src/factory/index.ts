@@ -227,7 +227,7 @@ export default function factory<
 
           if (scopePlugins !== undefined) {
             if (scopePlugins.length === 1) {
-              [plugin] = scopePlugins;
+              const [plugin] = scopePlugins;
 
               Object.assign(
                 manifest,
