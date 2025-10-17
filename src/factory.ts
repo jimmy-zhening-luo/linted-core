@@ -5,7 +5,6 @@ export default function factory<
   OptionalScope extends Scope,
   BundledPlugin extends string,
   BundledParser extends Scope,
-  // Tree,
 >(
   scopes: readonly Scope[],
   optionalScopes: readonly OptionalScope[],
