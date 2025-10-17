@@ -239,20 +239,17 @@ export default function factory<
               );
             }
             else {
+              const plugged: Partial<typeof plugins> = {};
+
+              for (const plugin of scopePlugins)
+                plugged[plugin] = plugins[plugin];
+
               Object.assign(
                 manifest,
                 {
-                  plugins: {},
+                  plugins: plugged,
                 },
               );
-
-              for (const plugin of scopePlugins)
-                Object.assign(
-                  manifest.plugins,
-                  {
-                    [plugin]: plugins[plugin],
-                  },
-                );
             }
           }
 
