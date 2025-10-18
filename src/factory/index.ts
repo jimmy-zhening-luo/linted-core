@@ -5,21 +5,20 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
-  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
-  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[0],
-  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[1],
-  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[2],
+  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[0],
+  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[1],
+  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[2],
   {
     plugins,
     parsers,
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[3],
-  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[4],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
+  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
   {
     defaults,
     extensions = {},
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[5],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
@@ -183,7 +182,6 @@ export default function factory<
         || rules.length === 0
         || Optional.has(scope)
         && !(scope in parsers)
-
       )
         return [];
       else {
@@ -195,39 +193,11 @@ export default function factory<
 
         if (settings[scope] !== undefined) {
           const {
-            plugins: scopePlugins,
             languageOptions,
             parserOptions,
             processor,
             language,
           } = settings[scope];
-
-          if (scopePlugins !== undefined)
-            if (scopePlugins.length === 1) {
-              const plugin = scopePlugins[0]!;
-
-              Object.assign(
-                manifest,
-                {
-                  plugins: {
-                    [plugin]: plugins[plugin],
-                  },
-                },
-              );
-            }
-            else {
-              const plugged: Partial<typeof plugins> = {};
-
-              for (const plugin of scopePlugins)
-                plugged[plugin] = plugins[plugin];
-
-              Object.assign(
-                manifest,
-                {
-                  plugins: plugged,
-                },
-              );
-            }
 
           if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser] as Parser;
@@ -303,9 +273,16 @@ export default function factory<
   if (configs.length === 0)
     return [];
   else {
-    configs[configs.length] = {
+    const { length } = configs;
+
+    configs.length += 2;
+    configs[length] = {
       name: "linted/*/ignores",
       ignores: defaults.ignores["*"],
+    };
+    configs[length + 1] = {
+      name: "linted/*/plugins",
+      plugins,
     };
 
     return configs;

@@ -1,24 +1,30 @@
 import type { Rules } from "../../rules";
 
 export interface Defaults<Scope extends string> {
-  files: Partial<Record<
-    Scope,
-    string[]
-  >>;
+  files: Partial<
+    Record<
+      Scope,
+      string[]
+    >
+  >;
   ignores:
     & Record<
       "*",
       string[]
     >
-    & Partial<Record<
+    & Partial<
+      Record<
+        Scope,
+        string[]
+      >
+    >;
+  rules: Partial<
+    Record<
       Scope,
-      string[]
-    >>;
-  rules: Partial<Record<
-    Scope,
-    {
-      id: string;
-      rules: Rules;
-    }[]
-  >>;
+      {
+        id: string;
+        rules: Rules;
+      }[]
+    >
+  >;
 }

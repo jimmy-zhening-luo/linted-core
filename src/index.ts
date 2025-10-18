@@ -9,16 +9,12 @@ export default function<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
-  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
   tree: Array<
-    readonly [
-      Scope,
-      readonly Scope[],
-    ]
+    readonly [Scope, readonly Scope[]]
   >,
   imports: {
     plugins:
@@ -28,15 +24,8 @@ export default function<
       & Record<RequiredParser, unknown>
       & Partial<Record<Optional, unknown>>;
   },
-  settings: Settings<
-    Scope,
-    Plugin,
-    Parser
-  >,
-  configuration: Configuration<
-    Scope,
-    Optional
-  >,
+  settings: Settings<Scope, Parser>,
+  configuration: Configuration<Scope, Optional>,
 ) {
   return factory(
     scopes,

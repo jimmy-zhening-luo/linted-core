@@ -71,10 +71,10 @@ describe(
     describe(
       "configs",
       function () {
-        const global = configs.at(-1) as [object];
+        const global = configs.at(-2) as [object, object];
 
         it(
-          "ends with global ignores",
+          "ends with global ignores and plugins",
           function () {
             global
               .should.have
