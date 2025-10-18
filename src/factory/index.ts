@@ -185,11 +185,19 @@ export default function factory<
       )
         return [];
       else {
-        const manifest = {
-          name: "linted/".concat(scope),
-          files,
-          ignores,
-        };
+        const rulesets: unknown[] = rules.map(
+          (
+            {
+              id,
+              rules,
+            },
+          ) => ({
+            name: "linted/".concat(scope, "/", id),
+            files,
+            ignores,
+            rules,
+          }),
+        );
 
         if (settings[scope] !== undefined) {
           const {
@@ -197,7 +205,12 @@ export default function factory<
             parserOptions,
             processor,
             language,
-          } = settings[scope];
+          } = settings[scope],
+          manifest = {
+            name: "linted/".concat(scope),
+            files,
+            ignores,
+          };
 
           if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser] as Parser;
@@ -247,23 +260,9 @@ export default function factory<
               manifest,
               { language },
             );
+
+          rulesets[rulesets.length] = manifest;
         }
-
-        const rulesets: unknown[] = rules.map(
-          (
-            {
-              id,
-              rules,
-            },
-          ) => ({
-            name: "linted/".concat(scope, "/", id),
-            files,
-            ignores,
-            rules,
-          }),
-        );
-
-        rulesets[rulesets.length] = manifest;
 
         return rulesets;
       }
