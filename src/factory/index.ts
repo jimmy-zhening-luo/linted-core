@@ -1,7 +1,4 @@
-import type {
-  Settings,
-  Configuration,
-} from "../interface";
+import type Core from "..";
 
 export default function factory<
   Scope extends string,
@@ -11,37 +8,18 @@ export default function factory<
   Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
-  scopes: readonly Scope[],
-  optional: readonly Optional[],
-  tree: Array<
-    readonly [
-      Scope,
-      readonly Scope[],
-    ]
-  >,
+  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[0],
+  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[1],
+  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[2],
   {
     plugins,
     parsers,
-  }: {
-    plugins:
-      & Record<RequiredPlugin, unknown>
-      & Partial<Record<Optional, unknown>>;
-    parsers:
-      & Record<RequiredParser, unknown>
-      & Partial<Record<Optional, unknown>>;
-  },
-  settings: Settings<
-    Scope,
-    Plugin,
-    Parser
-  >,
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[3],
+  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[4],
   {
     defaults,
     extensions = {},
-  }: Configuration<
-    Scope,
-    Optional
-  >,
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[5],
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
