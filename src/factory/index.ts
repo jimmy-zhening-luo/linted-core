@@ -168,13 +168,7 @@ export default function factory<
             defaultGlobals[L + i] = ignores[i]!;
         }
 
-  const configs: unknown[] = [
-    {
-      name: "linted/*/ignores",
-      ignores: defaults.ignores["*"],
-    },
-  ],
-  scopeConfigs: unknown[] = scopes.flatMap(
+  const configs: unknown[] = scopes.flatMap(
     scope => {
       const {
         files: { [scope]: files },
@@ -285,33 +279,35 @@ export default function factory<
             );
         }
 
-        return [manifest].concat(
-          rules.map(
-            (
-              {
-                id,
-                rules,
-              },
-            ) => ({
-              name: "linted/".concat(scope, "/", id),
-              files,
-              ignores,
+        const rulesets: unknown[] = rules.map(
+          (
+            {
+              id,
               rules,
-            }),
-          ),
+            },
+          ) => ({
+            name: "linted/".concat(scope, "/", id),
+            files,
+            ignores,
+            rules,
+          }),
         );
+
+        rulesets[rulesets.length] = manifest;
+
+        return rulesets;
       }
     },
   );
 
-  if (scopeConfigs.length !== 0) {
-    const L = configs.length;
+  if (configs.length === 0)
+    return [];
+  else {
+    configs[configs.length] = {
+      name: "linted/*/ignores",
+      ignores: defaults.ignores["*"],
+    };
 
-    configs.length += scopeConfigs.length;
-
-    for (let i = 0; i < scopeConfigs.length; i++)
-      configs[L + i] = scopeConfigs[i];
+    return configs;
   }
-
-  return configs;
 }
