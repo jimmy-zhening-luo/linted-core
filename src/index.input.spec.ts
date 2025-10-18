@@ -113,7 +113,7 @@ configuration = {
     rules: {
       js: [
         {
-          id: "enable",
+          name: "enable",
           rules: {
             vanilla: State.ERROR,
             vanilla0: State.ERROR,
@@ -122,7 +122,7 @@ configuration = {
           },
         },
         {
-          id: "enable/stylistic",
+          name: "enable/stylistic",
           rules: {
             "@stylistic/style-rule": State.ERROR,
           },
@@ -130,13 +130,13 @@ configuration = {
       ],
       ts: [
         {
-          id: "disable",
+          name: "disable",
           rules: {
             vanilla0: State.OFF,
           },
         },
         {
-          id: "enable/extension",
+          name: "enable/extension",
           rules: {
             "@typescript-eslint/enums": State.ERROR,
             "@typescript-eslint/destructure-expression": State.ERROR,
@@ -146,19 +146,19 @@ configuration = {
       ],
       mocha: [
         {
-          id: "disable",
+          name: "disable",
           rules: {
             vanilla2: State.OFF,
           },
         },
         {
-          id: "disable/ts",
+          name: "disable/ts",
           rules: {
             "@typescript-eslint/global": State.ERROR,
           },
         },
         {
-          id: "enable",
+          name: "enable",
           rules: {
             "mocha/test-expression": State.ERROR,
           },
@@ -166,13 +166,13 @@ configuration = {
       ],
       svelte: [
         {
-          id: "disable",
+          name: "disable",
           rules: {
             vanilla1: State.OFF,
           },
         },
         {
-          id: "enable-extension",
+          name: "enable-extension",
           rules: {
             "svelte/tags": State.ERROR,
           },
@@ -180,7 +180,7 @@ configuration = {
       ],
       html: [
         {
-          id: "enable",
+          name: "enable",
           rules: {
             "html/attribute": State.ERROR,
           },
@@ -188,7 +188,7 @@ configuration = {
       ],
       json: [
         {
-          id: "enable",
+          name: "enable",
           rules: {
             "jsonc/property-check": State.ERROR,
             "jsonc/comment": [
@@ -204,7 +204,7 @@ configuration = {
       ],
       jsonc: [
         {
-          id: "override-comment",
+          name: "override-comment",
           rules: {
             "jsonc/comment": [
               State.ERROR,
@@ -215,7 +215,7 @@ configuration = {
       ],
       jsoncc: [
         {
-          id: "override-comma",
+          name: "override-comma",
           rules: {
             "jsonc/trailing-comma": [
               State.ERROR,

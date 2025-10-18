@@ -96,7 +96,7 @@ export default function factory<
           defaults.rules[scope][
             defaults.rules[scope].length
           ] = {
-            id: scope.concat("/override"),
+            name: scope.concat("/override"),
             rules,
           };
     }
@@ -185,19 +185,16 @@ export default function factory<
       )
         return [];
       else {
-        const rulesets: unknown[] = rules.map(
-          (
+        const R = rules.length;
+
+        for (let i = 0; i < R; ++i)
+          Object.assign(
+            rules[i]!,
             {
-              id,
-              rules,
+              files,
+              ignores,
             },
-          ) => ({
-            name: "linted/".concat(scope, "/", id),
-            files,
-            ignores,
-            rules,
-          }),
-        );
+          );
 
         if (settings[scope] !== undefined) {
           const {
@@ -261,10 +258,10 @@ export default function factory<
               { language },
             );
 
-          rulesets[rulesets.length] = manifest;
+          (rules as unknown[])[rules.length] = manifest;
         }
 
-        return rulesets;
+        return rules as unknown[];
       }
     },
   );

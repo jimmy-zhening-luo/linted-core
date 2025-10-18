@@ -22,7 +22,7 @@ export interface Defaults<Scope extends string> {
     Record<
       Scope,
       {
-        id: string;
+        name: string;
         rules: Rules;
       }[]
     >
