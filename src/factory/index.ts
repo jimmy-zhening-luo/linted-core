@@ -1,4 +1,7 @@
-import type { Configuration } from "../interface";
+import type {
+  Settings,
+  Configuration,
+} from "../interface";
 
 export default function factory<
   Scope extends string,
@@ -27,14 +30,17 @@ export default function factory<
       & Record<RequiredParser, unknown>
       & Partial<Record<Optional, unknown>>;
   },
+  settings: Settings<
+    Scope,
+    Plugin,
+    Parser
+  >,
   {
     defaults,
     extensions = {},
   }: Configuration<
     Scope,
-    Optional,
-    Plugin,
-    Parser
+    Optional
   >,
 ) {
   for (const scope of optional)
@@ -196,7 +202,6 @@ export default function factory<
         files: { [scope]: files },
         ignores: { [scope]: ignores = [] },
         rules: { [scope]: rules },
-        settings: { [scope]: settings },
       } = defaults;
 
       if (
@@ -216,14 +221,14 @@ export default function factory<
           ignores,
         };
 
-        if (settings !== undefined) {
+        if (settings[scope] !== undefined) {
           const {
             plugins: scopePlugins,
             languageOptions,
             parserOptions,
             processor,
             language,
-          } = settings;
+          } = settings[scope];
 
           if (scopePlugins !== undefined)
             if (scopePlugins.length === 1) {

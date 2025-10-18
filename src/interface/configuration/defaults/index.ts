@@ -1,16 +1,6 @@
-import type { Settings } from "./settings";
-import type { Rules } from "../rules";
+import type { Rules } from "../../rules";
 
-export interface Defaults<
-  Scope extends string,
-  Plugin extends string,
-  Parser extends Scope,
-> {
-  settings: Partial<Settings<
-    Scope,
-    Plugin,
-    Parser
-  >>;
+export interface Defaults<Scope extends string> {
   files: Partial<Record<
     Scope,
     string[]

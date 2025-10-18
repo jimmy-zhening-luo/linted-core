@@ -55,56 +55,56 @@ imports = {
     html: Parser("HTML"),
   },
 },
+settings = {
+  js: {
+    plugins: ["@stylistic"] as const,
+  },
+  ts: {
+    plugins: ["@typescript-eslint"] as const,
+    languageOptions: {
+      parser: "ts" as const,
+    },
+  },
+  svelte: {
+    plugins: ["svelte"] as const,
+    languageOptions: {
+      parser: "svelte" as const,
+    },
+    parserOptions: {
+      parser: "ts" as const,
+      extraFileExtensions: [".svelte"],
+    },
+    processor: "svelte/svelte",
+  },
+  html: {
+    plugins: ["html"] as const,
+    languageOptions: {
+      parser: "html" as const,
+    },
+    parserOptions: {
+      frontmatter: true,
+    },
+    language: "html/html",
+  },
+  json: {
+    plugins: [
+      "json",
+      "jsonc",
+    ] as const,
+    languageOptions: {
+      allowTrailingCommas: true,
+    },
+    language: "json/jsonc",
+  },
+  jsonc: {
+    language: "json/jsonc",
+  },
+  jsoncc: {
+    language: "json/jsonc",
+  },
+},
 configuration = {
   defaults: {
-    settings: {
-      js: {
-        plugins: ["@stylistic"] as const,
-      },
-      ts: {
-        plugins: ["@typescript-eslint"] as const,
-        languageOptions: {
-          parser: "ts" as const,
-        },
-      },
-      svelte: {
-        plugins: ["svelte"] as const,
-        languageOptions: {
-          parser: "svelte" as const,
-        },
-        parserOptions: {
-          parser: "ts" as const,
-          extraFileExtensions: [".svelte"],
-        },
-        processor: "svelte/svelte",
-      },
-      html: {
-        plugins: ["html"] as const,
-        languageOptions: {
-          parser: "html" as const,
-        },
-        parserOptions: {
-          frontmatter: true,
-        },
-        language: "html/html",
-      },
-      json: {
-        plugins: [
-          "json",
-          "jsonc",
-        ] as const,
-        languageOptions: {
-          allowTrailingCommas: true,
-        },
-        language: "json/jsonc",
-      },
-      jsonc: {
-        language: "json/jsonc",
-      },
-      jsoncc: {
-        language: "json/jsonc",
-      },
-    },
     files: {
       js: ["default.js"],
       ts: ["default.ts"],

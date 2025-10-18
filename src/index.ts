@@ -1,4 +1,7 @@
-import type { Configuration } from "./interface";
+import type {
+  Settings,
+  Configuration,
+} from "./interface";
 import factory from "./factory";
 
 export default function<
@@ -25,11 +28,14 @@ export default function<
       & Record<RequiredParser, unknown>
       & Partial<Record<Optional, unknown>>;
   },
-  configuration: Configuration<
+  settings: Settings<
     Scope,
-    Optional,
     Plugin,
     Parser
+  >,
+  configuration: Configuration<
+    Scope,
+    Optional
   >,
 ) {
   return factory(
@@ -37,6 +43,7 @@ export default function<
     optional,
     tree,
     imports,
+    settings,
     configuration,
   );
 }
