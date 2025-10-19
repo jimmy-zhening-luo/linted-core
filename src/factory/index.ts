@@ -194,11 +194,11 @@ export default function factory<
         }
 
   return defineConfig(
-    globalIgnores(defaults.ignores["*"]),
     {
       name: "plugins",
       plugins,
     },
+    globalIgnores(defaults.ignores["*"]),
     scopes.map(
       scope => {
         const {
@@ -208,8 +208,7 @@ export default function factory<
         } = defaults;
 
         if (
-          files === undefined
-          || rules === undefined
+          rules === undefined
           || files.length === 0
           || rules.length === 0
           || Optional.has(scope)
@@ -256,14 +255,12 @@ export default function factory<
             (rules as unknown[])[rules.length] = definition;
           }
 
-          return defineConfig(
-            {
-              name: "scope/".concat(scope),
-              files,
-              ignores,
-              "extends": [rules as MutableRules<typeof rules>],
-            },
-          );
+          return {
+            name: "scope/".concat(scope),
+            files,
+            ignores,
+            "extends": [rules as MutableRules<typeof rules>],
+          };
         }
       },
     ),

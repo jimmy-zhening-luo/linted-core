@@ -1,11 +1,9 @@
 import type { RuleConfig } from "@eslint/config-helpers";
 
 export interface Defaults<Scope extends string> {
-  files: Partial<
-    Record<
-      Scope,
-      string[]
-    >
+  files: Record<
+    Scope,
+    string[]
   >;
   ignores:
     & Record<
