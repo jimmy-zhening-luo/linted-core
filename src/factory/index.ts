@@ -225,7 +225,14 @@ export default function factory<
                       parserOptions,
                     },
                   }
-              : { languageOptions };
+              : {
+                  languageOptions: parserOptions === undefined
+                    ? languageOptions
+                    : Object.assign(
+                      languageOptions,
+                      { parserOptions },
+                    ),
+                };
 
             if (processor !== undefined)
               Object.assign(
