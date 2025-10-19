@@ -59,11 +59,13 @@ describe(
           function () {
             configs
               .should
-              .satisfy((configs: unknown[]) => configs
-                .every(config => typeof config === "object"
-                  && config !== null
-                  && "name" in config
-                  && typeof config.name === "string"));
+              .satisfy(
+                (configs: unknown[]) => configs
+                  .every(config => typeof config === "object"
+                    && config !== null
+                    && "name" in config
+                    && typeof config.name === "string"),
+              );
           },
         );
       },
@@ -71,21 +73,18 @@ describe(
     describe(
       "configs",
       function () {
-        const global = configs.at(-2) as [object, object];
-
         it(
-          "ends with global ignores and plugins",
+          "has plugins",
           function () {
-            global
-              .should.have
-              .property(
-                "name",
-                "linted/*/ignores",
+            configs
+              .should
+              .satisfy(
+                (configs: unknown[]) => configs
+                  .some(config => typeof config === "object"
+                    && config !== null
+                    && "plugins" in config
+                    && typeof config.plugins === "object"),
               );
-            global
-              .should.have
-              .property("ignores")
-              .an("array");
           },
         );
       },

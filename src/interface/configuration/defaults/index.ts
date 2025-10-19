@@ -1,4 +1,4 @@
-import type { Rules } from "../../rules";
+import type { RuleConfig } from "@eslint/config-helpers";
 
 export interface Defaults<Scope extends string> {
   files: Partial<
@@ -21,10 +21,15 @@ export interface Defaults<Scope extends string> {
   rules: Partial<
     Record<
       Scope,
-      {
-        name: string;
-        rules: Rules;
-      }[]
+      Array<
+        {
+          name: string;
+          rules: Record<
+            string,
+            Readonly<RuleConfig>
+          >;
+        }
+      >
     >
   >;
 }

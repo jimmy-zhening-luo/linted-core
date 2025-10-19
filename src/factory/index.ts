@@ -1,4 +1,30 @@
+import {
+  defineConfig,
+  globalIgnores,
+  type RuleConfig,
+} from "@eslint/config-helpers";
 import type Core from "..";
+
+type MutableRules<RuleArray> = RuleArray extends Array<
+  infer Rules extends {
+    name: string;
+    rules: Record<
+      string,
+      Readonly<RuleConfig>
+    >;
+  }
+>
+  ? {
+      name: Rules["name"];
+      rules: {
+        [Rule in keyof Rules["rules"]]: Mutable<Rules["rules"][Rule
+        ]>
+      };
+    }[]
+  : RuleArray;
+type Mutable<V> = V extends object
+  ? { -readonly [I in keyof V]: V[I] }
+  : V;
 
 export default function factory<
   Scope extends string,
@@ -167,120 +193,79 @@ export default function factory<
             defaultGlobals[L + i] = ignores[i]!;
         }
 
-  const configs: unknown[] = scopes.flatMap(
-    scope => {
-      const {
-        files: { [scope]: files },
-        ignores: { [scope]: ignores = [] },
-        rules: { [scope]: rules },
-      } = defaults;
+  return defineConfig(
+    globalIgnores(defaults.ignores["*"]),
+    {
+      name: "plugins",
+      plugins,
+    },
+    scopes.map(
+      scope => {
+        const {
+          files: { [scope]: files },
+          ignores: { [scope]: ignores = [] },
+          rules: { [scope]: rules },
+        } = defaults;
 
-      if (
-        files === undefined
-        || rules === undefined
-        || files.length === 0
-        || rules.length === 0
-        || Optional.has(scope)
-        && !(scope in parsers)
-      )
-        return [];
-      else {
-        const R = rules.length;
+        if (
+          files === undefined
+          || rules === undefined
+          || files.length === 0
+          || rules.length === 0
+          || Optional.has(scope)
+          && !(scope in parsers)
+        )
+          return [];
+        else {
+          if (settings[scope] !== undefined) {
+            const {
+              languageOptions,
+              parserOptions,
+              processor,
+              language,
+            } = settings[scope];
 
-        for (let i = 0; i < R; ++i)
-          Object.assign(
-            rules[i]!,
+            if (languageOptions?.parser !== undefined)
+              languageOptions.parser = parsers[languageOptions.parser] as Parser;
+
+            if (parserOptions?.parser !== undefined)
+              parserOptions.parser = parsers[parserOptions.parser] as Parser;
+
+            const definition = languageOptions === undefined
+              ? parserOptions === undefined
+                ? {}
+                : {
+                    languageOptions: {
+                      parserOptions,
+                    },
+                  }
+              : { languageOptions };
+
+            if (processor !== undefined)
+              Object.assign(
+                definition,
+                { processor },
+              );
+
+            if (language !== undefined)
+              Object.assign(
+                definition,
+                { language },
+              );
+
+            (rules as unknown[])[rules.length] = definition;
+          }
+
+          return defineConfig(
             {
+              name: "scope/".concat(scope),
               files,
               ignores,
+              "extends": [rules as MutableRules<typeof rules>],
             },
           );
-
-        if (settings[scope] !== undefined) {
-          const {
-            languageOptions,
-            parserOptions,
-            processor,
-            language,
-          } = settings[scope],
-          manifest = {
-            name: "linted/".concat(scope),
-            files,
-            ignores,
-          };
-
-          if (languageOptions?.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser] as Parser;
-
-          if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser] as Parser;
-
-          if (languageOptions === undefined) {
-            if (
-              parserOptions !== undefined
-              && Object.keys(parserOptions).length !== 0
-            )
-              Object.assign(
-                manifest,
-                {
-                  languageOptions: {
-                    parserOptions,
-                  },
-                },
-              );
-          }
-          else {
-            if (
-              parserOptions !== undefined
-              && Object.keys(parserOptions).length !== 0
-            )
-              Object.assign(
-                languageOptions,
-                { parserOptions },
-              );
-
-            if (Object.keys(languageOptions).length !== 0)
-              Object.assign(
-                manifest,
-                { languageOptions },
-              );
-          }
-
-          if (processor !== undefined)
-            Object.assign(
-              manifest,
-              { processor },
-            );
-
-          if (language !== undefined)
-            Object.assign(
-              manifest,
-              { language },
-            );
-
-          (rules as unknown[])[rules.length] = manifest;
         }
-
-        return rules as unknown[];
-      }
-    },
+      },
+    ),
   );
-
-  if (configs.length === 0)
-    return [];
-  else {
-    const { length } = configs;
-
-    configs.length += 2;
-    configs[length] = {
-      name: "linted/*/ignores",
-      ignores: defaults.ignores["*"],
-    };
-    configs[length + 1] = {
-      name: "linted/*/plugins",
-      plugins,
-    };
-
-    return configs;
-  }
 }
