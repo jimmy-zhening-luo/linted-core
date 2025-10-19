@@ -72,21 +72,15 @@ export default function factory<
         } = {},
       } = extensions;
 
-      if (files.length !== 0)
-        if (defaults.files[scope] === undefined)
-          Object.assign(
-            defaults.files,
-            { [scope]: files },
-          );
-        else {
-          const defaultFiles = defaults.files[scope],
-          L = defaultFiles.length;
+      if (files.length !== 0) {
+        const defaultFiles = defaults.files[scope],
+        L = defaultFiles.length;
 
-          defaultFiles.length += files.length;
+        defaultFiles.length += files.length;
 
-          for (let i = 0; i < files.length; i++)
-            defaultFiles[L + i] = files[i]!;
-        }
+        for (let i = 0; i < files.length; i++)
+          defaultFiles[L + i] = files[i]!;
+      }
 
       if (ignores.length !== 0)
         if (defaults.ignores[scope] === undefined)
@@ -137,23 +131,16 @@ export default function factory<
       const files = defaults.files[scope],
       ignores = defaults.ignores[scope];
 
-      if (files !== undefined)
-        if (files.length !== 0)
-          for (const parent of parents)
-            if (defaults.files[parent] === undefined)
-              Object.assign(
-                defaults.files,
-                { [parent]: files },
-              );
-            else {
-              const parentFiles = defaults.files[parent],
-              L = parentFiles.length;
+      if (files.length !== 0)
+        for (const parent of parents) {
+          const parentFiles = defaults.files[parent],
+          L = parentFiles.length;
 
-              parentFiles.length += files.length;
+          parentFiles.length += files.length;
 
-              for (let i = 0; i < files.length; i++)
-                parentFiles[L + i] = files[i]!;
-            }
+          for (let i = 0; i < files.length; i++)
+            parentFiles[L + i] = files[i]!;
+        }
 
       if (ignores !== undefined)
         if (ignores.length !== 0)
