@@ -1,6 +1,7 @@
 import {
   defineConfig,
   globalIgnores,
+  type Plugin,
   type RuleConfig,
 } from "@eslint/config-helpers";
 import type Core from "..";
@@ -31,21 +32,21 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
-  Plugin extends RequiredPlugin | Optional,
+  TPlugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
-  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[0],
-  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[1],
-  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[2],
+  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[0],
+  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[1],
+  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[2],
   {
     plugins,
     parsers,
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[3],
-  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[4],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[3],
+  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[4],
   {
     defaults,
     extensions = {},
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[5],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, TPlugin, Parser>>[5],
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
@@ -208,7 +209,7 @@ export default function factory<
             settings[scope]!.plugins.map(
               plugin => ({
                 plugins: {
-                  [plugin]: plugins[plugin],
+                  [plugin]: plugins[plugin] as Plugin,
                 },
               }),
             ),
