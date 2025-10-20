@@ -9,6 +9,7 @@ export default function<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
@@ -24,7 +25,11 @@ export default function<
       & Record<RequiredParser, unknown>
       & Partial<Record<Optional, unknown>>;
   },
-  settings: Settings<Scope, Parser>,
+  settings: Settings<
+    Scope,
+    Plugin,
+    Parser
+  >,
   configuration: Configuration<Scope, Optional>,
 ) {
   return factory(

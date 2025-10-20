@@ -31,20 +31,21 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
+  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
-  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[0],
-  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[1],
-  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[2],
+  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[0],
+  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[1],
+  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[2],
   {
     plugins,
     parsers,
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
-  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[3],
+  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[4],
   {
     defaults,
     extensions = {},
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[5],
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
@@ -188,73 +189,87 @@ export default function factory<
         !Optional.has(scope)
         || scope in parsers
       ),
+  ),
+  activeScopeSettings = activeScopes.filter(
+    scope => settings[scope] !== undefined,
   );
 
   return defineConfig(
-    {
-      name: "plugins",
-      plugins,
-    },
     globalIgnores(defaults.ignores["*"]),
-    activeScopes
+    activeScopeSettings
       .filter(
-        scope => settings[scope] !== undefined,
+        scope => settings[scope]!.plugins !== undefined,
       )
       .map(
-        scope => {
-          const {
-            languageOptions,
-            parserOptions,
-            processor,
-            language,
-          } = settings[scope]!;
-
-          if (languageOptions?.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser] as Parser;
-
-          if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser] as Parser;
-
-          const definition = languageOptions === undefined
-            ? parserOptions === undefined
-              ? {}
-              : {
-                  languageOptions: {
-                    parserOptions,
-                  },
-                }
-            : {
-                languageOptions: parserOptions === undefined
-                  ? languageOptions
-                  : Object.assign(
-                      languageOptions,
-                      { parserOptions },
-                    ),
-              };
-
-          if (processor !== undefined)
-            Object.assign(
-              definition,
-              { processor },
-            );
-
-          if (language !== undefined)
-            Object.assign(
-              definition,
-              { language },
-            );
-
-          return {
-            name: "scope/".concat(
-              scope,
-              "/definition",
+        scope => ({
+          files: defaults.files[scope],
+          ignores: defaults.ignores[scope] ?? [],
+          "extends": [
+            settings[scope]!.plugins.map(
+              plugin => ({
+                plugins: {
+                  [plugin]: plugins[plugin],
+                },
+              }),
             ),
-            files: defaults.files[scope],
-            ignores: defaults.ignores[scope] ?? [],
-            "extends": [definition],
-          };
-        },
+          ],
+        }),
       ),
+    activeScopeSettings.map(
+      scope => {
+        const {
+          languageOptions,
+          parserOptions,
+          processor,
+          language,
+        } = settings[scope]!;
+
+        if (languageOptions?.parser !== undefined)
+          languageOptions.parser = parsers[languageOptions.parser] as Parser;
+
+        if (parserOptions?.parser !== undefined)
+          parserOptions.parser = parsers[parserOptions.parser] as Parser;
+
+        const definition = languageOptions === undefined
+          ? parserOptions === undefined
+            ? {}
+            : {
+                languageOptions: {
+                  parserOptions,
+                },
+              }
+          : {
+              languageOptions: parserOptions === undefined
+                ? languageOptions
+                : Object.assign(
+                    languageOptions,
+                    { parserOptions },
+                  ),
+            };
+
+        if (processor !== undefined)
+          Object.assign(
+            definition,
+            { processor },
+          );
+
+        if (language !== undefined)
+          Object.assign(
+            definition,
+            { language },
+          );
+
+        return {
+          name: "scope/".concat(
+            scope,
+            "/definition",
+          ),
+          files: defaults.files[scope],
+          ignores: defaults.ignores[scope] ?? [],
+          "extends": [definition],
+        };
+      },
+    ),
     activeScopes.map(
       scope => ({
         name: "scope/".concat(scope),
