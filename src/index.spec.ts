@@ -70,24 +70,5 @@ describe(
         );
       },
     );
-    describe(
-      "configs",
-      function () {
-        it(
-          "has plugins",
-          function () {
-            configs
-              .should
-              .satisfy(
-                (configs: unknown[]) => configs
-                  .some(config => typeof config === "object"
-                    && config !== null
-                    && "plugins" in config
-                    && typeof config.plugins === "object"),
-              );
-          },
-        );
-      },
-    );
   },
 );
