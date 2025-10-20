@@ -206,7 +206,7 @@ export default function factory<
           files: defaults.files[scope],
           ignores: defaults.ignores[scope] ?? [],
           "extends": [
-            settings[scope]!.plugins.map(
+            settings[scope]!.plugins!.map(
               plugin => ({
                 plugins: {
                   [plugin]: plugins[plugin] as Plugin,
