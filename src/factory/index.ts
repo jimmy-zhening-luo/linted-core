@@ -198,7 +198,7 @@ export default function factory<
     globalIgnores(defaults.ignores["*"]),
     activeScopes
       .filter(
-        scope => settings[scope] === undefined,
+        scope => settings[scope] !== undefined,
       )
       .map(
         scope => {
@@ -207,7 +207,7 @@ export default function factory<
             parserOptions,
             processor,
             language,
-          } = settings[scope];
+          } = settings[scope]!;
 
           if (languageOptions?.parser !== undefined)
             languageOptions.parser = parsers[languageOptions.parser] as Parser;
