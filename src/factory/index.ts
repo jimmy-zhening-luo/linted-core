@@ -260,7 +260,7 @@ export default function factory<
         name: "scope/".concat(scope),
         files: defaults.files[scope],
         ignores: defaults.ignores[scope] ?? [],
-        "extends": [defaults.rules[scope] as MutableRules<typeof defaults.rules[scope]>],
+        "extends": [defaults.rules[scope] as MutableRules<typeof (defaults.rules[scope])>],
       }),
     ),
   );
