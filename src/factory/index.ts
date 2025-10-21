@@ -50,77 +50,41 @@ export default function factory<
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
-      Object.assign(
-        plugins,
-        {
-          [scope]: extensions[scope].plugin,
-        },
-      );
-      Object.assign(
-        parsers,
-        {
-          [scope]: extensions[scope].parser,
-        },
-      );
+      plugins[scope] = extensions[scope].plugin;
+      parsers[scope] = extensions[scope].parsers;
     }
 
   for (const scope of scopes)
     if (extensions[scope] !== undefined) {
       const {
         [scope]: {
-          files = [],
-          ignores = [],
-          rules = null,
+          files,
+          ignores,
+          rules,
         } = {},
       } = extensions;
 
-      if (files.length !== 0) {
-        const defaultFiles = defaults.files[scope],
-        L = defaultFiles.length;
+      if (files !== undefined)
+        defaults.files[scope]
+          .push(...files);
 
-        defaultFiles.length += files.length;
-
-        for (let i = 0; i < files.length; i++)
-          defaultFiles[L + i] = files[i]!;
-      }
-
-      if (ignores.length !== 0)
+      if (ignores !== undefined)
         if (defaults.ignores[scope] === undefined)
-          Object.assign(
-            defaults.ignores,
-            { [scope]: ignores },
-          );
-        else {
-          const defaultIgnores = defaults.ignores[scope],
-          L = defaultIgnores.length;
-
-          defaultIgnores.length += ignores.length;
-
-          for (let i = 0; i < ignores.length; i++)
-            defaultIgnores[L + i] = ignores[i]!;
-        }
-
-      if (rules !== null)
-        if (defaults.rules[scope] === undefined)
-          Object.assign(
-            defaults.rules,
-            {
-              [scope]: [
-                {
-                  id: scope.concat("/override"),
-                  rules,
-                },
-              ],
-            },
-          );
+          /* eslint-disable no-param-reassign */
+          defaults.ignores[scope] = ignores;
         else
-        /* eslint-disable no-param-reassign */
+          defaults.ignores[scope]
+            .push(...ignores);
+
+      if (rules !== undefined)
+        if (defaults.rules[scope] === undefined)
+          /* eslint-disable no-param-reassign */
+          defaults.rules[scope] = [{ rules }];
+        else
+          /* eslint-disable no-param-reassign */
           defaults.rules[scope][
             defaults.rules[scope].length
-          ] = {
-            name: scope.concat("/override"),
-            rules,
-          };
+          ] = { rules };
     }
 
   const Optional = new Set<Scope>(optional);
