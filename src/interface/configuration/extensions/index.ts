@@ -6,7 +6,4 @@ export type Extensions<
   Optional extends Scope,
 >
 = & GlobalExtension
-  & ScopeExtensions<
-    Scope,
-    Optional
-  >;
+  & ScopeExtensions<Scope, Optional>;

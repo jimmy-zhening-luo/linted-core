@@ -7,9 +7,6 @@ export type Settings<
 > = Partial<
   Record<
     Scope,
-    ScopeManifest<
-      Plugin,
-      Parser
-    >
+    ScopeManifest<Plugin, Parser>
   >
 >;

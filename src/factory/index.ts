@@ -50,42 +50,56 @@ export default function factory<
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {
-      plugins[scope] = extensions[scope].plugin;
-      parsers[scope] = extensions[scope].parsers;
+      /* eslint-disable no-param-reassign */
+      plugins[scope] = extensions[scope].plugin as typeof plugins[Optional];
+      parsers[scope] = extensions[scope].parser as typeof parsers[Optional];
     }
 
-  for (const scope of scopes)
-    if (extensions[scope] !== undefined) {
-      const {
-        [scope]: {
-          files,
-          ignores,
+  const extended = scopes.filter(
+    scope => extensions[scope] !== undefined,
+  );
+
+  for (const scope of extended) {
+    const {
+      [scope]: {
+        files,
+        ignores,
+        rules,
+      } = {},
+    } = extensions;
+
+    if (files !== undefined)
+      defaults
+        .files[scope]
+        .push(...files);
+
+    if (ignores !== undefined)
+      if (defaults.ignores[scope] === undefined)
+      /* eslint-disable no-param-reassign */
+        defaults.ignores[scope] = ignores;
+      else
+        defaults
+          .ignores[scope]
+          .push(...ignores);
+
+    if (rules !== undefined)
+      if (defaults.rules[scope] === undefined)
+      /* eslint-disable no-param-reassign */
+        defaults.rules[scope] = [
+          {
+            rules,
+            name: scope.concat("/user"),
+          },
+        ];
+      else
+      /* eslint-disable no-param-reassign */
+        defaults.rules[scope][
+          defaults.rules[scope].length
+        ] = {
           rules,
-        } = {},
-      } = extensions;
-
-      if (files !== undefined)
-        defaults.files[scope]
-          .push(...files);
-
-      if (ignores !== undefined)
-        if (defaults.ignores[scope] === undefined)
-          /* eslint-disable no-param-reassign */
-          defaults.ignores[scope] = ignores;
-        else
-          defaults.ignores[scope]
-            .push(...ignores);
-
-      if (rules !== undefined)
-        if (defaults.rules[scope] === undefined)
-          /* eslint-disable no-param-reassign */
-          defaults.rules[scope] = [{ rules }];
-        else
-          /* eslint-disable no-param-reassign */
-          defaults.rules[scope][
-            defaults.rules[scope].length
-          ] = { rules };
-    }
+          name: scope.concat("/user"),
+        };
+  }
 
   const Optional = new Set<Scope>(optional);
 
@@ -98,53 +112,34 @@ export default function factory<
       ignores = defaults.ignores[scope];
 
       if (files.length !== 0)
-        for (const parent of parents) {
-          const parentFiles = defaults.files[parent],
-          L = parentFiles.length;
-
-          parentFiles.length += files.length;
-
-          for (let i = 0; i < files.length; i++)
-            parentFiles[L + i] = files[i]!;
-        }
+        for (const parent of parents)
+          defaults
+            .files[parent]
+            .push(...files);
 
       if (ignores !== undefined)
         if (ignores.length !== 0)
           for (const parent of parents)
             if (defaults.ignores[parent] === undefined)
-              Object.assign(
-                defaults.ignores,
-                { [parent]: ignores },
-              );
-            else {
-              const parentIgnores = defaults.ignores[parent],
-              L = parentIgnores.length;
-
-              parentIgnores.length += ignores.length;
-
-              for (let i = 0; i < ignores.length; i++)
-                parentIgnores[L + i] = ignores[i]!;
-            }
+              defaults.ignores[parent] = ignores;
+            else
+              defaults
+                .ignores[parent]
+                .push(...ignores);
     }
 
   if (extensions["*"] !== undefined)
-    if (extensions["*"].override === true)
-      Object.assign(
-        defaults.ignores,
-        { "*": extensions["*"].ignores ?? [] },
-      );
+    if (
+      extensions["*"].override === true
+      || defaults.ignores["*"] === undefined
+    )
+      defaults.ignores["*"] = extensions["*"].ignores ?? [];
     else
       if (extensions["*"].ignores !== undefined)
-        if (extensions["*"].ignores.length !== 0) {
-          const { ignores } = extensions["*"],
-          defaultGlobals = defaults.ignores["*"],
-          L = defaultGlobals.length;
-
-          defaultGlobals.length += ignores.length;
-
-          for (let i = 0; i < ignores.length; i++)
-            defaultGlobals[L + i] = ignores[i]!;
-        }
+        if (extensions["*"].ignores.length !== 0)
+          defaults
+            .ignores["*"]
+            .push(...extensions["*"].ignores);
 
   const activeScopes = scopes.filter(
     scope => defaults.rules[scope] !== undefined
@@ -160,7 +155,6 @@ export default function factory<
   );
 
   return defineConfig(
-    globalIgnores(defaults.ignores["*"]),
     activeScopeSettings
       .filter(
         scope => settings[scope]!.plugins !== undefined,
@@ -180,6 +174,7 @@ export default function factory<
           ],
         }),
       ),
+    defaults.ignores["*"] === undefined ? [] : globalIgnores(defaults.ignores["*"]),
     activeScopeSettings.map(
       scope => {
         const {
@@ -213,16 +208,10 @@ export default function factory<
             };
 
         if (processor !== undefined)
-          Object.assign(
-            definition,
-            { processor },
-          );
+          (definition as typeof definition & { processor: string }).processor = processor;
 
         if (language !== undefined)
-          Object.assign(
-            definition,
-            { language },
-          );
+          (definition as typeof definition & { language: string }).language = language;
 
         return {
           name: "scope/".concat(

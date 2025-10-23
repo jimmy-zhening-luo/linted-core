@@ -1,33 +1,17 @@
 import type { RuleConfig } from "@eslint/config-helpers";
 
 export interface Defaults<Scope extends string> {
-  files: Record<
+  files: Record<Scope, string[]>;
+  ignores: Partial<Record<Scope | "*", string[]>>;
+  rules: Partial<Record<
     Scope,
-    string[]
-  >;
-  ignores:
-    & Record<
-      "*",
-      string[]
+    Array<
+      {
+        name: string;
+        rules: {
+          [rule: string]: Readonly<RuleConfig>;
+        };
+      }
     >
-    & Partial<
-      Record<
-        Scope,
-        string[]
-      >
-    >;
-  rules: Partial<
-    Record<
-      Scope,
-      Array<
-        {
-          name: string;
-          rules: Record<
-            string,
-            Readonly<RuleConfig>
-          >;
-        }
-      >
-    >
-  >;
+  >>;
 }
