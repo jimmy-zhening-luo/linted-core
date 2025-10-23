@@ -39,5 +39,5 @@ export default function<
     imports,
     settings,
     configuration,
-  );
+  ) as unknown[];
 }
