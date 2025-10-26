@@ -97,83 +97,64 @@ export default function factory<
     scope => !optionalized.has(scope)
       && defaults.files[scope].length !== 0
       && defaults.rules[scope].length !== 0,
-  ),
-  activeSettings = active.filter(
-    scope => settings[scope] !== undefined,
   );
 
   return defineConfig(
+    {
+      plugins,
+    },
     defaults.ignores["*"] === undefined
       ? []
       : globalIgnores(defaults.ignores["*"]),
-    activeSettings
+    active
       .filter(
-        scope => settings[scope]!.plugins !== undefined,
+        scope => settings[scope] !== undefined,
       )
       .map(
-        scope => ({
-          files: defaults.files[scope],
-          ...defaults.ignores[scope] === undefined
-            ? {}
+        scope => {
+          const {
+            languageOptions,
+            parserOptions,
+            processor,
+            language,
+          } = settings[scope]!;
+
+          if (languageOptions?.parser !== undefined)
+            languageOptions.parser = parsers[languageOptions.parser] as Parser;
+
+          if (parserOptions?.parser !== undefined)
+            parserOptions.parser = parsers[parserOptions.parser] as Parser;
+
+          const definition = languageOptions === undefined
+            ? parserOptions === undefined
+              ? {}
+              : {
+                  languageOptions: {
+                    parserOptions,
+                  },
+                }
             : {
-                ignores: defaults.ignores[scope],
-              },
-          "extends": [
-            settings[scope]!.plugins!.map(
-              plugin => ({
-                plugins: {
-                  [plugin]: plugins[plugin] as object,
-                },
-              }),
-            ),
-          ],
-        }),
+                languageOptions: parserOptions === undefined
+                  ? languageOptions
+                  : Object.assign(
+                      languageOptions,
+                      { parserOptions },
+                    ),
+              };
+
+          if (processor !== undefined)
+            (definition as typeof definition & { processor: string }).processor = processor;
+
+          if (language !== undefined)
+            (definition as typeof definition & { language: string }).language = language;
+
+          return {
+            files: defaults.files[scope],
+            ignores: defaults.ignores[scope] ?? [],
+            "extends": [definition],
+          };
+        },
       ),
-    activeSettings.map(
-      scope => {
-        const {
-          languageOptions,
-          parserOptions,
-          processor,
-          language,
-        } = settings[scope]!;
-
-        if (languageOptions?.parser !== undefined)
-          languageOptions.parser = parsers[languageOptions.parser] as Parser;
-
-        if (parserOptions?.parser !== undefined)
-          parserOptions.parser = parsers[parserOptions.parser] as Parser;
-
-        const definition = languageOptions === undefined
-          ? parserOptions === undefined
-            ? {}
-            : {
-                languageOptions: {
-                  parserOptions,
-                },
-              }
-          : {
-              languageOptions: parserOptions === undefined
-                ? languageOptions
-                : Object.assign(
-                    languageOptions,
-                    { parserOptions },
-                  ),
-            };
-
-        if (processor !== undefined)
-          (definition as typeof definition & { processor: string }).processor = processor;
-
-        if (language !== undefined)
-          (definition as typeof definition & { language: string }).language = language;
-
-        return {
-          files: defaults.files[scope],
-          ignores: defaults.ignores[scope] ?? [],
-          "extends": [definition],
-        };
-      },
-    ),
     active.map(
       scope => ({
         files: defaults.files[scope],
