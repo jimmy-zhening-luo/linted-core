@@ -1,8 +1,9 @@
+import factory from "./factory";
 import type {
   Settings,
   Configuration,
 } from "./interface";
-import factory from "./factory";
+import type { MutableRules } from "./interface/rules";
 
 export default function<
   Scope extends string,
@@ -39,5 +40,11 @@ export default function<
     imports,
     settings,
     configuration,
-  ) as unknown[];
+  ) as Array<
+    {
+      files?: (string | string[])[];
+      ignores?: (string)[];
+      rules?: MutableRules;
+    }
+  >;
 }

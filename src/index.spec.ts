@@ -22,7 +22,7 @@ describe(
   "Core",
   function () {
     describe(
-      "shape",
+      "module",
       function () {
         it(
           "is a function",
@@ -55,17 +55,88 @@ describe(
           },
         );
         it(
-          "containing only config-like members",
+          "of config objects",
           function () {
-            configs
-              .should
-              .satisfy(
-                (configs: unknown[]) => configs
-                  .every(config => typeof config === "object"
-                    && config !== null
-                    && "name" in config
-                    && typeof config.name === "string"),
-              );
+            for (const config of configs)
+              config
+                .should.be
+                .an("object")
+                .includes
+                .any
+                .keys(
+                  "files",
+                  "ignores",
+                  "rules",
+                );
+          },
+        );
+        it(
+          "with valid plugins",
+          function () {
+            for (const config of configs)
+              if ("plugins" in config)
+                (config.plugins as object)
+                  .should.be
+                  .an("object");
+          },
+        );
+        it(
+          "or valid files",
+          function () {
+            for (const config of configs)
+              if ("files" in config)
+                config
+                  .files
+                  .should.be
+                  .an("array")
+                  .not.empty;
+          },
+        );
+        it(
+          "or valid ignores",
+          function () {
+            for (const config of configs)
+              if ("ignores" in config) {
+                config
+                  .ignores
+                  .should.be
+                  .an("array");
+
+                for (const pattern of config.ignores)
+                  pattern
+                    .should.be
+                    .a("string")
+                    .not.empty;
+              }
+          },
+        );
+        it(
+          "or valid rules",
+          function () {
+            for (const config of configs)
+              if ("rules" in config) {
+                config
+                  .rules
+                  .should.be
+                  .an("object")
+                  .not.empty;
+
+                for (const rule of Object.keys(config.rules)) {
+                  rule
+                    .should
+                    .be
+                    .a("string");
+
+                  if (typeof config.rules[rule] !== "number")
+                    config.rules[rule]!
+                      .should
+                      .be
+                      .an("array")
+                      .with
+                      .property("0")
+                      .a("number");
+                }
+              }
           },
         );
       },

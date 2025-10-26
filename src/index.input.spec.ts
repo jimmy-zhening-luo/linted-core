@@ -102,12 +102,7 @@ configuration = {
     ignores: {
       "*": ["ignore/default.*"],
       js: ["ignore/default.js"],
-      ts: ["ignore/default.ts"],
-      mocha: ["ignore/default.mocha"],
-      svelte: ["ignore/default.svelte"],
-      html: ["ignore/default.html"],
       json: ["ignore/default.json"],
-      jsonc: ["ignore/default.jsonc"],
       jsoncc: ["ignore/default-comma.jsonc"],
     },
     rules: {
