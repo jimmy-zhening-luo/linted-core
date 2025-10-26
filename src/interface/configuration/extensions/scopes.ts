@@ -1,4 +1,4 @@
-import type { RuleConfig } from "@eslint/config-helpers";
+import type { Rules } from "../../rules";
 
 export type ScopeExtensions<
   Scope extends string,
@@ -9,10 +9,7 @@ export type ScopeExtensions<
   {
     files?: string[];
     ignores?: string[];
-    rules?: Record<
-      string,
-      Readonly<RuleConfig>
-    >;
+    rules?: Rules;
   }
 >
 & Record<

@@ -1,31 +1,9 @@
 import {
   defineConfig,
   globalIgnores,
-  type Plugin,
-  type RuleConfig,
 } from "@eslint/config-helpers";
 import type Core from "..";
-
-type MutableRules<RuleArray> = RuleArray extends Array<
-  infer Rules extends {
-    name: string;
-    rules: Record<
-      string,
-      Readonly<RuleConfig>
-    >;
-  }
->
-  ? {
-      name: Rules["name"];
-      rules: {
-        [Rule in keyof Rules["rules"]]: Mutable<Rules["rules"][Rule
-        ]>
-      };
-    }[]
-  : RuleArray;
-type Mutable<V> = V extends object
-  ? { -readonly [I in keyof V]: V[I] }
-  : V;
+import type { MutableRules } from "../interface/rules";
 
 export default function factory<
   Scope extends string,
@@ -167,7 +145,7 @@ export default function factory<
             settings[scope]!.plugins!.map(
               plugin => ({
                 plugins: {
-                  [plugin]: plugins[plugin] as Plugin,
+                  [plugin]: plugins[plugin] as object,
                 },
               }),
             ),

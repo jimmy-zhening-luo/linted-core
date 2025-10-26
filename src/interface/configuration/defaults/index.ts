@@ -1,4 +1,4 @@
-import type { RuleConfig } from "@eslint/config-helpers";
+import type { Rules } from "../../rules";
 
 export interface Defaults<Scope extends string> {
   files: Record<Scope, string[]>;
@@ -8,9 +8,7 @@ export interface Defaults<Scope extends string> {
     Array<
       {
         name: string;
-        rules: {
-          [rule: string]: Readonly<RuleConfig>;
-        };
+        rules: Rules;
       }
     >
   >>;
