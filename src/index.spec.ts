@@ -64,6 +64,7 @@ describe(
                 .includes
                 .any
                 .keys(
+                  "plugins",
                   "files",
                   "ignores",
                   "rules",
