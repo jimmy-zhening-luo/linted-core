@@ -52,7 +52,7 @@ export default function factory<
     } = extensions;
 
     if (files !== undefined)
-      defaults
+      void defaults
         .files[scope]
         .push(...files);
 
@@ -61,7 +61,7 @@ export default function factory<
       /* eslint-disable no-param-reassign */
         defaults.ignores[scope] = ignores;
       else
-        defaults
+        void defaults
           .ignores[scope]
           .push(...ignores);
 
@@ -76,7 +76,7 @@ export default function factory<
     if (!optionalized.has(scope))
       if (defaults.files[scope].length !== 0)
         for (const parent of parents)
-          defaults
+          void defaults
             .files[parent]
             .push(...defaults.files[scope]);
 
@@ -89,7 +89,7 @@ export default function factory<
     else
       if (extensions["*"].ignores !== undefined)
         if (extensions["*"].ignores.length !== 0)
-          defaults
+          void defaults
             .ignores["*"]
             .push(...extensions["*"].ignores);
 
