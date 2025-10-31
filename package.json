@@ -1,5 +1,5 @@
 {
-  "$pkg": "2211.7.0",
+  "$pkg": "2411.0.0",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
@@ -11,13 +11,13 @@
   "private": false,
   "engineStrict": true,
   "engines": {
-    "node": "^22",
-    "npm": "^10 || ^11"
+    "node": "^24",
+    "npm": "^11"
   },
   "type": "module",
   "peerDependenciesMeta": {},
   "dependencies": {
-    "@eslint/config-helpers": "^0.4.1"
+    "@eslint/config-helpers": "^0.4.2"
   },
   "devDependencies": {
     "@types/chai": "^5.2.3",
