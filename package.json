@@ -16,8 +16,7 @@
   },
   "type": "module",
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
-  "peerDependenciesMeta": {},
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@eslint/config-helpers": "^0.4.2"
   },
