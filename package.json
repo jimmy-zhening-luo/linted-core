@@ -1,5 +1,5 @@
 {
-  "$pkg": "2411.0.0",
+  "$pkg": "2411.4.1",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
@@ -15,6 +15,8 @@
     "npm": "^11"
   },
   "type": "module",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "peerDependenciesMeta": {},
   "dependencies": {
     "@eslint/config-helpers": "^0.4.2"
@@ -27,26 +29,25 @@
     "ts-add-js-extension": "^1.6.6",
     "typescript": "^5.9.3"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "cmd --% /c \"(if exist dist rmdir /s /q dist) & (if exist build rmdir /s /q build) & (if exist .eslintcache del /f /q .eslintcache)\" || rm -rf dist build .eslintcache",
-    "prebuild": "npm run clean",
-    "build": "cmd /c \"(if exist svelte.config.js (npm run build:svelte) else (npm run build:ts))\" || bash -c 'if [ -f svelte.config.js ]; then npm run build:svelte; else npm run build:ts; fi'",
-    "build:ts": "tsc && ts-add-js-extension --dir=dist --showprogress=false",
+    "clean": "cmd --% /c \"for %G in (types dist dist-tests build packed) do (if exist %G rmdir /s /q %G) & for %G in (.eslintcache) do (if exist %G del /f /q %G)\" || rm -rf types dist dist-tests build packed .eslintcache",
+    "build": "npm run build:ts",
+    "build:ts": "tsc -b src",
     "build:svelte": "svelte-kit sync && svelte-check && vite build",
-    "postbuild": "npm run lint || echo \"Lint failed. Continuing...\"",
+    "postbuild:ts": "npm run --if-present stage && ts-add-js-extension --showprogress=false --dir=dist",
+    "postbuild": "npm run lint || exit 0",
     "lint": "eslint --cache --fix",
     "pretest": "npm run build",
-    "test": "npm run --if-present test:runner",
-    "test:runner": "mocha",
-    "prestart": "npm run --ignore-scripts build",
-    "start": "cmd --% /c \"(if exist svelte.config.js (npm run start:svelte) else (npm run start:ts))\" || bash -c 'if [ -f svelte.config.js ]; then npm run start:svelte; else npm run start:ts; fi'",
+    "test": "npm run --if-present test:suite",
+    "test:suite": "tsc -b tests && ts-add-js-extension --showprogress=false --dir=dist-tests --include=dist && mocha",
+    "prestart": "npm run build",
+    "start": "npm run start:ts",
     "start:ts": "node .",
     "start:svelte": "vite preview --open",
-    "prepublishOnly": "npm test",
+    "prepublishOnly": "npm run clean && npm test",
     "publish:release": "cmd --% /c \"for /f \"delims=-\" %a in (\"%npm_package_version%\") do if \"%a\" == \"%npm_package_version%\" (npm publish) else (npm publish --tag=next)\" || bash -c 'if [ \"${npm_package_version#*-}\" = \"${npm_package_version}\" ]; then npm publish; else npm publish --tag=next; fi'",
-    "predeploy": "npm test",
+    "predeploy": "npm run clean && npm test",
+    "stage": "",
     "deploy": ""
   },
   "author": "Jimmy Zhening Luo <jimmy-zhening-luo@users.noreply.github.com> (https://jimm.my/)"

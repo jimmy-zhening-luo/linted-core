@@ -1,5 +1,5 @@
 import "chai/register-should.js";
-import Core from ".";
+import Core from "../dist";
 import {
   scopes,
   optional,
