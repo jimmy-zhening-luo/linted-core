@@ -1,9 +1,6 @@
 import factory from "./factory";
-import type {
-  Settings,
-  Configuration,
-} from "./interface";
-import type { MutableRules } from "./interface/rules";
+import type { Configuration, Settings } from "../typings";
+import type { MutableRules } from "../typings/rules";
 
 export default function<
   Scope extends string,

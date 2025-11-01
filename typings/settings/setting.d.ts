@@ -1,4 +1,4 @@
-export interface ScopeManifest<
+export interface Setting<
   Plugin extends string,
   Parser extends string,
 > {

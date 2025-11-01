@@ -3,7 +3,7 @@ import {
   globalIgnores,
 } from "@eslint/config-helpers";
 import type Core from "..";
-import type { MutableRuleConfigs } from "../interface/rules";
+import type { MutableRuleConfigs } from "../../typings/rules";
 
 export default function factory<
   Scope extends string,

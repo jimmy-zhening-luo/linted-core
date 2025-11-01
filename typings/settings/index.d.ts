@@ -1,4 +1,4 @@
-import type { ScopeManifest } from "./manifest";
+import type { Setting } from "./setting";
 
 export type Settings<
   Scope extends string,
@@ -7,6 +7,6 @@ export type Settings<
 > = Partial<
   Record<
     Scope,
-    ScopeManifest<Plugin, Parser>
+    Setting<Plugin, Parser>
   >
 >;

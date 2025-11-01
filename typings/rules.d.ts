@@ -1,11 +1,11 @@
-type State
+export type State
 = | 0
   | 1
   | 2
   | "off"
   | "warn"
   | "error";
-type Rule = State | [State, ...unknown[]];
+export type Rule = State | [State, ...unknown[]];
 export type Rules = Record<
   string,
   Readonly<Rule>
@@ -31,6 +31,6 @@ export type MutableRuleConfigs<Configs> = Configs extends Array<
   >
   : Configs;
 
-type Mutable<Rule> = Rule extends object
+export type Mutable<Rule> = Rule extends object
   ? { -readonly [Index in keyof Rule]: Rule[Index] }
   : Rule;
