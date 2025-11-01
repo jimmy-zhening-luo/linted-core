@@ -38,7 +38,7 @@
     "lint": "eslint --cache --fix",
     "pretest": "npm run build",
     "test": "npm run --if-present test:suite",
-    "test:suite": "tsc -b tests && ts-add-js-extension --showprogress=false --dir=dist-tests --include=dist && mocha",
+    "test:suite": "tsc -b tests && ts-add-js-extension --showprogress=false --dir=dist && mocha",
     "prestart": "npm run build",
     "start": "npm run start:ts",
     "start:ts": "node .",
