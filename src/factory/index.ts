@@ -10,21 +10,20 @@ export default function factory<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
-  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
-  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[0],
-  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[1],
-  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[2],
+  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[0],
+  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[1],
+  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[2],
   {
     plugins,
     parsers,
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[3],
-  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[4],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
+  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
   {
     defaults,
     extensions = {},
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Plugin, Parser>>[5],
+  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
 ) {
   for (const scope of optional)
     if (extensions[scope] !== undefined) {

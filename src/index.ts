@@ -7,7 +7,6 @@ export default function<
   Optional extends Scope,
   RequiredPlugin extends string,
   RequiredParser extends Scope,
-  Plugin extends RequiredPlugin | Optional,
   Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
@@ -25,7 +24,6 @@ export default function<
   },
   settings: Settings<
     Scope,
-    Plugin,
     Parser
   >,
   configuration: Configuration<Scope, Optional>,

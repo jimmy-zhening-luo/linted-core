@@ -1,8 +1,6 @@
 export interface Setting<
-  Plugin extends string,
   Parser extends string,
 > {
-  plugins?: readonly Plugin[];
   languageOptions?: {
     [property: string]: unknown;
     parser?: Parser;
