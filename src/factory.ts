@@ -2,8 +2,8 @@ import {
   defineConfig,
   globalIgnores,
 } from "@eslint/config-helpers";
-import type Core from "..";
-import type { MutableRuleConfigs } from "../../typings/rules";
+import type Core from ".";
+import type { MutableRuleConfigs } from "../typings/rules";
 
 export default function factory<
   Scope extends string,
