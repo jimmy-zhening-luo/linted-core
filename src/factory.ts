@@ -25,23 +25,25 @@ export default function factory<
     extensions = {},
   }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
 ) {
-  for (const scope of optional)
-    if (extensions[scope] !== undefined) {
-      /* eslint-disable no-param-reassign */
-      plugins[scope] = extensions[scope].plugin as typeof plugins[Optional];
-      parsers[scope] = extensions[scope].parser as typeof parsers[Optional];
-    }
+  const Scopes = new Set(scopes),
+  OptionalScopes = new Set(optional),
+  RequiredScopes = Scopes.difference(OptionalScopes),
+  ExtendedScopes = new Set(
+    Object.keys(extensions) as Scope[],
+  )
+    .intersection(Scopes),
+  ExtendedOptionalScopes = ExtendedScopes
+    .intersection(OptionalScopes),
+  ConfiguredScopes = RequiredScopes
+    .union(ExtendedOptionalScopes);
 
-  const extended = scopes.filter(
-    scope => extensions[scope] !== undefined,
-  ),
-  optionalized = new Set<Scope>(
-    optional.filter(
-      scope => !(scope in parsers),
-    ),
-  );
+  for (const scope of ExtendedOptionalScopes) {
+    /* eslint-disable no-param-reassign */
+    plugins[scope] = extensions[scope]!.plugin as typeof plugins[Optional];
+    parsers[scope] = extensions[scope]!.parser as typeof parsers[Optional];
+  }
 
-  for (const scope of extended) {
+  for (const scope of ExtendedScopes) {
     const {
       [scope]: {
         files,
@@ -51,18 +53,18 @@ export default function factory<
     } = extensions;
 
     if (files !== undefined)
-      void defaults
-        .files[scope]
-        .push(...files);
+      void defaults.files[scope].push(
+        ...files,
+      );
 
     if (ignores !== undefined)
       if (defaults.ignores[scope] === undefined)
       /* eslint-disable no-param-reassign */
         defaults.ignores[scope] = ignores;
       else
-        void defaults
-          .ignores[scope]
-          .push(...ignores);
+        void defaults.ignores[scope].push(
+          ...ignores,
+        );
 
     if (rules !== undefined)
       /* eslint-disable no-param-reassign */
@@ -72,12 +74,14 @@ export default function factory<
   }
 
   for (const [scope, parents] of tree)
-    if (!optionalized.has(scope))
-      if (defaults.files[scope].length !== 0)
-        for (const parent of parents)
-          void defaults
-            .files[parent]
-            .push(...defaults.files[scope]);
+    if (
+      ConfiguredScopes.has(scope)
+      && defaults.files[scope].length !== 0
+    )
+      for (const parent of parents)
+        void defaults.files[parent].push(
+          ...defaults.files[scope],
+        );
 
   if (extensions["*"] !== undefined)
     if (
@@ -86,29 +90,24 @@ export default function factory<
     )
       defaults.ignores["*"] = extensions["*"].ignores ?? [];
     else
-      if (extensions["*"].ignores !== undefined)
-        if (extensions["*"].ignores.length !== 0)
-          void defaults
-            .ignores["*"]
-            .push(...extensions["*"].ignores);
+      if (
+        extensions["*"].ignores !== undefined
+        && extensions["*"].ignores.length !== 0
+      )
+        void defaults.ignores["*"].push(
+          ...extensions["*"].ignores,
+        );
 
-  const active = scopes.filter(
-    scope => !optionalized.has(scope)
-      && defaults.files[scope].length !== 0
-      && defaults.rules[scope].length !== 0,
-  );
+  const enabledScopes = scopes
+    .filter(scope => ConfiguredScopes.has(scope))
+    .filter(scope => defaults.files[scope].length !== 0)
+    .filter(scope => defaults.rules[scope].length !== 0);
 
   return defineConfig(
-    {
-      plugins,
-    },
-    defaults.ignores["*"] === undefined
-      ? []
-      : globalIgnores(defaults.ignores["*"]),
-    active
-      .filter(
-        scope => settings[scope] !== undefined,
-      )
+    { plugins },
+    globalIgnores(defaults.ignores["*"] ?? []),
+    enabledScopes
+      .filter(scope => settings[scope] !== undefined)
       .map(
         scope => {
           const {
@@ -150,16 +149,12 @@ export default function factory<
           return {
             files: defaults.files[scope],
             ignores: defaults.ignores[scope] ?? [],
-            "extends": [definition],
+            "extends": [
+              definition,
+              defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
+            ],
           };
         },
       ),
-    active.map(
-      scope => ({
-        files: defaults.files[scope],
-        ignores: defaults.ignores[scope] ?? [],
-        "extends": [defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>],
-      }),
-    ),
   );
 }
