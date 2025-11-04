@@ -107,50 +107,60 @@ export default function factory<
     { plugins },
     globalIgnores(defaults.ignores["*"] ?? []),
     enabledScopes
-      .filter(scope => settings[scope] !== undefined)
       .map(
         scope => {
-          const {
-            languageOptions,
-            parserOptions,
-            processor,
-            language,
-          } = settings[scope]!;
-
-          if (languageOptions?.parser !== undefined)
-            languageOptions.parser = parsers[languageOptions.parser] as Parser;
-
-          if (parserOptions?.parser !== undefined)
-            parserOptions.parser = parsers[parserOptions.parser] as Parser;
-
-          const definition = languageOptions === undefined
-            ? parserOptions === undefined
-              ? {}
-              : {
-                  languageOptions: {
-                    parserOptions,
-                  },
-                }
-            : {
-                languageOptions: parserOptions === undefined
-                  ? languageOptions
-                  : Object.assign(
-                      languageOptions,
-                      { parserOptions },
-                    ),
+          const definition: {
+            languageOptions?: {
+              parserOptions?: {
+                parser?: Parser;
               };
+              parser?: Parser;
+            };
+            processor?: string;
+            language?: string;
+          } = {};
 
-          if (processor !== undefined)
-            (definition as typeof definition & { processor: string }).processor = processor;
+          if (settings[scope] !== undefined) {
+            const {
+              languageOptions,
+              parserOptions,
+              processor,
+              language,
+            } = settings[scope];
 
-          if (language !== undefined)
-            (definition as typeof definition & { language: string }).language = language;
+            if (languageOptions?.parser !== undefined)
+              languageOptions.parser = parsers[languageOptions.parser] as Parser;
+
+            if (parserOptions?.parser !== undefined)
+              parserOptions.parser = parsers[parserOptions.parser] as Parser;
+
+            if (parserOptions === undefined) {
+              if (languageOptions !== undefined)
+                definition.languageOptions = languageOptions;
+            }
+            else
+              // parser YES
+              if (languageOptions === undefined)
+                // language NO parser YES
+                definition.languageOptions = {
+                  parserOptions,
+                };
+              else
+                // language YES parser YES
+                definition.languageOptions = Object.assign(languageOptions, { parserOptions });
+
+            if (processor !== undefined)
+              (definition as typeof definition & { processor: string }).processor = processor;
+
+            if (language !== undefined)
+              (definition as typeof definition & { language: string }).language = language;
+          }
 
           return {
             files: defaults.files[scope],
             ignores: defaults.ignores[scope] ?? [],
             "extends": [
-              definition,
+              Object.keys(definition).length === 0 ? [] : definition,
               defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
             ],
           };
