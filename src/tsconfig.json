@@ -1,8 +1,9 @@
 {
-  "extends": "./tsconfig-src.json",
-  "include": [
-    "**/*",
+  "files": [
+    "index.ts",
+    "factory.ts",
   ],
+  "extends": "./tsconfig-src.json",
   "references": [
     {
       "path": "../typings",
