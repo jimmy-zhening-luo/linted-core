@@ -38,7 +38,6 @@ export default function factory<
     .union(ExtendedOptionalScopes);
 
   for (const scope of ExtendedOptionalScopes) {
-    /* eslint-disable no-param-reassign */
     plugins[scope] = extensions[scope]!.plugin as typeof plugins[Optional];
     parsers[scope] = extensions[scope]!.parser as typeof parsers[Optional];
   }
@@ -59,7 +58,7 @@ export default function factory<
 
     if (ignores !== undefined)
       if (defaults.ignores[scope] === undefined)
-      /* eslint-disable no-param-reassign */
+
         defaults.ignores[scope] = ignores;
       else
         void defaults.ignores[scope].push(
@@ -67,7 +66,7 @@ export default function factory<
         );
 
     if (rules !== undefined)
-      /* eslint-disable no-param-reassign */
+
       defaults.rules[scope][
         defaults.rules[scope].length
       ] = { rules };
