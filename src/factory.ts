@@ -15,66 +15,48 @@ export default function factory<
   scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[0],
   optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[1],
   tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[2],
-  {
-    plugins,
-    parsers,
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
+  imports: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
   settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
-  {
-    defaults,
-    extensions = {},
-  }: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
+  defaults: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
+  extensions?: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[6],
 ) {
-  const Scopes = new Set(scopes),
-  OptionalScopes = new Set(optional),
-  RequiredScopes = Scopes.difference(OptionalScopes),
-  ExtendedScopes = new Set(
-    Object.keys(extensions) as Scope[],
-  )
-    .intersection(Scopes),
-  ExtendedOptionalScopes = ExtendedScopes
-    .intersection(OptionalScopes),
-  ConfiguredScopes = RequiredScopes
-    .union(ExtendedOptionalScopes);
+  const Scopes = new Set(scopes);
 
-  for (const scope of ExtendedOptionalScopes) {
-    plugins[scope] = extensions[scope]!.plugin as typeof plugins[Optional];
-    parsers[scope] = extensions[scope]!.parser as typeof parsers[Optional];
-  }
+  if (extensions !== undefined) {
+    for (const scope of optional)
+      if (extensions[scope] === undefined)
+        Scopes.delete(scope);
+      else {
+        imports.plugins[scope] = extensions[scope].plugin as typeof imports.plugins[Optional];
+        imports.parsers[scope] = extensions[scope].parser as typeof imports.parsers[Optional];
+      }
 
-  for (const scope of ExtendedScopes) {
-    const {
-      [scope]: {
-        files,
-        ignores,
-        rules,
-      } = {},
-    } = extensions;
+    for (const scope of Scopes)
+      if (extensions[scope] !== undefined) {
+        if (extensions[scope].files !== undefined)
+          void defaults.files[scope].push(
+            ...extensions[scope].files,
+          );
 
-    if (files !== undefined)
-      void defaults.files[scope].push(
-        ...files,
-      );
+        if (extensions[scope].ignores !== undefined)
+          if (defaults.ignores[scope] === undefined)
 
-    if (ignores !== undefined)
-      if (defaults.ignores[scope] === undefined)
+            defaults.ignores[scope] = extensions[scope].ignores;
+          else
+            void defaults.ignores[scope].push(
+              ...extensions[scope].ignores,
+            );
 
-        defaults.ignores[scope] = ignores;
-      else
-        void defaults.ignores[scope].push(
-          ...ignores,
-        );
-
-    if (rules !== undefined)
-
-      defaults.rules[scope][
-        defaults.rules[scope].length
-      ] = { rules };
+        if (extensions[scope].rules !== undefined)
+          defaults.rules[scope][
+            defaults.rules[scope].length
+          ] = { rules: extensions[scope].rules };
+      }
   }
 
   for (const [scope, parents] of tree)
     if (
-      ConfiguredScopes.has(scope)
+      Scopes.has(scope)
       && defaults.files[scope].length !== 0
     )
       for (const parent of parents)
@@ -82,28 +64,28 @@ export default function factory<
           ...defaults.files[scope],
         );
 
-  if (extensions["*"] !== undefined)
-    if (
-      extensions["*"].override === true
-      || defaults.ignores["*"] === undefined
-    )
-      defaults.ignores["*"] = extensions["*"].ignores ?? [];
-    else
+  if (extensions !== undefined)
+    if (extensions["*"] !== undefined)
       if (
-        extensions["*"].ignores !== undefined
-        && extensions["*"].ignores.length !== 0
+        extensions["*"].override === true
+        || defaults.ignores["*"] === undefined
       )
-        void defaults.ignores["*"].push(
-          ...extensions["*"].ignores,
-        );
+        defaults.ignores["*"] = extensions["*"].ignores ?? [];
+      else
+        if (
+          extensions["*"].ignores !== undefined
+          && extensions["*"].ignores.length !== 0
+        )
+          void defaults.ignores["*"].push(
+            ...extensions["*"].ignores,
+          );
 
-  const enabledScopes = scopes
-    .filter(scope => ConfiguredScopes.has(scope))
+  const enabledScopes = [...Scopes]
     .filter(scope => defaults.files[scope].length !== 0)
     .filter(scope => defaults.rules[scope].length !== 0);
 
   return defineConfig(
-    { plugins },
+    { plugins: imports.plugins },
     globalIgnores(defaults.ignores["*"] ?? []),
     enabledScopes
       .map(
@@ -128,25 +110,24 @@ export default function factory<
             } = settings[scope];
 
             if (languageOptions?.parser !== undefined)
-              languageOptions.parser = parsers[languageOptions.parser] as Parser;
+              languageOptions.parser = imports.parsers[languageOptions.parser] as Parser;
 
             if (parserOptions?.parser !== undefined)
-              parserOptions.parser = parsers[parserOptions.parser] as Parser;
+              parserOptions.parser = imports.parsers[parserOptions.parser] as Parser;
 
             if (parserOptions === undefined) {
               if (languageOptions !== undefined)
                 definition.languageOptions = languageOptions;
             }
             else
-              // parser YES
               if (languageOptions === undefined)
-                // language NO parser YES
                 definition.languageOptions = {
                   parserOptions,
                 };
-              else
-                // language YES parser YES
-                definition.languageOptions = Object.assign(languageOptions, { parserOptions });
+              else {
+                (languageOptions as NonNullable<typeof definition.languageOptions>).parserOptions = parserOptions;
+                definition.languageOptions = languageOptions;
+              }
 
             if (processor !== undefined)
               (definition as typeof definition & { processor: string }).processor = processor;
@@ -159,7 +140,11 @@ export default function factory<
             files: defaults.files[scope],
             ignores: defaults.ignores[scope] ?? [],
             "extends": [
-              Object.keys(definition).length === 0 ? [] : definition,
+              definition.languageOptions !== undefined
+              || definition.language !== undefined
+              || definition.processor !== undefined
+                ? definition
+                : [],
               defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
             ],
           };

@@ -1,4 +1,4 @@
-import type { Rules } from "../../rules";
+import type { Rules } from "../rules";
 
 export interface Defaults<Scope extends string> {
   files: Record<Scope, string[]>;

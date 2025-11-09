@@ -1,5 +1,7 @@
 import factory from "./factory";
-import type { Configuration, Settings } from "../typings";
+import type {
+  Settings, Defaults, Extensions,
+} from "../typings";
 import type { MutableRules } from "../typings/rules";
 
 export default function<
@@ -26,7 +28,11 @@ export default function<
     Scope,
     Parser
   >,
-  configuration: Configuration<Scope, Optional>,
+  defaults: Defaults<Scope>,
+  extensions?: Extensions<
+    Scope,
+    Optional
+  >,
 ) {
   return factory(
     scopes,
@@ -34,7 +40,8 @@ export default function<
     tree,
     imports,
     settings,
-    configuration,
+    defaults,
+    extensions,
   ) as Array<
     {
       files?: (string | string[])[];

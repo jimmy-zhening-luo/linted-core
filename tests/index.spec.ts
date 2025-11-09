@@ -6,7 +6,8 @@ import {
   tree,
   imports,
   settings,
-  configuration,
+  defaults,
+  extensions,
 } from "./index.input.spec";
 
 const configs = Core(
@@ -15,7 +16,8 @@ const configs = Core(
   tree,
   imports,
   settings,
-  configuration,
+  defaults,
+  extensions,
 );
 
 describe(
