@@ -9,7 +9,6 @@ Parser = (scope: string) => `MOCK_PARSER:${scope}`;
 export const scopes = [
   "js",
   "ts",
-  "mocha",
   "svelte",
   "html",
   "json",
@@ -27,10 +26,6 @@ tree = [
     ["json"],
   ] as const,
   [
-    "mocha",
-    ["ts"],
-  ] as const,
-  [
     "svelte",
     ["ts"],
   ] as const,
@@ -43,9 +38,6 @@ imports = {
   plugins: {
     "@stylistic": Plugin,
     "@typescript-eslint": Plugin,
-    mocha: Plugin,
-    "chai-friendly": Plugin,
-    "chai-expect": Plugin,
     html: Plugin,
     json: Plugin,
     jsonc: Plugin,
@@ -91,7 +83,6 @@ defaults = {
   files: {
     js: ["default.js"],
     ts: ["default.ts"],
-    mocha: ["default.mocha"],
     svelte: ["default.svelte"],
     html: ["default.html"],
     json: ["default.json"],
@@ -135,26 +126,6 @@ defaults = {
           "@typescript-eslint/enums": State.ERROR,
           "@typescript-eslint/destructure-expression": State.ERROR,
           "@typescript-eslint/global": State.ERROR,
-        },
-      },
-    ],
-    mocha: [
-      {
-        name: "disable",
-        rules: {
-          vanilla2: State.OFF,
-        },
-      },
-      {
-        name: "disable/ts",
-        rules: {
-          "@typescript-eslint/global": State.ERROR,
-        },
-      },
-      {
-        name: "enable",
-        rules: {
-          "mocha/test-expression": State.ERROR,
         },
       },
     ],
