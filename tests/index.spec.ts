@@ -22,13 +22,13 @@ const configs = Core(
 
 describe(
   "Core",
-  function () {
+  () => {
     describe(
       "module",
-      function () {
+      () => {
         it(
           "is a function",
-          function () {
+          () => {
             Core
               .should.be
               .a("function");
@@ -38,10 +38,10 @@ describe(
     );
     describe(
       "output",
-      function () {
+      () => {
         it(
           "is a non-empty array",
-          function () {
+          () => {
             configs
               .should.be
               .an("array")
@@ -50,7 +50,7 @@ describe(
         );
         it(
           `length >= (global/ignores + ${scopes.length} scopes = ${scopes.length + 1}) [Actual: ${configs.length}]`,
-          function () {
+          () => {
             configs
               .should.have
               .lengthOf.above(scopes.length + 1);
@@ -58,7 +58,7 @@ describe(
         );
         it(
           "of config objects",
-          function () {
+          () => {
             for (const config of configs)
               config
                 .should.be
@@ -75,7 +75,7 @@ describe(
         );
         it(
           "with valid plugins",
-          function () {
+          () => {
             for (const config of configs)
               if ("plugins" in config)
                 (config.plugins as object)
@@ -85,7 +85,7 @@ describe(
         );
         it(
           "or valid files",
-          function () {
+          () => {
             for (const config of configs)
               if ("files" in config)
                 config
@@ -97,7 +97,7 @@ describe(
         );
         it(
           "or valid ignores",
-          function () {
+          () => {
             for (const config of configs)
               if ("ignores" in config) {
                 config
@@ -115,7 +115,7 @@ describe(
         );
         it(
           "or valid rules",
-          function () {
+          () => {
             for (const config of configs)
               if ("rules" in config) {
                 config
