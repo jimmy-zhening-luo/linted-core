@@ -119,7 +119,7 @@ export default function factory<
   const configs: Array<
     {
       plugins?: unknown;
-      rules?: typeof defaults.rules[Scope][number];
+      rules?: typeof defaults.rules[Scope][number]["rules"];
       files?: Array<string | [string, string]>;
       ignores?: string[];
       languageOptions?: unknown;
