@@ -77,7 +77,7 @@ export default function factory<
     }
 
   const enabledScopes = [...Scopes]
-    .filter(scope => defaults.files[scope].length)
+    .filter(scope => defaults.files[scope].length),
   setScopes = enabledScopes
     .filter(scope => settings[scope]);
 
