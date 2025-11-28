@@ -116,7 +116,15 @@ export default function factory<
     }
   }
 
-  const configs = enabledScopes.flatMap(
+  const configs: Array<{
+    plugins?: unknown;
+    files?: Array<string | [string, string]>;
+    ignores?: string[];
+    rules?: string[];
+    languageOptions?: unknown;
+    language?: string;
+    processor?: string;
+  }> = enabledScopes.flatMap(
     scope => defaults.rules[scope],
   ),
   rulesGlobalTotal = configs.length + 2;
