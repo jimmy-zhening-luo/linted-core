@@ -86,15 +86,15 @@ export default function factory<
     ignores = defaults.ignores[scope] ?? [];
 
     for (const rule of defaults.rules[scope]) {
-      rule.files = files;
-      rule.ignores = ignores;
+      (rule as typeof rule & { files: Array<string | [string, string]> }).files = files;
+      (rule as typeof rule & { ignores: string[] }).ignores = ignores;
     }
 
     const setting = settings[scope];
 
     if (setting) {
-      setting.files = files;
-      setting.ignores = ignores;
+      (setting as typeof setting & { files: Array<string | [string, string]> }).files = files;
+      (setting as typeof setting & { ignores: string[] }).ignores = ignores;
 
       if (setting.languageOptions) {
         const {
