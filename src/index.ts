@@ -26,15 +26,9 @@ export default function<
       & Record<RequiredParser, unknown>
       & Partial<Record<Optional, unknown>>;
   },
-  settings: Settings<
-    Scope,
-    Parser
-  >,
+  settings: Settings<Scope, Parser>,
   defaults: Defaults<Scope>,
-  extensions?: Extensions<
-    Scope,
-    Optional
-  >,
+  extensions?: Extensions<Scope, Optional>,
 ) {
   return factory(
     scopes,
@@ -44,11 +38,5 @@ export default function<
     settings,
     defaults,
     extensions,
-  ) as Array<
-    {
-      files?: Array<string | [string, string]>;
-      ignores?: string[];
-      rules?: Rules;
-    }
-  >;
+  );
 }
