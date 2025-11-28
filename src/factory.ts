@@ -117,7 +117,7 @@ export default function factory<
   }
 
   const configs: Array<
-    typeof defaults.rules[Scope]
+    typeof defaults.rules[Scope][number]
     & {
       plugins?: unknown;
       files?: Array<string | [string, string]>;
