@@ -120,7 +120,7 @@ export default function factory<
     plugins?: unknown;
     files?: Array<string | [string, string]>;
     ignores?: string[];
-    rules?: string[];
+    rules?: unknown;
     languageOptions?: unknown;
     language?: string;
     processor?: string;
