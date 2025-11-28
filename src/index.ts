@@ -4,6 +4,7 @@ import type {
   Defaults,
   Extensions,
 } from "../typings";
+import type { Rules } from "../typings/rules";
 
 export default function<
   Scope extends string,
@@ -28,7 +29,13 @@ export default function<
   settings: Settings<Scope, Parser>,
   defaults: Defaults<Scope>,
   extensions?: Extensions<Scope, Optional>,
-) {
+): Array<
+  {
+    files?: Array<string | [string, string]>;
+    ignores?: string[];
+    rules?: Rules;
+  }
+> {
   return factory(
     scopes,
     optional,

@@ -1,5 +1,4 @@
 import type Core from ".";
-import type { Rules } from "../../typings/rules";
 
 export default function factory<
   Scope extends string,
@@ -15,13 +14,7 @@ export default function factory<
   settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
   defaults: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
   extensions?: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[6],
-): Array<
-  {
-    files?: Array<string | [string, string]>;
-    ignores?: string[];
-    rules?: Rules;
-  }
-> {
+) {
   const Scopes = new Set(scopes);
 
   if (extensions) {
@@ -115,7 +108,7 @@ export default function factory<
       name: "*/ignores",
       ignores: defaults.ignores["*"] ?? [],
     },
-  ],
+  ] as typeof configs & { files?: Array<string | [string, string]> },
   scopeCount = enabledScopes.length;
 
   configs.length = Count.Global + scopeCount;
