@@ -119,6 +119,7 @@ export default function factory<
             .parser = imports.parsers[subparser] as Parser;
       }
     }
+  }
 
   const configs = enabledScopes.flatMap(
     scope => defaults.rules[scope],
