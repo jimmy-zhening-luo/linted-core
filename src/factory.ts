@@ -99,7 +99,13 @@ export default function factory<
     Global = 2,
   }
 
-  const configs = [
+  const configs: Array<{
+    name: string;
+    files?: Array<string | [string, string]>;
+    ignores?: string[];
+    extends?: unknown;
+    plugins?: unknown;
+  }> = [
     {
       name: "*/plugins",
       plugins: imports.plugins,
@@ -108,7 +114,7 @@ export default function factory<
       name: "*/ignores",
       ignores: defaults.ignores["*"] ?? [],
     },
-  ] as typeof configs & { files?: Array<string | [string, string]> },
+  ],
   scopeCount = enabledScopes.length;
 
   configs.length = Count.Global + scopeCount;
@@ -117,6 +123,7 @@ export default function factory<
     const scope = enabledScopes[i]!;
 
     configs[i + Count.Global] = {
+      name: scope,
       files: defaults.files[scope],
       ignores: defaults.ignores[scope] ?? [],
       "extends": [
