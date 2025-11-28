@@ -90,9 +90,9 @@ export default function factory<
       rule.ignores = ignores;
     }
 
-    if (settings[scope]) {
-      const setting = settings[scope]!;
+    const setting = settings[scope];
 
+    if (setting) {
       setting.files = files;
       setting.ignores = ignores;
 
