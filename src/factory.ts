@@ -1,9 +1,4 @@
-import {
-  defineConfig,
-  globalIgnores,
-} from "@eslint/config-helpers";
 import type Core from ".";
-import type { MutableRuleConfigs } from "../typings/rules";
 
 export default function factory<
   Scope extends string,
@@ -96,7 +91,7 @@ export default function factory<
         if (subparser)
           settings[scope]
             .languageOptions
-            .parserOptions
+            .parserOptions!
             .parser = imports.parsers[subparser] as Parser;
       }
 
@@ -119,14 +114,14 @@ export default function factory<
   configs.length = Count.Global + scopeCount;
 
   for (let i = 0; i < scopeCount; ++i) {
-    const scope = enabledScopes[i];
+    const scope = enabledScopes[i]!;
 
-    config[i + Count.Global] = {
+    configs[i + Count.Global] = {
       files: defaults.files[scope],
       ignores: defaults.ignores[scope] ?? [],
       "extends": [
         settings[scope] ?? [],
-        defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
+        defaults.rules[scope],
       ],
     };
   }
