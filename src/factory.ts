@@ -103,7 +103,7 @@ export default function factory<
     name: string;
     files?: Array<string | [string, string]>;
     ignores?: string[];
-    extends?: unknown;
+    "extends"?: unknown;
     plugins?: unknown;
   }> = [
     {
