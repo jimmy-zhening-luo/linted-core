@@ -56,7 +56,7 @@ export default function factory<
               ...extension.ignores,
             );
           else
-            defaults.ignores[scope] = ignores;
+            defaults.ignores[scope] = extension.ignores;
 
         if (extension.rules)
           defaults.rules[scope][
