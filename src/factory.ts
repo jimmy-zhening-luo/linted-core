@@ -138,7 +138,7 @@ export default function factory<
   };
   setScopes.forEach(
     (scope, i) => {
-      configs[rulesGlobalTotal + i] = settings[scope];
+      configs[rulesGlobalTotal + i] = settings[scope]!;
     },
   );
 
