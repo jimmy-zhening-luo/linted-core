@@ -4,7 +4,6 @@ import type {
   Defaults,
   Extensions,
 } from "../typings";
-import type { Rules } from "../typings/rules";
 
 export default function<
   Scope extends string,

@@ -1,4 +1,5 @@
 import type Core from ".";
+import type { Rules } from "../../typings/rules";
 
 export default function factory<
   Scope extends string,
