@@ -18,33 +18,55 @@ export default function factory<
   const Scopes = new Set(scopes);
 
   if (extensions) {
+    const global = extensions["*"];
+
+    if (global)
+      if (
+        global.override
+        || !defaults.ignores["*"]
+      )
+        defaults.ignores["*"] = global.ignores ?? [];
+      else
+        if (global.ignores?.length)
+          void defaults.ignores["*"].push(
+            ...global.ignores,
+          );
+
     for (const scope of optional)
       if (extensions[scope]) {
-        imports.plugins[scope] = extensions[scope].plugin as typeof imports.plugins[Optional];
-        imports.parsers[scope] = extensions[scope].parser as typeof imports.parsers[Optional];
+        imports.plugins[scope] = extensions[scope].plugin as Plugin;
+        imports.parsers[scope] = extensions[scope].parser as Parser;
       }
       else
         Scopes.delete(scope);
 
     for (const scope of Scopes)
       if (extensions[scope]) {
-        if (extensions[scope].files)
+        const {
+          [scope]: {
+            files,
+            ignores,
+            rules,
+          },
+        } = extensions;
+
+        if (files)
           void defaults.files[scope].push(
-            ...extensions[scope].files,
+            ...files,
           );
 
-        if (extensions[scope].ignores)
+        if (ignores)
           if (defaults.ignores[scope])
             void defaults.ignores[scope].push(
-              ...extensions[scope].ignores,
+              ...ignores,
             );
           else
-            defaults.ignores[scope] = extensions[scope].ignores;
+            defaults.ignores[scope] = ignores;
 
-        if (extensions[scope].rules)
+        if (rules)
           defaults.rules[scope][
             defaults.rules[scope].length
-          ] = { rules: extensions[scope].rules };
+          ] = { rules };
       }
   }
 
@@ -52,86 +74,69 @@ export default function factory<
     if (
       Scopes.has(scope)
       && defaults.files[scope].length
-    )
-      for (const parent of parents)
-        void defaults.files[parent].push(
-          ...defaults.files[scope],
-        );
+    ) {
+      const { [scope]: files } = defaults.files;
 
-  if (extensions)
-    if (extensions["*"])
-      if (
-        extensions["*"].override
-        || !defaults.ignores["*"]
-      )
-        defaults.ignores["*"] = extensions["*"].ignores ?? [];
-      else
-        if (extensions["*"].ignores?.length)
-          void defaults.ignores["*"].push(
-            ...extensions["*"].ignores,
-          );
+      for (const parent of parents)
+        void defaults.files[parent].push(...files);
+    }
 
   const enabledScopes = [...Scopes]
     .filter(scope => defaults.files[scope].length)
-    .filter(scope => defaults.rules[scope].length);
+  setScopes = enabledScopes
+    .filter(scope => settings[scope]);
 
-  for (const scope of enabledScopes)
-    if (settings[scope])
-      if (settings[scope].languageOptions) {
+  for (const scope of enabledScopes) {
+    const files = defaults.files[scope],
+    ignores = defaults.ignores[scope] ?? [];
+
+    for (const rule of defaults.rules[scope]) {
+      rule.files = files;
+      rule.ignores = ignores;
+    }
+
+    if (settings[scope]) {
+      const { [scope]: setting } = settings;
+
+      setting.files = files;
+      setting.ignores = ignores;
+
+      if (setting.languageOptions) {
         const {
           parser,
           parserOptions: { parser: subparser } = {},
-        } = settings[scope].languageOptions;
+        } = setting.languageOptions;
 
         if (parser)
-          settings[scope]
+          setting
             .languageOptions
             .parser = imports.parsers[parser] as Parser;
 
         if (subparser)
-          settings[scope]
+          setting
             .languageOptions
             .parserOptions!
             .parser = imports.parsers[subparser] as Parser;
       }
+    }
 
-  const enum Count {
-    Global = 2,
-  }
+  const configs = enabledScopes.flatMap(
+    scope => defaults.rules[scope],
+  ),
+  rulesGlobalTotal = configs.length + 2;
 
-  const configs: Array<{
-    name: string;
-    files?: Array<string | [string, string]>;
-    ignores?: string[];
-    "extends"?: unknown;
-    plugins?: unknown;
-  }> = [
-    {
-      name: "*/plugins",
-      plugins: imports.plugins,
+  configs.length = rulesGlobalTotal + setScopes.length;
+  configs[rulesGlobalTotal - 2] = {
+    plugins: imports.plugins,
+  };
+  configs[rulesGlobalTotal - 1] = {
+    ignores: defaults.ignores["*"] ?? [],
+  };
+  setScopes.forEach(
+    (scope, i) => {
+      configs[rulesGlobalTotal + i] = settings[scope];
     },
-    {
-      name: "*/ignores",
-      ignores: defaults.ignores["*"] ?? [],
-    },
-  ],
-  scopeCount = enabledScopes.length;
-
-  configs.length = Count.Global + scopeCount;
-
-  for (let i = 0; i < scopeCount; ++i) {
-    const scope = enabledScopes[i]!;
-
-    configs[i + Count.Global] = {
-      name: scope,
-      files: defaults.files[scope],
-      ignores: defaults.ignores[scope] ?? [],
-      "extends": [
-        settings[scope] ?? [],
-        defaults.rules[scope],
-      ],
-    };
-  }
+  );
 
   return configs;
 }
