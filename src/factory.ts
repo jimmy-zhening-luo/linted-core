@@ -91,7 +91,7 @@ export default function factory<
     }
 
     if (settings[scope]) {
-      const { [scope]: setting } = settings;
+      const setting = settings[scope]!;
 
       setting.files = files;
       setting.ignores = ignores;
