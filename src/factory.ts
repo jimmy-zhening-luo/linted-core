@@ -36,14 +36,13 @@ export default function factory<
       if (extensions[scope]) {
         imports.plugins[scope] = extensions[scope].plugin as typeof imports.plugins[Optional];
         imports.parsers[scope] = extensions[scope].parser as typeof imports.parsers[Optional];
-
       }
       else
         Scopes.delete(scope);
 
     for (const scope of Scopes)
       if (extensions[scope]) {
-        const extension = extensions[scope]!;
+        const extension = extensions[scope];
 
         if (extension.files)
           void defaults.files[scope].push(
