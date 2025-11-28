@@ -71,9 +71,7 @@ export default function factory<
       )
         defaults.ignores["*"] = extensions["*"].ignores ?? [];
       else
-        if (
-          extensions["*"].ignores?.length
-        )
+        if (extensions["*"].ignores?.length)
           void defaults.ignores["*"].push(
             ...extensions["*"].ignores,
           );
@@ -85,25 +83,53 @@ export default function factory<
   for (const scope of enabledScopes)
     if (settings[scope])
       if (settings[scope].languageOptions) {
-        settings[scope].languageOptions.parser &&= imports.parsers[settings[scope].languageOptions.parser] as Parser;
+        const {
+          parser,
+          parserOptions: { parser: subparser } = {},
+        } = settings[scope].languageOptions;
 
-        if (settings[scope].languageOptions.parserOptions)
-          settings[scope].languageOptions.parserOptions.parser &&= imports.parsers[settings[scope].languageOptions.parserOptions.parser] as Parser;
+        if (parser)
+          settings[scope]
+            .languageOptions
+            .parser = imports.parsers[parser] as Parser;
+
+        if (subparser)
+          settings[scope]
+            .languageOptions
+            .parserOptions
+            .parser = imports.parsers[subparser] as Parser;
       }
 
-  return defineConfig(
-    { plugins: imports.plugins },
-    globalIgnores(defaults.ignores["*"] ?? []),
-    enabledScopes
-      .map(
-        scope => ({
-          files: defaults.files[scope],
-          ignores: defaults.ignores[scope] ?? [],
-          "extends": [
-            settings[scope] ?? [],
-            defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
-          ],
-        }),
-      ),
-  );
+  const enum Count {
+    Global = 2,
+  }
+
+  const configs = [
+    {
+      name: "*/plugins",
+      plugins: imports.plugins,
+    },
+    {
+      name: "*/ignores",
+      ignores: defaults.ignores["*"] ?? [],
+    },
+  ],
+  scopeCount = enabledScopes.length;
+
+  configs.length = Count.Global + scopeCount;
+
+  for (let i = 0; i < scopeCount; ++i) {
+    const scope = enabledScopes[i];
+
+    config[i + Count.Global] = {
+      files: defaults.files[scope],
+      ignores: defaults.ignores[scope] ?? [],
+      "extends": [
+        settings[scope] ?? [],
+        defaults.rules[scope] as MutableRuleConfigs<NonNullable<typeof defaults.rules[typeof scope]>>,
+      ],
+    };
+  }
+
+  return configs;
 }

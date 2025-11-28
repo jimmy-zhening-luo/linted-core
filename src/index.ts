@@ -1,6 +1,8 @@
 import factory from "./factory";
 import type {
-  Settings, Defaults, Extensions,
+  Settings,
+  Defaults,
+  Extensions,
 } from "../typings";
 import type { MutableRules } from "../typings/rules";
 
