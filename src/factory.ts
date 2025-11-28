@@ -117,9 +117,9 @@ export default function factory<
   }
 
   const configs: Array<
-    Partial<typeof defaults.rules[Scope][number]>
-    & {
+    {
       plugins?: unknown;
+      rules?: typeof defaults.rules[Scope][number];
       files?: Array<string | [string, string]>;
       ignores?: string[];
       languageOptions?: unknown;
