@@ -18,7 +18,11 @@ const configs = Core(
   settings,
   defaults,
   extensions,
-);
+),
+Scopes = new Set(scopes);
+
+for (const scope of optional)
+  Scopes.delete(scope);
 
 describe(
   "Core",
@@ -49,11 +53,12 @@ describe(
           },
         );
         it(
-          `length >= (global/ignores + ${scopes.length} scopes = ${scopes.length + 1}) [Actual: ${configs.length}]`,
+          `length >= (*/plugins + */ignores + ${Scopes.size} scopes = ${Scopes.size + 2}) [Actual: ${configs.length}]`,
           () => {
             configs
               .should.have
-              .lengthOf.above(scopes.length + 1);
+              .lengthOf
+              .at.least(Scopes.size + 2);
           },
         );
         it(
