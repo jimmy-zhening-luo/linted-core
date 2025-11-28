@@ -4,7 +4,7 @@ import type {
   Defaults,
   Extensions,
 } from "../typings";
-import type { MutableRules } from "../typings/rules";
+import type { Rules } from "../typings/rules";
 
 export default function<
   Scope extends string,
@@ -46,9 +46,9 @@ export default function<
     extensions,
   ) as Array<
     {
-      files?: (string | string[])[];
-      ignores?: (string)[];
-      rules?: MutableRules;
+      files?: Array<string | [string, string]>;
+      ignores?: string[];
+      rules?: Rules;
     }
   >;
 }
