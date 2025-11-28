@@ -43,31 +43,25 @@ export default function factory<
 
     for (const scope of Scopes)
       if (extensions[scope]) {
-        const {
-          [scope]: {
-            files,
-            ignores,
-            rules,
-          },
-        } = extensions;
+        const extension = extensions[scope]!;
 
-        if (files)
+        if (extension.files)
           void defaults.files[scope].push(
-            ...files,
+            ...extension.files,
           );
 
-        if (ignores)
+        if (extension.ignores)
           if (defaults.ignores[scope])
             void defaults.ignores[scope].push(
-              ...ignores,
+              ...extension.ignores,
             );
           else
             defaults.ignores[scope] = ignores;
 
-        if (rules)
+        if (extension.rules)
           defaults.rules[scope][
             defaults.rules[scope].length
-          ] = { rules };
+          ] = { rules: extension.rules };
       }
   }
 
