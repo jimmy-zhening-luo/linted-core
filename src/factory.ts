@@ -34,8 +34,9 @@ export default function factory<
 
     for (const scope of optional)
       if (extensions[scope]) {
-        imports.plugins[scope] = extensions[scope].plugin as Plugin;
-        imports.parsers[scope] = extensions[scope].parser as Parser;
+        imports.plugins[scope] = extensions[scope].plugin as typeof imports.plugins[Optional];
+        imports.parsers[scope] = extensions[scope].parser as typeof imports.parsers[Optional];
+
       }
       else
         Scopes.delete(scope);
