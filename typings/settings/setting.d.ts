@@ -1,12 +1,12 @@
 export interface Setting<
-  Parser extends string,
+  Scope extends string,
 > {
   languageOptions?: {
     [property: string]: unknown;
-    parser?: Parser;
+    parser?: Scope;
     parserOptions?: {
       [property: string]: unknown;
-      parser?: Parser;
+      parser?: Scope;
     };
   };
   language?: string;

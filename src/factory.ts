@@ -3,66 +3,60 @@ import type Core from ".";
 export default function factory<
   Scope extends string,
   Optional extends Scope,
-  RequiredPlugin extends string,
-  RequiredParser extends Scope,
-  Parser extends RequiredParser | Optional,
 >(
-  scopes: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[0],
-  optional: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[1],
-  tree: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[2],
-  imports: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[3],
-  settings: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[4],
-  defaults: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[5],
-  extensions?: Parameters<typeof Core<Scope, Optional, RequiredPlugin, RequiredParser, Parser>>[6],
+  scopes: Parameters<typeof Core<Scope, Optional>>[0],
+  optional: Parameters<typeof Core<Scope, Optional>>[1],
+  tree: Parameters<typeof Core<Scope, Optional>>[2],
+  imports: Parameters<typeof Core<Scope, Optional>>[3],
+  settings: Parameters<typeof Core<Scope, Optional>>[4],
+  defaults: Parameters<typeof Core<Scope, Optional>>[5],
+  extensions: Parameters<typeof Core<Scope, Optional>>[6],
 ) {
-  const Scopes = new Set(scopes);
+  const Scopes = new Set(scopes),
+  global = extensions["*"];
 
-  if (extensions) {
-    const global = extensions["*"];
+  if (global)
+    if (
+      global.override
+      || !defaults.ignores["*"]
+    )
+      defaults.ignores["*"] = global.ignores ?? [];
+    else
+      if (global.ignores?.length)
+        void defaults.ignores["*"].push(
+          ...global.ignores,
+        );
 
-    if (global)
-      if (
-        global.override
-        || !defaults.ignores["*"]
-      )
-        defaults.ignores["*"] = global.ignores ?? [];
-      else
-        if (global.ignores?.length)
-          void defaults.ignores["*"].push(
-            ...global.ignores,
+  for (const scope of optional)
+    if (extensions[scope]) {
+      imports.plugins[scope] = extensions[scope].plugin;
+      imports.parsers[scope] = extensions[scope].parser;
+    }
+    else
+      Scopes.delete(scope);
+
+  for (const scope of Scopes)
+    if (extensions[scope]) {
+      const extension = extensions[scope];
+
+      if (extension.files)
+        void defaults.files[scope].push(
+          ...extension.files,
+        );
+
+      if (extension.ignores)
+        if (defaults.ignores[scope])
+          void defaults.ignores[scope].push(
+            ...extension.ignores,
           );
+        else
+          defaults.ignores[scope] = extension.ignores;
 
-    for (const scope of optional)
-      if (extensions[scope]) {
-        imports.plugins[scope] = extensions[scope].plugin as typeof imports.plugins[Optional];
-        imports.parsers[scope] = extensions[scope].parser as typeof imports.parsers[Optional];
-      }
-      else
-        Scopes.delete(scope);
-
-    for (const scope of Scopes)
-      if (extensions[scope]) {
-        const extension = extensions[scope];
-
-        if (extension.files)
-          void defaults.files[scope].push(
-            ...extension.files,
-          );
-
-        if (extension.ignores)
-          if (defaults.ignores[scope])
-            void defaults.ignores[scope].push(
-              ...extension.ignores,
-            );
-          else
-            defaults.ignores[scope] = extension.ignores;
-
-        if (extension.rules)
-          defaults.rules[scope][
-            defaults.rules[scope].length
-          ] = { rules: extension.rules };
-      }
-  }
+      if (extension.rules)
+        defaults.rules[scope][
+          defaults.rules[scope].length
+        ] = { rules: extension.rules };
+    }
 
   for (const [scope, parents] of tree)
     if (
@@ -84,16 +78,21 @@ export default function factory<
     const files = defaults.files[scope],
     ignores = defaults.ignores[scope] ?? [];
 
+    type Enscope<Config> = Config & {
+      files?: typeof files;
+      ignores?: typeof ignores;
+    };
+
     for (const rule of defaults.rules[scope]) {
-      (rule as typeof rule & { files: Array<string | [string, string]> }).files = files;
-      (rule as typeof rule & { ignores: string[] }).ignores = ignores;
+      (rule as Enscope<typeof rule>).files = files;
+      (rule as Enscope<typeof rule>).ignores = ignores;
     }
 
     const setting = settings[scope];
 
     if (setting) {
-      (setting as typeof setting & { files: Array<string | [string, string]> }).files = files;
-      (setting as typeof setting & { ignores: string[] }).ignores = ignores;
+      (setting as Enscope<typeof setting>).files = files;
+      (setting as Enscope<typeof setting>).ignores = ignores;
 
       if (setting.languageOptions) {
         const {
@@ -104,13 +103,13 @@ export default function factory<
         if (parser)
           setting
             .languageOptions
-            .parser = imports.parsers[parser] as Parser;
+            .parser = imports.parsers[parser] as Scope;
 
         if (subparser)
           setting
             .languageOptions
             .parserOptions!
-            .parser = imports.parsers[subparser] as Parser;
+            .parser = imports.parsers[subparser] as Scope;
       }
     }
   }

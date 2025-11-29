@@ -9,9 +9,6 @@ import type { Rules } from "../typings/rules";
 export default function<
   Scope extends string,
   Optional extends Scope,
-  RequiredPlugin extends string,
-  RequiredParser extends Scope,
-  Parser extends RequiredParser | Optional,
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
@@ -19,14 +16,10 @@ export default function<
     readonly [Scope, readonly Scope[]]
   >,
   imports: {
-    plugins:
-      & Record<RequiredPlugin, unknown>
-      & Partial<Record<Optional, unknown>>;
-    parsers:
-      & Record<RequiredParser, unknown>
-      & Partial<Record<Optional, unknown>>;
+    plugins: Record<string, unknown>;
+    parsers: Partial<Record<Scope, unknown>>;
   },
-  settings: Settings<Scope, Parser>,
+  settings: Settings<Scope>,
   defaults: Defaults<Scope>,
   extensions: Extensions<Scope, Optional>,
 ): Array<
