@@ -21,7 +21,7 @@ export default function<
   },
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
-  extensions: Extensions<Scope, Optional>,
+  extensions: Extensions<Scope, Optional> = {},
 ): Array<
   {
     files?: Array<string | [string, string]>;
