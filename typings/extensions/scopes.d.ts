@@ -7,7 +7,7 @@ export type ScopeExtensions<
 = Record<
   Scope,
   {
-    files?: Array<string | [string, string]>;
+    files?: Array<string | string[]>;
     ignores?: string[];
     rules?: Rules;
   }

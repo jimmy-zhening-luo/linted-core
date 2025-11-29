@@ -19,7 +19,12 @@ configs = Core(
   settings,
   defaults,
   extensions,
-),
+) as {
+  files?: (string | string[])[];
+  ignores?: string[];
+  rules?: Record<string, unknown>;
+  plugins?: object;
+}[],
 Scopes = new Set(scopes);
 
 for (const scope of optional)
@@ -84,7 +89,7 @@ describe(
           () => {
             for (const config of configs)
               if ("plugins" in config)
-                (config.plugins as object)
+                config.plugins
                   .should.be
                   .an("object");
           },
@@ -94,8 +99,7 @@ describe(
           () => {
             for (const config of configs)
               if ("files" in config)
-                config
-                  .files
+                config.files
                   .should.be
                   .an("array")
                   .not.empty;
