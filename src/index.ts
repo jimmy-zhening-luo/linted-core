@@ -15,23 +15,25 @@ export default function<
   parsers: Record<string, unknown>,
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
-  extensions: {
-    "*"?: {
-      ignores?: string[];
-      override?: boolean;
-    };
-  } & {
-    readonly [K in Scope]?: {
-      files?: readonly (string | readonly string[])[];
-      ignores?: readonly string[];
-      rules?: Rules;
+  extensions: Partial<
+    {
+      "*": {
+        ignores?: string[];
+        override?: boolean;
+      };
+    } & {
+      readonly [K in Scope]: {
+        files?: readonly (string | readonly string[])[];
+        ignores?: readonly string[];
+        rules?: Rules;
+      }
+    } & {
+      readonly [K in Optional]: {
+        plugin: unknown;
+        parser: unknown;
+      }
     }
-  } & {
-    readonly [K in Optional]?: {
-      plugin: unknown;
-      parser: unknown;
-    }
-  },
+  >,
 ): unknown[] {
   return factory(
     scopes,
