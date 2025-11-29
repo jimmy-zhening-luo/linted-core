@@ -15,7 +15,7 @@ export type ScopeExtensions<
 & Record<
   Optional,
   {
-    readonly plugin: object;
-    readonly parser: object;
+    readonly plugin: unknown;
+    readonly parser: unknown;
   }
 >;
