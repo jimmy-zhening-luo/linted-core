@@ -2,9 +2,9 @@ import type { Rules } from "../rules";
 
 export type ScopeExtensions<
   Scope extends string,
-  Optional extends Scope,
+  Optional extends string,
 >
-= & Record<
+= Record<
   Scope,
   {
     files?: Array<string | [string, string]>;
@@ -15,7 +15,7 @@ export type ScopeExtensions<
 & Record<
   Optional,
   {
-    plugin: unknown;
-    parser: unknown;
+    plugin: object;
+    parser: object;
   }
 >;

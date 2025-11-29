@@ -18,12 +18,13 @@ export default function<
   parsers: Record<string, unknown>,
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
-  extensions: Extensions<Scope, Optional> = {},
+  extensions: Extensions<Scope, Optional>,
 ): Array<
   {
     files?: Array<string | [string, string]>;
     ignores?: string[];
     rules?: Rules;
+    plugins?: Record<string, unknown>;
   }
 > {
   return factory(
