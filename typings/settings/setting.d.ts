@@ -1,12 +1,12 @@
 export interface Setting {
-  languageOptions?: {
-    [option: string]: unknown;
+  readonly languageOptions?: {
+    readonly [option: string]: unknown;
     parser?: string;
-    parserOptions?: {
-      [parserOption: string]: unknown;
+    readonly parserOptions?: {
+      readonly [parserOption: string]: unknown;
       parser?: string;
     };
   };
-  language?: string;
-  processor?: string;
+  readonly language?: string;
+  readonly processor?: string;
 }

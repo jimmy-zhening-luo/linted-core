@@ -5,8 +5,10 @@ export type State
   | "off"
   | "warn"
   | "error";
-export type Rule = State | [State, ...unknown[]];
-export type Rules = Record<
-  string,
-  Readonly<Rule>
+export type Rule = State | readonly [State, ...unknown[]];
+export type Rules = Readonly<
+  Record<
+    string,
+    Rule
+  >
 >;

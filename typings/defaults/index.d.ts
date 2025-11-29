@@ -1,7 +1,19 @@
 import type { Rules } from "../rules";
 
 export interface Defaults<Scope extends string> {
-  files: Record<Scope, string[]>;
-  ignores: Partial<Record<Scope | "*", string[]>>;
-  rules: Record<Scope, Record<"rules", Rules>[]>;
+  readonly files: Record<
+    Scope,
+    (string | readonly string[])[]
+  >;
+  readonly ignores: Partial<
+    Record<
+      | Scope
+      | "*",
+      string[]
+    >
+  >;
+  readonly rules: Record<
+    Scope,
+    Record<"rules", Rules>[]
+  >;
 }

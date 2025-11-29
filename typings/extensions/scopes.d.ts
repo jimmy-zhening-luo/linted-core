@@ -7,15 +7,15 @@ export type ScopeExtensions<
 = Record<
   Scope,
   {
-    files?: Array<string | string[]>;
-    ignores?: string[];
-    rules?: Rules;
+    readonly files?: readonly(string | readonly string[])[];
+    readonly ignores?: readonly string[];
+    readonly rules?: Rules;
   }
 >
 & Record<
   Optional,
   {
-    plugin: object;
-    parser: object;
+    readonly plugin: object;
+    readonly parser: object;
   }
 >;

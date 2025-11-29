@@ -20,7 +20,7 @@ export default function factory<
       global.override
       || !defaults.ignores["*"]
     )
-      defaults.ignores["*"] = global.ignores ?? [];
+      defaults.ignores["*"] = (global.ignores ?? []) as string[];
     else
       if (global.ignores?.length)
         void defaults.ignores["*"].push(
@@ -53,7 +53,7 @@ export default function factory<
             ...extension.ignores,
           );
         else
-          defaults.ignores[scope] = extension.ignores;
+          defaults.ignores[scope] = extension.ignores as string[];
 
       if (extension.rules)
         defaults.rules[scope][

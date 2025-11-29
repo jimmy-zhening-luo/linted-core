@@ -1,6 +1,6 @@
 export type GlobalExtension = {
   "*": {
-    ignores?: string[];
-    override?: boolean;
+    readonly ignores?: readonly string[];
+    readonly override?: boolean;
   };
 };
