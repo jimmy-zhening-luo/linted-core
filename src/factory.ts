@@ -131,20 +131,21 @@ export default function factory<
   >[] = enabledScopes.flatMap(
     scope => defaults.rules[scope],
   ),
-  rulesGlobalTotal = configs.length + 1;
+  { length: scopeRuleConfigCount } = configs,
+  { length: scopeSettingConfigCount } = setScopes,
+  scopeConfigCount = scopeRuleConfigCount + scopeSettingConfigCount;
 
-  configs.length = rulesGlobalTotal + setScopes.length;
-  configs[rulesGlobalTotal - 1] = {
+  configs.length = scopeConfigCount + 1;
+
+  for (let i = 0; i < scopeSettingConfigCount; ++i)
+    configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
+
+  configs[scopeConfigCount] = {
     ignores: defaults.ignores["*"] ?? [],
   };
-  setScopes.forEach(
-    (scope, i) => {
-      configs[rulesGlobalTotal + i] = settings[scope]!;
-    },
-  );
 
   if (Object.keys(extensionPlugins).length)
-    configs[configs.length] = { plugins: extensionPlugins };
+    configs[scopeConfigCount + 1] = { plugins: extensionPlugins };
 
   return configs;
 }
