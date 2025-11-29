@@ -17,7 +17,7 @@ export default function<
   >,
   imports: {
     plugins: Record<string, unknown>;
-    parsers: Partial<Record<Scope, unknown>>;
+    parsers: Record<string, unknown>;
   },
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
