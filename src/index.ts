@@ -15,10 +15,7 @@ export default function<
   tree: Array<
     readonly [Scope, readonly Scope[]]
   >,
-  imports: {
-    plugins: Record<string, unknown>;
-    parsers: Record<string, unknown>;
-  },
+  parsers: Record<string, unknown>,
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
   extensions: Extensions<Scope, Optional> = {},
@@ -33,7 +30,7 @@ export default function<
     scopes,
     optional,
     tree,
-    imports,
+    parsers,
     settings,
     defaults,
     extensions,

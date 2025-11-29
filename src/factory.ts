@@ -7,7 +7,7 @@ export default function factory<
   scopes: Parameters<typeof Core<Scope, Optional>>[0],
   optional: Parameters<typeof Core<Scope, Optional>>[1],
   tree: Parameters<typeof Core<Scope, Optional>>[2],
-  imports: Parameters<typeof Core<Scope, Optional>>[3],
+  parsers: Parameters<typeof Core<Scope, Optional>>[3],
   settings: Parameters<typeof Core<Scope, Optional>>[4],
   defaults: Parameters<typeof Core<Scope, Optional>>[5],
   extensions: Parameters<typeof Core<Scope, Optional>>[6] = {},
@@ -27,11 +27,14 @@ export default function factory<
           ...global.ignores,
         );
 
+  const extensionPlugins: Record<string, unknown> = {};
+
   for (const scope of optional)
     if (extensions[scope]) {
-      imports.plugins[scope] = extensions[scope].plugin;
-      imports.parsers[scope] = extensions[scope].parser;
+      extensionPlugins[scope] = extensions[scope].plugin;
+      parsers[scope] = extensions[scope].parser;
     }
+
     else
       Scopes.delete(scope);
 
@@ -103,20 +106,20 @@ export default function factory<
         if (parser)
           setting
             .languageOptions
-            .parser = imports.parsers[parser] as Scope;
+            .parser = parsers[parser] as Scope;
 
         if (subparser)
           setting
             .languageOptions
             .parserOptions!
-            .parser = imports.parsers[subparser] as Scope;
+            .parser = parsers[subparser] as Scope;
       }
     }
   }
 
   const configs: Array<
     {
-      plugins?: unknown;
+      plugins?: Record<string, unknown>;
       rules?: typeof defaults.rules[Scope][number]["rules"];
       files?: Array<string | [string, string]>;
       ignores?: string[];
@@ -127,12 +130,9 @@ export default function factory<
   > = enabledScopes.flatMap(
     scope => defaults.rules[scope],
   ),
-  rulesGlobalTotal = configs.length + 2;
+  rulesGlobalTotal = configs.length + 1;
 
   configs.length = rulesGlobalTotal + setScopes.length;
-  configs[rulesGlobalTotal - 2] = {
-    plugins: imports.plugins,
-  };
   configs[rulesGlobalTotal - 1] = {
     ignores: defaults.ignores["*"] ?? [],
   };
@@ -141,6 +141,9 @@ export default function factory<
       configs[rulesGlobalTotal + i] = settings[scope]!;
     },
   );
+
+  if (Object.keys(extensionPlugins).length)
+    configs[configs.length] = { plugins: extensionPlugins };
 
   return configs;
 }
