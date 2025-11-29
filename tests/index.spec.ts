@@ -10,7 +10,8 @@ import {
   extensions,
 } from "./index.input.spec";
 
-const configs = Core(
+const GLOBAL_CONFIG_COUNT = 1,
+configs = Core(
   scopes,
   optional,
   tree,
@@ -53,12 +54,12 @@ describe(
           },
         );
         it(
-          `length >= (*/plugins + */ignores + ${Scopes.size} scopes = ${Scopes.size + 2}) [Actual: ${configs.length}]`,
+          `length >= (*/plugins + */ignores + ${Scopes.size} scopes = ${Scopes.size + GLOBAL_CONFIG_COUNT}) [Actual: ${configs.length}]`,
           () => {
             configs
               .should.have
               .lengthOf
-              .at.least(Scopes.size + 2);
+              .at.least(Scopes.size + GLOBAL_CONFIG_COUNT);
           },
         );
         it(
