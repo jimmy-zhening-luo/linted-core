@@ -10,7 +10,7 @@ export default function factory<
   imports: Parameters<typeof Core<Scope, Optional>>[3],
   settings: Parameters<typeof Core<Scope, Optional>>[4],
   defaults: Parameters<typeof Core<Scope, Optional>>[5],
-  extensions: Parameters<typeof Core<Scope, Optional>>[6],
+  extensions: Parameters<typeof Core<Scope, Optional>>[6] = {},
 ) {
   const Scopes = new Set(scopes),
   global = extensions["*"];
