@@ -1,9 +1,9 @@
 export interface Setting {
   languageOptions?: {
-    [property: string]: unknown;
+    [option: string]: unknown;
     parser?: string;
     parserOptions?: {
-      [property: string]: unknown;
+      [parserOption: string]: unknown;
       parser?: string;
     };
   };
