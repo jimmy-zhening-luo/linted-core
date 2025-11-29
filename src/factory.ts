@@ -44,7 +44,7 @@ export default function factory<
 
       if (extension.files)
         void defaults.files[scope].push(
-          ...extension.files,
+          ...extension.files as string[],
         );
 
       if (extension.ignores)
@@ -53,7 +53,7 @@ export default function factory<
             ...extension.ignores,
           );
         else
-          defaults.ignores[scope] = extension.ignores;
+          defaults.ignores[scope] = extension.ignores as string[];
 
       if (extension.rules)
         defaults.rules[scope][
@@ -117,17 +117,18 @@ export default function factory<
     }
   }
 
-  const configs: Array<
-    {
-      plugins?: Record<string, unknown>;
-      rules?: typeof defaults.rules[Scope][number]["rules"];
-      files?: Array<string | [string, string]>;
-      ignores?: string[];
-      languageOptions?: unknown;
-      language?: string;
-      processor?: string;
-    }
-  > = enabledScopes.flatMap(
+  const configs: Partial<
+    Record<
+      | "plugins"
+      | "rules"
+      | "files"
+      | "ignores"
+      | "languageOptions"
+      | "language"
+      | "processor",
+      unknown
+    >
+  >[] = enabledScopes.flatMap(
     scope => defaults.rules[scope],
   ),
   rulesGlobalTotal = configs.length + 1;

@@ -2,7 +2,7 @@ import factory from "./factory";
 import type {
   Settings,
   Defaults,
-  Extensions,
+  Rules,
 } from "../typings";
 
 export default function<
@@ -11,13 +11,27 @@ export default function<
 >(
   scopes: readonly Scope[],
   optional: readonly Optional[],
-  tree: Array<
-    readonly [Scope, readonly Scope[]]
-  >,
+  tree: readonly (readonly [Scope, readonly Scope[]])[],
   parsers: Record<string, unknown>,
   settings: Settings<Scope>,
   defaults: Defaults<Scope>,
-  extensions: Extensions<Scope, Optional>,
+  extensions: {
+    "*"?: {
+      ignores?: string[];
+      override?: boolean;
+    };
+  } & {
+    readonly [K in Scope]?: {
+      files?: readonly (string | readonly string[])[];
+      ignores?: readonly string[];
+      rules?: Rules;
+    }
+  } & {
+    readonly [K in Optional]?: {
+      plugin: unknown;
+      parser: unknown;
+    }
+  },
 ): unknown[] {
   return factory(
     scopes,
