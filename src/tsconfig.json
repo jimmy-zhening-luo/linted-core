@@ -3,7 +3,7 @@
     "index.ts",
     "factory.ts",
   ],
-  "extends": "./tsconfig-src.json",
+  "extends": "./tsconfig-src",
   "references": [
     {
       "path": "../typings",
