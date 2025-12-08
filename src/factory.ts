@@ -12,20 +12,25 @@ export default function factory<
   defaults: Parameters<typeof Core<Scope, Optional>>[5],
   extensions: Parameters<typeof Core<Scope, Optional>>[6],
 ) {
-  const Scopes = new Set(scopes),
-  global = extensions["*"];
+  const Scopes = new Set(scopes);
 
-  if (global)
-    if (
-      global.override
-      || !defaults.ignores["*"]
-    )
-      defaults.ignores["*"] = (global.ignores ?? []) as string[];
+  if (extensions["*"]) {
+    const globalExtension = extensions["*"];
+
+    if (globalExtension.override || !defaults.ignores["*"])
+      defaults.ignores["*"] = (globalExtension.ignores ?? []) as string[];
     else
-      if (global.ignores?.length)
-        void defaults.ignores["*"].push(
-          ...global.ignores,
-        );
+      if (globalExtension.ignores?.length) {
+        const { "*": ignores } = defaults.ignores,
+        { length } = ignores,
+        { length: x } = globalExtension.ignores;
+
+        ignores.length = length + x;
+
+        for (let i = 0; i < x; ++i)
+          ignores[length + i] = globalExtension.ignores[i]!;
+      }
+  }
 
   const extensionPlugins: Record<string, unknown> = {};
 
@@ -42,16 +47,28 @@ export default function factory<
     if (extensions[scope]) {
       const extension = extensions[scope];
 
-      if (extension.files)
-        void defaults.files[scope].push(
-          ...extension.files as string[],
-        );
+      if (extension.files?.length) {
+        const { [scope]: files } = defaults.files,
+        { length } = files,
+        { length: x } = extension.files;
 
-      if (extension.ignores)
-        if (defaults.ignores[scope])
-          void defaults.ignores[scope].push(
-            ...extension.ignores,
-          );
+        files.length = length + x;
+
+        for (let i = 0; i < x; ++i)
+          files[length + i] = extension.files[i]!;
+      }
+
+      if (extension.ignores?.length)
+        if (defaults.ignores[scope]?.length) {
+          const ignores = defaults.ignores[scope],
+          { length } = ignores,
+          { length: x } = extension.ignores;
+
+          ignores.length = length + x;
+
+          for (let i = 0; i < x; ++i)
+            ignores[length + i] = extension.ignores[i]!;
+        }
         else
           defaults.ignores[scope] = extension.ignores as string[];
 
@@ -68,8 +85,16 @@ export default function factory<
     ) {
       const { [scope]: files } = defaults.files;
 
-      for (const parent of parents)
-        void defaults.files[parent].push(...files);
+      for (const parent of parents) {
+        const { [parent]: parentFiles } = defaults.files,
+        { length } = parentFiles,
+        { length: x } = files;
+
+        parentFiles.length = length + x;
+
+        for (let i = 0; i < x; ++i)
+          parentFiles[length + i] = files[i]!;
+      }
     }
 
   const enabledScopes = [...Scopes]
@@ -78,8 +103,10 @@ export default function factory<
     .filter(scope => scope in settings);
 
   for (const scope of enabledScopes) {
-    const files = defaults.files[scope],
-    ignores = defaults.ignores[scope] ?? [];
+    const {
+      files: { [scope]: files },
+      ignores: { [scope]: ignores },
+    } = defaults;
 
     type Enscope<Config> = Config & {
       files?: typeof files;
@@ -132,20 +159,20 @@ export default function factory<
     scope => defaults.rules[scope],
   ),
   { length: scopeRuleConfigCount } = configs,
-  { length: scopeSettingConfigCount } = setScopes,
-  scopeConfigCount = scopeRuleConfigCount + scopeSettingConfigCount;
+  { length: scopeSettingConfigCount } = setScopes;
 
-  configs.length = scopeConfigCount + 1;
+  configs.length = scopeRuleConfigCount + scopeSettingConfigCount;
 
   for (let i = 0; i < scopeSettingConfigCount; ++i)
     configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
 
-  configs[scopeConfigCount] = {
-    ignores: defaults.ignores["*"] ?? [],
-  };
+  if (defaults.ignores["*"]?.length)
+    configs[configs.length] = {
+      ignores: defaults.ignores["*"],
+    };
 
   if (Object.keys(extensionPlugins).length)
-    configs[scopeConfigCount + 1] = { plugins: extensionPlugins };
+    configs[configs.length] = { plugins: extensionPlugins };
 
   return configs;
 }
