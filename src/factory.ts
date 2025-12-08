@@ -115,14 +115,18 @@ export default function factory<
 
     for (const rule of defaults.rules[scope]) {
       (rule as Enscope<typeof rule>).files = files;
-      (rule as Enscope<typeof rule>).ignores = ignores;
+
+      if (ignores)
+        (rule as Enscope<typeof rule>).ignores = ignores;
     }
 
     const setting = settings[scope];
 
     if (setting) {
       (setting as Enscope<typeof setting>).files = files;
-      (setting as Enscope<typeof setting>).ignores = ignores;
+
+      if (ignores)
+        (setting as Enscope<typeof setting>).ignores = ignores;
 
       if (setting.languageOptions) {
         const {
