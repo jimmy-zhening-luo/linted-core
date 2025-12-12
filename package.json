@@ -1,5 +1,5 @@
 {
-  "$pkg": "2411.7.0",
+  "$pkg": "2412.0.0",
   "$schema": "https://json.schemastore.org/package",
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "name": "@eslinted/core",
@@ -21,8 +21,8 @@
       "default": "./dist/index.js"
     }
   },
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "devDependencies": {
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
