@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig-base",
   "include": [
+    "../typings/**/*",
     "**/*",
   ],
   "references": [
@@ -12,6 +13,11 @@
     "rootDirs": [
       "..",
       "../src",
+    ],
+    "types": [
+      "mocha",
+      "chai",
+      /* {CONFIGURE} */
     ],
     "outDir": "../dist/tests",
   },
