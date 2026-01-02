@@ -36,7 +36,6 @@ tree = [
 ] as const,
 imports = {
   plugins: {
-    "@stylistic": Plugin,
     "@typescript-eslint": Plugin,
     html: Plugin,
     json: Plugin,
@@ -104,12 +103,6 @@ defaults = {
           vanilla0: State.ERROR,
           vanilla1: State.ERROR,
           vanilla2: State.ERROR,
-        },
-      },
-      {
-        name: "enable/stylistic",
-        rules: {
-          "@stylistic/style-rule": State.ERROR,
         },
       },
     ],
