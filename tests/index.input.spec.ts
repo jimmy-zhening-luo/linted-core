@@ -95,7 +95,14 @@ defaults = {
     jsoncc: ["ignore/default-comma.jsonc"],
   },
   rules: {
-    "*": [],
+    "*": [
+      {
+        rules: {
+          global0: State.WARN,
+          global1: State.ERROR,
+        }
+      }
+    ],
     js: [
       {
         name: "enable",
