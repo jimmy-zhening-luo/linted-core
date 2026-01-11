@@ -7,13 +7,12 @@ export interface Defaults<Scope extends string> {
   >;
   readonly ignores: Partial<
     Record<
-      | Scope
-      | "*",
+      Scope | "*",
       string[]
     >
   >;
   readonly rules: Record<
-    Scope,
+    Scope | "*",
     Record<"rules", Rules>[]
   >;
 }
