@@ -159,26 +159,28 @@ export default function factory<
       | "processor",
       unknown
     >
-  >[] = enabledScopes.flatMap(
+  >[] = ["*", ...enabledScopes].flatMap(
     scope => defaults.rules[scope],
-  ),
-  { length: scopeRuleConfigCount } = configs,
-  { length: scopeSettingConfigCount } = setScopes;
-
-  configs.length = scopeRuleConfigCount + scopeSettingConfigCount;
-
-  for (let i = 0; i < scopeSettingConfigCount; ++i)
-    configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
-
-  configs[configs.length] = defaults.rules["*"][0]!;
+  );
 
   if (defaults.ignores["*"]?.length)
     configs[configs.length] = {
       ignores: defaults.ignores["*"],
     };
 
+  if (extensions["*"]?.rules?.length)
+    configs[configs.length] = extensions["*"].rules!;
+
   if (Object.keys(extensionPlugins).length)
     configs[configs.length] = { plugins: extensionPlugins };
+
+  const { length: scopeRuleConfigCount } = configs,
+  { length: scopeSettingConfigCount } = setScopes;
+
+  configs.length = scopeRuleConfigCount + scopeSettingConfigCount;
+
+  for (let i = 0; i < scopeSettingConfigCount; ++i)
+    configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
 
   return configs;
 }
