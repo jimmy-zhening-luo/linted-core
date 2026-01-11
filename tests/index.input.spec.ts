@@ -100,8 +100,8 @@ defaults = {
         rules: {
           global0: State.WARN,
           global1: State.ERROR,
-        }
-      }
+        },
+      },
     ],
     js: [
       {
