@@ -105,7 +105,6 @@ defaults = {
     ],
     js: [
       {
-        name: "enable",
         rules: {
           vanilla: State.ERROR,
           vanilla0: State.ERROR,
@@ -116,13 +115,11 @@ defaults = {
     ],
     ts: [
       {
-        name: "disable",
         rules: {
           vanilla0: State.OFF,
         },
       },
       {
-        name: "enable/extension",
         rules: {
           "@typescript-eslint/enums": State.ERROR,
           "@typescript-eslint/destructure-expression": State.ERROR,
@@ -132,13 +129,11 @@ defaults = {
     ],
     svelte: [
       {
-        name: "disable",
         rules: {
           vanilla1: State.OFF,
         },
       },
       {
-        name: "enable-extension",
         rules: {
           "svelte/tags": State.ERROR,
         },
@@ -146,7 +141,6 @@ defaults = {
     ],
     html: [
       {
-        name: "enable",
         rules: {
           "html/attribute": State.ERROR,
         },
@@ -154,7 +148,6 @@ defaults = {
     ],
     json: [
       {
-        name: "enable",
         rules: {
           "jsonc/property-check": State.ERROR,
           "jsonc/comment": [
@@ -170,7 +163,6 @@ defaults = {
     ],
     jsonc: [
       {
-        name: "override-comment",
         rules: {
           "jsonc/comment": [
             State.ERROR,
@@ -181,7 +173,6 @@ defaults = {
     ],
     jsoncc: [
       {
-        name: "override-comma",
         rules: {
           "jsonc/trailing-comma": [
             State.ERROR,
