@@ -170,7 +170,7 @@ export default function factory<
   for (let i = 0; i < scopeSettingConfigCount; ++i)
     configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
 
-  configs[configs.length] = defaults.rules["*"];
+  configs[configs.length] = defaults.rules["*"][0]!;
 
   if (defaults.ignores["*"]?.length)
     configs[configs.length] = {
