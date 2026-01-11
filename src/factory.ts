@@ -163,7 +163,7 @@ export default function factory<
     scope => defaults.rules[scope],
   );
 
-  if (extensions["*"]?.rules?.length)
+  if (extensions["*"]?.rules)
     configs[configs.length] = extensions["*"].rules!;
 
   if (Object.keys(extensionPlugins).length)
