@@ -159,7 +159,7 @@ export default function factory<
       | "processor",
       unknown
     >
-  >[] = ["*", ...enabledScopes].flatMap(
+  >[] = (["*" as const, ...enabledScopes] as const).flatMap(
     scope => defaults.rules[scope],
   );
 
