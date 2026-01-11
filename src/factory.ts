@@ -164,7 +164,7 @@ export default function factory<
   );
 
   if (extensions["*"]?.rules)
-    configs[configs.length] = extensions["*"].rules!;
+    configs[configs.length] = { rules: extensions["*"].rules };
 
   if (Object.keys(extensionPlugins).length)
     configs[configs.length] = { plugins: extensionPlugins };
