@@ -21,13 +21,13 @@ export default function factory<
       defaults.ignores["*"] = (globalExtension.ignores ?? []) as string[];
     else if (globalExtension.ignores?.length) {
       const { "*": ignores } = defaults.ignores as Required<typeof defaults.ignores>,
-      { length } = ignores,
+      { length } = ignores!,
       { length: nExtendedIgnores } = globalExtension.ignores;
 
-      ignores.length = length + nExtendedIgnores;
+      ignores!.length = length + nExtendedIgnores;
 
       for (let i = 0; i < nExtendedIgnores; ++i)
-        ignores[length + i] = globalExtension.ignores[i]!;
+        ignores![length + i] = globalExtension.ignores[i]!;
     }
   }
 
