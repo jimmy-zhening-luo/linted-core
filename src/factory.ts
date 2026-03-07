@@ -109,7 +109,7 @@ export default function factory<
       rules: { [scope]: rules },
     } = defaults;
 
-    rules.unshift(defaults.rules["*"][0]!)
+    rules.unshift(defaults.rules["*"][0]!);
 
     type Enscope<Config> = Config & {
       files?: typeof files;
