@@ -5,13 +5,9 @@ export interface Defaults<Scope extends string> {
     Scope,
     (string | readonly string[])[]
   >;
-  readonly ignores: Record<
-    "*",
-    string[]
-  >
-  & Partial<
+  readonly ignores: Partial<
     Record<
-      Scope,
+      Scope | "*",
       string[]
     >
   >;

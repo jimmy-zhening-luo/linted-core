@@ -164,7 +164,7 @@ export default function factory<
     >
   >[] = [
     {
-      ignores: defaults.ignores["*"],
+      ignores: defaults.ignores["*"]!,
     },
   ];
 
