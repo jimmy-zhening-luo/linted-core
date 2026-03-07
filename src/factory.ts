@@ -101,7 +101,7 @@ export default function factory<
       Scopes.delete(scope);
 
   type Scoped<PartialConfig> = PartialConfig & {
-    files?: readonly string[];
+    files?: (string | readonly string[])[];
     ignores?: readonly string[];
   };
 
