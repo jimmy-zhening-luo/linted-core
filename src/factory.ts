@@ -21,18 +21,17 @@ export default function factory<
       globalExtension.override
       || !defaults.ignores["*"]
     )
-      defaults.ignores["*"] = globalExtension.ignores! ?? [];
-    else
-      if (globalExtension.ignores?.length) {
-        const { "*": ignores } = defaults.ignores,
-        { length } = ignores,
-        { length: x } = globalExtension.ignores;
+      defaults.ignores["*"] = (globalExtension.ignores as string[]) ?? [];
+    else if (globalExtension.ignores?.length) {
+      const { "*": ignores } = defaults.ignores,
+      { length } = ignores,
+      { length: x } = globalExtension.ignores;
 
-        ignores.length = length + x;
+      ignores.length = length + x;
 
-        for (let i = 0; i < x; ++i)
-          ignores[length + i] = globalExtension.ignores[i]!;
-      }
+      for (let i = 0; i < x; ++i)
+        ignores[length + i] = globalExtension.ignores[i]!;
+    }
   }
 
   const extensionPlugins: Record<string, unknown> = {};
