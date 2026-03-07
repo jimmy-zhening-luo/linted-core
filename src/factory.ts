@@ -102,14 +102,15 @@ export default function factory<
   setScopes = enabledScopes
     .filter(scope => scope in settings);
 
+  defaults.rules.js.unshift(defaults.rules["*"][0]!);
+  defaults.rules.json.unshift(defaults.rules["*"][0]!);
+
   for (const scope of enabledScopes) {
     const {
       files: { [scope]: files },
       ignores: { [scope]: ignores },
       rules: { [scope]: rules },
     } = defaults;
-
-    rules.unshift(defaults.rules["*"][0]!);
 
     type Enscope<Config> = Config & {
       files?: typeof files;
@@ -162,7 +163,7 @@ export default function factory<
       | "processor",
       unknown
     >
-  >[] = (["*" as const, ...enabledScopes] as const).flatMap(
+  >[] = enabledScopes.flatMap(
     scope => defaults.rules[scope],
   );
 
