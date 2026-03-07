@@ -181,7 +181,7 @@ export default function factory<
   configs.length = preamble + nRules;
 
   for (let i = 0; i < nRules; ++i)
-    configs[preamble + i] = defaults.rules[enabledScopes[i]]!;
+    configs[preamble + i] = defaults.rules[enabledScopes[i]!]!;
 
   if (extensions["*"]?.rules)
     configs[configs.length] = { rules: extensions["*"].rules };
