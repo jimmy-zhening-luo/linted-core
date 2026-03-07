@@ -102,8 +102,8 @@ export default function factory<
   setScopes = enabledScopes
     .filter(scope => scope in settings);
 
-  defaults.rules.js.unshift(defaults.rules["*"][0]!);
-  defaults.rules.json.unshift(defaults.rules["*"][0]!);
+  defaults.js.rules.unshift(defaults.rules["*"][0]!);
+  defaults.json.rules.unshift(defaults.rules["*"][0]!);
 
   for (const scope of enabledScopes) {
     const {
