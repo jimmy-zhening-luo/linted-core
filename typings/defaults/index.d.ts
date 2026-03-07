@@ -13,6 +13,6 @@ export interface Defaults<Scope extends string> {
   >;
   readonly rules: Record<
     Scope,
-    Record<"rules", Rules>[]
+    Record<"rules", Rules>
   >;
 }

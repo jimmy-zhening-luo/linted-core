@@ -73,9 +73,10 @@ export default function factory<
           defaults.ignores[scope] = extension.ignores as string[];
 
       if (extension.rules)
-        defaults.rules[scope][
-          defaults.rules[scope].length
-        ] = { rules: extension.rules };
+        Object.assign(
+          defaults.rules[scope].rules,
+          extension.rules,
+        );
     }
 
   for (const [scope, parents] of tree)
@@ -114,12 +115,8 @@ export default function factory<
       ignores?: typeof ignores;
     };
 
-    for (const rule of rules) {
-      (rule as Enscope<typeof rule>).files = files;
-
-      if (ignores)
-        (rule as Enscope<typeof rule>).ignores = ignores;
-    }
+    (rules as Enscope<typeof rules>).files = files;
+    (rules as Enscope<typeof rules>).ignores = ignores;
 
     const setting = settings[scope];
 
@@ -160,7 +157,7 @@ export default function factory<
       | "processor",
       unknown
     >
-  >[] = enabledScopes.flatMap(
+  >[] = enabledScopes.map(
     scope => defaults.rules[scope],
   );
 
