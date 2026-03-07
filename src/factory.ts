@@ -167,16 +167,18 @@ export default function factory<
     scope => defaults.rules[scope],
   );
 
+  if (defaults.ignores["*"]?.length)
+    configs.unshift(
+      {
+        ignores: defaults.ignores["*"],
+      },
+    );
+
   if (extensions["*"]?.rules)
     configs[configs.length] = { rules: extensions["*"].rules };
 
   if (Object.keys(extensionPlugins).length)
     configs[configs.length] = { plugins: extensionPlugins };
-
-  if (defaults.ignores["*"]?.length)
-    configs[configs.length] = {
-      ignores: defaults.ignores["*"],
-    };
 
   const { length: scopeRuleConfigCount } = configs,
   { length: scopeSettingConfigCount } = setScopes;
