@@ -41,7 +41,6 @@ export default function factory<
       extensionPlugins[scope] = extensions[scope].plugin;
       parsers[scope] = extensions[scope].parser;
     }
-
     else
       Scopes.delete(scope);
 
@@ -100,10 +99,12 @@ export default function factory<
       }
     }
 
-  const enabledScopes = [...Scopes]
-    .filter(scope => defaults.files[scope].length),
-  setScopes = enabledScopes
-    .filter(scope => scope in settings);
+  const enabledScopes = [...Scopes].filter(
+    scope => defaults.files[scope].length,
+  ),
+  setScopes = enabledScopes.filter(
+    scope => scope in settings,
+  );
 
   for (const scope of enabledScopes) {
     const {
@@ -161,30 +162,32 @@ export default function factory<
       | "processor",
       unknown
     >
-  >[] = enabledScopes.map(
-    scope => defaults.rules[scope],
-  );
+  >[] = [
+    {
+      ignores: defaults.ignores["*"],
+    },
+  ];
 
-  if (defaults.ignores["*"]?.length)
-    configs.unshift(
-      {
-        ignores: defaults.ignores["*"],
-      },
-    );
+  const { length: nSettings } = setScopes;
+
+  configs.length = 1 + nSettings;
+
+  for (let i = 0; i < nSettings; ++i)
+    configs[1 + i] = settings[setScopes[i]]!;
+
+  const { length: prelength } = configs,
+  { length: nRules } = enabledScopes;
+
+  configs.length = prelength + nRules;
+
+  for (let i = 0; i < nRules; ++i)
+    configs[prelength + i] = defaults.rules[enabledScopes[i]]!;
 
   if (extensions["*"]?.rules)
     configs[configs.length] = { rules: extensions["*"].rules };
 
   if (Object.keys(extensionPlugins).length)
     configs[configs.length] = { plugins: extensionPlugins };
-
-  const { length: scopeRuleConfigCount } = configs,
-  { length: scopeSettingConfigCount } = setScopes;
-
-  configs.length = scopeRuleConfigCount + scopeSettingConfigCount;
-
-  for (let i = 0; i < scopeSettingConfigCount; ++i)
-    configs[scopeRuleConfigCount + i] = settings[setScopes[i]]!;
 
   return configs;
 }
