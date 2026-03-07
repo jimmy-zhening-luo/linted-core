@@ -21,7 +21,7 @@ export default function factory<
       globalExtension.override
       || !defaults.ignores["*"]
     )
-      defaults.ignores["*"] = (globalExtension.ignores as string[]) ?? [];
+      defaults.ignores["*"] = globalExtension.ignores ?? [] as string[];
     else if (globalExtension.ignores?.length) {
       const { "*": ignores } = defaults.ignores,
       { length } = ignores,
