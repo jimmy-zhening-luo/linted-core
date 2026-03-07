@@ -22,11 +22,11 @@ export default function factory<
     else if (globalExtension.ignores?.length) {
       const { "*": ignores = [] } = defaults.ignores,
       { length } = ignores,
-      { length: nExtendedIgnores } = globalExtension.ignores;
+      { length: nGlobalExtendedIgnores } = globalExtension.ignores;
 
-      ignores.length = length + nExtendedIgnores;
+      ignores.length = length + nGlobalExtendedIgnores;
 
-      for (let i = 0; i < nExtendedIgnores; ++i)
+      for (let i = 0; i < nGlobalExtendedIgnores; ++i)
         ignores[length + i] = globalExtension.ignores[i]!;
     }
   }
@@ -48,11 +48,11 @@ export default function factory<
       if (extension.files?.length) {
         const { [scope]: files } = defaults.files,
         { length } = files,
-        { length: x } = extension.files;
+        { length: nExtendedFiles } = extension.files;
 
-        files.length = length + x;
+        files.length = length + nExtendedFiles;
 
-        for (let i = 0; i < x; ++i)
+        for (let i = 0; i < nExtendedFiles; ++i)
           files[length + i] = extension.files[i]!;
       }
 
@@ -60,11 +60,11 @@ export default function factory<
         if (defaults.ignores[scope]?.length) {
           const ignores = defaults.ignores[scope],
           { length } = ignores,
-          { length: x } = extension.ignores;
+          { length: nExtendedIgnores } = extension.ignores;
 
-          ignores.length = length + x;
+          ignores.length = length + nExtendedIgnores;
 
-          for (let i = 0; i < x; ++i)
+          for (let i = 0; i < nExtendedIgnores; ++i)
             ignores[length + i] = extension.ignores[i]!;
         }
         else
@@ -86,24 +86,21 @@ export default function factory<
 
       for (const parent of parents) {
         const { [parent]: parentFiles } = defaults.files,
-        { length } = parentFiles,
+        { length: nParents } = parentFiles,
         { length: nChildren } = files;
 
-        parentFiles.length = length + nChildren;
+        parentFiles.length = nParents + nChildren;
 
         for (let i = 0; i < nChildren; ++i)
-          parentFiles[length + i] = files[i]!;
+          parentFiles[nParents + i] = files[i]!;
       }
     }
 
-  const enabledScopes = [...Scopes].filter(
-    scope => defaults.files[scope].length,
-  ),
-  setScopes = enabledScopes.filter(
-    scope => scope in settings,
-  );
+  for (const scope of Scopes)
+    if (!defaults.files[scope].length)
+      Scopes.delete(scope);
 
-  for (const scope of enabledScopes) {
+  for (const scope of Scopes) {
     const {
       files: { [scope]: files },
       ignores: { [scope]: ignores },
@@ -164,20 +161,24 @@ export default function factory<
       ignores: defaults.ignores["*"] ?? [],
     },
   ],
-  { length: nSettings } = setScopes,
+  ruleScopes = [...Scopes],
+  settingScopes = ruleScopes.filter(
+    scope => scope in settings,
+  ),
+  { length: nSettings } = settingScopes,
   preamble = 1 + nSettings;
 
   configs.length = preamble;
 
   for (let i = 0; i < nSettings; ++i)
-    configs[1 + i] = settings[setScopes[i]]!;
+    configs[1 + i] = settings[settingScopes[i]]!;
 
-  const { length: nRules } = enabledScopes;
+  const { length: nRules } = ruleScopes;
 
   configs.length = preamble + nRules;
 
   for (let i = 0; i < nRules; ++i)
-    configs[preamble + i] = defaults.rules[enabledScopes[i]!]!;
+    configs[preamble + i] = defaults.rules[ruleScopes[i]!]!;
 
   if (extensions["*"]?.rules)
     configs[configs.length] = { rules: extensions["*"].rules };
