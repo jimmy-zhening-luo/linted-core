@@ -87,11 +87,11 @@ export default function factory<
       for (const parent of parents) {
         const { [parent]: parentFiles } = defaults.files,
         { length } = parentFiles,
-        { length: x } = files;
+        { length: nChildren } = files;
 
-        parentFiles.length = length + x;
+        parentFiles.length = length + nChildren;
 
-        for (let i = 0; i < x; ++i)
+        for (let i = 0; i < nChildren; ++i)
           parentFiles[length + i] = files[i]!;
       }
     }
