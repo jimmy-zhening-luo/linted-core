@@ -106,14 +106,17 @@ export default function factory<
     const {
       files: { [scope]: files },
       ignores: { [scope]: ignores },
+      rules: { [scope]: rules },
     } = defaults;
+
+    rules.shift(default.rules["*"][0]!)
 
     type Enscope<Config> = Config & {
       files?: typeof files;
       ignores?: typeof ignores;
     };
 
-    for (const rule of defaults.rules[scope]) {
+    for (const rule of rules) {
       (rule as Enscope<typeof rule>).files = files;
 
       if (ignores)
