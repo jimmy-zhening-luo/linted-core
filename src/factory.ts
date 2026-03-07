@@ -17,8 +17,11 @@ export default function factory<
   if (extensions["*"]) {
     const globalExtension = extensions["*"];
 
-    if (globalExtension.override || !defaults.ignores["*"])
-      defaults.ignores["*"] = (globalExtension.ignores ?? []) as string[];
+    if (
+      globalExtension.override
+      || !defaults.ignores["*"]
+    )
+      defaults.ignores["*"] = globalExtension.ignores! ?? [];
     else
       if (globalExtension.ignores?.length) {
         const { "*": ignores } = defaults.ignores,
