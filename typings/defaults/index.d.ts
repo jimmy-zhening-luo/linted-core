@@ -12,7 +12,7 @@ export interface Defaults<Scope extends string> {
     >
   >;
   readonly rules: Record<
-    Scope | "*",
+    Scope,
     Record<"rules", Rules>[]
   >;
 }
