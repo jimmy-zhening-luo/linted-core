@@ -72,11 +72,11 @@ export default function factory<
         else
           defaults.ignores[scope] = extension.ignores as string[];
 
-      if (extension.rules)
-        Object.assign(
-          defaults.rules[scope].rules,
-          extension.rules,
-        );
+      // if (extension.rules)
+      //   Object.assign(
+      //     defaults.rules[scope].rules,
+      //     extension.rules,
+      //   );
     }
 
   for (const [scope, parents] of tree)
