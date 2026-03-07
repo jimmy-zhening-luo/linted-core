@@ -168,20 +168,20 @@ export default function factory<
     },
   ];
 
-  const { length: nSettings } = setScopes;
+  const { length: nSettings } = setScopes,
+  preamble = 1 + nSettings;
 
-  configs.length = 1 + nSettings;
+  configs.length = preamble;
 
   for (let i = 0; i < nSettings; ++i)
     configs[1 + i] = settings[setScopes[i]]!;
 
-  const { length: prelength } = configs,
-  { length: nRules } = enabledScopes;
+  const { length: nRules } = enabledScopes;
 
-  configs.length = prelength + nRules;
+  configs.length = preamble + nRules;
 
   for (let i = 0; i < nRules; ++i)
-    configs[prelength + i] = defaults.rules[enabledScopes[i]]!;
+    configs[preamble + i] = defaults.rules[enabledScopes[i]]!;
 
   if (extensions["*"]?.rules)
     configs[configs.length] = { rules: extensions["*"].rules };
