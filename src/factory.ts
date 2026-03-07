@@ -116,7 +116,9 @@ export default function factory<
     };
 
     (rules as Enscope<typeof rules>).files = files;
-    (rules as Enscope<typeof rules>).ignores = ignores;
+
+    if (ignores)
+      (rules as Enscope<typeof rules>).ignores = ignores;
 
     const setting = settings[scope];
 
