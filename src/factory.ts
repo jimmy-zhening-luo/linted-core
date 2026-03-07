@@ -100,30 +100,29 @@ export default function factory<
     if (!defaults.files[scope].length)
       Scopes.delete(scope);
 
+  type Scoped<PartialConfig> = PartialConfig & {
+    files?: readonly string[];
+    ignores?: readonly string[];
+  };
+
   for (const scope of Scopes) {
     const {
+      rules: { [scope]: rules },
       files: { [scope]: files },
       ignores: { [scope]: ignores },
-      rules: { [scope]: rules },
-    } = defaults;
+    } = defaults,
+    setting = settings[scope];
 
-    type Enscope<Config> = Config & {
-      files?: typeof files;
-      ignores?: typeof ignores;
-    };
-
-    (rules as Enscope<typeof rules>).files = files;
+    (rules as Scoped<typeof rules>).files = files;
 
     if (ignores)
-      (rules as Enscope<typeof rules>).ignores = ignores;
-
-    const setting = settings[scope];
+      (rules as Scoped<typeof rules>).ignores = ignores;
 
     if (setting) {
-      (setting as Enscope<typeof setting>).files = files;
+      (setting as Scoped<typeof setting>).files = files;
 
       if (ignores)
-        (setting as Enscope<typeof setting>).ignores = ignores;
+        (setting as Scoped<typeof setting>).ignores = ignores;
 
       if (setting.languageOptions) {
         const {
@@ -145,16 +144,16 @@ export default function factory<
     }
   }
 
-  const configs: Partial<
-    Record<
-      | "plugins"
-      | "rules"
-      | "files"
-      | "ignores"
-      | "languageOptions"
-      | "language"
-      | "processor",
-      unknown
+  const configs: Scoped<
+    Partial<
+      Record<
+        | "plugins"
+        | "rules"
+        | "languageOptions"
+        | "language"
+        | "processor",
+        unknown
+      >
     >
   >[] = [
     {
