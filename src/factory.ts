@@ -166,9 +166,8 @@ export default function factory<
     {
       ignores: defaults.ignores["*"]!,
     },
-  ];
-
-  const { length: nSettings } = setScopes,
+  ],
+  { length: nSettings } = setScopes,
   preamble = 1 + nSettings;
 
   configs.length = preamble;
