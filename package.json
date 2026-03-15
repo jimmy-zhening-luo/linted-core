@@ -3,7 +3,7 @@
   "$help": "https://docs.npmjs.com/cli/configuring-npm/package-json",
   "$schema": "https://json.schemastore.org/package",
   "name": "@eslinted/core",
-  "version": "33.1.2",
+  "version": "33.1.3",
   "repository": "github:jimmy-zhening-luo/linted-core",
   "description": "Internal core for npm package `linted`, responsible for producing an array of fully-formed ESLint configurations according to `linted` spec.",
   "keywords": [],
