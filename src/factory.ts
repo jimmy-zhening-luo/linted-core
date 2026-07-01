@@ -12,8 +12,6 @@ export default function factory<
   defaults: Parameters<typeof Core<Scope, Optional>>[5],
   extensions: Parameters<typeof Core<Scope, Optional>>[6],
 ) {
-  const Scopes = new Set(scopes);
-
   if (extensions["*"]) {
     const globalExtension = extensions["*"];
 
@@ -31,7 +29,8 @@ export default function factory<
     }
   }
 
-  const extensionPlugins: Record<string, unknown> = {};
+  const Scopes = new Set(scopes),
+  extensionPlugins: Record<string, unknown> = {};
 
   for (const scope of optional)
     if (extensions[scope]) {
